@@ -4,10 +4,13 @@ namespace Tectonic\Shift\Library\Search;
 
 use Eloquent, Event;
 use Tectonic\Shift\Library\Contracts\QueryInterface;
+use Tectonic\Shift\Library\Traits\Observable;
 use Tectonic\Shift\Library\Search\Filters\SearchFilterFactory;
 
 abstract class Search
 {
+	use Observable;
+
 	/**
 	 * Query object that gets used for altering query parameters.etc.
 	 * 
@@ -54,10 +57,14 @@ abstract class Search
 	 */
 	public function results() 
 	{
+		$this->fireEvent('search.filters');
+
 		foreach ($this->filterFactory->filters as $filter) {
 			$filter->criteria($this->query);
 		}
-		
+
+		$this->fireEvent('search.execute');
+
 		return $this->query->paginate($this->limit());
 	}
 
@@ -81,18 +88,6 @@ abstract class Search
 	public function limit()
 	{
 		return $this->limit;
-	}
-
-	/**
-	 * If any search implementation wishes to be extended by other packages,
-	 * then call this method. This will fire an event for this specific
-	 * search object.
-	 * 
-	 * @param string $eventName
-	 */
-	public function extend($eventName)
-	{
-		Event::fire('search.'.$eventName, [$this]);
 	}
 
 	/**
