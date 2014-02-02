@@ -1,10 +1,22 @@
 <?php
 
+use Mockery as m;
+use Request;
+use View;
+
 class UtilityTest extends PHPUnit_Framework_TestCase
 {
 	public function setUp()
 	{
-		$this->utility = new Tectonic\Shift\Library\Utility;
+		$this->request = m::mock('Request');
+		$this->view = m::mock('View');
+
+		$this->utility = new Tectonic\Shift\Library\Utility($this->request, $this->view);
+	}
+
+	public function tearDown()
+	{
+		m::close();
 	}
 
 	/**
@@ -24,5 +36,20 @@ class UtilityTest extends PHPUnit_Framework_TestCase
 	public function testEventNameCalledWithMoreThanTwoArgsShouldBuildTheStringWithDecimalsAfterTheFirst()
 	{
 		$this->assertEquals('shift::run.some.long.event.name', $this->utility->eventName('shift', 'run', 'some', 'long', 'event', 'name'));
+	}
+
+	public function testNoJsonViewShouldNotReturnTheViewIfTheRequestWantsJson()
+	{
+		$this->request->shouldReceive('wantsJson')->andReturn(true);
+
+		$this->assertNull($this->utility->noJsonView());
+	}
+
+	public function testNoJsonViewShouldReturnTheViewIfTheRequestDoesNotWantJson()
+	{
+		$this->request->shouldReceive('wantsJson')->andReturn(false);
+		$this->view->shouldReceive('make')->with('shift::layouts.application')->andReturn('view');
+
+		$this->assertEquals('view', $this->utility->noJsonView());
 	}
 }

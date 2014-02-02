@@ -15,6 +15,26 @@ use View;
 class Utility
 {
 	/**
+	 * Stores the request object for checks.
+	 *
+	 * @var Request
+	 */
+	protected $request;
+
+	/**
+	 * Stores the View object.
+	 *
+	 * @var View
+	 */
+	protected $view;
+
+	public function __construct(Request $request, View $view)
+	{
+		$this->request = $request;
+		$this->view = $view;
+	}
+
+	/**
 	 * Generates a name to be used when firing an event. This is to help standardise
 	 * the naming of events into one cohesive string. Class names should follow this
 	 * naming convention, in that, an event name with:
@@ -70,8 +90,8 @@ class Utility
 	 */
 	public function noJsonView()
 	{
-		if (!Request::wantsJson()) {
-			return View::make('shift::layouts.application');
+		if (!$this->request->wantsJson()) {
+			return $this->view->make('shift::layouts.application');
 		}
 	}
 }
