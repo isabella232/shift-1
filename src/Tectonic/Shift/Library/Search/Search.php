@@ -57,7 +57,7 @@ abstract class Search
 		foreach ($this->filterFactory->filters as $filter) {
 			$filter->criteria($this->query);
 		}
-
+		
 		return $this->query->paginate($this->limit());
 	}
 
