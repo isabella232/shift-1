@@ -2,6 +2,9 @@
 
 namespace Tectonic\Shift\Modules\Accounts\Models;
 
-class Role extends \Eloquent {
+use Tectonic\Shift\Library\BaseModel;
+
+class Role extends BaseModel
+{
 	
 }

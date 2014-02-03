@@ -2,7 +2,7 @@
 
 namespace Tectonic\Shift\Library;
 
-class BaseController extends \Controller
+class BaseModel extends \Eloquent
 {
 	
 }

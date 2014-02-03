@@ -2,8 +2,8 @@
 
 namespace Tectonic\Shift\Library\Search;
 
-use Eloquent, Event;
-use Tectonic\Shift\Library\Contracts\QueryInterface;
+use Eloquent;
+use Event;
 use Tectonic\Shift\Library\Traits\Observable;
 use Tectonic\Shift\Library\Search\Filters\SearchFilterFactory;
 
@@ -97,7 +97,7 @@ abstract class Search
 	 * 
 	 * @param QueryInterface $query
 	 */
-	public function setQuery(QueryInterface $query)
+	public function setQuery(Eloquent $query)
 	{
 		$this->query = $query;
 	}

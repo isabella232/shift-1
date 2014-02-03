@@ -15,7 +15,7 @@ class SearchTest extends PHPUnit_Framework_TestCase
 		$mockNameFilter = m::mock('Tectonic\Shift\Library\Search\Filters\SearchFilter')->makePartial();
 		$mockNameFilter->shouldReceive('criteria')->twice();
 		
-		$mockQuery = m::mock('Tectonic\Shift\Library\Contracts\QueryInterface');
+		$mockQuery = m::mock('Eloquent');
 		$mockQuery->shouldReceive('paginate')->andReturn(['items']);
 
 		$search = new Tests\Stubs\SearchStub;

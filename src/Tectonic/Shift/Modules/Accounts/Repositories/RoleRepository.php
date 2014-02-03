@@ -3,6 +3,7 @@
 namespace Tectonic\Shift\Modules\Accounts\Repositories;
 
 use Tectonic\Shift\Modules\Accounts\Roles\Search\RoleSearch;
+use Tectonic\Shift\Modules\Accounts\Contracts\RoleRepositoryInterface;
 use Tectonic\Shift\Library\SqlBaseRepository;
 
 class SqlRoleRepository extends SqlBaseRepository implements RoleRepositoryInterface
