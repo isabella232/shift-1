@@ -37,7 +37,7 @@ abstract class Search
 	 * 
 	 * @var array
 	 */
-	public $params = [];
+	protected $params = [];
 
 	/**
 	 * Add the filter factory to the search object.
@@ -57,15 +57,19 @@ abstract class Search
 	 */
 	public function results() 
 	{
-		$this->fireEvent('search.filters');
+		$this->fireEvent('searchFilters', $this->filterFactory);
 
 		foreach ($this->filterFactory->filters as $filter) {
 			$filter->criteria($this->query);
 		}
 
-		$this->fireEvent('search.execute');
+		$this->fireEvent('searchExecute', $this);
 
-		return $this->query->paginate($this->limit());
+		$results = $this->query->paginate($this->limit());
+
+		$this->fireEvent('searchResults', $results);
+
+		return $results;
 	}
 
 	/**
@@ -76,6 +80,14 @@ abstract class Search
 	public function setParams(array $params)
 	{
 		$this->params = $params;
+	}
+
+	/**
+	 * 
+	 */
+	public function getParams()
+	{
+		return $this->params;
 	}
 
 	/**
