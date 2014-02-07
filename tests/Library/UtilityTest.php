@@ -1,8 +1,6 @@
 <?php
 
 use Mockery as m;
-use Request;
-use View;
 
 class UtilityTest extends PHPUnit_Framework_TestCase
 {
