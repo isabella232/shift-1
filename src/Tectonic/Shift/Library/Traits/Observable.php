@@ -74,7 +74,7 @@ trait Observable
 	 * @param  bool    $halt
 	 * @return mixed
 	 */
-	protected function fireEvent($event, $halt = true)
+	public function fireEvent($event, $halt = true)
 	{
 		if (!isset(static::$dispatcher)) return true;
 
