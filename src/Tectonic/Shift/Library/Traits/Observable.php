@@ -2,6 +2,8 @@
 
 namespace Tectonic\Shift\Library\Traits;
 
+use Illuminate\Events\Dispatcher;
+
 trait Observable
 {
 	/**
@@ -26,9 +28,11 @@ trait Observable
 		// it into the model's event system, making it convenient to watch these.
 		foreach (static::getObservableEvents() as $event)
 		{
-			if (method_exists($class, $event))
+			$method = static::eventMethod($event);
+
+			if (method_exists($class, $method))
 			{
-				static::registerEvent($event, $className.'@'.$event);
+				static::registerEvent($event, $className.'@'.$method);
 			}
 		}
 	}
@@ -40,11 +44,27 @@ trait Observable
 	 */
 	public static function getObservableEvents()
 	{
-		if (!isset($this->observables)) {
+		if (!isset(static::$observables)) {
 			throw new \Exception('When using the Observable trait, please ensure you\'ve defined $this->observables property as an array.');
 		}
 
-		return $this->observables;
+		return static::$observables;
+	}
+
+	/**
+	 * Turns an event into a method name, by replacing . and _ with a capital of the following word. For example,
+	 * if the event is something like user.updating, then the method would become userUpdating.
+	 *
+	 * @param string $event
+	 * @return string
+	 */
+	protected static function eventMethod($event)
+	{
+		$callback = function($matches) {
+			return strtoupper($matches[1][1]);
+		};
+
+		return preg_replace_callback('/([._-][a-z])/i', $callback, $event);
 	}
 
 	/**
@@ -79,7 +99,7 @@ trait Observable
 
 		foreach ($instance->getObservableEvents() as $event)
 		{
-			static::$dispatcher->forget("eloquent.{$event}: ".get_called_class());
+			static::$dispatcher->forget("{$event}: ".get_called_class());
 		}
 	}
 
@@ -95,8 +115,8 @@ trait Observable
 		if (isset(static::$dispatcher))
 		{
 			$name = get_called_class();
-
-			static::$dispatcher->listen("eloquent.{$event}: {$name}", $callback);
+			
+			static::$dispatcher->listen("{$event}: {$name}", $callback);
 		}
 	}
 
