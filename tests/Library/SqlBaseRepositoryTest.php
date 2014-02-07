@@ -49,7 +49,7 @@ class SqlRoleRepositoryTest extends PHPUnit_Framework_TestCase
 	{
 		$this->repository->shouldReceive('find')->andReturn($this->model);
 		$this->model->shouldReceive('delete')->andReturn(true);
-		$this->model->shouldReceive('findOrFail')->with(1)->andReturn($record);
+		$this->model->shouldReceive('findOrFail')->with(1)->andReturn([]);
 
 		$this->assertEquals($this->model, $this->repository->delete(1));
 	}
