@@ -29,7 +29,7 @@ trait Observable
 		foreach (static::getObservableEvents() as $event)
 		{
 			$method = static::eventMethod($event);
-
+			
 			if (method_exists($class, $method))
 			{
 				static::registerEvent($event, $className.'@'.$method);
@@ -47,7 +47,7 @@ trait Observable
 		if (!isset(static::$observables)) {
 			throw new \Exception('When using the Observable trait, please ensure you\'ve defined $this->observables property as an array.');
 		}
-
+		
 		return static::$observables;
 	}
 
