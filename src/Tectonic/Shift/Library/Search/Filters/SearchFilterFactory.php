@@ -6,7 +6,7 @@ use Event, Utility;
 use Tectonic\Shift\Library\Search\Search;
 use Tectonic\Shift\Library\Traits\Observable;
 
-class SearchFilterFactory
+abstract class SearchFilterFactory
 {
 	use Observable;
 
@@ -77,4 +77,9 @@ class SearchFilterFactory
 
 		return Utility::eventName('search', $base, 'filters');
 	}
+
+	/**
+	 * Called upon boot for child classes to register their required search filters and settings.
+	 */
+	abstract protected function register();
 }
