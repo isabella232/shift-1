@@ -1,11 +1,12 @@
 <?php
 
-namespace Tectonic\Shift\Core\Search\Filters;
+namespace Tectonic\Shift\Library\Search\Filters;
 
-use Tectonic\Shift\Core\Search\SearchFilter;
-use Tectonic\Shift\Core\Search\SearchFilterInterface;
+use Tectonic\Shift\Library\Search\SearchFilter;
+use Tectonic\Shift\Library\Contracts\SearchFilterInterface;
 
-class OrderFilter extends SearchFilter implements SearchFilterInterface {
+class OrderFilter extends SearchFilter implements SearchFilterInterface
+{
 
 	/**
 	 * The default field for the search query to order by.

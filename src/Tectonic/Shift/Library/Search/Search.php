@@ -17,7 +17,7 @@ class Search implements SearchInterface
 	 * 
 	 * @var Query
 	 */
-	public $query;
+	protected $query;
 	
 	/**
 	 * Stores the filter factory that contains all the filters to be applied to the search query.
@@ -123,5 +123,27 @@ class Search implements SearchInterface
 	public function getQuery()
 	{
 		return $this->query;
+	}
+
+	/**
+	 * Returns the value for a specific parameter, or null if it doesn't exist.
+	 *
+	 * @param string $key
+	 * @return string
+	 */
+	public function getParam($key)
+	{
+		return @$this->getParams()[$key];
+	}
+
+	/**
+	 * Checks to see if the registered search parameters contain a given key.
+	 *
+	 * @param string $key
+	 * @return boolean
+	 */
+	public function hasParam($key)
+	{
+		return !is_null(@$this->getParams()[$key]);
 	}
 }

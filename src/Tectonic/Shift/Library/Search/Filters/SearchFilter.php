@@ -24,29 +24,15 @@ class SearchFilter
 	}
 
 	/**
-	 * Sets the params object on the class.
+	 * Any call to the search filter, we basically just want to forward onto the search class,
+	 * which contains all the methods we need for filtering :)
 	 *
-	 * @param string $key
-	 * @return array
+	 * @param string $method
+	 * @param array $arguments
+	 * @return mixed
 	 */
-	public function getParams($key = null)
+	public function __call($method, $arguments)
 	{
-		$params = $this->search->getParams();
-
-		if (!is_null($key)) {
-			return @$params[$key];
-		}
-
-		return $params;
-	}
-
-	/**
-	 * Shorthand method to retreive the search query object.
-	 * 
-	 * @return Query $query
-	 */
-	public function getQuery()
-	{
-		return $this->search->query;
+		return call_user_func_array([$this->search, $method], $arguments);
 	}
 }
