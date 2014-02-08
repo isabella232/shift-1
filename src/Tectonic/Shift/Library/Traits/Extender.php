@@ -3,7 +3,7 @@
 namespace Tectonic\Shift\Library\Traits;
 
 /**
- * The polymorphic trait provides the ability for any class to easily be extended by other classes at runtime. In effect,
+ * The extender trait provides the ability for any class to easily be extended by other classes at runtime. In effect,
  * it provides polymorphism without having to be redeveloped each time it is required. This is particularly useful in cases
  * where we may have numerous classes that need to extend models or repositories from multiple locations. Single inheritance
  * in these cases just won't do.
@@ -24,18 +24,25 @@ namespace Tectonic\Shift\Library\Traits;
 use BadMethodCallException;
 use Exception;
 
-trait Polymorphic
+trait Extender
 {
 	/**
-	 * Stores the objects that will be used for polymorphic calls.
+	 * Stores the objects that will be used for extender calls.
 	 *
 	 * @var array
 	 */
-	protected static $polymorphicObjects = [];
+	protected static $extensions = [];
 
+	/**
+	 * Whenever a method is called that does not fit the class, then Extender will loop through all registered
+	 * objects to see if a method exists that is required. It will then execute and return that method's output.
+	 *
+	 * @param string $method
+	 * @param array $arguments
+	 */
 	public function __call($method, $arguments)
 	{
-		foreach (static::$polymorphicObjects as $object) {
+		foreach (static::$extensions as $object) {
 			if (method_exists($object, $method)) {
 				return $object->$method($arguments);
 			}
@@ -45,18 +52,26 @@ trait Polymorphic
 	}
 
 	/**
-	 * Registers a new polymorphing object with the class. It will not register the same class twice.
+	 * Registers a new extender object with the class. It will not register the same class twice.
 	 *
 	 * @param object $object
 	 */
-	public static function registerPolymorphic($object)
+	public static function registerExtension($object)
 	{
 		$className = get_class($object);
 
-		if (isset(static::$polymorphicObjects[$className])) {
-			throw new Exception('Object '.$className.' has already been registered with Polymorphic.');
+		if (isset(static::$extensions[$className])) {
+			throw new Exception('Object '.$className.' has already been registered with Extender.');
 		}
 
-		static::$polymorphicObjects[$className] = $object;
+		static::$extensions[$className] = $object;
+	}
+
+	/**
+	 * Removes all registered extensions from the class.
+	 */
+	public static function flushExtensions()
+	{
+		static::$extensions = [];
 	}
 }

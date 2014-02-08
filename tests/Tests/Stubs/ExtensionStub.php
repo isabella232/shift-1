@@ -2,7 +2,7 @@
 
 namespace Tests\Stubs;
 
-class PolymorpherStub
+class ExtensionStub
 {
 	public function example()
 	{
