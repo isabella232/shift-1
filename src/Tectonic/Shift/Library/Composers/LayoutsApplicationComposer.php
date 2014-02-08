@@ -1,6 +1,6 @@
 <?php 
 
-namespace Tectonic\Shift\Core\Composers;
+namespace Tectonic\Shift\Library\Composers;
 
 class LayoutsApplicationComposer
 {
