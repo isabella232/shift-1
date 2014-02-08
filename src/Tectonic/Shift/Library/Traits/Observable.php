@@ -74,7 +74,7 @@ trait Observable
 	 * @param  bool    $halt
 	 * @return mixed
 	 */
-	public function fireEvent($event, $halt = true)
+	protected function fireEvent($event, $halt = true)
 	{
 		if (!isset(static::$dispatcher)) return true;
 
@@ -95,9 +95,7 @@ trait Observable
 	{
 		if ( ! isset(static::$dispatcher)) return;
 
-		$instance = new static;
-
-		foreach ($instance->getObservableEvents() as $event)
+		foreach (static::getObservableEvents() as $event)
 		{
 			static::$dispatcher->forget("{$event}: ".get_called_class());
 		}

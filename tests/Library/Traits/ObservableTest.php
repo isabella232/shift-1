@@ -24,12 +24,36 @@ class ObservableTest extends PHPUnit_Framework_TestCase
 		$this->observableClass = new ObservableStub;
 	}
 
+	public function testGetObservableEventsShouldReturnEvents()
+	{
+		$this->assertEquals([ 'some.method', 'another.event' ], ObservableStub::getObservableEvents());
+	}
+
+	public function testFlushEventListenersShouldClearAllRegisteredHooks()
+	{
+		ObservableStub::observe($this->observer);
+
+		$this->mockDispatcher->shouldReceive('forget')->twice();
+
+		ObservableStub::flushEventListeners();
+	}
+
 	public function testObserveShouldRegisterAppropriateEvents()
 	{
 		// TODO: get proper arguments sorted: $this->mockDispatcher->shouldReceive('listen')->with("some.method: Tests\Stubs\ObserverStub")->with('Tests\Stubs\ObserverStub@someMethod');
 		$this->mockDispatcher->shouldReceive('listen');
 
 		ObservableStub::observe($this->observer);
+	}
+
+	public function testFireEventShouldCallMethodsOnRelevantClasses()
+	{
+		ObservableStub::observe($this->observer);
+
+		$this->mockDispatcher->shouldReceive('fire');
+
+		$observable = new ObservableStub;
+		$observable->fire();
 	}
 
 }
