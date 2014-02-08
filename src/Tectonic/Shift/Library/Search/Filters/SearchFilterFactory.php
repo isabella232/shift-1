@@ -2,7 +2,7 @@
 
 namespace Tectonic\Shift\Library\Search\Filters;
 
-use Event, Utility;
+use Tectonic\Shift\Library\Contracts\SearchFilterInterface;
 use Tectonic\Shift\Library\Search\Search;
 use Tectonic\Shift\Library\Traits\Observable;
 
@@ -15,21 +15,23 @@ abstract class SearchFilterFactory
 	 * 
 	 * @var SearchEngine
 	 */
-	public $search;
+	protected $search;
 
 	/**
 	 * Array housing all registered search filters.
 	 * 
 	 * @var array SearchFilterInterface
 	 */
-	public $filters = [];
+	protected $filters = [];
 
 	/**
 	 * Registers the filters needed for this search method to function.
 	 */
 	public function __construct() 
 	{
-		$this->boot();
+		$this->register();
+		
+		$this->fireEvent('filterFactoryBoot', [$this]);
 	}
 
 	/**
@@ -55,27 +57,13 @@ abstract class SearchFilterFactory
 	}
 
 	/**
-	 * Boots the search filter factory, and fires an event to see if any other packages or
-	 * modules need to register filters for the search.
+	 * Returns the registered filters.
+	 *
+	 * @return array
 	 */
-	public function boot() 
+	public function getFilters()
 	{
-		$this->register();
-		
-		$this->fireEvent($this->eventName(), [$this]);
-	}
-
-	/**
-	 * Determines the event name to be fired when requiring other filters to be registered.
-	 * 
-	 * @return string
-	 */
-	protected function eventName() 
-	{
-		$class = str_replace('SearchFilterFactory', '', get_class($this));
-		$base = substr(strtolower(preg_replace('/(A-Z)/', '.$1', $class)), 1);
-
-		return Utility::eventName('search', $base, 'filters');
+		return $this->filters;
 	}
 
 	/**

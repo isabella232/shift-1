@@ -60,7 +60,7 @@ class Search implements SearchInterface
 	{
 		$this->fireEvent('searchFilters', $this->filterFactory);
 
-		foreach ($this->filterFactory->filters as $filter) {
+		foreach ($this->filterFactory->getFilters() as $filter) {
 			$filter->criteria($this->query);
 		}
 
