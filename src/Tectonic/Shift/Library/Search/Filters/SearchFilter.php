@@ -50,15 +50,8 @@ abstract class SearchFilter
 	 * 
 	 * @return Query $query
 	 */
-	public function query()
+	public function getQuery()
 	{
 		return $this->search->query;
 	}
-
-	/**
-	 * Must be implemented by children, contains the functionality required for registering
-	 * the search criteria.
-	 */
-	abstract public function criteria();
-
 }

@@ -7,7 +7,7 @@ use Event;
 use Tectonic\Shift\Library\Traits\Observable;
 use Tectonic\Shift\Library\Search\Filters\SearchFilterFactory;
 
-abstract class Search
+class Search implements SearchInterface
 {
 	use Observable;
 

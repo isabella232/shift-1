@@ -1,6 +1,6 @@
 <?php
 
-namespace Tectonic\Shift\Core\Search\Filters;
+namespace Tectonic\Shift\Library\Search\Filters;
 
 class KeywordFilter extends SearchFilter implements SearchFilterInterface {
 	
@@ -16,7 +16,8 @@ class KeywordFilter extends SearchFilter implements SearchFilterInterface {
 	/**
 	 * Simply checks the default field for the given keyword.
 	 */
-	public function criteria() {
+	public function criteria()
+	{
 		if ($this->params['keyword']) {
 			$this->query()->where($this->defaultField, 'LIKE', '%' . $this->params['keyword'] . '%');
 		}

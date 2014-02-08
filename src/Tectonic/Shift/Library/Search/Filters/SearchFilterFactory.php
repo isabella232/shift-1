@@ -47,7 +47,7 @@ abstract class SearchFilterFactory
 	 * 
 	 * @param  SearchFilter $filter
 	 */
-	public function addFilter(SearchFilter $filter)
+	public function addFilter(SearchFilterInterface $filter)
 	{
 		$filter->setSearch($this->search);
 		

@@ -12,8 +12,9 @@ class SearchTest extends PHPUnit_Framework_TestCase
 	// Really only one method here that needs to be tested, all the rest are dead simple
 	public function testResultsShouldCallAllFilterCriteriaAndReturnResults()
 	{
-		$mockNameFilter = m::mock('Tectonic\Shift\Library\Search\Filters\SearchFilter')->makePartial();
+		$mockNameFilter = m::mock('Tectonic\Shift\Library\Search\Filters\SearchFilterInterface')->makePartial();
 		$mockNameFilter->shouldReceive('criteria')->twice();
+		$mockNameFilter->shouldReceive('setSearch')->twice();
 		
 		$mockQuery = m::mock('Eloquent');
 		$mockQuery->shouldReceive('paginate')->andReturn(['items']);
@@ -31,6 +32,4 @@ class SearchTest extends PHPUnit_Framework_TestCase
 		
 		$this->assertEquals(['items'], $search->results());
 	}
-
-
 }

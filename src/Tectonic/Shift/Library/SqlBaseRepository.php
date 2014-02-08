@@ -10,6 +10,13 @@ abstract class SqlBaseRepository implements BaseRepositoryInterface
 	 * @var Eloquent
 	 */
 	public $model;
+
+	/**
+	 * Stores the validator object that should be used for all validations via the repository.
+	 *
+	 * @var ValidatorInterface
+	 */
+	public $validator;
 	
 	/**
 	 * Stores the search object used by the resource.
