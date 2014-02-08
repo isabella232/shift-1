@@ -1,6 +1,6 @@
 <?php
 
-namespace Tectonic\Shift\Library;
+namespace Tectonic\Shift\Library\Contracts;
 
 /**
  * Nearly all repositories will require the following methods. This is to ensure we're dealing with a 

@@ -4,8 +4,9 @@ namespace Tectonic\Shift\Library\Search;
 
 use Eloquent;
 use Event;
-use Tectonic\Shift\Library\Traits\Observable;
+use Tectonic\Shift\Library\Contracts\SearchInterface;
 use Tectonic\Shift\Library\Search\Filters\SearchFilterFactory;
+use Tectonic\Shift\Library\Traits\Observable;
 
 class Search implements SearchInterface
 {
@@ -55,7 +56,7 @@ class Search implements SearchInterface
 	 * 
 	 * @return array Array of model objects
 	 */
-	public function results() 
+	public function results()
 	{
 		$this->fireEvent('searchFilters', $this->filterFactory);
 

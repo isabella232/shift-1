@@ -4,15 +4,8 @@ namespace Tectonic\Shift\Library\Search\Filters;
 
 use Tectonic\Shift\Library\Search\Search;
 
-abstract class SearchFilter
+class SearchFilter
 {
-	/**
-	 * Stores the search params for the search query.
-	 *
-	 * @var array
-	 */
-	protected $params;
-
 	/**
 	 * Stores the search object in question.
 	 * 
@@ -36,13 +29,15 @@ abstract class SearchFilter
 	 * @param string $key
 	 * @return array
 	 */
-	public function params($key = null)
+	public function getParams($key = null)
 	{
+		$params = $this->search->getParams();
+
 		if (!is_null($key)) {
-			return @$this->search->params[$key] ?: null;
+			return @$params[$key];
 		}
 
-		return $this->search->params;
+		return $params;
 	}
 
 	/**

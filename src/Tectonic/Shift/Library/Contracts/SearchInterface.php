@@ -1,6 +1,6 @@
 <?php
 
-namespace Tectonic\Shift\Library\Search;
+namespace Tectonic\Shift\Library\Contracts;
 
 interface SearchInterface
 {

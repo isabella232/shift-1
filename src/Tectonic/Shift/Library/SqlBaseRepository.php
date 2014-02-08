@@ -2,6 +2,8 @@
 
 namespace Tectonic\Shift\Library;
 
+use Tectonic\Shift\Library\Contracts\BaseRepositoryInterface;
+
 abstract class SqlBaseRepository implements BaseRepositoryInterface
 {
 	/**
