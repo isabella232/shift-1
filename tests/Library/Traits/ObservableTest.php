@@ -57,9 +57,15 @@ class ObservableTest extends PHPUnit_Framework_TestCase
 		$observable->fire();
 	}
 
-	public function getEventDispatcherShouldReturnRegisteredDispatcher()
+	public function testGetEventDispatcherShouldReturnRegisteredDispatcher()
 	{
 		$this->assertEquals(ObservableStub::getEventDispatcher(), $this->mockDispatcher);
 	}
 
+	public function testUnsetEventDispatcherShouldRemovedRegisteredDispatcher()
+	{
+		ObservableStub::unsetEventDispatcher();
+
+		$this->assertNull(ObservableStub::getEventDispatcher());
+	}
 }
