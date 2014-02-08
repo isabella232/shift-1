@@ -31,10 +31,10 @@ class ObservableTest extends PHPUnit_Framework_TestCase
 
 	public function testFlushEventListenersShouldClearAllRegisteredHooks()
 	{
-		ObservableStub::observe($this->observer);
-
+		$this->mockDispatcher->shouldReceive('listen');
 		$this->mockDispatcher->shouldReceive('forget')->twice();
-
+		
+		ObservableStub::observe($this->observer);
 		ObservableStub::flushEventListeners();
 	}
 
@@ -48,9 +48,10 @@ class ObservableTest extends PHPUnit_Framework_TestCase
 
 	public function testFireEventShouldCallMethodsOnRelevantClasses()
 	{
-		ObservableStub::observe($this->observer);
-
+		$this->mockDispatcher->shouldReceive('listen');
 		$this->mockDispatcher->shouldReceive('fire');
+		
+		ObservableStub::observe($this->observer);
 
 		$observable = new ObservableStub;
 		$observable->fire();
