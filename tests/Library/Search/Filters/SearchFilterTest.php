@@ -21,6 +21,7 @@ class SearchFilterTest extends PHPUnit_Framework_TestCase
 		$this->searchFilter->setSearch($this->mockSearch);
 	}
 
+	// Basically just a test to ensure that our search object is being called for a method that does not exist on search filter
 	public function testGetQueryShouldReturnSearchQueryObject()
 	{
 		$this->assertEquals($this->mockQuery, $this->searchFilter->getQuery());

@@ -2,7 +2,6 @@
 
 namespace Tectonic\Shift\Library\Search\Filters;
 
-use Tectonic\Shift\Library\Search\SearchFilter;
 use Tectonic\Shift\Library\Contracts\SearchFilterInterface;
 
 class OrderFilter extends SearchFilter implements SearchFilterInterface
@@ -27,8 +26,9 @@ class OrderFilter extends SearchFilter implements SearchFilterInterface
 	 *
 	 * @return OrderFilter
 	 */
-	public function criteria() {
-		$this->query->orderBy($this->sortField());
+	public function criteria()
+	{
+		$this->getQuery()->orderBy($this->sortField(), $this->sortDirection());
 		
 		return $this;
 	}
@@ -38,8 +38,9 @@ class OrderFilter extends SearchFilter implements SearchFilterInterface
 	 * 
 	 * @return string 
 	 */
-	public function sortField() {
-		return @$this->params['order'] ?: $this->defaultField;
+	protected function sortField()
+	{
+		return @$this->getParam('order') ?: $this->defaultField;
 	}
 
 	/**
@@ -47,8 +48,19 @@ class OrderFilter extends SearchFilter implements SearchFilterInterface
 	 * 
 	 * @return string
 	 */
-	public function sortDirection() {
-		return @$this->params['direction'] ?: $this->defaultDirection;
+	protected function sortDirection()
+	{
+		$validDirections = ['ASC', 'DESC'];
+
+		if ($this->hasParam('direction')) {
+			$direction = strtoupper($this->getParam('direction'));
+
+			if (in_array($direction, $validDirections)) {
+				return $direction;
+			}
+		}
+
+		return $this->defaultDirection;
 	}
 
 }

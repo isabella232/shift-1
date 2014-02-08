@@ -16,6 +16,7 @@ class KeywordFilterTest extends PHPUnit_Framework_TestCase
 		$this->mockQuery = m::mock('Eloquent');
 		$this->mockSearch = m::mock('Tectonic\Shift\Library\Search\Search')->makePartial();
 		$this->mockSearch->setQuery($this->mockQuery);
+		$this->mockSearch->setParams(['keyword' => 'kirk']);
 
 		$this->filter = new Tectonic\Shift\Library\Search\Filters\KeywordFilter;
 		$this->filter->setSearch($this->mockSearch);
@@ -23,6 +24,8 @@ class KeywordFilterTest extends PHPUnit_Framework_TestCase
 
 	public function testCallingCriteriaShouldAlterTheQuery()
 	{
-		$this->mockQuery->shouldReceive('where')->with('name', 'LIKE', '%kirk%');
+		$this->mockQuery->shouldReceive('where')->once()->with('name', 'LIKE', '%kirk%');
+
+		$this->filter->criteria();
 	}
 }
