@@ -65,6 +65,14 @@
 				}
 			};
 
+			resource.lower = function() {
+				return this.name.toLowerCase();
+			};
+
+			resource.lowerPlural = function() {
+				return this.lower().pluralize();
+			};
+
 			return resource;
 		};
 	}]);
