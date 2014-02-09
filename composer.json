@@ -13,7 +13,6 @@
         "jasonlewis/basset": "dev-master"
     },
     "require-dev": {
-        "illuminate/support": "4.1.x",
         "mockery/mockery": "dev-master@dev",
         "phpunit/phpunit": "3.7.*"
     },

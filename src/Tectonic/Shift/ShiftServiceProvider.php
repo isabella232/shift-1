@@ -3,8 +3,8 @@
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 
-class ShiftServiceProvider extends ServiceProvider {
-
+class ShiftServiceProvider extends ServiceProvider
+{
 	/**
 	 * Indicates if loading of the provider is deferred.
 	 *
@@ -34,9 +34,10 @@ class ShiftServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-		$this->bootFile('routes.php');
-		$this->bootFile('composers.php');
-		$this->bootFile('macros.php');
+		$this->bootFile('commands');
+		$this->bootFile('routes');
+		$this->bootFile('composers');
+		$this->bootFile('macros');
 	}
 
 	/**
@@ -53,6 +54,6 @@ class ShiftServiceProvider extends ServiceProvider {
 
 	public function bootFile($file)
 	{
-		require __DIR__.'/../../boot/'.$file;
+		require __DIR__.'/../../boot/'.$file.'.php';
 	}
 }
