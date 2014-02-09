@@ -3,12 +3,12 @@
 
 	var dependencies = [
 		'shift.users',
-		'shift.roles'
+		'shift.roles',
 	];
 
 	var module = angular.module('shift', dependencies);
 
-	module.config(['$locationProvider', 'ShiftRouterProvider' function($location, Router) {
+	module.config(['$locationProvider', 'ShiftRouteProvider' function($location, Router) {
 		$location.html5Mode(true);
 
 		Router.register('404', {
