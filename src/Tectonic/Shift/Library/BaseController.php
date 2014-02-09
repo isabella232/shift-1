@@ -52,7 +52,7 @@ abstract class BaseController extends Controller
 	 */
 	public function update($id)
 	{
-		$this->repository->update($id, Input::get());
+		return $this->repository->update($id, Input::get());
 	}
 
 	/**
@@ -63,6 +63,6 @@ abstract class BaseController extends Controller
 	 */
 	public function destroy($id)
 	{
-		$this->repository->delete($id);
+		return $this->repository->delete($id);
 	}
 }

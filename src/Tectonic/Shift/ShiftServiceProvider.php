@@ -20,8 +20,8 @@ class ShiftServiceProvider extends ServiceProvider
 	public function register()
 	{
 		$this->package('tectonic/shift');
-
-		$this->app->singleton('utility', 'Tectonic\Shift\Core\Utility');
+		
+		$this->app->singleton('utility', 'Tectonic\Shift\Library\Utility');
 
 		$aliases = AliasLoader::getInstance();
 		
