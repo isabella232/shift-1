@@ -3,7 +3,7 @@
 use Mockery as m;
 use Tests\Stubs\BaseControllerStub;
 
-class BaseControllerTest extends PHPUnit_Framework_TestCase
+class BaseControllerTest extends TestCase
 {
 	protected $controller, $mockRepository;
 
@@ -12,28 +12,28 @@ class BaseControllerTest extends PHPUnit_Framework_TestCase
 		m::close();
 	}
 
-	// public function setUp()
-	// {
-	// 	$this->mockRepository = m::mock('MockRepository')->makePartial();
+	public function setUp()
+	{
+		$this->mockRepository = m::mock('MockRepository')->makePartial();
 
-	// 	$this->controller  = new BaseControllerStub($this->mockRepository);
-	// }
+		$this->controller  = new BaseControllerStub($this->mockRepository);
+	}
 
-	// public function testIndexShouldReturnSearchResults()
-	// {
-	// 	Input::shouldReceive('all')->andReturn(['param' => 'value']);
+	public function testIndexShouldReturnSearchResults()
+	{
+		Input::shouldReceive('all')->andReturn(['param' => 'value']);
 
-	// 	$this->mockRepository->shouldReceive('search')->with(['param' => 'value']);
+		$this->mockRepository->shouldReceive('search')->with(['param' => 'value']);
 
-	// 	$this->controller->index();
-	// }
+		$this->controller->index();
+	}
 
-	// public function testStoreShouldCreateANewRecordViaRepository()
-	// {
-	// 	Input::shouldReceive('get')->andReturn(['name' => 'roger']);
+	public function testStoreShouldCreateANewRecordViaRepository()
+	{
+		Input::shouldReceive('get')->andReturn(['name' => 'roger']);
 
-	// 	$this->mockRepository->shouldReceive('create')->with(['name' => 'roger']);
+		$this->mockRepository->shouldReceive('create')->with(['name' => 'roger']);
 
-	// 	$this->controller->store();
-	// }
+		$this->controller->store();
+	}
 }
