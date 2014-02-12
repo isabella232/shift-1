@@ -3,6 +3,7 @@
 namespace Tectonic\Shift\Library;
 
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Input;
 
 abstract class BaseController extends Controller
 {

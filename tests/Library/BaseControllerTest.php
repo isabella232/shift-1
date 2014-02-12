@@ -2,8 +2,9 @@
 
 use Mockery as m;
 use Tests\Stubs\BaseControllerStub;
+use Illuminate\Support\Facades\Facade;
 
-class BaseControllerTest extends TestCase
+class BaseControllerTest extends PHPUnit_Framework_TestCase
 {
 	protected $controller, $mockRepository;
 
@@ -14,14 +15,19 @@ class BaseControllerTest extends TestCase
 
 	public function setUp()
 	{
-		$this->mockRepository = m::mock('MockRepository')->makePartial();
+		parent::setUp();
+
+		$this->mockRepository = m::mock('MockRepository');
+		$this->mockRequest = m::mock('request');
 
 		$this->controller  = new BaseControllerStub($this->mockRepository);
+
+		Facade::setFacadeApplication(['request' => $this->mockRequest]);
 	}
 
 	public function testIndexShouldReturnSearchResults()
 	{
-		Input::shouldReceive('all')->andReturn(['param' => 'value']);
+		$this->mockRequest->shouldReceive('all')->andReturn(['param' => 'value']);
 
 		$this->mockRepository->shouldReceive('search')->with(['param' => 'value']);
 
@@ -30,7 +36,7 @@ class BaseControllerTest extends TestCase
 
 	public function testStoreShouldCreateANewRecordViaRepository()
 	{
-		Input::shouldReceive('get')->andReturn(['name' => 'roger']);
+		$this->mockRequest->shouldReceive('input')->andReturn(['name' => 'roger']);
 
 		$this->mockRepository->shouldReceive('create')->with(['name' => 'roger']);
 

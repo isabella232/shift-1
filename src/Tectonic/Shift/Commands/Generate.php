@@ -1,6 +1,6 @@
 <?php
 
-namespace Tectonic\Shift\Library\Commands;
+namespace Tectonic\Shift\Commands;
 
 use Illuminate\Console\Command;
 
