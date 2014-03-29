@@ -1,6 +1,6 @@
 <?php
 
-namespace Tectonic\Shift\Modules\Accounts\Controllers;
+namespace Tectonic\Shift\Modules\Security\Controllers;
 
 use Tectonic\Shift\Library\BaseController;
 use Tectonic\Shift\Accounts\Repositories\RoleRepositoryInterface;

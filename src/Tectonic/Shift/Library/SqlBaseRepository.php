@@ -28,63 +28,41 @@ abstract class SqlBaseRepository implements BaseRepositoryInterface
 	public $search;
 
 	/**
-	 * Get all models.
-	 *
-	 * @return [$this->model]
-	 */
-	public function all()
-	{
-		return $this->model->all();
-	}
-
-	/**
-	 * Search for resources based on the key-value params provided.
-	 *
-	 * @param array $params
-	 * @return array
-	 */
-	public function search($params)
-	{
-		$this->search->setParams($params);
-
-		return $this->search->results();
-	}
-
-	/**
 	 * Get a specific resource.
 	 *
 	 * @param integer $id
 	 * @return Resource
 	 */
-	public function find($id)
+	public function findById($id)
 	{
 		return $this->model->findOrFail($id);
 	}
 
 	/**
-	 * Delete a specific resource. Returns the resource that was deleted.
+	 * Create a resource based on the data provided.
 	 *
-	 * @param integer $id
 	 * @return Resource
 	 */
-	public function delete($id)
+	public function create()
 	{
-		$resource = $this->find($id);
-
-		$resource->delete();
-
-		return $resource;
+		return $this->model->newInstance();
 	}
 
 	/**
-	 * Create a resource based on the data provided.
+	 * Delete a specific resource. Returns the resource that was deleted.
 	 *
-	 * @param array $data
+	 * @param object $resource
+	 * @param boolean $permanent
 	 * @return Resource
 	 */
-	public function create($data)
+	public function delete($resource, $permanent = false)
 	{
-		$resource = $this->model->create($data);
+		if ($permanent) {
+			$resource->forceDelete();
+		}
+		else {
+			$resource->delete();
+		}
 
 		return $resource;
 	}
@@ -92,15 +70,16 @@ abstract class SqlBaseRepository implements BaseRepositoryInterface
 	/**
 	 * Update a resource based on the id and data provided.
 	 *
-	 * @param integer $id
+	 * @param object $resource
 	 * @param array $data
 	 * @return Resource
 	 */
-	public function update($id, $data)
+	public function update($resource, $data = [])
 	{
-		$resource = $this->find($id);
+		if (is_array($data) && count($data) > 0) {
+			$resource->fill($data);
+		}
 
-		$resource->fill($data);
 		$resource->save();
 
 		return $resource;

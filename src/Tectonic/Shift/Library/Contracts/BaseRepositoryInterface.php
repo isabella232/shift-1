@@ -10,20 +10,22 @@ namespace Tectonic\Shift\Library\Contracts;
 
 interface BaseRepositoryInterface
 {
-	/**
-	 * Get all resources.
-	 *
-	 * @return [Resource]
-	 */
-	public function all();
 
 	/**
-	 * Search for resources based on the key-value params provided.
+	 * Create a resource based on the data provided.
 	 *
-	 * @param array $params
-	 * @return array
+	 * @return Resource
 	 */
-	public function search($params);
+	public function create();
+
+	/**
+	 * Delete a specific resource. Returns the resource that was deleted.
+	 *
+	 * @param object $resource
+	 * @param boolean $permanent
+	 * @return Resource
+	 */
+	public function delete($resource, $permanent = false);
 
 	/**
 	 * Get a specific resource.
@@ -31,30 +33,12 @@ interface BaseRepositoryInterface
 	 * @param integer $id
 	 * @return Resource
 	 */
-	public function find($id);
+	public function findById($id);
 
 	/**
-	 * Delete a specific resource. Returns the resource that was deleted.
-	 *
-	 * @param integer $id
-	 * @return Resource
-	 */
-	public function delete($id);
-
-	/**
-	 * Create a resource based on the data provided.
-	 *
+	 * @param $resource
 	 * @param array $data
 	 * @return Resource
 	 */
-	public function create($data);
-
-	/**
-	 * Update a resource based on the id and data provided.
-	 *
-	 * @param integer $id
-	 * @param array $data
-	 * @return Resource
-	 */
-	public function update($id, $data);
+	public function update($resource, $data = []);
 }

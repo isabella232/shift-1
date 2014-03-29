@@ -1,6 +1,6 @@
 <?php
 
-namespace Tectonic\Shift\Modules\Accounts\Models;
+namespace Tectonic\Shift\Modules\Security\Models;
 
 use Tectonic\Shift\Library\BaseModel;
 

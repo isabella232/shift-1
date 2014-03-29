@@ -19,49 +19,38 @@ class SqlRoleRepositoryTest extends PHPUnit_Framework_TestCase
 		$this->repository->search = $this->search;
 	}
 
-	public function testSearchShouldReturnSearchResults()
-	{
-		$params = [];
-
-		$this->search->shouldReceive('setParams')->with($params);
-		$this->search->shouldReceive('results')->andReturn([]);
-
-		$this->assertEquals([], $this->repository->search($params));
-	}
-
-	public function testAllShouldReturnAllResults()
-	{
-		$this->model->shouldReceive('all')->andReturn(['all']);
-
-		$this->assertEquals(['all'], $this->repository->all());
-	}
-
-	public function testFindShouldReturnASpecificRecord()
+	public function testFindByIdShouldReturnASpecificRecord()
 	{
 		$record = ['name' => 'Me'];
 
 		$this->model->shouldReceive('findOrFail')->with(1)->andReturn($record);
 
-		$this->assertEquals($record, $this->repository->find(1));
+		$this->assertEquals($record, $this->repository->findById(1));
 	}
 
 	public function testDeleteShouldRemoveAndReturnDeletedRecord()
 	{
-		$this->repository->shouldReceive('find')->andReturn($this->model);
-		$this->model->shouldReceive('delete')->andReturn(true);
-		$this->model->shouldReceive('findOrFail')->with(1)->andReturn([]);
+		$resource = m::mock('someobject');
+		$resource->shouldReceive('delete')->once();
 
-		$this->assertEquals($this->model, $this->repository->delete(1));
+		$this->assertEquals($resource, $this->repository->delete($resource));
+	}
+
+	public function testDeleteRecordPermanently()
+	{
+		$resource = m::mock('someobject');
+		$resource->shouldReceive('forceDelete')->once();
+
+		$this->assertEquals($resource, $this->repository->delete($resource, true));
 	}
 
 	public function testCreateShouldMakeAndReturnANewRecord()
 	{
-		$params = ['testParam' => 1];
 		$record = 'record';
 
-		$this->model->shouldReceive('create')->with($params)->andReturn($record);
+		$this->model->shouldReceive('newInstance')->andReturn($record);
 
-		$this->assertEquals($record, $this->repository->create($params));
+		$this->assertEquals($record, $this->repository->create());
 	}
 
 	public function testUpdateShouldSaveAndReturnExistingRecord()
@@ -74,6 +63,6 @@ class SqlRoleRepositoryTest extends PHPUnit_Framework_TestCase
 
 		$this->repository->shouldReceive('find')->with(1)->andReturn($foundRecord);
 
-		$this->assertEquals($foundRecord, $this->repository->update(1, $params));
+		$this->assertEquals($foundRecord, $this->repository->update($foundRecord, $params));
 	}
 }

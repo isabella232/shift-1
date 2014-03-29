@@ -27,6 +27,8 @@ class ShiftServiceProvider extends ServiceProvider
 		
 		$aliases->alias('Basset', 'Basset\Facade');
 		$aliases->alias('Utility', 'Tectonic\Shift\Core\Facades\Utility');
+
+		$this->registerViewFinder();
 	}
 
 	/**
@@ -38,6 +40,19 @@ class ShiftServiceProvider extends ServiceProvider
 		$this->bootFile('routes');
 		$this->bootFile('composers');
 		$this->bootFile('macros');
+	}
+
+	/**
+	 * Here we register our own custom view finder, which extends the one that Laravel uses.
+	 */
+	public function registerViewFinder()
+	{
+		// $this->app->bindShared('view.finder', function($app)
+		// {
+		// 	$paths = $app['config']['view.paths'];
+
+		// 	return new FileViewFinder($app['files'], $paths);
+		// });
 	}
 
 	/**
@@ -54,6 +69,6 @@ class ShiftServiceProvider extends ServiceProvider
 
 	public function bootFile($file)
 	{
-		require __DIR__.'/../../boot/'.$file.'.php';
+		require_once __DIR__.'/../../boot/'.$file.'.php';
 	}
 }
