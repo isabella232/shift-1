@@ -26,9 +26,11 @@ class ShiftServiceProvider extends ServiceProvider
 		$aliases = AliasLoader::getInstance();
 		
 		$aliases->alias('Basset', 'Basset\Facade');
+		$aliases->alias('Authority', 'Authority\AuthorityL4\Facades\Authority');
 		$aliases->alias('Utility', 'Tectonic\Shift\Core\Facades\Utility');
 
 		$this->registerViewFinder();
+		$this->registerAuthorityConfiguration();
 	}
 
 	/**
@@ -40,6 +42,13 @@ class ShiftServiceProvider extends ServiceProvider
 		$this->bootFile('routes');
 		$this->bootFile('composers');
 		$this->bootFile('macros');
+	}
+
+	public function registerAuthorityConfiguration()
+	{
+		$this->app['config']->set('authority-l4::initialize', function($authority) {
+			$user = $authority->getCurrentUser();
+		});
 	}
 
 	/**
@@ -63,10 +72,18 @@ class ShiftServiceProvider extends ServiceProvider
 	public function provides()
 	{
 		return [
-			'Basset\BassetServiceProvider'
+			'Basset\BassetServiceProvider',
+			'Authority\AuthorityL4\AuthorityL4ServiceProvider'
 		];
 	}
 
+	/**
+	 * Helper method for requiring boot files. These are files that generally have some basic configuration,
+	 * routes, global macros, or Laravel 4 commands that need to be registered.etc.
+	 *
+	 * @param string $file
+	 * @requires $file
+	 */
 	public function bootFile($file)
 	{
 		require_once __DIR__.'/../../boot/'.$file.'.php';
