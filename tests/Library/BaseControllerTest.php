@@ -17,30 +17,33 @@ class BaseControllerTest extends PHPUnit_Framework_TestCase
 	{
 		parent::setUp();
 
-		$this->mockRepository = m::mock('MockRepository');
-		$this->mockRequest = m::mock('request');
+		$this->mockRepository  = m::mock('MockRepository');
+		$this->mockSearch      = m::mock('MockSearch');
+		$this->mockRequest     = m::mock('request');
 
-		$this->controller  = new BaseControllerStub($this->mockRepository);
+		$this->controller  = new BaseControllerStub($this->mockRepository, $this->mockSearch);
 
 		Facade::setFacadeApplication(['request' => $this->mockRequest]);
 	}
 
 	public function testIndexShouldReturnSearchResults()
 	{
-		$this->mockRequest->shouldReceive('all')->andReturn(['param' => 'value']);
+		$this->mockRequest->shouldReceive('input')->andReturn(['param' => 'value']);
 
-		$this->mockRepository->shouldReceive('search')->with(['param' => 'value']);
+		$this->mockSearch->shouldReceive('setParams')->with(['param' => 'value']);
+		$this->mockSearch->shouldReceive('results')->with()->andReturn('search results');
 
-		$this->controller->index();
+		$this->assertEquals($this->controller->index(), 'search results');
 	}
 
 	public function testStoreShouldCreateANewRecordViaRepository()
 	{
 		$this->mockRequest->shouldReceive('input')->andReturn(['name' => 'roger']);
 
-		$this->mockRepository->shouldReceive('create')->with(['name' => 'roger']);
+		$this->mockRepository->shouldReceive('create')->with(['name' => 'roger'])->andReturn('new resource');
+		$this->mockRepository->shouldReceive('save')->with('new resource')->andReturn('saved resource');
 
-		$this->controller->store();
+		$this->assertEquals($this->controller->store(), 'saved resource');
 	}
 
 	public function testShowShouldReturnTheResource()
@@ -48,9 +51,9 @@ class BaseControllerTest extends PHPUnit_Framework_TestCase
 		$id = 1;
 		$model = 'returned resource';
 
-		$this->mockRepository->shouldReceive('find')->with($id)->andReturn($model);
+		$this->mockRepository->shouldReceive('requireById')->with($id)->andReturn($model);
 
-		$this->controller->show($id);
+		$this->assertEquals($this->controller->show($id), $model);
 	}
 
 	public function testUpdateShouldEditExistingRecord()
@@ -61,18 +64,17 @@ class BaseControllerTest extends PHPUnit_Framework_TestCase
 
 		$this->mockRequest->shouldReceive('input')->andReturn($params);
 
-		$this->mockRepository->shouldReceive('update')->with($id, $params);
+		$this->mockRepository->shouldReceive('requireById')->with($id)->andReturn('found resource');
+		$this->mockRepository->shouldReceive('update')->with('found resource', $params)->andReturn('updated resource');
 
-		$this->controller->update($id);
+		$this->assertEquals($this->controller->update($id), 'updated resource');
 	}
 
 	public function testDestroyShouldReturnTheDeletedResource()
 	{
-		$id = 1;
-		$model = 'returned resource';
+		$this->mockRepository->shouldReceive('requireById')->with(1)->andReturn('found resource');
+		$this->mockRepository->shouldReceive('delete')->with('found resource')->andReturn('deleted resource');
 
-		$this->mockRepository->shouldReceive('delete')->with($id)->andReturn($model);
-
-		$this->assertEquals( $this->controller->destroy($id), $model );
+		$this->assertEquals($this->controller->destroy(1), 'deleted resource');
 	}
 }

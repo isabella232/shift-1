@@ -15,13 +15,23 @@ abstract class BaseController extends Controller
 	protected $repository;
 
 	/**
+	 * Most controllers require a search mechanism. By setting the search value
+	 * from the child's controller, this requirement is met.
+	 *
+	 * @var Search
+	 */
+	protected $search;
+
+	/**
 	 * Display a listing of the resource.
 	 *
 	 * @return Response
 	 */
 	public function index()
 	{
-		return $this->repository->search(Input::all());
+		$this->search->setParams(Input::get());
+
+		return $this->search->results();
 	}
 
 	/**
@@ -31,7 +41,9 @@ abstract class BaseController extends Controller
 	 */
 	public function store()
 	{
-		return $this->repository->create(Input::get());
+		$resource = $this->repository->create(Input::get());
+
+		return $this->repository->save($resource);
 	}
 
 	/**
@@ -42,7 +54,7 @@ abstract class BaseController extends Controller
 	 */
 	public function show($id)
 	{
-		return $this->repository->find($id);
+		return $this->repository->requireById($id);
 	}
 
 	/**
@@ -53,7 +65,9 @@ abstract class BaseController extends Controller
 	 */
 	public function update($id)
 	{
-		return $this->repository->update($id, Input::get());
+		$resource = $this->repository->requireById($id);
+
+		return $this->repository->update($resource, Input::get());
 	}
 
 	/**
@@ -64,6 +78,8 @@ abstract class BaseController extends Controller
 	 */
 	public function destroy($id)
 	{
-		return $this->repository->delete($id);
+		$resource = $this->repository->requireById($id);
+
+		return $this->repository->delete($resource);
 	}
 }

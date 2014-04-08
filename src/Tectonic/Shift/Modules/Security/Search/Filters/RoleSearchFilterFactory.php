@@ -1,6 +1,6 @@
 <?php
 
-namespace Tectonic\Shift\Security\Search\Filters;
+namespace Tectonic\Shift\Modules\Security\Search\Filters;
 
 use Tectonic\Shift\Library\Search\Filters\KeywordFilter;
 use Tectonic\Shift\Library\Search\Filters\OrderFilter;
