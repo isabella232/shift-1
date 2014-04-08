@@ -2,6 +2,8 @@
 
 namespace Tectonic\Shift\Library;
 
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Tectonic\Shift\Library\Contracts\BaseRepositoryInterface;
 
 abstract class SqlBaseRepository implements BaseRepositoryInterface
@@ -11,41 +13,67 @@ abstract class SqlBaseRepository implements BaseRepositoryInterface
 	 *
 	 * @var Eloquent
 	 */
-	public $model;
-
-	/**
-	 * Stores the validator object that should be used for all validations via the repository.
-	 *
-	 * @var ValidatorInterface
-	 */
-	public $validator;
-	
-	/**
-	 * Stores the search object used by the resource.
-	 *
-	 * @var Search
-	 */
-	public $search;
+	protected $model;
 
 	/**
 	 * Get a specific resource.
 	 *
 	 * @param integer $id
 	 * @return Resource
+	 * @throws ModelNotFoundException
 	 */
-	public function findById($id)
+	public function getById($id)
 	{
-		return $this->model->findOrFail($id);
+		return $this->model->find($id);
+	}
+
+	/**
+	 * Searches for a resource with the id provided. If no resource is found that matches
+	 * the $id value, then it will throw a ModelNotFoundException.
+	 *
+	 * @param $id
+	 * @return Resource
+	 */
+	public function requireById($id)
+	{
+		$model = $this->getById($id);
+
+		if (!$model) {
+			throw with(new ModelNotFoundException)->setModel(get_class($this->model));
+		}
+
+		return $model;
+	}
+
+	/**
+	 * Returns the model that is being used by the repository.
+	 *
+	 * @return Eloquent
+	 */
+	public function getModel()
+	{
+		return $this->model;
+	}
+
+	/**
+	 * Sets the model to be used by the repository.
+	 *
+	 * @param $model
+	 */
+	public function setModel($model)
+	{
+		$this->model = $model;
 	}
 
 	/**
 	 * Create a resource based on the data provided.
 	 *
+	 * @param array $data
 	 * @return Resource
 	 */
-	public function create()
+	public function getNew($data = [])
 	{
-		return $this->model->newInstance();
+		return $this->model->newInstance($data);
 	}
 
 	/**
@@ -80,8 +108,24 @@ abstract class SqlBaseRepository implements BaseRepositoryInterface
 			$resource->fill($data);
 		}
 
-		$resource->save();
+		$this->save($resource);
 
 		return $resource;
+	}
+
+	/**
+	 * Saves the resource provided to the database.
+	 *
+	 * @param $resource
+	 * @return Resource
+	 */
+	public function save($resource)
+	{
+		if ($resource->getDirty()) {
+			$resource->save();
+		}
+		else {
+			return $resource->touch();
+		}
 	}
 }

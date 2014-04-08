@@ -1,9 +1,10 @@
 <?php
 
-namespace Tectonic\Shift\Accounts\Search\Filters;
+namespace Tectonic\Shift\Security\Search\Filters;
 
 use Tectonic\Shift\Library\Search\Filters\KeywordFilter;
 use Tectonic\Shift\Library\Search\Filters\OrderFilter;
+use Tectonic\Shift\Library\Search\Filters\SearchFilterFactory;
 
 class RoleSearchFilterFactory extends \Tectonic\Shift\Library\Search\Filters\SearchFilterFactory
 {

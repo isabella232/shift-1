@@ -14,9 +14,10 @@ interface BaseRepositoryInterface
 	/**
 	 * Create a resource based on the data provided.
 	 *
+	 * @param array $data An array of key->value pairs to be provided to the new resource.
 	 * @return Resource
 	 */
-	public function create();
+	public function getNew($data = []);
 
 	/**
 	 * Delete a specific resource. Returns the resource that was deleted.
@@ -33,7 +34,15 @@ interface BaseRepositoryInterface
 	 * @param integer $id
 	 * @return Resource
 	 */
-	public function findById($id);
+	public function getById($id);
+
+	/**
+	 * Similar to getById, but should raise an EntityNotFoundException.
+	 *
+	 * @param $id
+	 * @return mixed
+	 */
+	public function requireById($id);
 
 	/**
 	 * @param $resource
@@ -41,4 +50,12 @@ interface BaseRepositoryInterface
 	 * @return Resource
 	 */
 	public function update($resource, $data = []);
+
+	/**
+	 * Saves the provided resource.
+	 *
+	 * @param $resource
+	 * @return mixed
+	 */
+	public function save($resource);
 }

@@ -12,20 +12,18 @@ class SqlRoleRepositoryTest extends PHPUnit_Framework_TestCase
 	public function setUp()
 	{
 		$this->model = m::mock('Model');
-		$this->search = m::mock('Search');
 		$this->repository = m::mock('Tests\Stubs\SqlBaseRepositoryStub')->makePartial();
 
-		$this->repository->model  = $this->model;
-		$this->repository->search = $this->search;
+		$this->repository->setModel($this->model);
 	}
 
-	public function testFindByIdShouldReturnASpecificRecord()
+	public function testGetByIdShouldReturnASpecificRecord()
 	{
 		$record = ['name' => 'Me'];
 
-		$this->model->shouldReceive('findOrFail')->with(1)->andReturn($record);
+		$this->model->shouldReceive('find')->with(1)->andReturn($record);
 
-		$this->assertEquals($record, $this->repository->findById(1));
+		$this->assertEquals($record, $this->repository->getById(1));
 	}
 
 	public function testDeleteShouldRemoveAndReturnDeletedRecord()
@@ -44,22 +42,37 @@ class SqlRoleRepositoryTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals($resource, $this->repository->delete($resource, true));
 	}
 
-	public function testCreateShouldMakeAndReturnANewRecord()
+	public function testGetNewShouldMakeAndReturnANewRecord()
 	{
 		$record = 'record';
 
 		$this->model->shouldReceive('newInstance')->andReturn($record);
 
-		$this->assertEquals($record, $this->repository->create());
+		$this->assertEquals($record, $this->repository->getNew());
 	}
 
-	public function testUpdateShouldSaveAndReturnExistingRecord()
+	public function testUpdateShouldSaveAndReturnExistingDirtyRecord()
 	{
 		$params = ['testParam' => 1];
 
 		$foundRecord = m::mock('FoundRecord');
 		$foundRecord->shouldReceive('fill')->with($params);
 		$foundRecord->shouldReceive('save');
+		$foundRecord->shouldReceive('getDirty')->andReturn(true);
+
+		$this->repository->shouldReceive('find')->with(1)->andReturn($foundRecord);
+
+		$this->assertEquals($foundRecord, $this->repository->update($foundRecord, $params));
+	}
+
+	public function testUpdateShouldTouchAndReturnExistingCleanRecord()
+	{
+		$params = ['testParam' => 1];
+
+		$foundRecord = m::mock('FoundRecord');
+		$foundRecord->shouldReceive('fill')->with($params);
+		$foundRecord->shouldReceive('touch');
+		$foundRecord->shouldReceive('getDirty')->andReturn(false);
 
 		$this->repository->shouldReceive('find')->with(1)->andReturn($foundRecord);
 

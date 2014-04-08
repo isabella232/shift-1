@@ -1,16 +1,15 @@
 <?php
 
-namespace Tectonic\Shift\Modules\Accounts\Search;
+namespace Tectonic\Shift\Modules\Security\Search;
 
-use Tectonic\Shift\Core\Search\SearchEngine;
-use Tectonic\Shift\Roles\Role;
-use Tectonic\Shift\Roles\Search\Filters\RoleSearchFilterFactory;
+use Tectonic\Shift\Security\Models\Role;
+use Tectonic\Shift\Security\Search\Filters\RoleSearchFilterFactory;
 
 class RoleSearch extends \Tectonic\Shift\Core\Search\Search
 {
 	public function __construct(Role $role, RoleSearchFilterFactory $filterFactory)
 	{
-		$filters->setSearch($this);
+		$filterFactory->setSearch($this);
 		
 		$this->setQuery($role);
 		$this->setFilterFactory($filterFactory);
