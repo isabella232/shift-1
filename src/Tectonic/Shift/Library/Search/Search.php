@@ -4,8 +4,8 @@ namespace Tectonic\Shift\Library\Search;
 
 use Eloquent;
 use Event;
-use Tectonic\Shift\Library\Contracts\SearchInterface;
-use Tectonic\Shift\Library\Search\Filters\SearchFilterFactory;
+use Tectonic\Shift\Library\Search\SearchInterface;
+use Tectonic\Shift\Library\Search\Filters\SearchFilterInterface;
 use Tectonic\Shift\Library\Traits\Observable;
 
 class Search implements SearchInterface
@@ -18,13 +18,6 @@ class Search implements SearchInterface
 	 * @var Query
 	 */
 	protected $query;
-	
-	/**
-	 * Stores the filter factory that contains all the filters to be applied to the search query.
-	 * 
-	 * @var FilterFactory
-	 */
-	protected $filterFactory;
 
 	/**
 	 * Defines the default limit for paginating result sets.
@@ -41,14 +34,11 @@ class Search implements SearchInterface
 	protected $params = [];
 
 	/**
-	 * Add the filter factory to the search object.
-	 * 
-	 * @param SearchFilterFactory $filterFactory
+	 * Array housing all registered search filters.
+	 *
+	 * @var array SearchFilterInterface
 	 */
-	public function setFilters(SearchFilterFactory $filterFactory)
-	{
-		$this->filterFactory = $filterFactory;
-	}
+	protected $filters = [];
 
 	/**
 	 * Applies all filters/conditions to the current query by calling
@@ -58,10 +48,11 @@ class Search implements SearchInterface
 	 */
 	public function results()
 	{
-		$this->fireEvent('searchFilters', $this->filterFactory);
+		$this->fireEvent('searchFilters', $this);
 
-		foreach ($this->filterFactory->getFilters() as $filter) {
-			$filter->criteria($this->query);
+		foreach ($this->filters as $filter) {
+			$filter->setSearch($this);
+			$filter->criteria();
 		}
 
 		$this->fireEvent('searchExecute', $this);
@@ -108,7 +99,7 @@ class Search implements SearchInterface
 	 * This can be a Shift model, which extends Eloquent, or something else that implements 
 	 * that interface.
 	 * 
-	 * @param QueryInterface $query
+	 * @param Eloquent $query
 	 */
 	public function setQuery(Eloquent $query)
 	{
@@ -145,5 +136,15 @@ class Search implements SearchInterface
 	public function hasParam($key)
 	{
 		return !is_null(@$this->getParams()[$key]);
+	}
+
+	/**
+	 * Registers a new search filter for this search.
+	 *
+	 * @param  SearchFilterInterface $filter
+	 */
+	public function addFilter(SearchFilterInterface $filter)
+	{
+		$this->filters[] = $filter;
 	}
 }

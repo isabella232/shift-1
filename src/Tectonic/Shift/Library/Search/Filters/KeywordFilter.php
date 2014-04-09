@@ -2,7 +2,8 @@
 
 namespace Tectonic\Shift\Library\Search\Filters;
 
-use Tectonic\Shift\Library\Contracts\SearchFilterInterface;
+use Tectonic\Shift\Library\Search\Filters\SearchFilterInterface;
+use Tectonic\Shift\Library\Search\Search;
 
 class KeywordFilter extends SearchFilter implements SearchFilterInterface
 {	

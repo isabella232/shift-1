@@ -26,6 +26,6 @@ class KeywordFilterTest extends PHPUnit_Framework_TestCase
 	{
 		$this->mockQuery->shouldReceive('where')->once()->with('name', 'LIKE', '%kirk%');
 
-		$this->filter->criteria();
+		$this->filter->criteria($this->mockSearch);
 	}
 }

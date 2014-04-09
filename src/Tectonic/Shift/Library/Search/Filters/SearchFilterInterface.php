@@ -1,6 +1,6 @@
 <?php
 
-namespace Tectonic\Shift\Library\Contracts;
+namespace Tectonic\Shift\Library\Search\Filters;
 
 interface SearchFilterInterface
 {

@@ -26,7 +26,7 @@ class OrderFilterTest extends PHPUnit_Framework_TestCase
 	{
 		$this->mockQuery->shouldReceive('orderBy')->once()->with('id', 'DESC');
 
-		$this->filter->criteria();
+		$this->filter->criteria($this->mockSearch);
 	}
 
 	public function testCallingCriteriaWithCustomOrderParamsShouldCallQueryAppropriately()
@@ -35,7 +35,7 @@ class OrderFilterTest extends PHPUnit_Framework_TestCase
 
 		$this->mockQuery->shouldReceive('orderBy')->once()->with('name', 'ASC');
 
-		$this->filter->criteria();
+		$this->filter->criteria($this->mockSearch);
 	}
 
 	public function testCallingCriteriaWithInvalidDirectionShouldStillUseDefault()
@@ -44,6 +44,6 @@ class OrderFilterTest extends PHPUnit_Framework_TestCase
 
 		$this->mockQuery->shouldReceive('orderBy')->once()->with('field', 'DESC');
 
-		$this->filter->criteria();
+		$this->filter->criteria($this->mockSearch);
 	}
 }
