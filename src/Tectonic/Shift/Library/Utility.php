@@ -9,8 +9,8 @@
 namespace Tectonic\Shift\Library;
 
 use Exception;
-use Request;
-use View;
+use Illuminate\Http\Request;
+use Illuminate\View\Environment as View;
 
 class Utility
 {
@@ -49,11 +49,12 @@ class Utility
 	 *
 	 * Within the appropriate package.
 	 * 
-	 * @param  array $args Variable number of arguments that can be passed to create the 
+	 * @param  array $args Variable number of arguments that can be passed to create the
 	 *   event string. The first should always be the domain, such as search, model, auth.etc.
 	 * @return string
+	 * @throws Exception
 	 */
-	public function eventName()
+	public function eventName($args = [])
 	{
 		$numArgs  = func_num_args();
 

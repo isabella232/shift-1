@@ -4,7 +4,7 @@ namespace Tectonic\Shift\Library\Filters;
 
 use Request;
 use View;
-use Utility;
+use Tectonic\Shift\Library\Utility;
 
 class ViewFilter
 {

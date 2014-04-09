@@ -1,6 +1,6 @@
 <?php
 
-namespace Tectonic\Shift\Core\Facades;
+namespace Tectonic\Shift\Library\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

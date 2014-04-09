@@ -12,7 +12,7 @@ class ViewFilterTest extends PHPUnit_Framework_TestCase
 	
 	public function setUp()
 	{
-		$this->mockUtility = m::mock('Utility');
+		$this->mockUtility = m::mock('Tectonic\Shift\Library\Utility');
 		$this->filter = new ViewFilter($this->mockUtility);
 	}
 

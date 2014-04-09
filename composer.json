@@ -16,16 +16,14 @@
         "mockery/mockery": "dev-master@dev",
         "illuminate/support": "4.1.x",
         "illuminate/routing": "4.1.x",
+	    "orchestra/testbench": "2.1.*",
         "phpunit/phpunit": "3.7.*"
     },
     "autoload": {
         "psr-0": {
             "Tectonic\\Shift": "src/",
             "Tests": "tests/"
-        },
-        "classmap": [
-            "tests/TestCase.php"
-        ]
+        }
     },
     "minimum-stability": "dev"
 }

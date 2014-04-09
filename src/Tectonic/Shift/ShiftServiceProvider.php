@@ -27,7 +27,7 @@ class ShiftServiceProvider extends ServiceProvider
 		
 		$aliases->alias('Basset', 'Basset\Facade');
 		$aliases->alias('Authority', 'Authority\AuthorityL4\Facades\Authority');
-		$aliases->alias('Utility', 'Tectonic\Shift\Core\Facades\Utility');
+		$aliases->alias('Utility', 'Tectonic\Shift\Library\Facades\Utility');
 
 		$this->registerViewFinder();
 		$this->registerAuthorityConfiguration();
@@ -44,10 +44,14 @@ class ShiftServiceProvider extends ServiceProvider
 		$this->bootFile('macros');
 	}
 
+	/**
+	 * Sets up the configuration required by Authority when it gets loaded.
+	 */
 	public function registerAuthorityConfiguration()
 	{
 		$this->app['config']->set('authority-l4::initialize', function($authority) {
 			$user = $authority->getCurrentUser();
+			dd( 'thats whats up!' );
 		});
 	}
 

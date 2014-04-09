@@ -6,8 +6,8 @@ class UtilityTest extends PHPUnit_Framework_TestCase
 {
 	public function setUp()
 	{
-		$this->request = m::mock('Request');
-		$this->view = m::mock('View');
+		$this->request = m::mock('Illuminate\Http\Request');
+		$this->view = m::mock('Illuminate\View\Environment');
 
 		$this->utility = new Tectonic\Shift\Library\Utility($this->request, $this->view);
 	}

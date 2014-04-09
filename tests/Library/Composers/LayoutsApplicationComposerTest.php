@@ -10,17 +10,13 @@ class LayoutsApplicationComposerTest extends PHPUnit_Framework_TestCase
 		m::close();
 	}
 
-	public function setUp()
-	{
-		$this->mockView = m::mock('View');
-		$this->composer = new LayoutsApplicationComposer;
-	}
-
 	public function testShouldSetSettings()
 	{
-		$this->mockView->shouldReceive('with')->with('settings', []);
+		$mockView = m::mock('someview');
+		$mockView->shouldReceive('with')->with('settings', []);
 
-		$this->composer->compose($this->mockView);
+		$composer = new LayoutsApplicationComposer;
+		$composer->compose($mockView);
 	}
 
 }
