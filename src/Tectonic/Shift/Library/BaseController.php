@@ -2,6 +2,7 @@
 
 namespace Tectonic\Shift\Library;
 
+use App;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Input;
 
@@ -15,23 +16,26 @@ abstract class BaseController extends Controller
 	protected $repository;
 
 	/**
-	 * Most controllers require a search mechanism. By setting the search value
-	 * from the child's controller, this requirement is met.
+	 * Stores the full path to the search class to be used for search. The default search
+	 * class is derived from conventions. The search class itself should sit inside the Search
+	 * directory within a module.
 	 *
-	 * @var Search
+	 * @var string
 	 */
-	protected $search;
+	public $searchClass;
 
 	/**
 	 * Display a listing of the resource.
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function getIndex()
 	{
-		$this->search->setParams(Input::get());
+		$search = $this->resolveSearchClass();
 
-		return $this->search->results();
+		$search->setParams(Input::get());
+
+		return $search->results();
 	}
 
 	/**
@@ -39,7 +43,7 @@ abstract class BaseController extends Controller
 	 *
 	 * @return Response
 	 */
-	public function store()
+	public function postStore()
 	{
 		$resource = $this->repository->create(Input::get());
 
@@ -52,7 +56,7 @@ abstract class BaseController extends Controller
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($id)
+	public function getShow($id)
 	{
 		return $this->repository->requireById($id);
 	}
@@ -63,7 +67,7 @@ abstract class BaseController extends Controller
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function putUpdate($id)
 	{
 		$resource = $this->repository->requireById($id);
 
@@ -76,10 +80,46 @@ abstract class BaseController extends Controller
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($id)
+	public function deleteDestroy($id = null)
 	{
 		$resource = $this->repository->requireById($id);
 
 		return $this->repository->delete($resource);
+	}
+
+	/**
+	 * Returns the resolved search class.
+	 *
+	 * @return mixed
+	 */
+	protected function resolveSearchClass()
+	{
+		$className = $this->resolveSearchClassName($this->searchClass);
+
+		$searchClass = App::make($className);
+
+		return $searchClass;
+	}
+
+	/**
+	 * Returns the name of the search class to be used for search execution.
+	 *
+	 * @param string $searchClass
+	 * @return string
+	 */
+	protected function resolveSearchClassName($searchClass = null)
+	{
+		if (!is_null($searchClass)) return $searchClass;
+
+		$class = get_class($this);
+		$class = str_replace('Tectonic\Shift\Modules\\', '', $class);
+
+		$classParts = explode('\\', $class);
+		$module     = array_shift($classParts);
+		$baseClass  = str_replace('Controller', '', array_pop($classParts)).'Search';
+
+		$searchClassName = implode('\\', ['Tectonic\Shift\Modules', $module, 'Search', $baseClass]);
+
+		return $searchClassName;
 	}
 }

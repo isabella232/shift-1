@@ -25,5 +25,11 @@
             "Tests": "tests/"
         }
     },
-    "minimum-stability": "dev"
+    "minimum-stability": "dev",
+	"repositories": [
+		{
+			"type": "vcs",
+			"url": "git://github.com/orchestral/phpseclib.git"
+		}
+	]
 }

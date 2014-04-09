@@ -16,7 +16,7 @@ class SearchFilter
 	/**
 	 * Set the search engine that will be used for this filter.
 	 * 
-	 * @param SearchEngine $search
+	 * @param Search $search
 	 */
 	public function setSearch(Search $search)
 	{

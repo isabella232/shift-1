@@ -8,11 +8,8 @@ use Tectonic\Shift\Modules\Security\Search\RoleSearch;
 
 class RoleController extends BaseController
 {
-	protected $roles;
-
-	public function __construct(RoleRepositoryInterface $roles, RoleSearch $search)
+	public function __construct(RoleRepositoryInterface $repository)
 	{
-		$this->roles  = $roles;
-		$this->search = $search;
+		$this->repository = $repository;
 	}
 }

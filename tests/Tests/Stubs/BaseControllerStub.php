@@ -6,9 +6,10 @@ use Tectonic\Shift\Library\BaseController;
 
 class BaseControllerStub extends BaseController
 {
-	public function __construct($repository, $search)
+	public $searchClass = 'Tests\Stubs\SearchStub';
+
+	public function __construct($repository)
 	{
 		$this->repository = $repository;
-		$this->search     = $search;
 	}
 }

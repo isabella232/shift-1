@@ -2,6 +2,7 @@
 
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
+use Tectonic\Shift\Library\Router;
 
 class ShiftServiceProvider extends ServiceProvider
 {
@@ -20,8 +21,6 @@ class ShiftServiceProvider extends ServiceProvider
 	public function register()
 	{
 		$this->package('tectonic/shift');
-		
-		$this->app->singleton('utility', 'Tectonic\Shift\Library\Utility');
 
 		$aliases = AliasLoader::getInstance();
 		
@@ -30,7 +29,10 @@ class ShiftServiceProvider extends ServiceProvider
 		$aliases->alias('Utility', 'Tectonic\Shift\Library\Facades\Utility');
 
 		$this->registerViewFinder();
+		$this->registerRouter();
 		$this->registerAuthorityConfiguration();
+
+		$this->bootFile('bindings');
 	}
 
 	/**
@@ -45,13 +47,35 @@ class ShiftServiceProvider extends ServiceProvider
 	}
 
 	/**
+	 * Register the router instance. This completely overwrites the one registered by Laravel.
+	 *
+	 * @return void
+	 */
+	protected function registerRouter()
+	{
+		$this->app['router'] = $this->app->share(function($app)
+		{
+			$router = new Router($app['events'], $app);
+
+			// If the current application environment is "testing", we will disable the
+			// routing filters, since they can be tested independently of the routes
+			// and just get in the way of our typical controller testing concerns.
+			if ($app['env'] == 'testing')
+			{
+				$router->disableFilters();
+			}
+
+			return $router;
+		});
+	}
+
+	/**
 	 * Sets up the configuration required by Authority when it gets loaded.
 	 */
 	public function registerAuthorityConfiguration()
 	{
 		$this->app['config']->set('authority-l4::initialize', function($authority) {
 			$user = $authority->getCurrentUser();
-			dd( 'thats whats up!' );
 		});
 	}
 

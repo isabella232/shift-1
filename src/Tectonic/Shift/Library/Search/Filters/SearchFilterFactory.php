@@ -37,7 +37,7 @@ abstract class SearchFilterFactory
 	/**
 	 * Stores the search object locally.
 	 * 
-	 * @param SearchEngine $search
+	 * @param Search $search
 	 */
 	public function setSearch(Search $search) 
 	{
