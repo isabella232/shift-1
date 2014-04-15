@@ -13,8 +13,6 @@ class SearchTest extends PHPUnit_Framework_TestCase
 	{
 		$this->mockQuery = m::mock('Eloquent');
 		$this->search = new Tests\Stubs\SearchStub;
-
-
 	}
 
 	// Really only one method here that needs to be tested, all the rest are dead simple
