@@ -15,6 +15,13 @@ abstract class BaseController extends Controller
 	 */
 	protected $repository;
 
+    /**
+     * Stores the validator class that will be used for validating create and update requests.
+     *
+     * @var BaseValidator
+     */
+    protected $validator;
+
 	/**
 	 * Stores the full path to the search class to be used for search. The default search
 	 * class is derived from conventions. The search class itself should sit inside the Search
@@ -46,7 +53,13 @@ abstract class BaseController extends Controller
 	 */
 	public function postStore()
 	{
-		$resource = $this->repository->create(Input::get());
+        $input = Input::get();
+
+        $this->validator->setInput($input)
+            ->forMethod('create')
+            ->validate();
+
+		$resource = $this->repository->create($input);
 
 		return $this->repository->save($resource);
 	}
@@ -70,7 +83,14 @@ abstract class BaseController extends Controller
 	 */
 	public function putUpdate($id)
 	{
+        $input = Input::get();
+
 		$resource = $this->repository->requireById($id);
+
+        $this->validator->setInput($input)
+            ->forMethod('update')
+            ->using($resource)
+            ->validate();
 
 		return $this->repository->update($resource, Input::get());
 	}
