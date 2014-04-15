@@ -26,6 +26,7 @@ class BaseControllerTest extends Tests\TestCase
 	{
 		$searchMock = m::mock('searchclass');
 		$searchMock->shouldReceive('setParams')->with(['param' => 'value']);
+		$searchMock->shouldReceive('execute')->andReturn($searchMock);
 		$searchMock->shouldReceive('results')->andReturn('search results');
 
 		$this->app->instance('Tests\Stubs\SearchStub', $searchMock);

@@ -40,28 +40,50 @@ class Search implements SearchInterface
 	 */
 	protected $filters = [];
 
+    /**
+     * Stores the result set that is returned when the query is executed.
+     *
+     * @var array|null
+     */
+    public $results = null;
+
+    /**
+     * Applies all filters/conditions to the current query by calling
+     * their relevant methods and then returning the query result.
+     *
+     * @return Search
+     */
+    public function execute()
+    {
+        $this->fireEvent('searchFilters', $this);
+
+        foreach ($this->filters as $filter) {
+            $filter->setSearch($this);
+            $filter->criteria();
+        }
+
+        $this->fireEvent('searchExecute', $this);
+
+        $this->results = $this->query->paginate($this->limit());
+
+        return $this;
+    }
+
 	/**
-	 * Applies all filters/conditions to the current query by calling
-	 * their relevant methods and then returning the query result.
+	 * Returns the results array/object (paginated object or array of objects).
 	 * 
-	 * @return array Array of model objects
+	 * @return array
+     * @throws SearchResultsException
 	 */
 	public function results()
 	{
-		$this->fireEvent('searchFilters', $this);
+        if (is_null($this->results)) {
+            throw new SearchResultsException('$results has not yet been set. Make sure you call the execute() method before asking for a result set.');
+        }
 
-		foreach ($this->filters as $filter) {
-			$filter->setSearch($this);
-			$filter->criteria();
-		}
+        $this->fireEvent('searchResults', $this);
 
-		$this->fireEvent('searchExecute', $this);
-
-		$results = $this->query->paginate($this->limit());
-
-		$this->fireEvent('searchResults', $results);
-
-		return $results;
+		return $this->results;
 	}
 
 	/**

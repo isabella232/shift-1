@@ -34,6 +34,7 @@ abstract class BaseController extends Controller
 		$search = $this->resolveSearchClass();
 
 		$search->setParams(Input::get());
+        $search->execute();
 
 		return $search->results();
 	}
