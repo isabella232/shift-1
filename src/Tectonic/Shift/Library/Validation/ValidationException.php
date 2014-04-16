@@ -1,5 +1,7 @@
 <?php namespace Tectonic\Shift\Library\Validation;
 
+use Illuminate\Support\Contracts\JsonableInterface;
+
 class ValidationException extends \Exception implements JsonableInterface
 {
     /**
@@ -39,10 +41,11 @@ class ValidationException extends \Exception implements JsonableInterface
     /**
      * Required for the JsonableInterface implementation.
      *
+     * @param integer $options
      * @return array
      */
-    public function toJson()
+    public function toJson($options = 0)
     {
-        return $this->errors;
+        return json_encode($this->errors);
     }
 }

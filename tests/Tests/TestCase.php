@@ -37,6 +37,13 @@ class TestCase extends \Orchestra\Testbench\TestCase
 		));
 	}
 
+    protected function getPackageAliases()
+    {
+        return [
+            'Validator' => 'Illuminate\Support\Facades\Validator',
+        ];
+    }
+
 	public function setUp()
 	{
 		parent::setUp();

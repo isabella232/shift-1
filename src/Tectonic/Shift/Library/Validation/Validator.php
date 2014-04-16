@@ -30,6 +30,8 @@
  * @package Tectonic\Shift\Library\Validation
  */
 
+use Validator as ValidatorFacade;
+
 abstract class Validator
 {
     /**
@@ -60,7 +62,7 @@ abstract class Validator
      *
      * @var array
      */
-    protected $rules;
+    protected $rules = [];
 
     /**
      * Saves the user input on the object.
@@ -107,7 +109,7 @@ abstract class Validator
 
         $rules = $this->getRules();
 
-        $validator = Validator::make($rules);
+        $validator = ValidatorFacade::make($this->input, $rules);
 
         if ($validator->fails()) {
             $exception = new ValidationException;
@@ -122,14 +124,19 @@ abstract class Validator
      * Retrieves the rules that have defined for the validation.
      *
      * @return array
+     * @throws ValidationConfigurationException
      */
     private function getRules()
     {
+        if (!is_array($this->rules)) {
+            throw new ValidationConfigurationException('Validation rules defined must be provided as an array.');
+        }
+
         if (is_null($this->method)) {
             $rules = $this->rules;
         }
         else {
-            $rules = $this->{$this->method}($this->resource);
+            $rules = (array) $this->{$this->method}($this->resource);
         }
 
         return $rules;

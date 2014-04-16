@@ -4,5 +4,5 @@ use Tectonic\Shift\Library\Validation\Validator;
 
 class RoleValidator extends Validator
 {
-    
+
 }
