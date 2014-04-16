@@ -1,8 +1,8 @@
 <?php namespace Tectonic\Shift\Modules\Security\Validators;
 
-use Tectonic\Shift\Library\BaseValidator;
+use Tectonic\Shift\Library\Validation\Validator;
 
-class RoleValidator extends BaseValidator
+class RoleValidator extends Validator
 {
-
+    
 }

@@ -8,8 +8,9 @@ class BaseControllerStub extends BaseController
 {
 	public $searchClass = 'Tests\Stubs\SearchStub';
 
-	public function __construct($repository)
+	public function __construct($repository, $validator)
 	{
 		$this->repository = $repository;
+		$this->validator = $validator;
 	}
 }
