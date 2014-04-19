@@ -13,4 +13,14 @@ class RoleRepository extends SqlBaseRepository implements RoleRepositoryInterfac
 	{
 		$this->setModel($role);
 	}
+
+    /**
+     * Searches for the role that is the default role for new users.
+     *
+     * @return Role
+     */
+    public function getByDefault()
+    {
+        return $this->model->whereDefault(true)->first();
+    }
 }
