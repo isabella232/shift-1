@@ -1,8 +1,6 @@
 <?php namespace Tectonic\Shift\Modules\Security\Services;
 
 use Tectonic\Shift\Modules\Security\Repositories\RoleRepository;
-use Tectonic\Shift\Modules\Security\Validators\RoleValidator;
-
 
 class RoleManagementService
 {
@@ -15,18 +13,23 @@ class RoleManagementService
 
     /**
      * @param RoleRepository $roleRepository
-     * @param RoleValidator $roleValidator
      */
-    public function __construct(RoleRepository $roleRepository, RoleValidator $roleValidator)
+    public function __construct(RoleRepository $roleRepository)
     {
         $this->roleRepository = $roleRepository;
-        $this->roleValidator = $roleValidator;
     }
 
-    public function createRole($input)
+    /**
+     * Sets the default role for new user accounts.
+     *
+     * @param $role
+     */
+    public function setDefault($role)
     {
-        $this->roleValidator->validate($input)->forMethod('create');
+        $defaultRole = $this->roleRepository->getByDefault();
 
-
+        if (!isset($role->id) or $defaultRole->id != $role->id) {
+            $this->roleRepository->setDefaultRole($role);
+        }
     }
 } 

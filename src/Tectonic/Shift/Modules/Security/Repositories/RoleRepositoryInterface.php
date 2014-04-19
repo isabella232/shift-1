@@ -3,6 +3,7 @@
 namespace Tectonic\Shift\Modules\Security\Repositories;
 
 use Tectonic\Shift\Library\Contracts\BaseRepositoryInterface;
+use Tectonic\Shift\Modules\Security\Models\Role;
 
 interface RoleRepositoryInterface extends BaseRepositoryInterface
 {
@@ -12,4 +13,11 @@ interface RoleRepositoryInterface extends BaseRepositoryInterface
      * @return mixed
      */
     public function getByDefault();
+
+    /**
+     * Set the default role to the role provided.
+     *
+     * @param Role $role
+     */
+    public function setDefaultRole(Role $role);
 }
