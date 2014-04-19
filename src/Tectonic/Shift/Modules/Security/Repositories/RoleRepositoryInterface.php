@@ -19,5 +19,5 @@ interface RoleRepositoryInterface extends BaseRepositoryInterface
      *
      * @param Role $role
      */
-    public function setDefaultRole(Role $role);
+    public function setDefault(Role $role);
 }

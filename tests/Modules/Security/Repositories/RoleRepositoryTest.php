@@ -32,6 +32,6 @@ class RoleRepositoryTest extends Tests\TestCase
         $mockModel->shouldReceive('first')->once()->andReturn($previousDefaultRole);
 
         $repository = new RoleRepository($mockModel);
-        $repository->setDefaultRole($newRole);
+        $repository->setDefault($newRole);
     }
 }

@@ -30,7 +30,7 @@ class RoleRepository extends SqlBaseRepository implements RoleRepositoryInterfac
      *
      * @param Role $role
      */
-    public function setDefaultRole(Role $role)
+    public function setDefault(Role $role)
     {
         $defaultRole = $this->getByDefault();
 
