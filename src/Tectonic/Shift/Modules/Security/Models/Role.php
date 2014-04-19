@@ -11,7 +11,7 @@ class Role extends BaseModel
      *
      * @var array
      */
-    public $fillable = ['name', 'default'];
+    public $fillable = ['name', 'access'];
 
     /**
      * Sets the join for the permissions that roles employ.

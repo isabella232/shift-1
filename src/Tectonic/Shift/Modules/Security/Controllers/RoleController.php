@@ -13,4 +13,26 @@ class RoleController extends BaseController
 		$this->repository = $repository;
         $this->validator = $roleValidator;
 	}
+
+    public function postStore()
+    {
+        $role = parent::postStore();
+
+        if (Input::get('default')) {
+            $this->repository->setDefault($role);
+        }
+
+        return $role;
+    }
+
+    public function putUpdate($id)
+    {
+        $role = parent::putUpdate($id);
+
+        if (Input::get('default')) {
+            $this->repository->setDefault($role);
+        }
+
+        return $role;
+    }
 }

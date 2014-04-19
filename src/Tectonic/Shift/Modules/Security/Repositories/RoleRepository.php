@@ -32,18 +32,20 @@ class RoleRepository extends SqlBaseRepository implements RoleRepositoryInterfac
      */
     public function setDefault(Role $role)
     {
+        $roleRepository = $this;
+
         $defaultRole = $this->getByDefault();
 
         if (isset($role->id) and $defaultRole->id == $role->id) {
             return;
         }
 
-        DB::transaction(function() use ($defaultRole, $role) {
+        DB::transaction(function() use ($defaultRole, $role, $roleRepository) {
             $defaultRole->default = false;
-            $defaultRole->save();
-
             $role->default = true;
-            $role->save();
+
+            $roleRepository->save($defaultRole);
+            $roleRepository->save($role);
         });
     }
 }

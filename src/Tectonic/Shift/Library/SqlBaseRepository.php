@@ -8,6 +8,13 @@ use Tectonic\Shift\Library\Contracts\BaseRepositoryInterface;
 
 abstract class SqlBaseRepository implements BaseRepositoryInterface
 {
+    /**
+     * Many resources within shift may be restricted by the account the user is assigned to (if applicable).
+     * As a result, resources can
+     * @var bool
+     */
+    protected $restrictByAccount = true;
+
 	/**
 	 * Stores the model object for querying.
 	 *

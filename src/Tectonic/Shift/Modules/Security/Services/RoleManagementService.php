@@ -22,14 +22,22 @@ class RoleManagementService
     /**
      * Sets the default role for new user accounts.
      *
-     * @param $role
+     * @param array $input
      */
-    public function setDefault($role)
+    public function create($input)
     {
-        $defaultRole = $this->roleRepository->getByDefault();
+        $this->validator->setInput($input)
+            ->forMethod('create')
+            ->validate();
 
-        if (!isset($role->id) or $defaultRole->id != $role->id) {
-            $this->roleRepository->setDefaultRole($role);
+        $resource = $this->repository->create($input);
+
+        $this->repository->save($resource);
+
+        if (!empty($input['default'])) {
+            $this->repository->setDefault($resource);
         }
+
+        return $resource;
     }
 } 

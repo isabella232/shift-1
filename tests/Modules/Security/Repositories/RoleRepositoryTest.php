@@ -21,8 +21,10 @@ class RoleRepositoryTest extends Tests\TestCase
         $previousDefaultRole = m::mock('defaultRole');
         $previousDefaultRole->id = 1;
         $previousDefaultRole->shouldReceive('save')->once();
+        $previousDefaultRole->shouldReceive('getDirty')->once()->andReturn(true);
 
         $newRole = m::mock('Tectonic\Shift\Modules\Security\Models\Role')->makePartial();
+        $newRole->shouldReceive('getDirty')->once()->andReturn(true);
         $newRole->shouldReceive('setAttribute')->with('default', true)->once();
         $newRole->shouldReceive('save')->once();
         $newRole->id = 2;
