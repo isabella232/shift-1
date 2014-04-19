@@ -41,7 +41,7 @@ class BaseControllerTest extends Tests\TestCase
 	{
 		$this->mockInput->shouldReceive('input')->andReturn(['name' => 'roger']);
 
-		$this->mockRepository->shouldReceive('create')->with(['name' => 'roger'])->andReturn('new resource');
+		$this->mockRepository->shouldReceive('getNew')->with(['name' => 'roger'])->andReturn('new resource');
 		$this->mockRepository->shouldReceive('save')->with('new resource')->andReturn('saved resource');
 
         $this->mockValidator->shouldReceive('setInput')->once()->andReturn($this->mockValidator);

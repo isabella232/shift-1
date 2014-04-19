@@ -44,8 +44,26 @@ class RoleRepository extends SqlBaseRepository implements RoleRepositoryInterfac
             $defaultRole->default = false;
             $role->default = true;
 
-            $roleRepository->save($defaultRole);
-            $roleRepository->save($role);
+            $defaultRole->save();
+            $role->save();
         });
+    }
+
+    /**
+     * Overloads the parent method so as to provide some functionality based on the default attribute. If it's
+     * been provided, then it will call the setDefault method to handle the functionality.
+     *
+     * @param $role
+     * @return Role
+     */
+    public function save($role)
+    {
+        parent::save($role);
+
+        if ($role->default && $role->isDirty('default')) {
+            $this->setDefault($role);
+        }
+
+        return $role;
     }
 }

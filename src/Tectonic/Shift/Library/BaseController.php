@@ -59,7 +59,7 @@ abstract class BaseController extends Controller
             ->forMethod('create')
             ->validate();
 
-		$resource = $this->repository->create($input);
+		$resource = $this->repository->getNew($input);
 
 		return $this->repository->save($resource);
 	}
