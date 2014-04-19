@@ -23,7 +23,10 @@
         "psr-0": {
             "Tectonic\\Shift": "src/",
             "Tests": "tests/"
-        }
+        },
+        "classmap": [
+            "src/migrations"
+        ]
     },
     "minimum-stability": "dev",
 	"repositories": [

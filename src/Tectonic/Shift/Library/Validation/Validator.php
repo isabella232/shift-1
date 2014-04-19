@@ -68,10 +68,13 @@ abstract class Validator
      * Saves the user input on the object.
      *
      * @param array $input
+     * @return Validator
      */
     public function setInput(array $input)
     {
         $this->input = $input;
+
+        return $this;
     }
 
     /**
@@ -79,20 +82,26 @@ abstract class Validator
      * array of validation rules that will be executed in turn.
      *
      * @param string $method
+     * @return Validator
      */
     public function forMethod($method)
     {
         $this->method = $method;
+
+        return $this;
     }
 
     /**
      * For more complex validation requirements, you can define the resource you wish to use.
      *
      * @param $resource
+     * @return Validator
      */
     public function using($resource)
     {
         $this->resource = $resource;
+
+        return $this;
     }
 
     /**
@@ -132,13 +141,25 @@ abstract class Validator
             throw new ValidationConfigurationException('Validation rules defined must be provided as an array.');
         }
 
-        if (is_null($this->method)) {
-            $rules = $this->rules;
-        }
-        else {
-            $rules = (array) $this->{$this->method}($this->resource);
+        $rules = $this->rules;
+
+        if (!is_null($this->method) and method_exists($this, $this->method)) {
+            $rules = (array) call_user_func_array([$this, $this->method], [$this->resource]);
         }
 
         return $rules;
+    }
+
+    /**
+     * Set rules via an external source. Sometimes you may wish to have one-off validation rules.
+     *
+     * @param array $rules
+     * @return Validator
+     */
+    public function setRules($rules)
+    {
+        $this->rules = $rules;
+
+        return $this;
     }
 }

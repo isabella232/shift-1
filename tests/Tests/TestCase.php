@@ -2,6 +2,8 @@
 
 namespace Tests;
 
+use DB;
+use Exception;
 use Illuminate;
 use Mockery as m;
 use Symfony;
@@ -29,8 +31,8 @@ class TestCase extends \Orchestra\Testbench\TestCase
 		// reset base path to point to our package's src directory
 		$app['path.base'] = __DIR__ . '/../../';
 
-		$app['config']->set('database.default', 'testbench');
-		$app['config']->set('database.connections.testbench', array(
+		$app['config']->set('database.default', 'test');
+		$app['config']->set('database.connections.test', array(
 			'driver'   => 'sqlite',
 			'database' => ':memory:',
 			'prefix'   => ''
@@ -51,8 +53,11 @@ class TestCase extends \Orchestra\Testbench\TestCase
 		$artisan = $this->app->make('artisan');
 
 		$artisan->call('migrate', [
-			'--database' => 'testbench',
-			'--path'     => 'migrations'
+            '--database' => 'test',
+			'--path' => 'src/migrations'
 		]);
+
+        // Sanity check. This will fail if migrations failed.
+        DB::table('roles')->get();
 	}
 }

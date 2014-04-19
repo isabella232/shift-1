@@ -26,9 +26,8 @@ class ValidatorTest extends Tests\TestCase
     {
         $this->validator->setInput([]);
 
-        // Here we're just forcing a rule to be defined without having to setup a stub class
-        $this->validator->forMethod('create');
-        $this->validator->shouldReceive('create')->once()->andReturn(['name' => 'required']);
+        // We have to force this because of how method_exists does checks (it would never fire)
+        $this->validator->setRules(['name' => 'required']);
 
         $this->validator->validate();
     }
