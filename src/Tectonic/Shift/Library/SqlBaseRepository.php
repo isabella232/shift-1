@@ -128,7 +128,7 @@ abstract class SqlBaseRepository implements BaseRepositoryInterface
 	 */
 	public function save($resource)
 	{
-		if ($resource->getDirty()) {
+		if ($resource->isDirty()) {
 			return $resource->save();
 		}
 		else {
