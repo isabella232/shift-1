@@ -58,7 +58,7 @@ class SqlRoleRepositoryTest extends PHPUnit_Framework_TestCase
 		$foundRecord = m::mock('FoundRecord');
 		$foundRecord->shouldReceive('fill')->with($params);
 		$foundRecord->shouldReceive('save');
-		$foundRecord->shouldReceive('getDirty')->andReturn(true);
+		$foundRecord->shouldReceive('isDirty')->andReturn(true);
 
 		$this->repository->shouldReceive('find')->with(1)->andReturn($foundRecord);
 
@@ -72,7 +72,7 @@ class SqlRoleRepositoryTest extends PHPUnit_Framework_TestCase
 		$foundRecord = m::mock('FoundRecord');
 		$foundRecord->shouldReceive('fill')->with($params);
 		$foundRecord->shouldReceive('touch');
-		$foundRecord->shouldReceive('getDirty')->andReturn(false);
+		$foundRecord->shouldReceive('isDirty')->andReturn(false);
 
 		$this->repository->shouldReceive('find')->with(1)->andReturn($foundRecord);
 

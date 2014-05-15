@@ -4,12 +4,13 @@ namespace Tectonic\Shift\Modules\Security\Controllers;
 
 use Tectonic\Shift\Library\BaseController;
 use Tectonic\Shift\Modules\Security\Repositories\RoleRepositoryInterface;
-use Tectonic\Shift\Modules\Security\Search\RoleSearch;
+use Tectonic\Shift\Modules\Security\Validators\RoleValidator;
 
 class RoleController extends BaseController
 {
-	public function __construct(RoleRepositoryInterface $repository)
+	public function __construct(RoleRepositoryInterface $repository, RoleValidator $roleValidator)
 	{
 		$this->repository = $repository;
+        $this->validator = $roleValidator;
 	}
 }

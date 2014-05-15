@@ -16,7 +16,6 @@ class CreateRolesTable extends Migration
 		{
 			$table->increments('id');
 			$table->bigInteger('account_id')->index()->nullable();
-			$table->foreign('account_id')->references('id')->on('account');
 			$table->smallInteger('access')->unsigned()->default(0);
 			$table->string('name');
 			$table->timestamps();

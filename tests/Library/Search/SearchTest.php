@@ -16,19 +16,33 @@ class SearchTest extends PHPUnit_Framework_TestCase
 	}
 
 	// Really only one method here that needs to be tested, all the rest are dead simple
+    public function testExecuteShouldCallFiltersAndExecuteSearch()
+    {
+        $mockNameFilter = m::mock('Tectonic\Shift\Library\Search\Filters\SearchFilterInterface')->makePartial();
+        $mockNameFilter->shouldReceive('criteria')->twice();
+        $mockNameFilter->shouldReceive('setSearch')->twice();
+
+        $this->mockQuery->shouldReceive('paginate')->andReturn(['items']);
+
+        $this->search->setQuery($this->mockQuery);
+        $this->search->addFilter($mockNameFilter);
+        $this->search->addFilter($mockNameFilter);
+
+        $this->assertEquals($this->search, $this->search->execute());
+    }
+
 	public function testResultsShouldCallAllFilterCriteriaAndReturnResults()
 	{
-		$mockNameFilter = m::mock('Tectonic\Shift\Library\Search\Filters\SearchFilterInterface')->makePartial();
-		$mockNameFilter->shouldReceive('criteria')->twice();
-		$mockNameFilter->shouldReceive('setSearch')->twice();
-		
-		$this->mockQuery->shouldReceive('paginate')->andReturn(['items']);
+        $mockNameFilter = m::mock('Tectonic\Shift\Library\Search\Filters\SearchFilterInterface')->makePartial();
+        $mockNameFilter->shouldReceive('criteria')->once();
+        $mockNameFilter->shouldReceive('setSearch')->once();
 
-		$this->search->setQuery($this->mockQuery);
-		$this->search->addFilter($mockNameFilter);
-		$this->search->addFilter($mockNameFilter);
+        $this->mockQuery->shouldReceive('paginate')->andReturn(['result items']);
 
-		$this->assertEquals(['items'], $this->search->results());
+        $this->search->setQuery($this->mockQuery);
+        $this->search->addFilter($mockNameFilter);
+
+		$this->assertEquals(['result items'], $this->search->execute()->results());
 	}
 
 	public function testGetParamsShouldReturnAllParamsAsArray()
