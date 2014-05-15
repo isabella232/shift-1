@@ -9,12 +9,12 @@
  */
 HTML::macro( 'setting', function( $setting )
 {
-	$value = App::make('SettingsRepositoryInterface')->setting( $setting ); 
-	
+	/*$value = App::make('SettingsRepositoryInterface')->setting( $setting );
+
 	if ( !empty( $value ) )
 	{
 		return $value;
-	}
-	
+	}*/
+
 	return null;
 });

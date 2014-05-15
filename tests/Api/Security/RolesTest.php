@@ -11,7 +11,7 @@ class RolesTest extends Tests\TestCase
 
     public function testCreateNewRole()
     {
-        // $this->call('POST', 'roles');
+        $this->call('POST', 'roles');
 
         $this->markTestIncomplete( 'Issue with routes still to be resolved' );
     }

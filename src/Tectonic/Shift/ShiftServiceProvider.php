@@ -23,7 +23,7 @@ class ShiftServiceProvider extends ServiceProvider
 		$this->package('tectonic/shift');
 
 		$aliases = AliasLoader::getInstance();
-		
+
 		$aliases->alias('Basset', 'Basset\Facade');
 		$aliases->alias('Authority', 'Authority\AuthorityL4\Facades\Authority');
 		$aliases->alias('Utility', 'Tectonic\Shift\Library\Facades\Utility');
@@ -60,7 +60,8 @@ class ShiftServiceProvider extends ServiceProvider
 			// If the current application environment is "testing", we will disable the
 			// routing filters, since they can be tested independently of the routes
 			// and just get in the way of our typical controller testing concerns.
-			if ($app['env'] == 'testing')
+			//if ($app['env'] == 'testing')
+            if ($this->app->runningUnitTests())
 			{
 				$router->disableFilters();
 			}

@@ -5,21 +5,21 @@
 <!--[if lt IE 8]><script src="//cdnjs.cloudflare.com/ajax/libs/json3/3.2.4/json3.min.js"></script><![endif]-->
 
 {{-- Core shift files and scripts --}}
-@foreach ( Asset::$containers as $name => $container )
+{{-- @foreach ( Asset::$containers as $name => $container )
 	@if ( $name != 'custom' )
 		{{ Asset::container( $name )->styles() }}
 	@endif
-@endforeach
+@endforeach --}}
 
 {{-- Here we call the 'custom' container, which can hold all manner of things required for client software development --}}
-{{ Asset::container( 'custom' )->styles() }}
+{{-- Asset::container( 'custom' )->styles() --}}
 
 <script type="text/javascript">
 	var _gaq = _gaq || [];
 	_gaq.push(['_setAccount', 'UA-39121718-1']);
 	_gaq.push(['_setDomainName', 'awardsplatform.com']);
 	_gaq.push(['_trackPageview']);
-	
+
 	(function() {
 		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
 		ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
