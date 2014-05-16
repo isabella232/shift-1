@@ -3,6 +3,7 @@
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 use Tectonic\Shift\Library\Router;
+use App;
 
 class ShiftServiceProvider extends ServiceProvider
 {
@@ -24,16 +25,17 @@ class ShiftServiceProvider extends ServiceProvider
 
 		$aliases = AliasLoader::getInstance();
 
-		$aliases->alias('Basset', 'Basset\Facade');
-		$aliases->alias('Authority', 'Authority\AuthorityL4\Facades\Authority');
-		$aliases->alias('Utility', 'Tectonic\Shift\Library\Facades\Utility');
+        $this->loadBindings();
 
-		$this->registerViewFinder();
-		$this->registerRouter();
-		$this->registerAuthorityConfiguration();
+        $aliases->alias('Basset', 'Basset\Facade');
+        $aliases->alias('Authority', 'Authority\AuthorityL4\Facades\Authority');
+        $aliases->alias('Utility', 'Tectonic\Shift\Library\Facades\Utility');
 
-		$this->bootFile('bindings');
-	}
+        $this->registerViewFinder();
+        $this->registerRouter();
+        $this->registerAuthorityConfiguration();
+
+    }
 
 	/**
 	 * Register the various classes required to Bootstrap Shift
@@ -41,7 +43,8 @@ class ShiftServiceProvider extends ServiceProvider
 	public function boot()
 	{
 		$this->bootFile('commands');
-		$this->bootFile('routes');
+		//$this->bootFile('routes');
+        include __DIR__.'/routes.php'; // Without doing this integration tests won't work :(
 		$this->bootFile('composers');
 		$this->bootFile('macros');
 	}
@@ -55,18 +58,7 @@ class ShiftServiceProvider extends ServiceProvider
 	{
 		$this->app['router'] = $this->app->share(function($app)
 		{
-			$router = new Router($app['events'], $app);
-
-			// If the current application environment is "testing", we will disable the
-			// routing filters, since they can be tested independently of the routes
-			// and just get in the way of our typical controller testing concerns.
-			//if ($app['env'] == 'testing')
-            if ($this->app->runningUnitTests())
-			{
-				$router->disableFilters();
-			}
-
-			return $router;
+			return new Router($app['events'], $app);
 		});
 	}
 
@@ -117,4 +109,24 @@ class ShiftServiceProvider extends ServiceProvider
 	{
 		require_once __DIR__.'/../../boot/'.$file.'.php';
 	}
+
+    protected function loadBindings()
+    {
+        // Register Utility Binding
+        $this->app->bind('utility', function($app){
+                return new \Tectonic\Shift\Library\Utility();
+        });
+
+        // Register UserRepositoryInterface binding
+        $this->app->bind('Tectonic\Shift\Modules\Accounts\Repositories\UserRepositoryInterface', function($app){
+            $userModel = new \Tectonic\Shift\Modules\Accounts\Models\User();
+            return new \Tectonic\Shift\Modules\Accounts\Repositories\UserRepository($userModel);
+        });
+
+        // Register RoleRepositoryInterface binding
+        $this->app->bind('Tectonic\Shift\Modules\Security\Repositories\RoleRepositoryInterface', function($app) {
+            $roleModel = new \Tectonic\Shift\Modules\Security\Models\Role();
+            return new \Tectonic\Shift\Modules\Security\Repositories\RoleRepository($roleModel);
+        });
+    }
 }

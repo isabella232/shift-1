@@ -7,6 +7,7 @@ use Exception;
 use Illuminate;
 use Mockery as m;
 use Symfony;
+use Route;
 
 class TestCase extends \Orchestra\Testbench\TestCase
 {
@@ -49,6 +50,8 @@ class TestCase extends \Orchestra\Testbench\TestCase
 	public function setUp()
 	{
 		parent::setUp();
+
+        Route::disableFilters();
 
 		$artisan = $this->app->make('artisan');
 

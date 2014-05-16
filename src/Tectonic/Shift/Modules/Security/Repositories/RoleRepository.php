@@ -64,7 +64,9 @@ class RoleRepository extends SqlBaseRepository implements RoleRepositoryInterfac
         }
 
         // If the role was already saved via setDefault, we don't want to call it again
-        if ($role->isDirty()) {
+        $dirty = $role->getDirty();
+
+        if (!empty($dirty)) {
             parent::save($role);
         }
 
