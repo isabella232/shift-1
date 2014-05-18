@@ -3,8 +3,8 @@
 namespace Tectonic\Shift\Modules\Security\Controllers;
 
 use Tectonic\Shift\Library\BaseController;
-use Tectonic\Shift\Modules\Security\Repositories\RoleRepositoryInterface;
 use Tectonic\Shift\Modules\Security\Validators\RoleValidator;
+use Tectonic\Shift\Modules\Security\Repositories\RoleRepositoryInterface;
 
 class RoleController extends BaseController
 {
