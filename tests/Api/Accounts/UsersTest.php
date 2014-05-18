@@ -13,7 +13,7 @@ class UsersTest extends Tests\TestCase
 
         $this->userModel = new \Tectonic\Shift\Modules\Accounts\Models\User;
     }
-    public function test_store_new_user()
+    public function testStoreNewUser()
     {
         // Arrange
         $data = [
@@ -30,7 +30,7 @@ class UsersTest extends Tests\TestCase
         $this->assertSame($data['name'], $newUser->name);
     }
 
-    public function test_get_all_users()
+    public function testGetAllUsers()
     {
         // Act
         $this->call('GET', 'users');

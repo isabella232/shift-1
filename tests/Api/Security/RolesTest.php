@@ -13,7 +13,7 @@ class RolesTest extends Tests\TestCase
         $this->roleModel = new \Tectonic\Shift\Modules\Security\Models\Role;
     }
 
-    public function test_store_new_role()
+    public function testStoreNewRole()
     {
         // Arrange
         $data = [
@@ -31,7 +31,7 @@ class RolesTest extends Tests\TestCase
         $this->assertSame($data['name'], $newRole->name);
     }
 
-    public function test_get_all_roles()
+    public function testGetAllRoles()
     {
         // Act
         $this->call('GET', 'roles');

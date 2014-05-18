@@ -21,8 +21,6 @@ class ShiftServiceProvider extends ServiceProvider
 	 */
 	public function register()
 	{
-		$this->package('tectonic/shift');
-
 		$aliases = AliasLoader::getInstance();
 
         $this->loadBindings();
@@ -35,6 +33,8 @@ class ShiftServiceProvider extends ServiceProvider
         $this->registerRouter();
         $this->registerAuthorityConfiguration();
 
+		$this->bootFile('routes');
+		$this->bootFile('commands');
     }
 
 	/**
@@ -42,11 +42,10 @@ class ShiftServiceProvider extends ServiceProvider
 	 */
 	public function boot()
 	{
-		$this->bootFile('commands');
-		//$this->bootFile('routes');
-        include __DIR__.'/routes.php'; // Without doing this integration tests won't work :(
 		$this->bootFile('composers');
 		$this->bootFile('macros');
+
+		$this->package('tectonic/shift');
 	}
 
 	/**
@@ -107,7 +106,7 @@ class ShiftServiceProvider extends ServiceProvider
 	 */
 	public function bootFile($file)
 	{
-		require_once __DIR__.'/../../boot/'.$file.'.php';
+		require __DIR__.'/../../boot/'.$file.'.php';
 	}
 
     protected function loadBindings()
