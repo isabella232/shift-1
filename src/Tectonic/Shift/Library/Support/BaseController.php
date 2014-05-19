@@ -1,27 +1,16 @@
 <?php
 
-namespace Tectonic\Shift\Library;
+namespace Tectonic\Shift\Library\Support;
 
 use App;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Input;
+use Tectonic\Shift\Library\BaseValidator;
+use Tectonic\Shift\Library\Response;
+use Tectonic\Shift\Library\SqlBaseRepositoryInterface;
 
 abstract class BaseController extends Controller
 {
-	/**
-	 * Stores the repository that will do most of the data-based heavy lifting.
-	 *
-	 * @var SqlBaseRepositoryInterface
-	 */
-	protected $repository;
-
-    /**
-     * Stores the validator class that will be used for validating create and update requests.
-     *
-     * @var BaseValidator
-     */
-    protected $validator;
-
 	/**
 	 * Stores the full path to the search class to be used for search. The default search
 	 * class is derived from conventions. The search class itself should sit inside the Search
@@ -30,6 +19,13 @@ abstract class BaseController extends Controller
 	 * @var string
 	 */
 	public $searchClass;
+
+    /**
+     * The CRUDService stored represents the basic or base functionality for a given resource.
+     *
+     * @var CRUDService
+     */
+    public $crudService;
 
 	/**
 	 * Display a listing of the resource.
@@ -53,15 +49,7 @@ abstract class BaseController extends Controller
 	 */
 	public function postStore()
 	{
-        $input = Input::get();
-
-        $this->validator->setInput($input)
-            ->forMethod('create')
-            ->validate();
-
-		$resource = $this->repository->getNew($input);
-
-		return $this->repository->save($resource);
+        $this->crudService->create(Input::get());
 	}
 
 	/**
@@ -72,7 +60,7 @@ abstract class BaseController extends Controller
 	 */
 	public function getShow($id)
 	{
-		return $this->repository->requireById($id);
+		return $this->crudService->get($id);
 	}
 
 	/**
@@ -83,16 +71,7 @@ abstract class BaseController extends Controller
 	 */
 	public function putUpdate($id)
 	{
-        $input = Input::get();
-
-		$resource = $this->repository->requireById($id);
-
-        $this->validator->setInput($input)
-            ->forMethod('update')
-            ->using($resource)
-            ->validate();
-
-		return $this->repository->update($resource, Input::get());
+        return $this->crudService->update($id, Input::get());
 	}
 
 	/**
@@ -103,9 +82,7 @@ abstract class BaseController extends Controller
 	 */
 	public function deleteDestroy($id = null)
 	{
-		$resource = $this->repository->requireById($id);
-
-		return $this->repository->delete($resource);
+        return $this->crudService->delete($id);
 	}
 
 	/**

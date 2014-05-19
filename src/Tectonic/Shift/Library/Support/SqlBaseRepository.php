@@ -1,10 +1,10 @@
 <?php
 
-namespace Tectonic\Shift\Library;
+namespace Tectonic\Shift\Library\Support;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Tectonic\Shift\Library\Contracts\BaseRepositoryInterface;
+use Tectonic\Shift\Library\Eloquent;
 
 abstract class SqlBaseRepository implements BaseRepositoryInterface
 {

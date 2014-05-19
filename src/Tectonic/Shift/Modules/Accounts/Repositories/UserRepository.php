@@ -3,7 +3,7 @@
 namespace Tectonic\Shift\Modules\Accounts\Repositories;
 
 use Tectonic\Shift\Modules\Accounts\Models\User;
-use Tectonic\Shift\Library\SqlBaseRepository;
+use Tectonic\Shift\Library\Support\SqlBaseRepository;
 
 class UserRepository extends SqlBaseRepository implements UserRepositoryInterface
 {

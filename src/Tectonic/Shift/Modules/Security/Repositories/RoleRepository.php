@@ -6,7 +6,7 @@ use DB;
 use Tectonic\Shift\Modules\Security\Models\Role;
 use Tectonic\Shift\Modules\Security\Search\RoleSearch;
 use Tectonic\Shift\Modules\Security\Repositories\RoleRepositoryInterface;
-use Tectonic\Shift\Library\SqlBaseRepository;
+use Tectonic\Shift\Library\Support\SqlBaseRepository;
 
 class RoleRepository extends SqlBaseRepository implements RoleRepositoryInterface
 {

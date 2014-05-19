@@ -2,7 +2,7 @@
 
 namespace Tectonic\Shift\Modules\Security\Models;
 
-use Tectonic\Shift\Library\BaseModel;
+use Tectonic\Shift\Library\Support\BaseModel;
 
 class Role extends BaseModel
 {

@@ -2,7 +2,7 @@
 
 namespace Tests\Stubs;
 
-use Tectonic\Shift\Library\SqlBaseRepository;
+use Tectonic\Shift\Library\Support\SqlBaseRepository;
 
 class SqlBaseRepositoryStub extends SqlBaseRepository
 {

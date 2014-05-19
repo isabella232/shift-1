@@ -2,7 +2,7 @@
 
 namespace Tectonic\Shift\Modules\Security\Repositories;
 
-use Tectonic\Shift\Library\Contracts\BaseRepositoryInterface;
+use Tectonic\Shift\Library\Support\BaseRepositoryInterface;
 use Tectonic\Shift\Modules\Security\Models\Role;
 
 interface RoleRepositoryInterface extends BaseRepositoryInterface

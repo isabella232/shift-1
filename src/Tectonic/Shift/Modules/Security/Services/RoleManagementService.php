@@ -1,6 +1,7 @@
 <?php namespace Tectonic\Shift\Modules\Security\Services;
 
 use Tectonic\Shift\Modules\Security\Repositories\RoleRepository;
+use Tectonic\Shift\Modules\Security\Validators\RoleValidator;
 
 class RoleManagementService
 {
@@ -13,10 +14,12 @@ class RoleManagementService
 
     /**
      * @param RoleRepository $roleRepository
+     * @param RoleValidator $roleValidator
      */
-    public function __construct(RoleRepository $roleRepository)
+    public function __construct(RoleRepository $roleRepository, RoleValidator $roleValidator)
     {
         $this->roleRepository = $roleRepository;
+        $this->roleValidator = $roleValidator;
     }
 
     /**
@@ -26,18 +29,55 @@ class RoleManagementService
      */
     public function create($input)
     {
-        $this->validator->setInput($input)
+        $this->roleValidator->setInput($input)
             ->forMethod('create')
             ->validate();
 
-        $resource = $this->repository->create($input);
+        $resource = $this->roleRepository->getNew($input);
 
-        $this->repository->save($resource);
+        return $this->roleRepository->save($resource);
+    }
 
-        if (!empty($input['default'])) {
-            $this->repository->setDefault($resource);
-        }
+    /**
+     * Retrieves a single role object and returns the result.
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function get($id)
+    {
+        return $this->roleRepository->requireById($id);
+    }
 
-        return $resource;
+    /**
+     * Update a specific role, based on the id provided.
+     *
+     * @param $id
+     * @param $input
+     * @return mixed
+     */
+    public function update($id, $input)
+    {
+        $resource = $this->roleRepository->requireById($id);
+
+        $this->roleValidator->setInput($input)
+            ->forMethod('update')
+            ->using($resource)
+            ->validate();
+
+        return $this->roleRepository->update($resource, $input);
+    }
+
+    /**
+     * Delete a role based on the id provided.
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function delete($id)
+    {
+        $resource = $this->roleRepository->requireById($id);
+
+        return $this->roleRepository->delete($resource);
     }
 } 
