@@ -18,14 +18,14 @@ class RoleRepositoryTest extends Tests\TestCase
 
     public function testSettingRoleDefaultShouldUpdatePreviousDefaultRoleAsWell()
     {
-        $previousDefaultRole = m::mock('defaultRole');
+        $previousDefaultRole = m::mock('defaultRole')->makePartial();
         $previousDefaultRole->id = 1;
-        $previousDefaultRole->shouldReceive('save')->once();
+        $previousDefaultRole->shouldReceive('getDirty')->once()->andReturn([]);
 
         $newRole = m::mock('Tectonic\Shift\Modules\Security\Models\Role')->makePartial();
-        $newRole->shouldReceive('setAttribute')->with('default', true)->once();
         $newRole->shouldReceive('save')->once();
         $newRole->id = 2;
+        $newRole->default = true;
 
         $mockModel = m::mock('Tectonic\Shift\Modules\Security\Models\Role');
         $mockModel->shouldReceive('whereDefault')->once()->with(true)->andReturn($mockModel);

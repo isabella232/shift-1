@@ -42,15 +42,11 @@ class RoleRepository extends SqlBaseRepository implements RoleRepositoryInterfac
         }
 
         DB::transaction(function() use ($defaultRole, $role, $roleRepository) {
-            // We do not call save on the roleRepository here because doing so would result
-            // in an endless loop, due to the changed default setting.
             if ($defaultRole) {
                 $defaultRole->default = false;
-                $defaultRole->save();
-
+                $roleRepository->save($defaultRole);
             }
 
-            $role->default = true;
             $role->save();
         });
     }
