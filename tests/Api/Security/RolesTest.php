@@ -19,12 +19,13 @@ class RolesTest extends Tests\TestCase
         $data = [
             'account_id' => 1,
             'access'     => 1,
-            'name'       => 'Test Role'
+            'name'       => 'Test Role',
+            'default'    => true
         ];
 
         // Act
         $this->call('POST', 'roles', $data);
-        $newRole = $this->roleModel->where('name', '=', $data['name'])->first();
+        $newRole = $this->roleModel->whereName($data['name'])->first();
 
         // Assert
         $this->assertResponseOk();

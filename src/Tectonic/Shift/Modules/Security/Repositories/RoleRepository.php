@@ -42,10 +42,15 @@ class RoleRepository extends SqlBaseRepository implements RoleRepositoryInterfac
         }
 
         DB::transaction(function() use ($defaultRole, $role, $roleRepository) {
-            $defaultRole->default = false;
-            $role->default = true;
+            // We do not call save on the roleRepository here because doing so would result
+            // in an endless loop, due to the changed default setting.
+            if ($defaultRole) {
+                $defaultRole->default = false;
+                $defaultRole->save();
 
-            $defaultRole->save();
+            }
+
+            $role->default = true;
             $role->save();
         });
     }
@@ -63,11 +68,8 @@ class RoleRepository extends SqlBaseRepository implements RoleRepositoryInterfac
             $this->setDefault($role);
         }
 
-        // If the role was already saved via setDefault, we don't want to call it again
-        $dirty = $role->getDirty();
-
-        if (!empty($dirty)) {
-            parent::save($role);
+        if ($role->getDirty()) {
+            return parent::save($role);
         }
 
         return $role;

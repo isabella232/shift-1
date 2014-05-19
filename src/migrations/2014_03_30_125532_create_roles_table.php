@@ -18,7 +18,9 @@ class CreateRolesTable extends Migration
 			$table->bigInteger('account_id')->index()->nullable();
 			$table->smallInteger('access')->unsigned()->default(0);
 			$table->string('name');
+            $table->boolean('default')->index();
 			$table->timestamps();
+            $table->datetime('deleted_at')->nullable()->index();
 		});
 	}
 
