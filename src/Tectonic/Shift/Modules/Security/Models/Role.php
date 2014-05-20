@@ -6,6 +6,8 @@ use Tectonic\Shift\Library\Support\BaseModel;
 
 class Role extends BaseModel
 {
+    protected $softDelete = true;
+
     /**
      * Below are the fields that can be mass-assigned on the model.
      *

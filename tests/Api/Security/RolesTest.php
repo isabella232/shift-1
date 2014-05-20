@@ -72,4 +72,28 @@ class RolesTest extends Tests\TestCase
         // Assert
         $this->assertResponseOk();
     }
+
+    public function testDeleteRole()
+    {
+        $existingRoleData = [
+            'account_id' => null,
+            'access' => 1,
+            'default' => false,
+            'name' => 'Existing role'
+        ];
+
+        $role = $this->roleModel->create($existingRoleData);
+
+        // Act
+        $this->call('DELETE', 'roles', [$role->id]);
+
+        $deletedRole = $this->roleModel->withTrashed()->find($role->id);
+
+        // Assert
+        $this->assertResponseOk();
+        $this->assertThat(
+            $deletedRole->deleted_at,
+            $this->logicalNot($this->equalTo(null))
+        );
+    }
 }

@@ -20,7 +20,7 @@ class CreateRolesTable extends Migration
 			$table->string('name');
             $table->boolean('default')->index();
 			$table->timestamps();
-            $table->datetime('deleted_at')->nullable()->index();
+            $table->softDeletes();
 		});
 	}
 
