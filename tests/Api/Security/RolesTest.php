@@ -55,10 +55,13 @@ class RolesTest extends Tests\TestCase
 
         // Assert
         $newDefaultRole = $this->roleModel->whereDefault(true)->get();
+        $otherRoles = $this->roleModel->whereDefault(false)->get();
 
         $this->assertResponseOk();
         $this->assertCount(1, $newDefaultRole);
+        $this->assertCount(1, $otherRoles);
         $this->assertSame($newRoleData['name'], $newDefaultRole[0]->name);
+        $this->assertSame($existingRoleData['name'], $otherRoles[0]->name);
     }
 
     public function testGetAllRoles()
