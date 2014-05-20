@@ -96,4 +96,23 @@ class RolesTest extends Tests\TestCase
             $this->logicalNot($this->equalTo(null))
         );
     }
+
+    public function testUpdateRole()
+    {
+
+    }
+
+    private function createNewRole($data = [])
+    {
+        $defaultData = [
+            'account_id' => null,
+            'access' => 1,
+            'default' => false,
+            'name' => 'Existing role'
+        ];
+
+        $role = $this->roleModel->create($existingRoleData);
+
+        return $newRole;
+    }
 }
