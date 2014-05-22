@@ -26,6 +26,7 @@ class RoleManagementService
      * Sets the default role for new user accounts.
      *
      * @param array $input
+     * @return resource
      */
     public function create($input)
     {

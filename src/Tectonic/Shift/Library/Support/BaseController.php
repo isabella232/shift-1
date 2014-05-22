@@ -5,8 +5,8 @@ namespace Tectonic\Shift\Library\Support;
 use App;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Response;
 use Tectonic\Shift\Library\BaseValidator;
-use Tectonic\Shift\Library\Response;
 use Tectonic\Shift\Library\SqlBaseRepositoryInterface;
 
 abstract class BaseController extends Controller
@@ -82,7 +82,18 @@ abstract class BaseController extends Controller
 	 */
 	public function deleteDestroy($id = null)
 	{
-        return $this->crudService->delete($id);
+        if ($id) {
+            $ids = (array) $id;
+        }
+        else {
+            $ids = Input::get();
+        }
+
+        foreach ($ids as $id) {
+            $this->crudService->delete($id);
+        }
+
+        return Response::make(null, 200);
 	}
 
 	/**
