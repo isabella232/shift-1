@@ -15,7 +15,7 @@ class CreateRolesTable extends Migration
 		Schema::create('roles', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->bigInteger('account_id')->index()->nullable();
+			$table->bigInteger('account_id')->unsigned()->index()->nullable();
 			$table->smallInteger('access')->unsigned()->default(0);
 			$table->string('name');
             $table->boolean('default')->index();
