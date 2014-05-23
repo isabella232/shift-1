@@ -1,3 +1,3 @@
 <?php
 
-Artisan::add(new \Tectonic\Shift\Commands\Generator\Generate);
+//Artisan::add(new \Tectonic\Shift\Commands\Generator\Generate);

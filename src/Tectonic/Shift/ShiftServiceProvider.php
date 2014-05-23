@@ -127,5 +127,11 @@ class ShiftServiceProvider extends ServiceProvider
             $roleModel = new \Tectonic\Shift\Modules\Security\Models\Role();
             return new \Tectonic\Shift\Modules\Security\Repositories\RoleRepository($roleModel);
         });
+
+        // Register CustomFieldRepositoryInterface binding
+        $this->app->bind('Tectonic\Shift\Modules\CustomFields\Repositories\CustomFieldRepositoryInterface', function($app) {
+            $customFieldsModel = new \Tectonic\Shift\Modules\CustomFields\Models\CustomField();
+            return new \Tectonic\Shift\Modules\CustomFields\Repositories\SqlCustomFieldRepository($customFieldsModel);
+        });
     }
 }
