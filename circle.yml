@@ -1,3 +1,7 @@
 machine:
   php:
     version: 5.4.6
+
+dependencies:
+  pre:
+    - composer install --prefer-source --no-interaction --no-progress -vvv

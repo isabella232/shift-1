@@ -75,7 +75,8 @@ abstract class BaseController extends Controller
 	}
 
 	/**
-	 * Remove the specified resource from storage.
+	 * Remove the specified resource from storage. If no id is provided as part of the URL,
+     * then it will look to the delete's payload, which should be an array of ids to remove.
 	 *
 	 * @param  int  $id
 	 * @return Response
