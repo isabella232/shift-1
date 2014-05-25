@@ -32,7 +32,7 @@
 	"repositories": [
 		{
 			"type": "vcs",
-			"url": "git://github.com/orchestral/phpseclib.git"
+			"url": "git@github.com:orchestral/phpseclib.git"
 		}
 	]
 }

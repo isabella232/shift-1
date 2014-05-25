@@ -12,5 +12,33 @@
 
 final class Bouncer
 {
+	private $resource;
 
+	private $matrix;
+
+	public function __construct($resource)
+	{
+		$this->resource = $resource;
+	}
+
+	public function addRequiredAccess()
+	{
+
+	}
+
+	public function registerDefaultAccess()
+	{
+		// Setup the default matrix conditions
+		$this->addRequiredAccess('get', 'index', 'read');
+		$this->addRequiredAccess('get', 'export', 'read');
+		$this->addRequiredAccess('get', 'view', 'read');
+		$this->addRequiredAccess('post', 'index', 'create');
+		$this->addRequiredAccess('put', 'update', 'update');
+		$this->addRequiredAccess('delete', 'index', 'delete');
+
+		$this->init();
+
+		// Fire an event to allow other modules to define permissions
+		Event::fire( 'access.' . strtolower( Str::plural( $this->resource() ) ), [ $this ] );
+	}
 }
