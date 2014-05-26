@@ -68,6 +68,16 @@ final class AuthenticatedConsumer
 	}
 
 	/**
+	 * Returns the consumer object that is currently authenticated against the API.
+	 *
+	 * @return Consumer
+	 */
+	public function getConsumer()
+	{
+		return $this->consumer;
+	}
+
+	/**
 	 * Defines whether or not a given permission is allowable. That is, that either:
 	 *
 	 * - the allow array element is defined and set to true OR
