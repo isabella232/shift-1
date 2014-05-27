@@ -1,5 +1,6 @@
 <?php namespace Tectonic\Shift\Library\Authorization;
 
+use Log;
 use Illuminate\Support\Str;
 
 /**
@@ -117,7 +118,7 @@ final class Bouncer
 			$action = $this->determineAction($method);
 		}
 
-//		Log::info('ACCESS REQUEST: FROM ' . $this->resource . ' WITH ' . $method .' TO ' . $action);
+		Log::info('ACCESS REQUEST: FROM ' . $this->resource . ' WITH ' . $method .' TO ' . $action);
 
 		// let's see if such an action and resource exists in the matrix
 		if (isset($this->matrix[$method][$action])) {
@@ -155,7 +156,7 @@ final class Bouncer
 			}
 		}
 
-//		Log::info('ACCESS REQUEST: DENIED');
+		Log::info('ACCESS REQUEST: DENIED');
 
 		return false;
 	}
@@ -169,7 +170,7 @@ final class Bouncer
 	 */
 	private function authoriseByFunction(\Closure $function)
 	{
-//		Log::info('ACCESS REQUEST: Auth check defined as an anonymous function.');
+		Log::info('ACCESS REQUEST: Auth check defined as an anonymous function.');
 
 		return $function();
 	}
@@ -191,7 +192,7 @@ final class Bouncer
 		}
 
 		if ($this->consumer->can($rule, $resource)) {
-//			Log::info('ACCESS REQUEST: GRANTED FROM ' . $resource . ' ON RULE: ' . $rule);
+			Log::info('ACCESS REQUEST: GRANTED FROM ' . $resource . ' ON RULE: ' . $rule);
 			return true;
 		}
 	}
