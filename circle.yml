@@ -4,4 +4,4 @@ machine:
 
 dependencies:
   pre:
-    - composer install --prefer-source --no-interaction --no-progress -vvv
+    - composer config --global github-oauth.github.com 8af454cd0cb6cd9af4e7699fe4aba439e257651e
