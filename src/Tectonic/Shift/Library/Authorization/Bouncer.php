@@ -160,15 +160,27 @@ final class Bouncer
 		return false;
 	}
 
-	private function authoriseByFunction($function)
+	/**
+	 * Some authorization requires very complex conditions. Passing a callback as part of the rule requirement
+	 * for the matrix allows this functionality. This method executes and returns the result of that callback.
+	 *
+	 * @param \Closure $function
+	 * @return bool
+	 */
+	private function authoriseByFunction(\Closure $function)
 	{
 //		Log::info('ACCESS REQUEST: Auth check defined as an anonymous function.');
 
-		if ($function()) return true;
-
-		return false;
+		return $function();
 	}
 
+	/**
+	 * The default authorization check. See if access is provided for a given permission rule and resource.
+	 *
+	 * @param $rule
+	 * @param null $resource
+	 * @return bool
+	 */
 	private function authoriseByRule($rule, $resource = null)
 	{
 		// Guest access allowed
