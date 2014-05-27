@@ -23,6 +23,10 @@ final class AuthenticatedConsumer
 	 */
 	private $consumer;
 
+	/**
+	 * @param Consumer $consumer
+	 * @param Authority $authority
+	 */
 	public function __construct(Consumer $consumer, Authority $authority)
 	{
 		$this->authority = $authority;

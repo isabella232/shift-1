@@ -7,14 +7,15 @@ use Tectonic\Shift\Library\Authorization\AuthenticatedConsumer;
 class AuthenticatedConsumerTest extends PHPUnit_Framework_TestCase
 {
 	private $authenticatedConsumer;
+	private $consumer;
 	private $mockAuthority;
 
 	public function setUp()
 	{
-		$consumer = new Consumer(1);
+		$this->consumer = new Consumer(1);
 		$this->mockAuthority = m::mock('Authority\Authority');
 
-		$this->authenticatedConsumer = new AuthenticatedConsumer($consumer, $this->mockAuthority);
+		$this->authenticatedConsumer = new AuthenticatedConsumer($this->consumer, $this->mockAuthority);
 	}
 
 	public function tearDown()
@@ -35,6 +36,11 @@ class AuthenticatedConsumerTest extends PHPUnit_Framework_TestCase
 		$this->mockAuthority->shouldReceive('allow')->with('create', 'User')->once();
 
 		$this->authenticatedConsumer->setPermissions($permissions);
+	}
+
+	public function testGetConsumer()
+	{
+		$this->assertEquals($this->consumer, $this->authenticatedConsumer->getConsumer());
 	}
 
 	public function testGetAuthority()

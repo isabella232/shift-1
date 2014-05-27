@@ -1,5 +1,7 @@
 <?php namespace Tectonic\Shift\Library\Authorization;
 
+use Illuminate\Support\Str;
+
 /**
  * Class Bouncer
  *
@@ -88,14 +90,14 @@ final class Bouncer
 		$method = $this->method($method);
 
 		if (!isset($this->matrix[$method])) {
-			$this->matrix[$method] = array();
+			$this->matrix[$method] = [];
 		}
 
 		if (!isset($this->matrix[$method][$action])) {
-			$this->matrix[$method][$action] = [$access_requirement];
+			$this->matrix[$method][$action] = $access_requirement;
 		}
 		else {
-			$this->matrix[$method][$action][] = $access_requirement;
+			$this->matrix[$method][$action] = array_merge($this->matrix[$method][$action], $access_requirement);
 		}
 	}
 
@@ -115,7 +117,7 @@ final class Bouncer
 			$action = $this->determineAction($method);
 		}
 
-		Log::info('ACCESS REQUEST: FROM ' . $this->resource . ' WITH ' . $method .' TO ' . $action);
+//		Log::info('ACCESS REQUEST: FROM ' . $this->resource . ' WITH ' . $method .' TO ' . $action);
 
 		// let's see if such an action and resource exists in the matrix
 		if (isset($this->matrix[$method][$action])) {
@@ -143,7 +145,7 @@ final class Bouncer
 						}
 						else {
 							// 'any' means anyone can do it
-							if ($rule == 'any' or $this->authoriseByRule($rule, $this_resource)) return true;
+							if ($this->authoriseByRule($rule, $this_resource)) return true;
 						}
 					}
 				}
@@ -153,28 +155,31 @@ final class Bouncer
 			}
 		}
 
-		Log::info('ACCESS REQUEST: DENIED');
+//		Log::info('ACCESS REQUEST: DENIED');
 
 		return false;
 	}
 
 	private function authoriseByFunction($function)
 	{
-		Log::info('ACCESS REQUEST: Auth check defined as an anonymous function.');
+//		Log::info('ACCESS REQUEST: Auth check defined as an anonymous function.');
 
-		if ($function(\Request::route())) return true;
+		if ($function()) return true;
 
 		return false;
 	}
 
 	private function authoriseByRule($rule, $resource = null)
 	{
+		// Guest access allowed
+		if ('any' == $rule) return true;
+
 		if (is_null($resource)) {
 			$resource = $this->resource;
 		}
 
 		if ($this->consumer->can($rule, $resource)) {
-			Log::info('ACCESS REQUEST: GRANTED FROM ' . $resource . ' ON RULE: ' . $rule);
+//			Log::info('ACCESS REQUEST: GRANTED FROM ' . $resource . ' ON RULE: ' . $rule);
 			return true;
 		}
 	}
@@ -220,6 +225,16 @@ final class Bouncer
 	}
 
 	/**
+	 * Returns the matrix that has been previously defined.
+	 *
+	 * @return array
+	 */
+	public function getMatrix()
+	{
+		return $this->matrix;
+	}
+
+	/**
 	 * Does some basic transformation for methods, to set a standard use
 	 *
 	 * @param string $method
@@ -228,6 +243,6 @@ final class Bouncer
 	 */
 	private function method($method)
 	{
-		return \Str::lower($method);
+		return Str::lower($method);
 	}
 }
