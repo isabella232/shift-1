@@ -27,8 +27,6 @@ class CustomFieldRepositoryTest extends TestCase
     {
         parent::setUp();
 
-        Mockery::close(); // Destroy any existing mocks before creating new ones
-
         $this->cleanData = [
             'resource'     => 'user',
             'type'         => 'text',
@@ -47,6 +45,15 @@ class CustomFieldRepositoryTest extends TestCase
     }
 
     /**
+     * Runs after every test
+     */
+    public function tearDown()
+    {
+        parent::tearDown();
+        Mockery::close(); // Destroy any existing mocks before creating new ones
+    }
+
+    /**
      * Test repository calls the correct methods on CREATE operation.
      *
      * @test
@@ -61,7 +68,7 @@ class CustomFieldRepositoryTest extends TestCase
         $repository = new SqlCustomFieldRepository($this->mockModel);
 
         // Act
-        $newModel   = $repository->getNew($this->cleanData);
+        $newModel = $repository->getNew($this->cleanData);
 
         // Assert
         $this->assertSame($this->mockModel, $newModel);
@@ -75,7 +82,7 @@ class CustomFieldRepositoryTest extends TestCase
     public function testRepositoryPerformsReadOperations()
     {
         // Arrange
-        $repository  = new SqlCustomFieldRepository($this->mockModel);
+        $repository = new SqlCustomFieldRepository($this->mockModel);
         $this->mockModel
             ->shouldReceive('find')
             ->once()
@@ -96,21 +103,41 @@ class CustomFieldRepositoryTest extends TestCase
     public function testRepositoryPerformsUpdateOperation()
     {
         // Arrange
-        $repository = new SqlCustomFieldRepository($this->mockModel);
+        $repository   = new SqlCustomFieldRepository($this->mockModel);
         $resourceMock = Mockery::mock('Tectonic\Shift\Modules\CustomFields\Models\CustomField');
-        $data = [ 'type' => 'aDifferentType' ];
+        $data         = ['type' => 'aDifferentType'];
 
         // This test goes MENTAL if you say 'shouldReceive('touch') ???
-        /*$resourceMock
+        $resourceMock
             ->shouldReceive('fill')->with($data)->once()
             ->shouldReceive('getDirty')->once()
             ->shouldReceive('touch')->once()
-            ->andReturn('resourceUpdated');*/
+            ->andReturn($resourceMock);
 
         // Act
-        //$result = $repository->update($resourceMock, $data);
+        $result = $repository->update($resourceMock, $data);
 
         // Assert
-        //$this->assertEquals($result, 'resourceUpdated');
+        $this->assertSame($resourceMock, $result);
+    }
+
+    /**
+     * Test repository performs DELETE by calling correct methods
+     *
+     * @test
+     */
+    public function testRepositoryPerformsDeleteOperation()
+    {
+        // Arrange
+        $resourceOne = Mockery::mock('Tectonic\Shift\Modules\CustomFields\Models\CustomField');
+        $repository  = new SqlCustomFieldRepository($this->mockModel);
+
+        $resourceOne->shouldReceive('delete')->once()->andReturn($resourceOne);
+
+        // Act
+        $result = $repository->delete($resourceOne);
+
+        // Assert
+        $this->assertSame($resourceOne, $result);
     }
 }

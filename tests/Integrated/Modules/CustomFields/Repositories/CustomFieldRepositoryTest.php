@@ -130,6 +130,25 @@ class CustomFieldRepositoryTest extends TestCase
     }
 
     /**
+     * Test repository can DELETE a resource
+     *
+     * @test
+     */
+    public function testRepositoryPerformsDeleteOperation()
+    {
+        // Arrange
+        $this->populateCustomFieldTable();
+        $model = $this->repository->getById(1);
+
+        // Act
+        $this->repository->delete($model, true);
+        $result = $this->repository->getById(1);
+
+        //Assert
+        $this->assertEmpty($result);
+    }
+
+    /**
      * Helper: populate custom_field table with an entry for testing.
      *
      * Result: 1 CustomField record with an ID:1
