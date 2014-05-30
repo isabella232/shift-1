@@ -27,6 +27,8 @@ class CustomFieldRepositoryTest extends TestCase
     {
         parent::setUp();
 
+        Mockery::close(); // Destroy any existing mocks before creating new ones
+
         $this->cleanData = [
             'resource'     => 'user',
             'type'         => 'text',
@@ -42,8 +44,6 @@ class CustomFieldRepositoryTest extends TestCase
         ];
 
         $this->repository = new SqlCustomFieldRepository(new CustomField());
-
-        Mockery::close(); // Destroy any existing mocks before creating new ones
     }
 
     /**
@@ -125,7 +125,8 @@ class CustomFieldRepositoryTest extends TestCase
         $result = $this->repository->update($resource, $updateData);
 
         // Assert
-        //$this->assertNotSame($resource->resource, $result->resource);
+        $this->assertEquals($result->resource, 'user');
+        $this->assertEquals($result->type, 'checkbox');
     }
 
     /**
