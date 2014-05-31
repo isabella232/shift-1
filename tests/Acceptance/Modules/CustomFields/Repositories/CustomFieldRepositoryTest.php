@@ -1,4 +1,4 @@
-<?php namespace Tests\Integrated\Modules\CustomFields\Repositories;
+<?php namespace Tests\Acceptance\Modules\CustomFields\Repositories;
 
 use Mockery;
 use Tests\TestCase;

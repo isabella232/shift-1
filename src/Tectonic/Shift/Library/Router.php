@@ -43,11 +43,11 @@ class Router extends \Illuminate\Routing\Router
 		}
 
 		if (array_search('get.view', $routes) !== false) {
-			$this->get("{$path}/(:num)", array("uses" => "{$class}@getShow"));
+			$this->get("{$path}/{id}", "{$class}@getShow");
 		}
 
 		if (array_search('put.update', $routes) !== false) {
-			$this->put("{$path}/(:num)", array("uses" => "{$class}@putUpdate"));
+			$this->put("{$path}/{id}", "{$class}@putUpdate");
 		}
 
 		if (array_search('get.index', $routes) !== false) {
@@ -59,7 +59,7 @@ class Router extends \Illuminate\Routing\Router
 		}
 
 		if (array_search('delete.destroy', $routes) !== false) {
-			$this->delete("{$path}/(:num)", "{$class}@deleteDestroy");
+			$this->delete("{$path}/{id}", "{$class}@deleteDestroy");
 			$this->delete($path, "{$class}@deleteDestroy");
 		}
 	}

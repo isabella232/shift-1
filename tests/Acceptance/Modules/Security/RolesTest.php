@@ -101,7 +101,13 @@ class RolesTest extends TestCase
 
     public function testUpdateRole()
     {
+        $existingRole = $this->createNewRole();
 
+        $this->call('PUT', 'roles/'.$existingRole->id, ['name' => 'Updated role name']);
+
+        $updatedRole = $this->roleModel->whereId($existingRole->id)->first();
+
+        $this->assertEquals('Updated role name', $updatedRole->name);
     }
 
     private function createNewRole($data = [])
@@ -113,8 +119,8 @@ class RolesTest extends TestCase
             'name' => 'Existing role'
         ];
 
-        $role = $this->roleModel->create($existingRoleData);
+        $existingRoleData = array_merge($defaultData, $data);
 
-        return $newRole;
+        return $this->roleModel->create($existingRoleData);
     }
 }
