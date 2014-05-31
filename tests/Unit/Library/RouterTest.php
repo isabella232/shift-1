@@ -32,7 +32,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase
     /**
      * Offers a more complete test of the routing functionality. Made some changes, decided to add a new
      * test rather than modify an existing one which works just fine. //- Kirk
-     * 
+     *
      * @covers Router::collection
      */
     public function testCompleteSetup()
