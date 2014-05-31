@@ -69,10 +69,11 @@ class RolesTest extends TestCase
     public function testGetAllRoles()
     {
         // Act
-        $this->call('GET', 'roles');
+        $this->response = $this->call('GET', 'roles');
 
         // Assert
         $this->assertResponseOk();
+        $this->assertEquals([], $this->parseResponse()->data);
     }
 
     public function testDeleteRole()
@@ -103,13 +104,33 @@ class RolesTest extends TestCase
     {
         $existingRole = $this->createNewRole();
 
-        $this->call('PUT', 'roles/'.$existingRole->id, ['name' => 'Updated role name']);
+        $this->response = $this->call('PUT', 'roles/'.$existingRole->id, ['name' => 'Updated role name']);
 
         $updatedRole = $this->roleModel->whereId($existingRole->id)->first();
 
         $this->assertEquals('Updated role name', $updatedRole->name);
+        $this->assertEquals($updatedRole->toArray(), $this->parseResponse(true));
     }
 
+    public function testGetSpecificRole()
+    {
+        $existingRole = $this->createNewRole();
+
+        $this->response = $this->call('GET', 'roles/'.$existingRole->id);
+        $parsedRole = $this->parseResponse();
+
+        $this->assertEquals($existingRole->account_id, $parsedRole->account_id);
+        $this->assertEquals($existingRole->id, $parsedRole->id);
+        $this->assertEquals($existingRole->name, $parsedRole->name);
+        $this->assertEquals((int) $existingRole->default, $parsedRole->default);
+    }
+
+    /**
+     * Used to create new role objects, including using some default data if no requirements are needed.
+     *
+     * @param array $data
+     * @return mixed
+     */
     private function createNewRole($data = [])
     {
         $defaultData = [
