@@ -1,4 +1,6 @@
-<?php namespace Tests\Api\Security;
+<?php
+
+namespace Tests\Api\Security;
 
 use Tests\TestCase;
 use Illuminate\Support\Facades\Route;

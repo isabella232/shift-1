@@ -69,7 +69,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
 			'--path' => 'src/migrations'
 		]);
 
-        // Sanity check. This will fail if migrations failed.
+        // Sanity check. This will fail if migrations failed for whatever reason
         DB::table('roles')->get();
 	}
 

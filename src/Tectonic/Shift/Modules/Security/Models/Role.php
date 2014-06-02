@@ -16,6 +16,14 @@ class Role extends BaseModel
     public $fillable = ['name', 'access', 'default'];
 
     /**
+     * Represents the account that this role belongs to.
+     */
+    public function account()
+    {
+        return $this->belongsTo('Tectonic\Shift\Modules\Accounts\Models\Account');
+    }
+
+    /**
      * Sets the join for the permissions that roles employ.
      *
      * @return mixed
