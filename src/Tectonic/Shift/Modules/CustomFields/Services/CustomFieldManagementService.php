@@ -1,9 +1,10 @@
 <?php namespace Tectonic\Shift\Modules\CustomFields\Services;
 
+use Tectonic\Shift\Library\Support\BaseManagementService;
 use Tectonic\Shift\Modules\CustomFields\Validators\CustomFieldValidator;
 use Tectonic\Shift\Modules\CustomFields\Repositories\CustomFieldRepositoryInterface;
 
-class CustomFieldManagementService
+class CustomFieldManagementService extends BaseManagementService
 {
     protected $repository;
 
