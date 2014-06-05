@@ -47,28 +47,6 @@ class CustomFieldRepositoryTest extends TestCase
     }
 
     /**
-     * Test repository calls the correct methods on CREATE operation.
-     *
-     * @test
-     */
-    public function testRepositoryPerformsCreateOperations()
-    {
-        // Arrange
-        $model = Mockery::mock('Tectonic\Shift\Modules\CustomFields\Models\CustomField');
-        $model->shouldReceive('newInstance')
-            ->with($this->cleanData)
-            ->once()
-            ->andReturn($model);
-        $repository = new SqlCustomFieldRepository($model);
-
-        // Act
-        $newModel   = $repository->getNew($this->cleanData);
-
-        // Assert
-        $this->assertSame($model, $newModel);
-    }
-
-    /**
      * Test repository can READ a record by id.
      *
      * @test
