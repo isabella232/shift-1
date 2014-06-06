@@ -15,5 +15,4 @@ class RoleManagementService extends BaseManagementService
         $this->repository = $repository;
         $this->validator = $validator;
     }
-
 }

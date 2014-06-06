@@ -11,11 +11,11 @@ class CustomFieldController extends BaseController
     public function __construct(
         CustomFieldRepositoryInterface $repository,
         CustomFieldValidator $validator,
-        CustomFieldManagementService $crudService
+        CustomFieldManagementService $service
     ) {
         $this->validator   = $validator;
         $this->repository  = $repository;
-        $this->crudService = $crudService;
+        $this->crudService = $service;
     }
 
 }

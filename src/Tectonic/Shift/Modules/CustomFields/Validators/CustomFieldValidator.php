@@ -11,4 +11,6 @@ class CustomFieldValidator extends Validator
         'field_title' => ['required']
     ];
 
+    // TODO: Validate that field_code is unique for a given resource
+
 }

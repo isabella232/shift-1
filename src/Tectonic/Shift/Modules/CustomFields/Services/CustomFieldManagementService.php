@@ -6,31 +6,13 @@ use Tectonic\Shift\Modules\CustomFields\Repositories\CustomFieldRepositoryInterf
 
 class CustomFieldManagementService extends BaseManagementService
 {
-    protected $repository;
-
-    protected $validator;
-
+    /**
+     * @param CustomFieldRepositoryInterface $repository
+     * @param CustomFieldValidator           $validator
+     */
     public function __construct(CustomFieldRepositoryInterface $repository, CustomFieldValidator $validator)
     {
         $this->repository = $repository;
         $this->validator = $validator;
     }
-
-    public function create($data)
-    {
-        $this->validator
-            ->setInput($data)
-            ->forMethod('create')
-            ->validate();
-
-        $resource = $this->repository->getNew($data);
-
-        return $this->repository->save($resource);
-    }
-
-    public function get($id)
-    {
-        return $this->repository->requiredById($id);
-    }
-
 }
