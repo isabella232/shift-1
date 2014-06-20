@@ -1,0 +1,24 @@
+<div class="container">
+    <div class="island"></div>
+
+    <div validation-errors></div>
+
+    <div class="row">
+        <div class="column-half">
+            <div ng-controller="sessions.auth">
+                <div ng-hide="forgotten" ng-controller="sessions.new">
+                    <div ng-include="viewPath('sessions/new.html', 'shift')"></div>
+                </div>
+                <div ng-show="forgotten" ng-controller="sessions.forgot">
+                    <div ng-include="viewPath('sessions/forgot.html', 'shift')"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="column-half">
+            <div ng-show="settings[ 'app.site.registrations' ]" ng-controller="users.register">
+                <div ng-include="viewPath('users/register.html', 'shift')"></div>
+            </div>
+        </div>
+    </div>
+</div>

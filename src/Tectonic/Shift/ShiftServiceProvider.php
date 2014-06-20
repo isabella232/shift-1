@@ -32,9 +32,12 @@ class ShiftServiceProvider extends ServiceProvider
         $this->registerViewFinder();
         $this->registerRouter();
         $this->registerAuthorityConfiguration();
+        $this->registerAssetContainer();
 
 		$this->bootFile('routes');
 		$this->bootFile('commands');
+
+
     }
 
 	/**
@@ -83,6 +86,17 @@ class ShiftServiceProvider extends ServiceProvider
 		// 	return new FileViewFinder($app['files'], $paths);
 		// });
 	}
+
+    /**
+     * Register the Asset container. This is an extended version of
+     * Orchetra\Asset\Factory
+     */
+    public function registerAssetContainer()
+    {
+        $this->app->bindShared('shift.asset', function($app) {
+            return new \Tectonic\Shift\Library\Support\Asset($app['orchestra.asset.dispatcher']);
+        });
+    }
 
 	/**
 	 * Get the services provided by the provider.

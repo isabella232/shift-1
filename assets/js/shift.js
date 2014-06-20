@@ -8,7 +8,7 @@
 
 	var module = angular.module('shift', dependencies);
 
-	module.config(['$locationProvider', 'ShiftRouteProvider' function($location, Router) {
+	module.config(['$locationProvider', 'ShiftRouteProvider', function($location, Router) {
 		$location.html5Mode(true);
 
 		Router.register('404', {
