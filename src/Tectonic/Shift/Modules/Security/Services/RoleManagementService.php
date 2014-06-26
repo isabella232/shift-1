@@ -1,6 +1,6 @@
 <?php namespace Tectonic\Shift\Modules\Security\Services;
 
-use Tectonic\Shift\Modules\Security\Repositories\RoleRepository;
+use Tectonic\Shift\Modules\Security\Repositories\RoleRepositoryInterface;
 use Tectonic\Shift\Modules\Security\Validators\RoleValidator;
 
 class RoleManagementService
@@ -13,10 +13,10 @@ class RoleManagementService
     public $roleRepository;
 
     /**
-     * @param RoleRepository $roleRepository
+     * @param RoleRepositoryInterface $roleRepository
      * @param RoleValidator $roleValidator
      */
-    public function __construct(RoleRepository $roleRepository, RoleValidator $roleValidator)
+    public function __construct(RoleRepositoryInterface $roleRepository, RoleValidator $roleValidator)
     {
         $this->roleRepository = $roleRepository;
         $this->roleValidator = $roleValidator;
@@ -49,7 +49,7 @@ class RoleManagementService
     {
         return $this->roleRepository->requireById($id);
     }
-
+lwg5app66r
     /**
      * Update a specific role, based on the id provided.
      *

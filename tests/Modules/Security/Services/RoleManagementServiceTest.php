@@ -11,7 +11,7 @@ class RoleManagementServiceTest extends Tests\TestCase
     {
         parent::setUp();
 
-        $this->mockRepository  = m::mock('Tectonic\Shift\Modules\Security\Repositories\RoleRepository');
+        $this->mockRepository  = m::mock('Tectonic\Shift\Modules\Security\Repositories\RoleRepositoryInterface');
         $this->mockValidator   = m::mock('Tectonic\Shift\Modules\Security\Validators\RoleValidator');
 
         $this->service  = new RoleManagementService($this->mockRepository, $this->mockValidator);

@@ -170,9 +170,13 @@ final class Bouncer
 	 */
 	private function authoriseByFunction(\Closure $function)
 	{
-		Log::info('ACCESS REQUEST: Auth check defined as an anonymous function.');
+		$access = $function();
 
-		return $function();
+		if ($access) {
+			Log::info("ACCESS REQUEST: GRANTED for anonymous function.");
+		}
+
+		return $access;
 	}
 
 	/**
@@ -195,6 +199,8 @@ final class Bouncer
 			Log::info('ACCESS REQUEST: GRANTED FROM ' . $resource . ' ON RULE: ' . $rule);
 			return true;
 		}
+
+		return false;
 	}
 
 	/**

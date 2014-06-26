@@ -22,6 +22,11 @@ class BaseControllerTest extends Tests\TestCase
 		$this->controller  = new BaseControllerStub($this->mockService);
 	}
 
+	public function testAccessFilter()
+	{
+		$this->controller->accessFilter($route, $request);
+	}
+
 	public function testGetIndex()
 	{
 		$searchMock = m::mock('searchclass');

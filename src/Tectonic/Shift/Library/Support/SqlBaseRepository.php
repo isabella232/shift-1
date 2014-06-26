@@ -30,7 +30,6 @@ abstract class SqlBaseRepository implements BaseRepositoryInterface
      * @param integer $id
      *
      * @return Resource
-     * @throws ModelNotFoundException
      */
     public function getById($id)
     {
@@ -44,6 +43,7 @@ abstract class SqlBaseRepository implements BaseRepositoryInterface
      * @param $id
      *
      * @return Resource
+     * @throws ModelNotFoundException
      */
     public function requireById($id)
     {
