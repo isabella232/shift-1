@@ -11,8 +11,17 @@
          syntaxCheck="false"
 >
     <testsuites>
-        <testsuite name="Package Test Suite">
+        <testsuite name="all">
             <directory suffix="Test.php">./tests/</directory>
+        </testsuite>
+        <testsuite name="api">
+            <directory suffix="Test.php">./tests/Api</directory>
+        </testsuite>
+        <testsuite name="integrated">
+            <directory suffix="Test.php">./tests/Integrated</directory>
+        </testsuite>
+        <testsuite name="unit">
+            <directory suffix="Test.php">./tests/Unit</directory>
         </testsuite>
     </testsuites>
 </phpunit>

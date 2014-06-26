@@ -24,7 +24,7 @@ class UserSearch extends \Tectonic\Shift\Library\Search\Search
 
 	public function registerFilters()
 	{
-		$this->addFilter($this->keywordFilter);
-		$this->addFilter($this->orderFilter);
-	}
+        $this->addFilter($this->orderFilter);
+        $this->addFilter($this->keywordFilter);
+    }
 }
