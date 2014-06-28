@@ -1,5 +1,6 @@
 <?php namespace Tectonic\Shift\Library\Authorization;
 
+use Log;
 use Illuminate\Support\Str;
 
 /**
@@ -117,7 +118,7 @@ final class Bouncer
 			$action = $this->determineAction($method);
 		}
 
-//		Log::info('ACCESS REQUEST: FROM ' . $this->resource . ' WITH ' . $method .' TO ' . $action);
+		Log::info('ACCESS REQUEST: FROM ' . $this->resource . ' WITH ' . $method .' TO ' . $action);
 
 		// let's see if such an action and resource exists in the matrix
 		if (isset($this->matrix[$method][$action])) {
@@ -155,20 +156,36 @@ final class Bouncer
 			}
 		}
 
-//		Log::info('ACCESS REQUEST: DENIED');
+		Log::info('ACCESS REQUEST: DENIED');
 
 		return false;
 	}
 
-	private function authoriseByFunction($function)
+	/**
+	 * Some authorization requires very complex conditions. Passing a callback as part of the rule requirement
+	 * for the matrix allows this functionality. This method executes and returns the result of that callback.
+	 *
+	 * @param \Closure $function
+	 * @return bool
+	 */
+	private function authoriseByFunction(\Closure $function)
 	{
-//		Log::info('ACCESS REQUEST: Auth check defined as an anonymous function.');
+		$access = $function();
 
-		if ($function()) return true;
+		if ($access) {
+			Log::info("ACCESS REQUEST: GRANTED for anonymous function.");
+		}
 
-		return false;
+		return $access;
 	}
 
+	/**
+	 * The default authorization check. See if access is provided for a given permission rule and resource.
+	 *
+	 * @param $rule
+	 * @param null $resource
+	 * @return bool
+	 */
 	private function authoriseByRule($rule, $resource = null)
 	{
 		// Guest access allowed
@@ -179,9 +196,11 @@ final class Bouncer
 		}
 
 		if ($this->consumer->can($rule, $resource)) {
-//			Log::info('ACCESS REQUEST: GRANTED FROM ' . $resource . ' ON RULE: ' . $rule);
+			Log::info('ACCESS REQUEST: GRANTED FROM ' . $resource . ' ON RULE: ' . $rule);
 			return true;
 		}
+
+		return false;
 	}
 
 	/**

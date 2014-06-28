@@ -3,7 +3,6 @@
 namespace Tests\Api\Security;
 
 use Tests\TestCase;
-use Illuminate\Support\Facades\Route;
 use Tectonic\Shift\Modules\Security\Models\Role;
 
 class RolesTest extends TestCase
