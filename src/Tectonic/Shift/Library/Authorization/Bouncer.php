@@ -197,6 +197,7 @@ final class Bouncer
 
 		if ($this->consumer->can($rule, $resource)) {
 			Log::info('ACCESS REQUEST: GRANTED FROM ' . $resource . ' ON RULE: ' . $rule);
+
 			return true;
 		}
 

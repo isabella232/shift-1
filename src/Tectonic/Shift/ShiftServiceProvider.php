@@ -109,6 +109,9 @@ class ShiftServiceProvider extends ServiceProvider
 		require __DIR__.'/../../boot/'.$file.'.php';
 	}
 
+    /**
+     * Loads the required bindings for the shift application, namely setting up interface contracts.
+     */
     protected function loadBindings()
     {
         // Register Utility Binding
@@ -121,10 +124,26 @@ class ShiftServiceProvider extends ServiceProvider
 	    $this->bind('Modules\CustomFields\Repositories\CustomFieldRepositoryInterface', 'Modules\CustomFields\Repositories\CustomFieldRepository');
     }
 
-	public function bind($name, $class)
+    /**
+     * Shofthand method for setting bindings, ensuring that the Tectonic\Shift namespace does not
+     * need to be provided with each call when setting up bindings. They can, however - be provided
+     * if necessary.
+     *
+     * @param $name
+     * @param $class
+     */
+    public function bind($name, $class)
 	{
 		$rootNamespace = 'Tectonic\\Shift\\';
 
-		$this->app->bind($rootNamespace.$name, $rootNamespace.$class);
+        if (!str_contains($name, $rootNamespace)) {
+            $name = $rootNamespace.$name;
+        }
+
+        if (!str_contains($class, $rootNamespace)) {
+            $class = $rootNamespace.$class;
+        }
+
+		$this->app->bind($name, $class);
 	}
 }
