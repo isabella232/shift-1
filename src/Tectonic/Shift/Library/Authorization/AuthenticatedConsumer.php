@@ -19,15 +19,15 @@ final class AuthenticatedConsumer
 	private $authority;
 
 	/**
-	 * @var Consumer
+	 * @var UserConsumer
 	 */
 	private $consumer;
 
 	/**
-	 * @param Consumer $consumer
+	 * @param ConsumerInterface $consumer
 	 * @param Authority $authority
 	 */
-	public function __construct(Consumer $consumer, Authority $authority)
+	public function __construct(ConsumerInterface $consumer, Authority $authority)
 	{
 		$this->authority = $authority;
 		$this->consumer = $consumer;
@@ -74,12 +74,32 @@ final class AuthenticatedConsumer
 	/**
 	 * Returns the consumer object that is currently authenticated against the API.
 	 *
-	 * @return Consumer
+	 * @return UserConsumer
 	 */
 	public function getConsumer()
 	{
 		return $this->consumer;
 	}
+
+    /**
+     * Returns the accounts that this consumer can safely manage and work with.
+     *
+     * @return array
+     */
+    public function getAccounts()
+    {
+        return $this->getConsumer()->getAccounts();
+    }
+
+    /**
+     * Return the account id that the consumer is currently managing.
+     *
+     * @return mixed
+     */
+    public function getAccountId()
+    {
+        return $this->getConsumer()->accountId;
+    }
 
 	/**
 	 * Defines whether or not a given permission is allowable. That is, that either:

@@ -11,4 +11,15 @@ class UserRepository extends SqlBaseRepository implements UserRepositoryInterfac
 	{
 		$this->setModel($user);
 	}
+
+    /**
+     * Returns a user object based on the email address provided.
+     *
+     * @param $email
+     * @return mixed
+     */
+    public function getByEmail($email)
+    {
+        return $this->model->whereEmail($email)->get();
+    }
 }

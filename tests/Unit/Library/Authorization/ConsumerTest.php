@@ -1,7 +1,7 @@
 <?php
 
 use Mockery as m;
-use Tectonic\Shift\Library\Authorization\Consumer;
+use Tectonic\Shift\Library\Authorization\UserConsumer;
 
 class ConsumerTest extends \PHPUnit_Framework_TestCase
 {
@@ -12,7 +12,7 @@ class ConsumerTest extends \PHPUnit_Framework_TestCase
 
 	public function testConsumerConstruction()
 	{
-		$consumer = new Consumer(1);
+		$consumer = new UserConsumer(1);
 
 		$this->assertEquals(1, $consumer->id);
 	}

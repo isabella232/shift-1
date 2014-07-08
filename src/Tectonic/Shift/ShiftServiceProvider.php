@@ -125,7 +125,7 @@ class ShiftServiceProvider extends ServiceProvider
     }
 
     /**
-     * Shofthand method for setting bindings, ensuring that the Tectonic\Shift namespace does not
+     * Short hand method for setting bindings, ensuring that the Tectonic\Shift namespace does not
      * need to be provided with each call when setting up bindings. They can, however - be provided
      * if necessary.
      *

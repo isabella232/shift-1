@@ -1,6 +1,7 @@
 <?php
 
 namespace Tectonic\Shift\Modules\Accounts\Services;
+use Tectonic\Shift\Library\Authorization\AuthenticatedConsumer;
 
 /**
  * Class AccountsService
@@ -10,21 +11,32 @@ namespace Tectonic\Shift\Modules\Accounts\Services;
  *
  * @package Tectonic\Shift\Modules\Accounts\Services
  */
+
 class AccountsService
 {
+    /**
+     * @var \Tectonic\Shift\Library\Authorization\AuthenticatedConsumer
+     */
+    private $authenticatedConsumer;
+
+    /**
+     * @param AuthenticatedConsumer $authenticatedConsumer
+     */
+    public function __construct(AuthenticatedConsumer $authenticatedConsumer)
+    {
+        $this->authenticatedConsumer = $authenticatedConsumer;
+    }
+    
     /**
      * Returns the account id for the currently authenticated user or 3rd party API token, and the
      * account that they are CURRENTLY working with. An authenticated consumer can have access to
      * numerous accounts, but will only work with one account at any given time.
      *
-     * @todo Implement logic for 3rd party api token, as well as checks against the accounts the
-     * user can actually manage.
-     *
-     * @return mixed
+     * @return integer
      */
     public function getCurrentAccountId()
     {
-        $accounts = $this->getAccounts();
+        return $this->authenticatedConsumer->getAccountId();
     }
 
     /**
