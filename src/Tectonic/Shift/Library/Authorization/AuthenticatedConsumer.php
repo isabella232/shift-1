@@ -98,7 +98,7 @@ final class AuthenticatedConsumer
      */
     public function getAccountId()
     {
-        return $this->getConsumer()->accountId;
+        return $this->getConsumer()->getAccountId();
     }
 
 	/**
