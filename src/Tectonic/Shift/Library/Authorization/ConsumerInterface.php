@@ -15,4 +15,11 @@ interface ConsumerInterface
      * @return integer
      */
     public function getAccountId();
+
+    /**
+     * Return the id for the consumer.
+     *
+     * @return integer
+     */
+    public function id();
 }

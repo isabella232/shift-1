@@ -3,6 +3,7 @@
 use Mockery as m;
 use Tectonic\Shift\Library\Authorization\UserConsumer;
 use Tectonic\Shift\Library\Authorization\AuthenticatedConsumer;
+use Tectonic\Shift\Modules\Accounts\Models\User;
 
 class AuthenticatedConsumerTest extends \PHPUnit_Framework_TestCase
 {
@@ -12,7 +13,7 @@ class AuthenticatedConsumerTest extends \PHPUnit_Framework_TestCase
 
 	public function setUp()
 	{
-		$this->consumer = new UserConsumer(1);
+		$this->consumer = new UserConsumer(new User);
 		$this->mockAuthority = m::mock('Authority\Authority');
 
 		$this->authenticatedConsumer = new AuthenticatedConsumer($this->consumer, $this->mockAuthority);

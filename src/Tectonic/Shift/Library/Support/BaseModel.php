@@ -2,8 +2,6 @@
 
 namespace Tectonic\Shift\Library\Support;
 
-use Tectonic\Shift\Modules\Accounts\Services\AccountsService;
-
 class BaseModel extends \Eloquent
 {
     /**
