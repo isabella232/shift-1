@@ -123,29 +123,41 @@ class ShiftServiceProvider extends ServiceProvider
 		require __DIR__.'/../../boot/'.$file.'.php';
 	}
 
+    /**
+     * Loads the required bindings for the shift application, namely setting up interface contracts.
+     */
     protected function loadBindings()
     {
         // Register Utility Binding
-        $this->app->bind('utility', function($app){
-                return new \Tectonic\Shift\Library\Utility();
-        });
+        $this->app->bind('utility', 'Tectonic\Shift\Library\Utility');
 
         // Register UserRepositoryInterface binding
-        $this->app->bind('Tectonic\Shift\Modules\Accounts\Repositories\UserRepositoryInterface', function($app){
-            $userModel = new \Tectonic\Shift\Modules\Accounts\Models\User();
-            return new \Tectonic\Shift\Modules\Accounts\Repositories\UserRepository($userModel);
-        });
+	    $this->bind('Modules\Accounts\Repositories\UserRepositoryInterface', 'Modules\Accounts\Repositories\SqlUserRepository');
+	    $this->bind('Modules\Security\Repositories\RoleRepositoryInterface', 'Modules\Security\Repositories\SqlRoleRepository');
 
-        // Register RoleRepositoryInterface binding
-        $this->app->bind('Tectonic\Shift\Modules\Security\Repositories\RoleRepositoryInterface', function($app) {
-            $roleModel = new \Tectonic\Shift\Modules\Security\Models\Role();
-            return new \Tectonic\Shift\Modules\Security\Repositories\RoleRepository($roleModel);
-        });
-
-        // Register CustomFieldRepositoryInterface binding
-        $this->app->bind('Tectonic\Shift\Modules\CustomFields\Repositories\CustomFieldRepositoryInterface', function($app) {
-            $customFieldsModel = new \Tectonic\Shift\Modules\CustomFields\Models\CustomField();
-            return new \Tectonic\Shift\Modules\CustomFields\Repositories\SqlCustomFieldRepository($customFieldsModel);
-        });
+	    $this->bind('Modules\CustomFields\Repositories\CustomFieldRepositoryInterface', 'Modules\CustomFields\Repositories\CustomFieldRepository');
     }
+
+    /**
+     * Shofthand method for setting bindings, ensuring that the Tectonic\Shift namespace does not
+     * need to be provided with each call when setting up bindings. They can, however - be provided
+     * if necessary.
+     *
+     * @param $name
+     * @param $class
+     */
+    public function bind($name, $class)
+	{
+		$rootNamespace = 'Tectonic\\Shift\\';
+
+        if (!str_contains($name, $rootNamespace)) {
+            $name = $rootNamespace.$name;
+        }
+
+        if (!str_contains($class, $rootNamespace)) {
+            $class = $rootNamespace.$class;
+        }
+
+		$this->app->bind($name, $class);
+	}
 }

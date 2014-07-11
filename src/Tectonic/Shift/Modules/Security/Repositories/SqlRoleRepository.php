@@ -6,7 +6,7 @@ use DB;
 use Tectonic\Shift\Modules\Security\Models\Role;
 use Tectonic\Shift\Library\Support\SqlBaseRepository;
 
-class RoleRepository extends SqlBaseRepository implements RoleRepositoryInterface
+class SqlRoleRepository extends SqlBaseRepository implements RoleRepositoryInterface
 {
 	public function __construct(Role $role)
 	{

@@ -3,7 +3,6 @@
 namespace Tectonic\Shift\Modules\Accounts\Search\Filters;
 
 use Tectonic\Shift\Library\Search\Filters\SearchFilterInterface;
-use Tectonic\Shift\Library\Search\Search;
 
 class AccountFilter extends SearchFilter implements SearchFilterInterface
 {
@@ -38,16 +37,9 @@ class AccountFilter extends SearchFilter implements SearchFilterInterface
 	 */
 	public function criteria()
 	{
-        if (Config::get('shift.accounts_enabled', false) === true) {
-            $accountId = $this->accountsService->getAccountId();
+        $accountId = $this->accountsService->getAccountId();
 
-            if (is_null($accountId)) {
-                $this->getQuery()->where_null($this->accountIdField);
-            }
-            else {
-			    $this->getQuery()->where($this->accountIdField, '=', $accountId);
-            }
-		}
+        $this->getQuery()->where($this->accountIdField, '=', $accountId);
 	}
 
     /**

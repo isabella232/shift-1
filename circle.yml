@@ -4,4 +4,4 @@ machine:
 
 dependencies:
   pre:
-    - composer config --global github-oauth.github.com 8af454cd0cb6cd9af4e7699fe4aba439e257651e
+    - composer config --global github-oauth.github.com ${COMPOSER_OAUTH_TOKEN}
