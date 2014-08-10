@@ -2,6 +2,8 @@
 
 namespace Tectonic\Shift\Modules\Accounts\Services;
 
+use Tectonic\Shift\Library\Support\BaseManagementService;
+
 /**
  * Class AccountsService
  *
@@ -10,7 +12,7 @@ namespace Tectonic\Shift\Modules\Accounts\Services;
  *
  * @package Tectonic\Shift\Modules\Accounts\Services
  */
-class AccountsService
+class AccountsService extends BaseManagementService
 {
     /**
      * Returns the account id for the currently authenticated user or 3rd party API token, and the
