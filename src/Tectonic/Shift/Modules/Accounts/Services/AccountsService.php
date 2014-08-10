@@ -3,7 +3,7 @@
 namespace Tectonic\Shift\Modules\Accounts\Services;
 
 use Tectonic\Shift\Library\Support\BaseManagementService;
-use Tectonic\Shift\Modules\Accounts\Repositories\AccountRepository;
+use Tectonic\Shift\Modules\Accounts\Repositories\AccountRepositoryInterface;
 
 /**
  * Class AccountsService
@@ -16,9 +16,9 @@ use Tectonic\Shift\Modules\Accounts\Repositories\AccountRepository;
 class AccountsService extends BaseManagementService
 {
 	/**
-	 * @param AccountRepository $repository
+	 * @param AccountRepositoryInterface $repository
 	 */
-	public function __construct(AccountRepository $repository)
+	public function __construct(AccountRepositoryInterface $repository)
 	{
 		$this->repository = $repository;
 	}
