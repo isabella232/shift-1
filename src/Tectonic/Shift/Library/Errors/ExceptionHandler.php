@@ -15,6 +15,6 @@ class ExceptionHandler
 {
 	public function handle( \Exception $exception )
 	{
-		
+
 	}
 }

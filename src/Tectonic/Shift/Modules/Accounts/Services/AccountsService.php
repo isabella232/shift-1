@@ -3,6 +3,7 @@
 namespace Tectonic\Shift\Modules\Accounts\Services;
 
 use Tectonic\Shift\Library\Support\BaseManagementService;
+use Tectonic\Shift\Modules\Accounts\Repositories\AccountRepository;
 
 /**
  * Class AccountsService
@@ -14,6 +15,14 @@ use Tectonic\Shift\Library\Support\BaseManagementService;
  */
 class AccountsService extends BaseManagementService
 {
+	/**
+	 * @param AccountRepository $repository
+	 */
+	public function __construct(AccountRepository $repository)
+	{
+		$this->repository = $repository;
+	}
+
     /**
      * Returns the account id for the currently authenticated user or 3rd party API token, and the
      * account that they are CURRENTLY working with. An authenticated consumer can have access to
@@ -38,4 +47,15 @@ class AccountsService extends BaseManagementService
     {
         return $this->authenticatedConsumer->getAccounts();
     }
+
+	/**
+	 * Find a domain that has been registered with the system.
+	 *
+	 * @param $domain
+	 * @return Account
+	 */
+	public function getRequestedDomain($domain)
+	{
+		return $this->repository->requireByDomain($domain);
+	}
 }

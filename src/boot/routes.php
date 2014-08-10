@@ -12,4 +12,7 @@ Route::group(['prefix' => Config::get('shift.api.url')], function() {
 });
 
 Route::filter('shift.view', 'Tectonic\Shift\Library\Filters\ViewFilter');
+Route::filter('shift.account', 'Tectonic\Shift\Library\Filters\AccountFilter');
+
+Route::when('*', 'shift.account');
 Route::when('*', 'shift.view');

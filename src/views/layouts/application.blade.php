@@ -15,10 +15,8 @@
     @include( 'shift::partials.head' )
 </head>
 <body>
-
     @yield('content', '<h1 align="center">No content section supplied</h1>')
 
     @include('shift::partials.foot')
-
 </body>
 </html>
