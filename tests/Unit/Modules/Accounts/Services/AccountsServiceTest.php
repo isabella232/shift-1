@@ -16,6 +16,7 @@ class AccountsServiceTest  extends TestCase
 		parent::setUp();
 
 		$this->mockRepository  = m::mock('Tectonic\Shift\Modules\Accounts\Repositories\AccountRepositoryInterface');
+
 		$this->service  = new AccountsService($this->mockRepository);
 	}
 
