@@ -22,8 +22,8 @@ class AccountsServiceTest  extends TestCase
 
 	public function testRequestedDomain()
 	{
-		$this->mockRepository->shouldReceive('requireByDomain')->with('whatever');
+		$this->mockRepository->shouldReceive('requireByDomain')->with('whatever')->andReturn('account');
 
-		$this->service->getRequestedDomain('whatever');
+		$this->assertEquals('account', $this->service->getRequestedDomain('whatever'));
 	}
 }

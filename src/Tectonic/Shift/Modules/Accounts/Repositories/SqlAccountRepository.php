@@ -4,8 +4,9 @@ namespace Tectonic\Shift\Modules\Accounts\Repositories;
 
 use Tectonic\Shift\Modules\Accounts\Models\Account;
 use Tectonic\Shift\Library\Support\SqlBaseRepository;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class AccountRepository extends SqlBaseRepository implements AccountRepositoryInterface
+class SqlAccountRepository extends SqlBaseRepository implements AccountRepositoryInterface
 {
 	public function __construct(Account $account)
 	{
@@ -18,7 +19,7 @@ class AccountRepository extends SqlBaseRepository implements AccountRepositoryIn
 	 *
 	 * @param $domain
 	 * @return Account
-	 * @throws ModelNotFoundException
+	 * @throws Illuminate\Database\Eloquent\ModelNotFoundException
 	 */
 	public function requireByDomain($domain)
 	{

@@ -4,7 +4,7 @@ use Mockery as m;
 use Tests\TestCase;
 use Tectonic\Shift\Modules\Security\Repositories\SqlRoleRepository;
 
-class RoleRepositoryTest extends TestCase
+class SqlRoleRepositoryTest extends TestCase
 {
     public function testSearchingForDefaultRolesShouldExecuteAppropriateMethods()
     {
