@@ -1,0 +1,403 @@
+// Global form styles.
+input,
+textarea,
+select {
+	border-radius: $default-radius;
+	background: #fff;
+	border: 1px solid #d5d5d5;
+	padding: 8px;
+	width: 100%;
+	
+	&.ng-invalid {
+		border-color: $colour-error;
+		
+		&:focus {
+			border-color: darken( $colour-error , 15 );
+		}
+	}
+}
+
+// Minor adjustment on the padding on dropdown menus.
+select { padding-left: 4px; }
+
+
+// Restrict textarea resizing.
+textarea {
+	min-height: 60px;
+	resize: none;
+	word-wrap: break-word;
+	
+	&.short {
+		min-height: 37px;
+	}
+}
+
+
+// Set style for submit buttons.
+input[type=submit] { @extend .button; }
+
+
+// Reset radio and checkbox styles
+input[type=checkbox],
+input[type=radio] {
+	background-color: transparent;
+	border: 0;
+	margin-right: 6px;
+	padding: 0;
+	width: 20px;
+}
+input[type=radio] { margin-right: 3px; }
+
+
+// Fix label position when preceeded by a checkbox or radio element
+input[type=checkbox] + label,
+input[type=radio] + label {
+	position: relative;
+	top: -2px;
+}
+
+input[type=file] {
+	cursor: pointer;
+}
+
+.twitter-typeahead {
+	display: block !important;
+}
+
+// Form controls.
+.control {
+	overflow: hidden;
+	margin-top: 15px;
+	
+	&:first-child { margin-top: 0; }
+}
+
+.autocomplete-control {
+	overflow: visible !important;
+}
+
+.attachment-control {
+	position: relative;
+	
+	.control-label label { display: inline; }
+	.remove-button {
+		
+	}
+}
+
+.remove-button {
+	@include position( relative , 3px 0 0 0 );
+	display: inline-block;
+	
+	a {
+		@include size( 16 );
+		@include sprite-position( 7 , 0 );
+		background-image: url( $sprite-main );
+		display: block;
+	}
+}
+
+.control-heading {
+	margin-bottom: 16px;
+	
+	h2 { line-height: 1.4em; }
+}
+
+.control-label,
+.horizontal .control-label {
+	float: left;
+	text-align: right;
+	display: table;
+	min-height: 35px;
+	
+	label {
+		display: table-cell;
+		padding-right: 20px;
+		vertical-align: middle;
+	}
+	
+	form.vertical & {
+		min-height: 0;
+	}
+}
+
+.control-field,
+.horizontal .control-field {
+	float: right;
+	
+	// Override spacing for vertical and horizontal lists inside a control field.
+	.vertical, .horizontal { margin: 13px 0 11px; }
+	.vertical li { margin-bottom: 5px; }
+	.horizontal li { margin-top: -2px; }
+}
+
+.horizontal {
+	&.control-group {
+		li + li {
+			label {
+				margin-right: 20px;
+				position: relative;
+				top: 1px;
+			}
+		}
+	}
+}
+
+// Help text that appears under a field.
+.help-text {
+	color: #999;
+	display: inline-block;
+	font-size: 0.923em;
+	margin-top: 5px;
+}
+
+// Vertical form styles. Override the default styles.
+.vertical {
+	.control { overflow: hidden; }
+	.control-label, .control-field {
+		float: none;
+		padding-right: 0;
+		text-align: left;
+		width: 100%;
+	}
+	.control-label { margin-bottom: 4px; }
+
+	// Divs can be nested within vertical arrangements with checkboxes and radio buttons and so need to be aligned correctly
+	.checkbox,
+	.radio {
+		float: left
+	}
+}
+
+.horizontal.spacious {
+	li {
+		margin-top: 5px;
+	}
+	li.checkbox {
+		margin-top: 7px;
+	}
+}
+
+
+/* Actions styles */
+.form-actions {
+	border-top: 1px solid #b7b7b7;
+	background: #f9f9f9;
+	padding: 20px;
+	margin-top: 30px;
+	
+	&.centered { text-align: center; }
+	.control-field { width: 100%; }
+	
+	input, a {
+		margin-bottom: 10px;
+	}
+}
+
+/**
+ * ac fields. When a field is untouched, AngularJS adds
+ * an additional class (ng-pristine) which says that the field
+ * is untouched. By default most of the fields will be invalid
+ * but for the fields that are pristine, we'll hide the
+ * erroraneous look. SWEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEET.
+ */
+input.ng-pristine,
+textarea.ng-pristine,
+select.ng-pristine {
+	border-color: #d5d5d5;
+	
+	&:focus {
+		border-color: #999;
+	}
+}
+
+/* Change the default focus colours */
+input:focus,
+textarea:focus,
+select:focus {
+	border-color: #999;
+	outline: none;
+}
+
+input.price-field { width: 70px; }
+input.date { width: 120px; }
+input.two-digit { width: 50px; }
+select.time { width: 60px; }
+
+.cc-expiry {
+	.column-quarter:first-child { width: 50px; }
+}
+
+// Specific to the roles checkbox list.
+ul.roles li {
+	margin-bottom: 15px;
+	margin-right: 15px;
+}
+
+// This is used on the judging groups page.
+ul.groups li {
+	+ li { margin-top: 5px; }
+	input { margin-right: 6px; }
+}
+
+
+// For client-side validation errors.
+span.error {
+	color: $colour-error;
+	display: block;
+	margin-top: 5px;
+	font-size: 0.923em;
+}
+
+
+// Required fields
+span.required { color: $colour-error; }
+
+div.disabled,
+label.disabled {
+	background-color: transparent !important;
+}
+
+// For any element that is disabled.
+[disabled],
+[disabled=disabled],
+.disabled,
+.disabled-form input,
+.disabled-form select,
+.disabled-form textarea {
+	background-color: $colour-disabled !important;
+	@include opacity( 0.5 );
+	
+	&:hover { cursor: not-allowed !important; }
+}
+
+// Text that is disabled, doesn't look so nice with the background colour.
+.disabled-text {
+	@include opacity( 0.5 );
+	
+	&:hover { cursor: not-allowed; }
+}
+
+
+// File uploads field
+.file-upload-container {
+	overflow: hidden;
+	padding: 2px 0;
+	position: relative;
+	
+	.file-upload-visual {
+		@include position( absolute , 2px 0 0 0px );
+		@include size( 100% 34 );
+		z-index: 1;
+		
+		// Hide this for IE.
+		@include ie {
+			display: none;
+		}
+		
+		.visual-field {
+			@include position( relative , -3px 0 0 0 );
+			background: white;
+			border-radius: $default-radius;
+			border: 1px solid #d5d5d5;
+			color: #aaa;
+			display: inline-block;
+			margin-right: 10px;
+			padding: 8px;
+			width: 65%;
+		}
+		.button {
+			padding-top: 7px;
+		}
+		
+		@include lt-ie9 {
+			.visual-field {
+				top: -2px;
+				padding: 6px 8px;
+			}
+		}
+	}
+	
+	.upload-field {
+		@include opacity(0);
+		@include position( absolute , 0px 0px 0 0 );
+		@include transform( translate(225px, -25px) scale(6) );
+		height: 36px;
+		position: relative;
+		z-index: 3;
+		
+		@include ie {
+			@include opacity(1);
+			@include transform( translate(0, 0) scale(1) );
+			position: static;
+			width: 300px;
+		}
+	}
+	
+	.upload-details-container {
+		overflow: hidden;
+		margin: 5px 0;
+	}
+	.upload-details {
+		float: right;
+		color: #bbb;
+	}
+	.upload-abort-button {
+		float: left;
+	}
+}
+
+.upload-progress-container {
+	@include size( 100% 14 );
+	background: #edeff2;
+	border-radius: 7px;
+	
+	.upload-progress {
+		background: $colour-warning;
+		border-radius: 7px;
+		height: 14px;
+	}
+}
+
+.document-container,
+.upload-complete {
+	margin-top: 5px;
+	
+	.filename,
+	.filesize,
+	.file-edit {
+		margin-right: 20px;
+	}
+	
+	.filename {
+		display: inline-block;
+		max-width: 50%;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+}
+
+
+#ie-uploader {
+	@include size( 100% 350 );
+	margin-bottom: 15px;
+}
+
+
+
+// Input field placeholders
+$colour-placeholder: #999;
+
+::-webkit-input-placeholder { color: $colour-placeholder; }
+:-moz-placeholder { color: $colour-placeholder; }
+::-moz-placeholder { color: $colour-placeholder; }
+:-ms-input-placeholder { color: $colour-placeholder; }
+
+.ie-placeholder-container {
+	position: relative;
+	
+	.ie-placeholder {
+		@include position( absolute , 10px 0 0 10px );
+		color: $colour-placeholder;
+	}
+}

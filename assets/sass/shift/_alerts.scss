@@ -1,0 +1,55 @@
+// Alert container is fixed on the page and holds all our notifications.
+// By default, notifications are shown in the top-right corner.
+#alert-container {
+	width: 300px;
+	z-index: 700; // z-index should be higher than modals, which start from 500.
+	
+	&.top-right    { @include position( fixed , $alerts-container-margin $alerts-container-margin 0 0 ); }
+	&.top-left     { @include position( fixed , $alerts-container-margin 0 0 $alerts-container-margin ); }
+	&.bottom-right { @include position( fixed , 0 $alerts-container-margin $alerts-container-margin 0 ); }
+	&.bottom-left  { @include position( fixed , 0 0 $alerts-container-margin $alerts-container-margin ); }
+}
+
+
+div[class^="alert-"] {
+	// @include transition( all $transition-speed );
+	background-image: url( $sprite-alerts );
+	background-repeat: no-repeat;
+	border-radius: $default-radius;
+	color: white;
+	cursor: pointer;
+	padding: 20px 20px 20px 65px;
+	
+	// When alerts are followed by other alerts.
+	& + & { margin-top: 10px; }
+	
+	&.sticky { cursor: default; }
+	
+	a {
+		color: white;
+		text-decoration: underline;
+	}
+}
+
+// A list of array types followed by their colour so that we can loop through them and
+// perform magic. Updating this list means you must update the sprite-alerts.png file as well.
+$alert-types:	info    $colour-info,
+				warning $colour-warning,
+				success $colour-success,
+				error   $colour-error;
+
+@for $i from 1 through length($alert-types) {
+	$type-list: nth( $alert-types , $i );
+	$type: nth( $type-list , 1 );
+	$colour: nth( $type-list , 2 );
+	
+	.alert-#{$type} {
+		@include new-alert( $colour , $i - 1 );
+	}
+}
+
+.alert-neutral {
+	@extend .alert-info;
+	background: #ddd !important;
+	color: #999 !important;
+}

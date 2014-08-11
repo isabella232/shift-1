@@ -1,0 +1,46 @@
+// All IE versions (except for 11 at the moment).
+.ie {
+	
+}
+
+// IE10 and below.
+.lt-ie11 {
+	.attachment-control .remove-button a { top: -5px; }
+}
+
+// IE9 and below.
+.lt-ie10 {
+	
+}
+
+// Style overrides for IE8.
+.lt-ie9 {
+	// Remove gutters from the last column, no matter the combination.
+	.column-half + .column-half,
+	.column-third + .column-third + .column-third,
+	.column-third + .column-two-thirds,
+	.column-two-thirds + .column-third,
+	.column-quarter + .column-quarter + .column-quarter + .column-quarter,
+	.column-quarter + .column-half + .column-quarter,
+	.column-quarter + .column-quarter + .column-half,
+	.column-half + .column-quarter + .column-quarter,
+	.column-quarter + .column-three-quarters
+	.column-three-quarters + .column-quarter,
+	.column-full {
+		@include omega();
+	}
+	
+	// Position of the filter button.
+	.filters #filter-toggle { bottom: -35px; }
+	
+	.attachment-control .remove-button a { top: -6px; }
+}
+
+// We do not support IE7 and below. Hide everything
+// and display the unsupported browser message.
+.lt-ie8 body {
+	overflow: hidden;
+	
+	> * { display: none; }
+	#unsupported-browser { display: block; }
+}

@@ -1,0 +1,53 @@
+.tips {
+	background: #5ec0c9;
+	border-radius: $default-radius;
+	color: white;
+	overflow: hidden;
+	padding: 20px;
+}
+.tips-title {
+	font: 400 28px/28px "Open Sans";
+	margin: 15px 70px;
+	position: absolute;
+	
+	&:before {
+		@include position( absolute , -10px 0 0 -60px );
+		@include size( 50 52 );
+		background: url( $img + 'tips.png' );
+		content: '';
+	}
+}
+
+.tips-body {
+	margin-left: 160px;
+	
+	p, ul, ol, h1, h2, h3, h4, h5, h6 { margin: 0; }
+	a {
+		color: #005961;
+		
+		&:hover { color: #007680; }
+	}
+	p + p { margin-top: 14px; }
+	ol {
+		counter-reset: item;
+		
+		> li {
+			display: block;
+			position: relative;
+			z-index: 1;
+			
+			&:before {
+				@include position( absolute , 0 0 0 -26px );
+				@include size( 20 );
+				background: #23afbb;
+				border-radius: 50%;
+				content: counter(item) " ";
+				counter-increment: item;
+				line-height: 20px;
+				text-align: center;
+				z-index: -1;
+			}
+		}
+	}
+	li + li { margin-top: 8px; }
+}

@@ -1,0 +1,83 @@
+table {
+	width: 100%;
+	
+	th, td {
+		// Specify font-size in pixels so retarded IE can render the font size correctly.
+		font: 400 13px/1.2em $font-primary;
+		vertical-align: top;
+		
+		// Checkbox sizing.
+		&.checkbox {
+			text-align: center;
+			width: 35px;
+		}
+	}
+	td {
+		padding: 15px 7px;
+	}
+	
+	// Vertical alignment.
+	&.middle,
+	&.align-middle {
+		th, td { vertical-align: middle; }
+	}
+	&.text-right {
+		th, td { text-align: right; }
+	}
+	
+	thead {
+		tr {
+			background: $colour-primary;
+			color: white;
+			text-align: left;
+		}
+		th {
+			padding: 11px 7px;
+			text-align: left;
+			vertical-align: middle;
+			
+			&:first-child { border-radius: $default-radius 0 0 $default-radius; }
+			&:last-child  { border-radius: 0 $default-radius $default-radius 0; }
+		}
+		a {
+			color: white;
+			text-decoration: none;
+			
+			&:hover { color: white; }
+			
+			// Sorting styles.
+			&.sortable,
+			&[class^='sort-'] {
+				@include transition( all $transition-speed );
+				background: url('../img/sort-icons.png') left -100px no-repeat;
+				padding-left: 17px;
+			}
+			&.sort-desc { background-position: left 4px; }
+			&.sort-asc  { background-position: left -47px; }
+		}
+	}
+	
+	.even { background: #f9f9f9; }
+	
+	.totals { font-weight: bold; }
+	
+	// Compact table styles.
+	&.compact {
+		th { padding: 5px; }
+		td { padding: 7px 5px; }
+	}
+	
+	// Bordered table styles.
+	&.bordered {
+		th { border: 1px solid #404040; }
+		td { border: 1px solid #ccc; }
+		thead {
+			th { border-radius: 0; }
+		}
+	}
+	
+	tr.totals td {
+		font-weight: bold;
+		font-size: 17px;
+	}
+}

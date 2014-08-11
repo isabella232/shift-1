@@ -1,0 +1,117 @@
+/*
+|--------------------------------------------------------------------------
+| Miscellaneous styles
+|--------------------------------------------------------------------------
+|
+| Small styles that are related to any page, or misc styles that don't
+| properly fit in another file/category.
+|
+*/
+
+.roles-left-column {
+	width: 35%;
+	margin-right: 5%;
+}
+.roles-right-column { width: 60%; }
+
+
+// Loading indicator.
+#loading-indicator {
+	@include position( fixed , 170px 0 0 48% );
+	@include size( 50 );
+	border: 1px solid #333;
+	background: rgba( black , 0.7 );
+	border-radius: $default-radius;
+	color: white;
+	z-index: 200;
+
+	@include lt-ie9 { background: #333; }
+
+	img { margin: 8px 0 0 8px; }
+}
+
+
+
+// Elements that are initially hidden until the page is loaded.
+.display-on-load {
+	display: none !important;
+}
+
+// the initial load indicator.
+#initial-load-indicator {
+	@include position( absolute , 0px 0px 0px 0px );
+	background: white;
+
+	#initial-load-content {
+		background: rgba( black , 0.7 );
+		border-radius: 10px;
+		color: white;
+		font-size: 20px;
+		line-height: 32px;
+		margin: 100px auto;
+		max-width: 400px;
+		padding: 40px;
+		text-align: center;
+
+		@include lt-ie9 { background: #333; }
+
+		img { margin-top: 20px; }
+	}
+}
+
+
+
+// Validation errors list.
+.validation-errors {
+	margin: 0;
+	list-style: none;
+	padding-left: 0;
+
+	li + li { margin-top: 8px; }
+}
+
+
+
+.export-csv-container {
+	padding: 22px 0;
+}
+
+
+.dates, .faq {
+	h4 {
+		margin-top: 25px;
+		margin-bottom: 10px;
+
+		+ p { margin-top: 0; }
+	}
+}
+
+
+.word-count {
+	display: block;
+	text-align: right;
+
+	&.invalid {
+		color: $colour-quaternary;
+	}
+}
+
+
+// Panels update/create page.
+.panels-row {
+	.checkbox { width: 12%; }
+	.label { width: 88%; }
+}
+
+
+// This is used on the Entries listing page for a judge.
+// The batch actions buttons (delete, copy) aren't used on that page
+// so the leaves the pagination info sitting along and looking ugly.
+.pagination-info-standalone {
+	float: right;
+	margin-bottom: 10px;
+}
+
+// Theme specific styling
+.theme-option-field { width: 80%; }
+.theme-hint-text { margin-bottom: 4px; }

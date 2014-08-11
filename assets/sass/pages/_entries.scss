@@ -1,0 +1,20 @@
+.entry-types {
+	
+	.entry-types-heading {
+		float: left;
+		width: 130px;
+	}
+	.entry-types-list {
+		float: left;
+	}
+}
+
+#active-category {
+	margin-top: 0;
+
+	img {
+		float: right;
+		margin: 0 0 15px 15px;
+		max-width: 500px;
+	}
+}

@@ -1,0 +1,35 @@
+/*
+|--------------------------------------------------------------------------
+| Main stylesheet file
+|--------------------------------------------------------------------------
+| 
+| This file will only load other libraries/files. There should be no
+| styles defined here.
+| 
+*/
+
+// Bourbon and Neat. bourbon.io, neat.bourbon.io
+@import 'bourbon/bourbon';
+@import 'neat/neat';
+
+@import 'config';
+@import 'mixins';
+@import 'normalize';
+
+// Shift's core styles.
+@import 'shift/_shift';
+
+// Styles that come from any plugin.
+@import 'plugins/_plugins';
+
+// Page-specific styles.
+@import 'pages/_pages';
+
+// Miscellangeous styles. Can be used for page-specific styles.
+@import 'misc';
+
+// Shame.css - Anything you're not proud of, should go here.
+@import 'shame';
+
+// IE overrides.
+@import 'ie';

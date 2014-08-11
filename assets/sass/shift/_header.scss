@@ -1,0 +1,160 @@
+#header {
+	position: relative;
+	background: url( $img + 'header-pattern.png' ) repeat;
+	overflow: hidden;
+	height:  110px;
+	z-index: 3;
+	
+	.logo {
+		background: url( $img + 'default-client-image.png' ) no-repeat;
+		display: block;
+		height: 120px;
+		margin: 0;
+		width: 100%;
+		text-indent: -10000em;
+	}
+}
+
+
+
+#control-panel {
+	@include position( absolute , 36px 20px 0 0 );
+	border-radius: $default-radius;
+	background: $colour-primary;
+	padding: 10px;
+
+	li {
+		line-height: 1.5em;
+		overflow: visible;
+		
+		&:first-child {
+			color: darken( #fff, 20% );
+		}
+	}
+	
+	li + li {
+		background: url( $img + 'menu-separator.png' ) no-repeat;
+		margin-left: 10px;
+		padding-left: 10px;
+	}
+	a {
+		@include transition( all $transition-speed );
+		color: $colour-header-link;
+		display: inline;
+		text-decoration: none;
+		
+		&:hover {
+			color: $colour-header-link-hover;
+		}
+	}
+}
+
+
+
+#navigation {
+	background: $colour-primary;
+	border-top: 2px solid lighten( $colour-primary , 17 );
+	height: 58px;
+	position: relative;
+	z-index: 2;
+	
+	.menu {
+		// Global link styles (for main menu and submenus).
+		a {
+			@include transition( all $transition-speed );
+			color: $colour-header-link;
+			display: block;
+			font: 600 em(18) $font-primary;
+			text-decoration: none;
+			
+			&:hover { color: $colour-header-link-hover; }
+		}
+		> li {
+			> a {
+				background: url( $img + 'menu-separator.png' ) 0 19px no-repeat;
+				height: 56px;
+				line-height: 32px;
+				padding: 12px 15px;
+				
+				// Add animation to the submenu indicator triangles.
+				&:before, &:after { @include transition( all $transition-speed ); }
+			}
+			&.active > a,
+			&:hover > a {
+				color: $colour-header-link-hover;
+				
+				&:before {
+					border-top-color: $colour-header-link-hover;
+				}
+			}
+			&:first-child {
+				width: 35px;
+				
+				> a {
+					@include hide-text;
+					background: url( $sprite-main ) 0px 18px no-repeat;
+					@include opacity( 0.4 );
+					
+					&:hover { @include opacity( 0.6 ); }
+				}
+			}
+		}
+	}
+	
+	.has-submenu {
+		> a {
+			position: relative;
+			
+			&:before {
+				@include position( absolute , 0 15px 0 0 );
+				@include triangle( 10px , $colour-header-link , down );
+				content: '';
+				margin-top: 15px;
+			}
+			&:after {
+				content: '';
+				padding-right: 20px;
+			}
+		}
+		
+		&:hover {
+			.submenu-triangle,
+			.submenu {
+				display: block;
+			}
+		}
+	}
+	
+	.submenu-triangle {
+		@include position( relative , -3px 0 0 30px );
+		@include triangle( 12px , $colour-primary , up );
+		display: none;
+	}
+	.submenu {
+		@include position( absolute , 65px 0 0 0 );
+		background: $colour-primary;
+		border-radius: $default-radius;
+		display: none;
+		margin-left: 5px;
+		padding: 15px 0;
+		min-width: 120px;
+		z-index: 1;
+		
+		li {
+			&:hover{}
+			> a {
+				padding: 5px 20px;
+			}
+			&:first-child {
+				> a { border-top: 0; }
+				
+				&:hover {
+					border-radius: 0 $default-radius 0 0;
+				}
+			}
+			&:last-child {
+				border-radius: 0 0 $default-radius $default-radius;
+			}
+		}
+	}
+}

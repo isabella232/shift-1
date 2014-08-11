@@ -2,38 +2,32 @@
 
 namespace Tectonic\Shift\Modules\Accounts\Services;
 
-/**
- * Class AccountsService
- *
- * The accounts service provides some methods for working with accounts and eases the use of working with
- * 1 or more accounts when logged in as an authenticated consumer that has access to those accounts.
- *
- * @package Tectonic\Shift\Modules\Accounts\Services
- */
+use Tectonic\Shift\Modules\Accounts\Models\Account;
+
 class AccountsService
 {
-    /**
-     * Returns the account id for the currently authenticated user or 3rd party API token, and the
-     * account that they are CURRENTLY working with. An authenticated consumer can have access to
-     * numerous accounts, but will only work with one account at any given time.
-     *
-     * @todo Implement logic for 3rd party api token, as well as checks against the accounts the
-     * user can actually manage.
-     *
-     * @return mixed
-     */
-    public function getCurrentAccountId()
-    {
-        $accounts = $this->getAccounts();
-    }
+	/**
+	 * Stores the current account that a given request is for.
+	 *
+	 * @var Account
+	 */
+	private $account;
 
-    /**
-     * Returns the accounts that an authenticated consumer has access to.
-     *
-     * @return array Account
-     */
-    public function getAccounts()
-    {
-        return $this->authenticatedConsumer->getAccounts();
-    }
+	/**
+	 * @param Account $account
+	 */
+	public function setCurrentAccount(Account $account)
+	{
+		$this->account = $account;
+	}
+
+	/**
+	 * Returns the current account that the request is dealing with.
+	 *
+	 * @return Account
+	 */
+	public function getCurrentAccount()
+	{
+		return $this->account;
+	}
 }

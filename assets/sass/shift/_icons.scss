@@ -1,0 +1,137 @@
+/*
+|--------------------------------------------------------------------------
+| Icons.
+|--------------------------------------------------------------------------
+| 
+| Place any icons here. Use the sprite-position mixin to help determine
+| positions of the icons on a sprite grid.
+| 
+*/
+
+%icons-with-hover {
+	@include opacity( 0.8 );
+	@include transition( all $transition-speed );
+	
+	&:hover { @include opacity( 1 ); }
+}
+
+span {
+	// Main sprite icons.
+	&[class^='icon-'] {
+		@include size( 16 );
+		background: url( $sprite-main ) no-repeat;
+		display: inline-block;
+		margin-right: 4px;
+	}
+	
+	&.icon-search {
+		@include position( relative , 2px 0 0 3px );
+		@include sprite-position( 1 , 0 );
+	}
+
+	&.icon-plus {
+		@include sprite-position( 2 , 0 );
+	}
+
+	&.icon-batch-action {
+		@include size( 30 31 );
+		background-position: -139px 9px;
+	}
+	
+	&.icon-close {
+		@extend %icons-with-hover;
+		@include size( 20 );
+		@include sprite-position( 4 , 0 );
+	}
+	
+	&.icon-collapsed {
+		@extend %icons-with-hover;
+		@include size( 20 14 );
+		@include sprite-position( 6 , 0 );
+	}
+	
+	&.icon-expanded {
+		@extend %icons-with-hover;
+		@include size( 20 14 );
+		@include sprite-position( 5 , 0 );
+	}
+	
+	&.icon-info {
+		@extend %icons-with-hover;
+		@include size( 14 13 );
+		@include sprite-position( 8 , 0 );
+
+		cursor: pointer;
+		top: 2px;
+	}
+
+	&.icon-lock {
+		@extend %icons-with-hover;
+		@include size( 18 );
+		@include sprite-position( 9 , 0 );
+	}
+
+	// Icons for files.
+	&[class^='icon-file-'] {
+		@include size( 25 27 );
+		@include sprite-position( 0 , 4 );
+		background-image: url( $sprite-file-icons );
+		background-repeat: no-repeat;
+		display: inline-block;
+		margin-right: 10px;
+	}
+}
+
+// Supported file extensions. Anything else will get the default icon.
+$file-type-audio:    mp3 wma wav m4a;
+$file-type-image:    jpg jpeg gif png;
+$file-type-video:    mpg mpeg avi wmv mov mp4 mkv;
+$file-type-document: doc docx pdf ppt pps xls xlsx;
+
+// Base file type styles.
+span.icon-file-audio    { @include sprite-position( 0 , 0 ); }
+span.icon-file-image    { @include sprite-position( 0 , 1 ); }
+span.icon-file-video    { @include sprite-position( 0 , 2 ); }
+span.icon-file-document { @include sprite-position( 0 , 3 ); }
+span.icon-file-link     { @include sprite-position( 0 , 5 ); }
+
+// Loop through the different audio file types and extend the base span.icon-file-afudio class.
+@for $i from 1 through length($file-type-audio) {
+	$extension: nth( $file-type-audio , $i );
+	
+	span.icon-file-#{$extension} {
+		@extend span.icon-file-audio;
+	}
+}
+
+// Loop through the different image file types and extend the base span.icon-file-image class.
+@for $i from 1 through length($file-type-image) {
+	$extension: nth( $file-type-image , $i );
+	
+	span.icon-file-#{$extension} {
+		@extend span.icon-file-image;
+	}
+}
+
+// Loop through the different video file types and extend the base span.icon-file-video class.
+@for $i from 1 through length($file-type-video) {
+	$extension: nth( $file-type-video , $i );
+	
+	span.icon-file-#{$extension} {
+		@extend span.icon-file-video;
+	}
+}
+
+// Loop through the different document file types and extend the base span.icon-file-document class.
+@for $i from 1 through length($file-type-document) {
+	$extension: nth( $file-type-document , $i );
+	
+	span.icon-file-#{$extension} {
+		@extend span.icon-file-document;
+	}
+}
+
+// When using icon-file-* icons, use this class to align the element vertically.
+.file-info {
+	@include position( relative , -6px 0 0 0 );
+}

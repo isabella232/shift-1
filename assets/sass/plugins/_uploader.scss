@@ -1,0 +1,46 @@
+// Uploader styles.
+.uploader {
+	border-radius: $default-radius;
+	border: 1px solid #D5D5D5;
+	margin: 10px 0;
+	padding: 3px;
+	
+	.progress {
+		border-radius: $default-radius;
+		background: $colour-secondary;
+		height: 25px;
+		overflow: hidden;
+	}
+	.text {
+		color: white;
+		font-size: 12px;
+		line-height: 25px;
+		margin-right: 5px;
+		text-align: right;
+	}
+}
+
+
+// /* Upload button */
+// .upload-container {
+// 	cursor: pointer;
+// 	float: left;
+// 	margin-right: 10px;
+// 	overflow: hidden;
+// 	position: relative;
+// }
+// .upload-container input {
+// 	-webkit-opacity: 0;
+// 	-moz-opacity: 0;
+// 	filter:alpha(opacity=0);
+// 	opacity: 0;
+	
+// 	cursor: pointer;
+// 	direction: ltr;
+// 	font-size: 23px;
+// 	margin: 0;
+// 	position: absolute;
+// 	right: 0;
+// 	top: 0;
+// 	transform: translate(-300px, 0) scale(4);
+// }

@@ -1,0 +1,51 @@
+%full-width { width: 100% !important; }
+%auto-height { height: auto !important; }
+%auto-width { width: auto !important; }
+
+div#recaptcha_area {
+	@extend %full-width;
+	
+	> table { @extend %full-width; }
+	
+	#recaptcha_image {
+		@extend %full-width;
+		@extend %auto-height;
+	}
+	#recaptcha_challenge_image {
+		@extend %full-width;
+		@extend %auto-height;
+	}
+	
+	.recaptchatable .recaptcha_image_cell {
+		@extend %auto-height;
+		
+		center {
+			@extend %auto-height;
+			margin-bottom: 15px !important;
+		}
+	}
+	
+	#recaptcha_privacy,
+	.recaptcha_r1_c1, .recaptcha_r2_c1, .recaptcha_r2_c2,
+	.recaptcha_r3_c1, .recaptcha_r3_c2, .recaptcha_r3_c3,
+	.recaptcha_r4_c2, .recaptcha_r4_c4, .recaptcha_r7_c1,
+	.recaptcha_r8_c1 {
+		display: none !important;
+	}
+	
+	.recaptcha_r4_c1 {
+		background: none !important;
+		@extend %auto-width;
+	}
+	
+	.recaptcha_input_area { @extend %auto-width; }
+	
+	#recaptcha_response_field {
+		@extend %full-width;
+		border-color: #d5d5d5 !important;
+		margin-top: 5px !important;
+		padding: 10px !important;
+		
+		&:focus { border-color: #999 !important; }
+	}
+}

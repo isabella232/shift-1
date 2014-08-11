@@ -4,6 +4,7 @@
     @include( 'shift::partials.header.head' )
 </head>
 <body>
+
     @include('shift::partials.misc.browser')
 
     @yield('content', '<h1 align="center">Shift &#8226; Award Force</h1>')

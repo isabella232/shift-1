@@ -1,0 +1,51 @@
+ul.tabs {
+	@extend ul.horizontal;
+	@include user-select( none );
+	border-bottom: 1px solid #e1e1e1;
+	margin-bottom: 30px !important;
+	
+	li {
+		+ li { margin-left: 8px; }
+		
+		&.active a { background: $colour-tab-active; }
+		&.disabled a { background: $colour-disabled; }
+		&.invalid a { background: $colour-error; }
+	}
+	a {
+		@include transition( all $transition-speed );
+		background: $colour-tab-up;
+		border-radius: $default-radius $default-radius 0 0;
+		color: white;
+		display: block;
+		height: 38px;
+		line-height: 38px;
+		padding: 2px 20px 0 ;
+		text-decoration: none;
+		
+		&:hover {
+			background: $colour-tab-over;
+		}
+	}
+	
+	@include media( $mobile ) {
+		li {
+			+ li { margin-left: 0; }
+			
+			width: 100%;
+			
+			&:first-child a { border-radius: $default-radius $default-radius 0 0; }
+			&:last-child a { border-radius: 0 0 $default-radius $default-radius; }
+		}
+		
+		a { border-radius: 0; }
+	}
+}
+
+// Specifically for disabled tabs - we want to make sure that the LI doesn't
+// get a background, otherwise tabs will lose their border radius.
+.tabs > li.disabled { background: transparent !important; }
+
+.tab-content {}
+.tab-content-flat {
+	margin-bottom: 60px;
+}

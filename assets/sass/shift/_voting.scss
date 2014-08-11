@@ -1,0 +1,55 @@
+.vote-list {
+	padding: 30px;
+	overflow: hidden;
+	background: #fafafa;
+
+	.tally {
+		background: #44b2c3;
+		color: #fff;
+		padding: 5px 8px;
+		position: absolute;
+		right: 0;
+		text-align: center;
+		top: 0;
+
+		.description {
+			font-size: 80%;
+		}
+
+		.number {
+			font-size: 20px;
+		}
+	}
+
+	.title {
+		border: 1px solid #efefef;
+		border-top: none;
+		height: 38px;
+		line-height: 38px;
+		overflow: hidden;
+		padding: 0 10px;
+	}
+
+	.vote-item {
+		background: #fff;
+		border-radius: 2px;
+		float: left;
+		margin-right: 15px;
+		margin-bottom: 15px;
+		position: relative;
+		max-width: 204px;
+
+		img {
+			display: block;
+            border-radius: 4px;
+		}
+	}
+
+	.no-image {
+		border: 1px solid #efefef;
+      border-radius: 4px;
+		color: #999;
+		text-align: center;
+		text-transform: uppercase;
+	}
+}

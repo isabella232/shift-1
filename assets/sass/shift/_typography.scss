@@ -1,0 +1,65 @@
+// Headings.
+%headings-shared {
+	color: $colour-secondary;
+	
+	&.first { margin-top: 0; }
+	&.collapse { margin: 0 }
+}
+h1, .h1 {
+	@extend %headings-shared;
+	font: 400 30px/40px $font-primary;
+}
+h2, .h2 {
+	@extend %headings-shared;
+	font: 400 28px/38px $font-primary;
+}
+h3, .h3 {
+	@extend %headings-shared;
+	font: 400 18px/26px $font-primary;
+}
+h4 {}
+h5 {}
+h6 {}
+
+
+// Paragraphs.
+p {}
+
+// div > p:first-child {
+// 	margin-top: 0;
+// }
+
+// Links.
+a {
+	color: $colour-tertiary;
+	cursor: pointer;
+	text-decoration: none;
+	
+	&:hover {
+		color: lighten( $colour-tertiary , 7 );
+	}
+	&:active, &:focus {
+		background-color: transparent;
+		outline: none !important; // disable dotted line on FF/IE after a link is clicked.
+	}
+}
+
+
+// Lists.
+ul, ol {
+	padding-left: 20px;
+	
+	// All nested unordered lists to have the same style.
+	ul, ul ul, ul ul ul { list-style: disc; }
+}
+li {}
+
+tr.warning,
+td.warning,
+span.warning {
+	color: $colour-warning
+}
+
+.strong {
+	font-weight: bold;
+}

@@ -1,0 +1,62 @@
+.pagination-info {
+	margin-top: 8px;
+	text-align: right;
+}
+
+// The actual container of the pagination directive.
+div[pagination] {
+	overflow: hidden;
+	margin: 20px 0;
+}
+
+div.pagination {
+	select {
+		float: right;
+		font-size: 0.875em;
+		margin-left: 25px;
+		padding: 4px;
+		width: 60px;
+	}
+
+	ul {
+		float: right;
+		position: relative;
+		margin-top: 2px;
+		
+		li { margin: 0 3px; }
+		a {
+			@include size( 24 );
+			@include transition( all $transition-speed );
+			background: transparent;
+			border-radius: 50%;
+			color: $colour-secondary;
+			display: block;
+			font: 400 0.875em/1.385em $font-primary;
+			letter-spacing: -1px;
+			line-height: 24px;
+			padding-right: 2px;
+			text-align: center;
+			
+			&:hover {
+				background: desaturate(lighten($colour-tertiary, 27), 30);
+				color: white;
+				text-decoration: none;
+			}
+		}
+		.numbered a {}
+		.active a {
+			background: $colour-tertiary;
+			color: white;
+		}
+		.turn a {
+			font-size: 1.25em;
+			line-height: 21px;
+		}
+		.disabled {
+			background: transparent !important;
+			color: $colour-disabled;
+			
+			&:hover a { background: transparent; color: $colour-secondary; }
+		}
+	}
+}

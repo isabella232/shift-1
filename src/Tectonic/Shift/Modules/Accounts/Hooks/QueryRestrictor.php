@@ -4,7 +4,7 @@ namespace Tectonic\Shift\Modules\Accounts\Hooks;
 
 use Tectonic\Shift\Library\Search\SearchInterface;
 use Tectonic\Shift\Modules\Accounts\Search\Filters\AccountFilter;
-use Tectonic\Shift\Modules\Accounts\Services\AccountsService;
+use Tectonic\Shift\Modules\Accounts\Services\AccountManagementService;
 
 /**
  * Class QueryRestrictor
