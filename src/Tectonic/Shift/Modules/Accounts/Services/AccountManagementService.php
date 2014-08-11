@@ -23,16 +23,6 @@ class AccountManagementService extends BaseManagementService
 		$this->repository = $repository;
 	}
 
-    /**
-     * Returns the accounts that an authenticated consumer has access to.
-     *
-     * @return array Account
-     */
-    public function getAccounts()
-    {
-        return $this->authenticatedConsumer->getAccounts();
-    }
-
 	/**
 	 * Find a domain that has been registered with the system.
 	 *

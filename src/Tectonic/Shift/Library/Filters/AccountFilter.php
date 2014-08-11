@@ -2,6 +2,7 @@
 
 namespace Tectonic\Shift\Library\Filters;
 use Tectonic\Shift\Modules\Accounts\Services\AccountManagementService;
+use Tectonic\Shift\Modules\Accounts\Services\AccountsService;
 
 /**
  * Class AccountFilter
@@ -15,16 +16,23 @@ use Tectonic\Shift\Modules\Accounts\Services\AccountManagementService;
 class AccountFilter
 {
 	/**
-	 * @var \Tectonic\Shift\Modules\Accounts\Services\AccountManagementService
+	 * @var \Tectonic\Shift\Modules\Accounts\Services\AccountsService
 	 */
-	private $service;
+	private $accountsService;
 
 	/**
-	 * @param AccountManagementService $service
+	 * @var \Tectonic\Shift\Modules\Accounts\Services\AccountManagementService
 	 */
-	public function __construct(AccountManagementService $service)
+	private $accountManagementService;
+
+	/**
+	 * @param AccountsService $accountsService
+	 * @param AccountManagementService $accountManagementService
+	 */
+	public function __construct(AccountsService $accountsService, AccountManagementService $accountManagementService)
 	{
-		$this->service = $service;
+		$this->accountsService = $accountsService;
+		$this->accountManagementService = $accountManagementService;
 	}
 
 	/**
@@ -33,8 +41,8 @@ class AccountFilter
 	 */
 	public function filter($route, $request)
 	{
-		$account = $this->service->getRequestedDomain($request->server('SERVER_NAME'));
+		$account = $this->accountManagementService->getRequestedDomain($request->server('SERVER_NAME'));
 
-		$this->service->setRequestedDomain($account);
+		$this->accountsService->setCurrentAccount($account);
 	}
 }
