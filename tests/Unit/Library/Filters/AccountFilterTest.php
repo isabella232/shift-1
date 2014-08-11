@@ -3,8 +3,6 @@
 use Mockery as m;
 use Tectonic\Shift\Library\Filters\AccountFilter;
 use Tests\TestCase;
-use Tectonic\Shift\Modules\Accounts\Services\AccountsService;
-use Tectonic\Shift\Modules\Accounts\Services\AccountManagementService;
 
 class AccountFilterTest extends TestCase
 {
