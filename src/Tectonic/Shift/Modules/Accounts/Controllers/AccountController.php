@@ -3,7 +3,7 @@
 namespace Tectonic\Shift\Modules\Accounts\Controllers;
 
 use Tectonic\Shift\Library\Support\BaseController;
-use Tectonic\Shift\Modules\Accounts\Repositories\AccountRepositoryInterface;
+use Tectonic\Shift\Modules\Accounts\Services\AccountManagementService;
 
 class AccountController extends BaseController
 {

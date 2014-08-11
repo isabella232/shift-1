@@ -23,7 +23,7 @@ class SqlAccountRepositoryTest extends TestCase
     {
 	    $domain = 'www.somedomain.com';
 
-        $this->mockModel->shouldReceive('whereDomain')->once()->with($domain)->andReturn($this->mockModel);
+        $this->mockModel->shouldReceive('whereHas')->once()->andReturn($this->mockModel);
         $this->mockModel->shouldReceive('first')->once()->andReturn('account');
 
         $this->assertEquals('account', $this->repository->requireByDomain($domain));
@@ -36,7 +36,7 @@ class SqlAccountRepositoryTest extends TestCase
 	{
 		$domain = 'www.somedomain.com';
 
-		$this->mockModel->shouldReceive('whereDomain')->once()->with($domain)->andReturn($this->mockModel);
+		$this->mockModel->shouldReceive('whereHas')->once()->andReturn($this->mockModel);
 		$this->mockModel->shouldReceive('first')->once()->andReturn(null);
 
 		$this->repository->requireByDomain($domain);

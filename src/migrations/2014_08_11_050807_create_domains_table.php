@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAccountsTable extends Migration {
+class CreateDomainsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,13 +12,13 @@ class CreateAccountsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('accounts', function(Blueprint $table)
+		Schema::create('domains', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->bigInteger('user_id')->unsigned()->index()->nullable(); // the owner of the account
-			$table->string('name');
+			$table->bigInteger('account_id')->unsigned()->index();
+			$table->string('domain')->index();
 			$table->timestamps();
-            $table->softDeletes();
+			$table->softDeletes();
 		});
 	}
 
@@ -29,7 +29,8 @@ class CreateAccountsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('accounts');
+
+		Schema::drop('domains');
 	}
 
 }

@@ -1,7 +1,7 @@
 <?php
 
 namespace Tectonic\Shift\Library\Filters;
-use Tectonic\Shift\Modules\Accounts\Services\AccountsService;
+use Tectonic\Shift\Modules\Accounts\Services\AccountManagementService;
 
 /**
  * Class AccountFilter
@@ -15,14 +15,14 @@ use Tectonic\Shift\Modules\Accounts\Services\AccountsService;
 class AccountFilter
 {
 	/**
-	 * @var \Tectonic\Shift\Modules\Accounts\Services\AccountsService
+	 * @var \Tectonic\Shift\Modules\Accounts\Services\AccountManagementService
 	 */
 	private $service;
 
 	/**
-	 * @param AccountsService $service
+	 * @param AccountManagementService $service
 	 */
-	public function __construct(AccountsService $service)
+	public function __construct(AccountManagementService $service)
 	{
 		$this->service = $service;
 	}

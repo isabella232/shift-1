@@ -3,10 +3,10 @@
 namespace Tests\Unit\Modules\Accounts\Services;
 
 use Mockery as m;
-use Tectonic\Shift\Modules\Accounts\Services\AccountsService;
+use Tectonic\Shift\Modules\Accounts\Services\AccountManagementService;
 use Tests\TestCase;
 
-class AccountsServiceTest  extends TestCase
+class AccountManagementServiceTest  extends TestCase
 {
 	private $mockRepository;
 	private $service;
@@ -17,7 +17,7 @@ class AccountsServiceTest  extends TestCase
 
 		$this->mockRepository  = m::mock('Tectonic\Shift\Modules\Accounts\Repositories\AccountRepositoryInterface');
 
-		$this->service  = new AccountsService($this->mockRepository);
+		$this->service  = new AccountManagementService($this->mockRepository);
 	}
 
 	public function testRequestedDomain()

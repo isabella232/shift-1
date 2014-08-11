@@ -23,7 +23,11 @@ class SqlAccountRepository extends SqlBaseRepository implements AccountRepositor
 	 */
 	public function requireByDomain($domain)
 	{
-		$account = $this->model->whereDomain($domain)->first();
+		$domainQuery = function($query) use ($domain) {
+			$query->whereDomain($domain);
+		};
+
+		$account = $this->model->whereHas('domains', $domainQuery)->first();
 
 		if (!$account) {
 			throw with(new ModelNotFoundException)->setModel(get_class($this->model));
