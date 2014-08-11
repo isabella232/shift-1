@@ -24,21 +24,6 @@ class AccountsService extends BaseManagementService
 	}
 
     /**
-     * Returns the account id for the currently authenticated user or 3rd party API token, and the
-     * account that they are CURRENTLY working with. An authenticated consumer can have access to
-     * numerous accounts, but will only work with one account at any given time.
-     *
-     * @todo Implement logic for 3rd party api token, as well as checks against the accounts the
-     * user can actually manage.
-     *
-     * @return mixed
-     */
-    public function getCurrentAccountId()
-    {
-        $accounts = $this->getAccounts();
-    }
-
-    /**
      * Returns the accounts that an authenticated consumer has access to.
      *
      * @return array Account
