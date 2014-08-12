@@ -17,7 +17,7 @@
                 controller: resource,
                 package: packageName
             });
-            
+
             // Register the create resource route
             Router.register(resource+'/new', {
                 templateUrl: resource+'/form.html',
