@@ -29,5 +29,10 @@
 
 			return config[key];
 		};
+
+		// Returns all configuration options
+		this.all = function() {
+			return config;
+		};
 	}]);
 })();
