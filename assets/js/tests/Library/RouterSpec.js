@@ -1,34 +1,35 @@
 'use strict';
 
 describe('provider: ShiftRouteProvider', function() {
-	var Config,
-		shiftRouteProvider;
+	var shiftRouteProvider;
 
-	beforeEach(function() {
-		var app = angular.module('Shift.Library.Router');
+	beforeEach(module('Shift.Library.Router'));
 
-		app.config(function(_ShiftRouteProvider_) {
-			Config = jasmine.createSpyObj('Config', ['get']);
+	beforeEach(inject(['ShiftRoute', function($s) {
+		shiftRouteProvider = $s;
+	}]));
 
-			shiftRouteProvider = _ShiftRouteProvider_.$get[1](Config);
-		});
+	it('should be able to register new routes', function() {
+		shiftRouteProvider.register('path', {});
 
-		module('Shift.Library.Router');
-		inject();
+		var routes = shiftRouteProvider.get();
+
+		expect(routes).toEqual([{url: '/path', order: 0}]);
 	});
 
-	describe('method: register', function() {
-		it('should register new routes', function() {
-			shiftRouteProvider.register('path', {});
-
-			var routes = shiftRouteProvider.get();
-
-			expect(routes).toEqual([{url: '/path', order: 0}]);
-		});
-	});
-
-	it('should return registered routes', function() {
+	it('get should return registered routes', function() {
 		expect(shiftRouteProvider.get()).toEqual([]);
 	});
 
+	it('sorting should return items in numerical order', function() {
+		var routes = [
+			{order: 1},
+			{order: 0}
+		];
+
+		var sortedRoutes = shiftRouteProvider.sortItems(routes);
+
+		expect(sortedRoutes[0]).toEqual(routes[1]);
+		expect(sortedRoutes[1]).toEqual(routes[0]);
+	});
 });
