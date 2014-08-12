@@ -1,6 +1,10 @@
-(function() {
-	'use strict';
+'use strict';
 
+// A little configuration required for setting up the underscore.string module
+_.mixin(_.str.exports());
+
+// Now let's begin.
+(function() {
 	var dependencies = [];
 
 	var module = angular.module('Shift', dependencies);
