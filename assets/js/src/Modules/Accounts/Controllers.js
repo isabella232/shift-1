@@ -1,28 +1,28 @@
 (function() {
 	'use strict';
 
-	var module = angular.module('shift.installs.controllers', ['shift.library.defaults']);
+	var module = angular.module('Shift.Accounts.Controllers', ['shift.library.defaults']);
 
-	module.controller('shift.installs', [
+	module.controller('shift.accounts', [
 		'$rootScope',
 		'$scope',
 		'$filter',
 		'Seeker',
 		'Deletism',
 		'Filter',
-		'Install',
+		'Account',
 		DefaultControllers.index
 	]);
 
-	module.controller('shift.installs.new', [
+	module.controller('shift.accounts.new', [
 		'$rootScope',
 		'$scope',
 		'$filter',
-		'Install',
+		'Account',
 		DefaultControllers.create
 	]);
 
-	module.controller('shift.installs.edit', [
+	module.controller('shift.accounts.edit', [
 		'$rootScope',
 		'$scope',
 		'$filter',
