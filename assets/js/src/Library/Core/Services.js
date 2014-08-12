@@ -9,11 +9,12 @@
 	 */
 	module.service('Config', [function() {
 		var config = {};
+		var self = this;
 
 		// Hydrate the configuration service with the required options
 		this.hydrate = function(configurationOptions) {
 			angular.forEach(configurationOptions, function(value, key) {
-				config[key] = value;
+				self.add(key, value);
 			});
 		};
 

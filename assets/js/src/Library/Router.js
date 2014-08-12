@@ -70,7 +70,7 @@
 					},
 
 					/**
-					 * Looks at the provided options (should contain the property: temkplateUrl) and determines where a
+					 * Looks at the provided options (should contain the property: templateUrl) and determines where a
 					 * view path may be found.
 					 *
 					 * @param object options
