@@ -5,3 +5,4 @@ composer.lock
 vendor
 bin
 .idea/*
+node_modules/*
