@@ -13,5 +13,10 @@ Route::group(['prefix' => Config::get('shift.api.url'), 'before' => 'shift.accou
 
 Route::get('install', 'Tectonic\Shift\Modules\Security\Controllers\InstallationController@getInstall');
 
-Route::filter('shift.view', 'Tectonic\Shift\Library\Filters\ViewFilter');
-Route::filter('shift.account', 'Tectonic\Shift\Library\Filters\AccountFilter');
+//Route::filter('shift.view', 'Tectonic\Shift\Library\Filters\ViewFilter');
+//Route::filter('shift.account', 'Tectonic\Shift\Library\Filters\AccountFilter');
+
+Route::get('/', function()
+{
+    return View::make('shift::home.index');
+});

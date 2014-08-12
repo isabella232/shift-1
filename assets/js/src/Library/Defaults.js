@@ -1,7 +1,7 @@
 (function(){
     'use strict';
 
-    var module = angular.module('shift.library.defaults', ['$ngResource']);
+    var module = angular.module('Shift.Library.Defaults', ['$ngResource']);
 
     /**
      * The DefaultRoutes factory object provides routes for the the most common application requests. These include
@@ -10,26 +10,26 @@
      * with the package it is currently representing.
      */
     module.provider('DefaultRoute', ['ShiftRouteProvider', function(Router) {
-        return function(resource, package) {
+        return function(resource, packageName) {
             // Register the main list route
             Router.register(resource, {
                 templateUrl: resource+'/index.html',
                 controller: resource,
-                package: package
+                package: packageName
             });
 
             // Register the create resource route
             Router.register(resource+'/new', {
                 templateUrl: resource+'/form.html',
                 controller: resource+'.new',
-                package: package
+                package: packageName
             });
 
             // Register the update resource route
             Router.register(resource+'/:id', {
                 templateUrl: resource+'/form.html',
                 controller: resource+'.edit',
-                package: package
+                package: packageName
             });
         };
     }]);

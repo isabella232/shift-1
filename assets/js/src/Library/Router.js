@@ -8,7 +8,7 @@
 	 *
 	 * This is used by the Shift and other libraries to help register routes that are then later used
 	 * by angular to match routes with controllers. Arguments provided should be identical to the routeProvider
-	 * used in angularjs. This is simply a register to ensure we can define routes across modulse, and have our
+	 * used in angularjs. This is simply a register to ensure we can define routes across modules, and have our
 	 * main module (app) have them executed.
 	 */
 	module.provider('ShiftRoute', function() {
@@ -70,7 +70,7 @@
 					},
 
 					/**
-					 * Looks at the provided options (should contain the property: temkplateUrl) and determines where a
+					 * Looks at the provided options (should contain the property: templateUrl) and determines where a
 					 * view path may be found.
 					 *
 					 * @param object options
@@ -84,10 +84,9 @@
 						return viewPath(options.templateUrl);
 					},
 
-					/*
-					 Function: init
-
-					 Based on all registered routes, Router will now register them all with angular. This should be called once the app is ready.
+					/**
+					 * Function: init
+					 * Based on all registered routes, Router will now register them all with angular. This should be called once the app is ready.
 					 */
 					init: function($routeProvider) {
 						angular.forEach(this.get() , function(route) {

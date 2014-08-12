@@ -7,7 +7,9 @@
 
     @include('shift::partials.misc.browser')
 
-    @yield('content', '<h1 align="center">Shift &#8226; Award Force</h1>')
+    <div ng-view>
+        @yield('content', '<h1 align="center">Shift &#8226; Award Force</h1>')
+    </div>
 
     @include('shift::partials.footer.foot')
 

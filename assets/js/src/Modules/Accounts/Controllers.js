@@ -1,9 +1,9 @@
 (function() {
 	'use strict';
 
-	var module = angular.module('Shift.Accounts.Controllers', ['shift.library.defaults']);
+	var module = angular.module('Shift.Accounts.Controllers', ['Shift.Library.Defaults']);
 
-	module.controller('shift.accounts', [
+	/*module.controller('shift.accounts', [
 		'$rootScope',
 		'$scope',
 		'$filter',
@@ -28,5 +28,6 @@
 		'$filter',
 		'install',
 		DefaultControllers.update
-	]);
+	]);*/
+
 })();

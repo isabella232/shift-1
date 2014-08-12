@@ -9,7 +9,7 @@ class AssetsComposer
     {
         // Add required assets to the asset container
         $container = Asset::container('shift');
-        $container->add('shift', 'packages/tectonic/shift/js/shift.js');
+        $container->add('shift', 'packages/tectonic/shift/js/shift-dev.js');
 
         $customContainer = Asset::container('custom');
         $customContainer->add('app', 'packages/tectonic/shift/js/app.js');

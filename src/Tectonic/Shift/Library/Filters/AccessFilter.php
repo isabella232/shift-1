@@ -13,6 +13,6 @@ class AccessFilter
 	 */
 	public function filter($route, $request)
 	{
-		dd($route);
+
 	}
 }

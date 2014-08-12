@@ -6,4 +6,5 @@
 	module.config(['ShiftRouteProvider', function(ShiftRouteProvider) {
 		ShiftRouteProvider('accounts', 'shift');
 	}]);
+
 })();

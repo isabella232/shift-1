@@ -1,19 +1,21 @@
 (function() {
 	'use strict';
 
-	var dependencies = [
-		'shift.users',
-		'shift.roles',
-	];
-
-	var module = angular.module('shift', dependencies);
+	var module = angular.module('shift', [
+        //'Shift.Library.Core.Services',
+        //'Shift.Library.DefaultControllers',
+        //'Shift.Library.Defaults',
+        'Shift.Library.Router',
+        'Shift.Home.Setup',
+        'Shift.Home.Controllers'
+    ]);
 
 	module.config(['$locationProvider', 'ShiftRouteProvider', function($location, Router) {
-		$location.html5Mode(true);
 
-		Router.register('404', {
-			templateUrl: '404.html',
-			bundle: 'shift'
-		});
+        $location.html5Mode(true);
+
+        Route.init();
+
 	}]);
+
 })();

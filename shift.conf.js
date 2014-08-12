@@ -16,19 +16,12 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       'assets/js/src/Vendor/angular.js',
-      'assets/js/src/Vendor/**/*.js',
-      'assets/js/src/Library/**/*.js',
-      'assets/js/src/*.js',
+      //'assets/js/src/Vendor/**/*.js',
+      //'assets/js/src/Library/**/*.js',
+      'assets/js/src/**/*.js',
       'assets/js/tests/angular-mocks.js',
       'assets/js/tests/**/*Spec.js'
     ],
-
-//	  files: [
-//		  'assets/js/src/Vendor/angular.js',
-//		  'assets/js/src/Shift.js',
-//		  'assets/js/tests/angular-mocks.js',
-//		  'assets/js/tests/**/*Spec.js'
-//	  ],
 
     // list of files to exclude
     exclude: [
@@ -66,7 +59,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome'],
+    //browsers: ['Chrome'],
 
 
     // Continuous Integration mode
