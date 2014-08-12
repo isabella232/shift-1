@@ -35,4 +35,41 @@
 			return config;
 		};
 	}]);
+
+	/**
+	 * The Resource service extends AngularJS' default $ngResource and makes it more compliant with modern RESTful
+	 * standards and practises. What this means is, $save will call the appropriate method whether the records exists
+	 * or not (PUT for update and POST for create).
+	 */
+	module.service('Resource', ['$resource', function($resource) {
+		return function(url, params, methods) {
+			var defaults = {
+				update: {method: 'put', isArray: false},
+				create: {method: 'post'}
+			};
+
+			methods = _.extend(defaults, methods);
+
+			var resource = $resource(url, params, methods);
+
+			resource.prototype.$save = function(data, callback) {
+				if (!this.id) {
+					this.$create(data, callback);
+				}
+				else {
+					this.$update(data, callback);
+				}
+			};
+
+			resource.lower = function() {
+				return this.name.toLowerCase();
+			};
+
+			resource.lowerPlural = function() {
+				return this.lower().pluralize();
+			};
+
+			return resource;
+		};
+	}]);
 })();

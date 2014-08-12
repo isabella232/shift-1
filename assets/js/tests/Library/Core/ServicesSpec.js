@@ -5,9 +5,9 @@ describe('service: Config', function() {
 
 	beforeEach(module('Shift.Library.Core.Services'));
 
-	beforeEach(inject(['Config', function($c) {
-		Config = $c;
-	}]));
+	beforeEach(inject(function(_Config_) {
+		Config = _Config_;
+	}));
 
 	it('should add new configuration keys and values', function() {
 		expect(Config.add('something', 'value')).toBeUndefined();
