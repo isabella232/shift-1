@@ -11,6 +11,5 @@ dependencies:
 test:
   override:
     - phpunit tests
-    - karma start ./shift.conf.js --single-run
-  pre:
-    - npm install -g karma
+    - ./node_modules/karma/bin/karma start ./shift.conf.js --single-run
+
