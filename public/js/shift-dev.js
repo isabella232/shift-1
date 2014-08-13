@@ -3536,9 +3536,9 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 	 * @param string defaultValue
 	 * @return string
 	 */
-	module.filter( 'default', [function() {
-		return function( input, defaultValue ) {
-			if ( !input ) return defaultValue;
+	module.filter('default', [function() {
+		return function(input, defaultValue) {
+			if (!input) return defaultValue;
 			
 			return input;
 		};

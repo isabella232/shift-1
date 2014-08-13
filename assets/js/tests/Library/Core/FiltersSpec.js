@@ -76,4 +76,16 @@ describe('module: Shift.Core.Filters', function() {
 			expect($filter('humanize')('why hello!')).toBe('Why hello!');
 		});
 	});
+
+	describe('filter: default', function() {
+		it('should exist', function() {
+			expect($filter('default')).not.toBe(null);
+		});
+
+		it('should return a default value if a falsy value is provided', function() {
+			expect($filter('default')(false, 'Default value')).toBe('Default value');
+			expect($filter('default')(null, 'No')).toBe('No');
+			expect($filter('default')(0, 'Zero')).toBe('Zero');
+		});
+	});
 });
