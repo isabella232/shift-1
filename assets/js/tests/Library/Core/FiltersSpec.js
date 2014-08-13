@@ -64,4 +64,16 @@ describe('module: Shift.Core.Filters', function() {
 			expect($filter('localDate')(null)).toBe(null);
 		});
 	});
+
+	describe('filter: humanize', function() {
+		it('should exist', function() {
+			expect($filter('humanize')).not.toBe(null);
+		});
+
+		it('should format a coded string into a humanized format', function() {
+			expect($filter('humanize')('whyHello!')).toBe('Why hello!');
+			expect($filter('humanize')('why-hello!')).toBe('Why hello!');
+			expect($filter('humanize')('why hello!')).toBe('Why hello!');
+		});
+	});
 });

@@ -3523,21 +3523,9 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 	 * @param string input
 	 * @return string
 	 */
-	module.filter('resourceToHuman', [function() {
-		return function( input ) {
-			var string = [];
-			
-			for (var i = 0; i < input.length; i++) {
-				var chr = input.charAt(i);
-				
-				if ( i > 0 && chr == chr.toUpperCase() ) {
-					string.push(' ');
-				}
-				
-				string.push(chr);
-			}
-			
-			return string.join('');
+	module.filter('humanize', [function() {
+		return function(input) {
+			return _.humanize(input);
 		};
 	}]);
 
