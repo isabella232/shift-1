@@ -56,6 +56,12 @@ describe('module: Shift.Core.Filters', function() {
 			expect($filter('localDate')).not.toBe(null);
 		});
 
+		it('should format a given server date, to a local client date format', function() {
+			expect($filter('localDate')('1982-12-09 00:54:13')).toBe('1982-12-09 00:54');
+		});
 
+		it('should return any value that is falsy', function() {
+			expect($filter('localDate')(null)).toBe(null);
+		});
 	});
 });
