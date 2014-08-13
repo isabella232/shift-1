@@ -5,7 +5,7 @@ module.exports = function(config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: 'assets/js',
+    basePath: '',
 
 
     // frameworks to use
@@ -15,13 +15,9 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'src/Vendor/angular.js',
-      'src/Vendor/**/*.js',
-      'src/Library/**/*.js',
-      'src/**/*.js',
-      'shift.js',
-      'tests/angular-mocks.js',
-      'tests/**/*Spec.js'
+      'public/js/shift-dev.js',
+      'assets/js/tests/angular-mocks.js',
+      'assets/js/tests/**/*Spec.js'
     ],
 
     // list of files to exclude

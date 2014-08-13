@@ -11,7 +11,12 @@ var input  = 'assets/',
     output = 'public/';
 
 var scripts = [
-    '!' + input + 'js/src/Vendor/angular.js',
+    input + 'js/vendor/markdown.converter.js',
+    input + 'js/vendor/underscore.min.js',
+    input + 'js/vendor/underscore.string.min.js',
+    input + 'js/vendor/angular.js',
+    input + 'js/vendor/angular-resource.js',
+    input + 'js/vendor/angular-route.js',
     input + 'js/src/**/*.js',
     input + 'js/shift.js'
 ];
@@ -26,10 +31,33 @@ gulp.task('scripts', function() {
         .pipe(notify({ message: 'Javascript files compiled.' }));
 });
 
-gulp.task( 'publish' , function() {
+gulp.task('publish' , function() {
     gulp.src('.')
         .pipe(exec('php ../../../artisan asset:publish --bench="tectonic/shift"'))
         .pipe(notify('Bundle assets published.'));
 });
 
-gulp.task( 'default' , [ 'scripts' , 'publish' ]);
+// Helper task for watching the scripts directories, and only the script directories
+gulp.task('scripts-watch' , function() {
+	gulp.run('scripts');
+
+	gulp.watch(input + 'js/src/**' , function() {
+		gulp.run('scripts');
+	});
+});
+
+gulp.task('default' , function() {
+	gulp.run('scripts' , 'publish', 'scripts-watch');
+
+	// Watch the JS directory.
+	gulp.watch(input + 'js/src/**' , function() {
+		gulp.run('scripts');
+	});
+
+	// When any changes happen to the 'public' directory, publish the changes.
+	gulp.watch(output + '**/*' , function() {
+		gulp.run('publish');
+	});
+});
+
+
