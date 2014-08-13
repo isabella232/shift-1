@@ -1,6 +1,8 @@
 machine:
   php:
     version: 5.4.6
+  node:
+    version: v0.10.28
 
 dependencies:
   pre:
