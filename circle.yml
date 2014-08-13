@@ -7,3 +7,8 @@ machine:
 dependencies:
   pre:
     - composer config --global github-oauth.github.com ${COMPOSER_OAUTH_TOKEN}
+
+test:
+  override:
+    - phpunit tests
+    - karma start shift.conf.js
