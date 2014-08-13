@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 
-	var module = angular.module('Shift.Core.Filters', []);
+	var module = angular.module('Shift.Library.Core.Filters', ['Shift.Library.Core.Services']);
 
 	/**
 	 * Identical to PHP's ucfirst function - converts the entire string to a lowercase version,
@@ -26,20 +26,14 @@
 	 * @return string (as HTML)
 	 */
 	module.filter('markdown', function() {
-		var replaceTags = function(input) {
+		return function(input) {
 			if (input) {
 				var converter = new Markdown.Converter();
-				
+
 				return converter.makeHtml(input);
 			}
-			
+
 			return input;
-		}
-		
-		return function(input) {
-			if (!input) return input;
-			
-			return replaceTags(input);
 		};
 	});
 
@@ -63,10 +57,10 @@
 	});
 
 	// Filter for formatting dates to a local-friendly format, for technical date formats.
-	module.filter( 'localDate', function( DateTimeFormats) {
-		return function( datetime ) {
-			if ( datetime ) {
-				return moment.utc( datetime, DateTimeFormats.serverFormat, 'en' ).local().format( DateTimeFormats.clientFormat );
+	module.filter('localDate', function(DateTimeFormats) {
+		return function(datetime) {
+			if (datetime) {
+				return moment.utc(datetime, DateTimeFormats.serverFormat, 'en').local().format(DateTimeFormats.clientFormat);
 			}
 
 			return datetime;

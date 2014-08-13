@@ -46,6 +46,7 @@ gulp.task('scripts-watch' , function() {
 	});
 });
 
+// When running gulp without any tasks, it'll watch the scripts, styles, and do artisan publishing.etc.
 gulp.task('default' , function() {
 	gulp.run('scripts' , 'publish', 'scripts-watch');
 

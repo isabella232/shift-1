@@ -3,7 +3,7 @@
 describe('module: Shift.Core.Filters', function() {
 	var $filter;
 
-	beforeEach(module('Shift.Core.Filters'));
+	beforeEach(module('Shift.Library.Core.Filters'));
 
 	beforeEach(inject(function(_$filter_) {
 		$filter = _$filter_;
@@ -50,4 +50,6 @@ describe('module: Shift.Core.Filters', function() {
 			expect($filter('mandatory')('input', true)).toEqual('input <span class="required">*</span>');
 		});
 	});
+
+
 });

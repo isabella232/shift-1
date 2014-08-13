@@ -3444,7 +3444,7 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 (function() {
 	'use strict';
 
-	var module = angular.module('Shift.Core.Filters', []);
+	var module = angular.module('Shift.Library.Core.Filters', ['Shift.Library.Core.Services']);
 
 	/**
 	 * Identical to PHP's ucfirst function - converts the entire string to a lowercase version,
@@ -3469,20 +3469,14 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 	 * @return string (as HTML)
 	 */
 	module.filter('markdown', function() {
-		var replaceTags = function(input) {
+		return function(input) {
 			if (input) {
 				var converter = new Markdown.Converter();
-				
+
 				return converter.makeHtml(input);
 			}
-			
+
 			return input;
-		}
-		
-		return function(input) {
-			if (!input) return input;
-			
-			return replaceTags(input);
 		};
 	});
 
@@ -3506,10 +3500,10 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 	});
 
 	// Filter for formatting dates to a local-friendly format, for technical date formats.
-	module.filter( 'localDate', function( DateTimeFormats) {
-		return function( datetime ) {
-			if ( datetime ) {
-				return moment.utc( datetime, DateTimeFormats.serverFormat, 'en' ).local().format( DateTimeFormats.clientFormat );
+	module.filter('localDate', function(DateTimeFormats) {
+		return function(datetime) {
+			if (datetime) {
+				return moment.utc(datetime, DateTimeFormats.serverFormat, 'en').local().format(DateTimeFormats.clientFormat);
 			}
 
 			return datetime;
@@ -3785,6 +3779,18 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 
 			return resource;
 		};
+	}]);
+
+	/**
+	 * This is a simple service that simply returns the relevant date time formats for both
+	 * the client, and the server. It's used mainly for doing date-time operations using
+	 * a library such as moment.js.
+	 */
+	module.service('DateTimeFormats', [function() {
+		this.dateFormat   = 'YYYY-MM-DD';
+		this.timeFormat   = 'HH:mm:ss';
+		this.serverFormat = 'YYYY-MM-DD HH:mm:ss';
+		this.clientFormat = 'YYYY-MM-DD HH:mm';
 	}]);
 })();
 

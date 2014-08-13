@@ -72,4 +72,16 @@
 			return resource;
 		};
 	}]);
+
+	/**
+	 * This is a simple service that simply returns the relevant date time formats for both
+	 * the client, and the server. It's used mainly for doing date-time operations using
+	 * a library such as moment.js.
+	 */
+	module.service('DateTimeFormats', [function() {
+		this.dateFormat   = 'YYYY-MM-DD';
+		this.timeFormat   = 'HH:mm:ss';
+		this.serverFormat = 'YYYY-MM-DD HH:mm:ss';
+		this.clientFormat = 'YYYY-MM-DD HH:mm';
+	}]);
 })();
