@@ -1,5 +1,5 @@
 {
-  "name": "Tectonic Shift",
+  "name": "tectonic-shift",
   "description": "This is just a dependency management package file.",
   "devDependencies": {
     "gulp": "^3.8.7",
