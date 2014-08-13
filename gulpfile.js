@@ -12,6 +12,7 @@ var input  = 'assets/',
 
 var scripts = [
     input + 'js/vendor/markdown.converter.js',
+    input + 'js/vendor/moment.min.js',
     input + 'js/vendor/underscore.min.js',
     input + 'js/vendor/underscore.string.min.js',
     input + 'js/vendor/angular.js',

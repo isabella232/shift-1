@@ -51,5 +51,11 @@ describe('module: Shift.Core.Filters', function() {
 		});
 	});
 
+	describe('filter: localDate', function() {
+		it('should exist', function() {
+			expect($filter('localDate')).not.toBe(null);
+		});
 
+
+	});
 });
