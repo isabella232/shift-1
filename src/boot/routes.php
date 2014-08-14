@@ -8,6 +8,7 @@
 Route::group(['prefix' => Config::get('shift.api.url'), 'before' => 'shift.account|shift.view'], function() {
 	Route::collection('roles', 'Tectonic\Shift\Modules\Security\Controllers\RoleController');
 	Route::collection('users', 'Tectonic\Shift\Modules\Accounts\Controllers\UserController');
+    Route::collection('locales', 'Tectonic\Shift\Modules\Localization\Controllers\LocaleController');
     Route::collection('customfields', 'Tectonic\Shift\Modules\CustomFields\Controllers\CustomFieldController');
 });
 
@@ -19,4 +20,9 @@ Route::filter('shift.account', 'Tectonic\Shift\Library\Filters\AccountFilter');
 Route::get('/', function()
 {
     return View::make('shift::home.index');
+});
+
+Route::get('test', function()
+{
+    return Config::getItems();
 });

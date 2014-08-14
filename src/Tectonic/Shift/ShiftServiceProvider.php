@@ -130,13 +130,14 @@ class ShiftServiceProvider extends ServiceProvider
     {
         // Register Utility Binding
         $this->app->singleton('utility', 'Tectonic\Shift\Library\Utility');
-        $this->app->singleton('Tectonic\Shift\Modles\Accounts\Services\AccountsService', 'Tectonic\Shift\Modles\Accounts\Services\AccountsService');
+        $this->app->singleton('Tectonic\Shift\Modules\Accounts\Services\AccountsService', 'Tectonic\Shift\Modules\Accounts\Services\AccountsService');
 
         // Register UserRepositoryInterface binding
 	    $this->bind('Modules\Accounts\Repositories\AccountRepositoryInterface', 'Modules\Accounts\Repositories\SqlAccountRepository');
 	    $this->bind('Modules\Accounts\Repositories\UserRepositoryInterface', 'Modules\Accounts\Repositories\SqlUserRepository');
 	    $this->bind('Modules\CustomFields\Repositories\CustomFieldRepositoryInterface', 'Modules\CustomFields\Repositories\CustomFieldRepository');
 	    $this->bind('Modules\Security\Repositories\RoleRepositoryInterface', 'Modules\Security\Repositories\SqlRoleRepository');
+	    $this->bind('Modules\Localization\Repositories\LocaleRepositoryInterface', 'Modules\Localization\Repositories\SqlLocalRepository');
     }
 
     /**

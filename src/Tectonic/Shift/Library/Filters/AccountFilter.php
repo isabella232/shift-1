@@ -41,7 +41,9 @@ class AccountFilter
 	 */
 	public function filter($route, $request)
 	{
-		$account = $this->accountManagementService->getRequestedDomain($request->server('SERVER_NAME'));
+        return; // Temporarily returning as locally this filter is failing.
+
+        $account = $this->accountManagementService->getRequestedDomain($request->server('SERVER_NAME'));
 
 		$this->accountsService->setCurrentAccount($account);
 	}
