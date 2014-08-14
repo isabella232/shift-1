@@ -16,7 +16,7 @@
 			$get: ['Config', function(Config) {
 				var routes = [];
 				var order = 0;
-				
+
 				/**
 				 * Registers a route and stores it on the internal routes variable.
 				 */

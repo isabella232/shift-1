@@ -1,10 +1,10 @@
 (function() {
     'use strict';
 
-    var module = angular.module('Shift.Home.Controllers', ['Shift.Library.Defaults']);
+    var module = angular.module('Shift.Home.Controllers', []);
 
-    module.controller('shift.home', ['$scope', function($scope) {
-
+    module.controller('Shift.Home', ['$scope', function($scope) {
+        $scope.title = "Shift 2.0";
     }]);
 
 })();
