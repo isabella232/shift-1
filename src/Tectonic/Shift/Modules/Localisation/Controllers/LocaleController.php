@@ -1,9 +1,9 @@
-<?php namespace Tectonic\Shift\Modules\Localization\Controllers;
+<?php namespace Tectonic\Shift\Modules\Localisation\Controllers;
 
 use Tectonic\Shift\Library\Support\BaseController;
-use Tectonic\Shift\Modules\Localization\Validators\LocaleValidator;
-use Tectonic\Shift\Modules\Localization\Services\LocaleManagementService;
-use Tectonic\Shift\Modules\Localization\Repositories\LocaleRepositoryInterface;
+use Tectonic\Shift\Modules\Localisation\Validators\LocaleValidator;
+use Tectonic\Shift\Modules\Localisation\Services\LocaleManagementService;
+use Tectonic\Shift\Modules\Localisation\Repositories\LocaleRepositoryInterface;
 
 class LocaleController extends BaseController
 {

@@ -1,4 +1,4 @@
-<?php namespace Tectonic\Shift\Modules\Localization\Validators;
+<?php namespace Tectonic\Shift\Modules\Localisation\Validators;
 
 use Tectonic\Shift\Library\Validation\Validator;
 

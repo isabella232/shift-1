@@ -1,4 +1,4 @@
-<?php namespace Tectonic\Shift\Modules\Localization\Models;
+<?php namespace Tectonic\Shift\Modules\Localisation\Models;
 
 use Tectonic\Shift\Library\Support\BaseModel;
 

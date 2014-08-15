@@ -1,9 +1,9 @@
-<?php namespace Tectonic\Shift\Modules\Localization\Search;
+<?php namespace Tectonic\Shift\Modules\Localisation\Search;
 
 use Tectonic\Shift\Library\Search\Search;
 use Tectonic\Shift\Library\Search\Filters\OrderFilter;
 use Tectonic\Shift\Library\Search\Filters\KeywordFilter;
-use Tectonic\Shift\Modules\Localization\Models\Locale;
+use Tectonic\Shift\Modules\Localisation\Models\Locale;
 
 class LocaleSearch extends Search
 {

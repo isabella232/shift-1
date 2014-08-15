@@ -1,7 +1,7 @@
-<?php namespace Tectonic\Shift\Modules\Localization\Repositories;
+<?php namespace Tectonic\Shift\Modules\Localisation\Repositories;
 
 use Tectonic\Shift\Library\Support\SqlBaseRepository;
-use Tectonic\Shift\Modules\Localization\Models\Locale;
+use Tectonic\Shift\Modules\Localisation\Models\Locale;
 
 class SqlLocalRepository extends SqlBaseRepository implements LocaleRepositoryInterface
 {

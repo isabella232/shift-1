@@ -137,7 +137,8 @@ class ShiftServiceProvider extends ServiceProvider
 	    $this->bind('Modules\Accounts\Repositories\UserRepositoryInterface', 'Modules\Accounts\Repositories\SqlUserRepository');
 	    $this->bind('Modules\CustomFields\Repositories\CustomFieldRepositoryInterface', 'Modules\CustomFields\Repositories\CustomFieldRepository');
 	    $this->bind('Modules\Security\Repositories\RoleRepositoryInterface', 'Modules\Security\Repositories\SqlRoleRepository');
-	    $this->bind('Modules\Localization\Repositories\LocaleRepositoryInterface', 'Modules\Localization\Repositories\SqlLocalRepository');
+	    $this->bind('Modules\Localisation\Repositories\LocaleRepositoryInterface', 'Modules\Localisation\Repositories\SqlLocalRepository');
+	    $this->bind('Modules\Localisation\Repositories\LocalisationRepositoryInterface', 'Modules\Localisation\Repositories\SqlLocalisationRepository');
     }
 
     /**
