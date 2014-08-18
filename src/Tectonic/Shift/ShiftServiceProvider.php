@@ -36,8 +36,6 @@ class ShiftServiceProvider extends ServiceProvider
 
 		$this->bootFile('routes');
 		$this->bootFile('commands');
-
-
     }
 
 	/**
@@ -49,6 +47,7 @@ class ShiftServiceProvider extends ServiceProvider
 		$this->bootFile('macros');
 
 		$this->package('tectonic/shift');
+        $this->registerCustomValidationRules();
 	}
 
 	/**
@@ -131,18 +130,34 @@ class ShiftServiceProvider extends ServiceProvider
         // Register Utility Binding
         $this->app->singleton('utility', 'Tectonic\Shift\Library\Utility');
         $this->app->singleton('Tectonic\Shift\Modules\Accounts\Services\AccountsService', 'Tectonic\Shift\Modules\Accounts\Services\AccountsService');
+        $this->app->singleton('lang', function($app){
+            return $app['shift.translator'];
+        });
 
         // Register UserRepositoryInterface binding
 	    $this->bind('Modules\Accounts\Repositories\AccountRepositoryInterface', 'Modules\Accounts\Repositories\SqlAccountRepository');
 	    $this->bind('Modules\Accounts\Repositories\UserRepositoryInterface', 'Modules\Accounts\Repositories\SqlUserRepository');
 	    $this->bind('Modules\CustomFields\Repositories\CustomFieldRepositoryInterface', 'Modules\CustomFields\Repositories\CustomFieldRepository');
 	    $this->bind('Modules\Security\Repositories\RoleRepositoryInterface', 'Modules\Security\Repositories\SqlRoleRepository');
-	    $this->bind('Modules\Localisation\Repositories\LocaleRepositoryInterface', 'Modules\Localisation\Repositories\SqlLocalRepository');
+	    $this->bind('Modules\Localisation\Repositories\LocaleRepositoryInterface', 'Modules\Localisation\Repositories\SqlLocaleRepository');
 	    $this->bind('Modules\Localisation\Repositories\LocalisationRepositoryInterface', 'Modules\Localisation\Repositories\SqlLocalisationRepository');
+
+        $this->app->bindShared('shift.translator', function($app)
+        {
+            return new \Tectonic\Shift\Library\Translation\Translator(
+                $this->app['translation.loader'],
+                $this->app['config']['app.locale'],
+                $this->app['config']['shift::autoloads']
+            );
+        });
+
+        $this->app->bind('Symfony\Component\Translation\TranslatorInterface', function($app) {
+            return $app['shift.translator'];
+        });
     }
 
     /**
-     * Shofthand method for setting bindings, ensuring that the Tectonic\Shift namespace does not
+     * Shorthand method for setting bindings, ensuring that the Tectonic\Shift namespace does not
      * need to be provided with each call when setting up bindings. They can, however - be provided
      * if necessary.
      *
@@ -163,4 +178,9 @@ class ShiftServiceProvider extends ServiceProvider
 
 		$this->app->bind($name, $class);
 	}
+
+    private function registerCustomValidationRules()
+    {
+        $this->app['Illuminate\Validation\Factory']->extend('localeCode', 'Tectonic\Shift\Modules\Localisation\Validators\LocaleCustomValidationRules@localeCode');
+    }
 }

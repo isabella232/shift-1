@@ -6,6 +6,6 @@ class LocaleValidator extends Validator
 {
     protected $rules = [
         'locale' => 'required',
-        'code'   => 'required|unique:locales,code'
+        'code'   => 'required|unique:locales,code|localeCode'
     ];
 }

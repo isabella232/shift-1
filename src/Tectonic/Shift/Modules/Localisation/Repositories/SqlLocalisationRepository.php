@@ -9,4 +9,18 @@ class SqlLocalisationRepository extends SqlBaseRepository implements Localisatio
     {
         $this->model = $localisation;
     }
+
+    /**
+     * Return a key/value paired array of UI localisations/customisations
+     *
+     * @return array
+     */
+    public function getUILocalisations($localeId)
+    {
+        return $this->model
+            ->where('resource', '=', '')
+            ->where('locale_id', '=', $localeId)
+            ->lists('value', 'field');
+    }
+
 }

@@ -1,8 +1,8 @@
 <?php namespace Tests\Unit\Modules\Localisation\Validators;
 
 use Mockery as m;
-use Tectonic\Shift\Modules\Localisation\Validators\LocaleCustomValidationRules;
 use Tests\TestCase;
+use Tectonic\Shift\Modules\Localisation\Validators\LocaleCustomValidationRules;
 
 class LocaleCodeValidatorTest extends TestCase
 {
@@ -10,13 +10,14 @@ class LocaleCodeValidatorTest extends TestCase
     {
         $validator = new LocaleCustomValidationRules();
 
-        $this->assertTrue($validator->localCode('code', 'en_GB', []));
-        $this->assertFalse($validator->localCode('code', 'enn_GB', []));
-        $this->assertFalse($validator->localCode('code', 'en_GBB', []));
-        $this->assertFalse($validator->localCode('code', 'EN_gb', []));
-        $this->assertFalse($validator->localCode('code', 'enGB', []));
-        $this->assertFalse($validator->localCode('code', 'engb', []));
-        $this->assertFalse($validator->localCode('code', 'ENGB', []));
-        $this->assertFalse($validator->localCode('code', 'en-GB', []));
+        // Test a variety of different formats to ensure full coverage
+        $this->assertTrue($validator->localeCode('code', 'en_GB', []));
+        $this->assertFalse($validator->localeCode('code', 'enn_GB', []));
+        $this->assertFalse($validator->localeCode('code', 'en_GBB', []));
+        $this->assertFalse($validator->localeCode('code', 'EN_gb', []));
+        $this->assertFalse($validator->localeCode('code', 'enGB', []));
+        $this->assertFalse($validator->localeCode('code', 'engb', []));
+        $this->assertFalse($validator->localeCode('code', 'EN', []));
+        $this->assertFalse($validator->localeCode('code', 'en-GB', []));
     }
 }

@@ -23,3 +23,13 @@ Route::group(['prefix' => Config::get('shift.api.url'), 'before' => 'shift.accou
  */
 Route::get('/', function() { return View::make('shift::home.index'); });
 Route::get('install', 'Tectonic\Shift\Modules\Security\Controllers\InstallationController@getInstall');
+
+Route::get('test', function()
+{
+    return App::make('Tectonic\Shift\Modules\Localisation\Repositories\LocaleRepositoryInterface')->getId('en_GB');
+
+    $lang = App::make('shift.translator');
+    $translations = App::make('Tectonic\Shift\Modules\Localisation\Repositories\LocalisationRepositoryInterface')->getUILocalisations();
+    $lang->setKeys($translations);
+    return $lang->all();
+});
