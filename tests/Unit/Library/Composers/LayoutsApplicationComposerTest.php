@@ -14,6 +14,7 @@ class LayoutsApplicationComposerTest extends \PHPUnit_Framework_TestCase
 	{
 		$mockView = m::mock('someview');
 		$mockView->shouldReceive('with')->with('settings', []);
+		$mockView->shouldReceive('with')->times(1);
 
 		$composer = new LayoutsApplicationComposer;
 		$composer->compose($mockView);
