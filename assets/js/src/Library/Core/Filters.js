@@ -105,21 +105,21 @@
 	 * @param boolean relative
 	 * @return string
 	 */
-	module.filter( 'niceDate', [ function() {
-		return function( input, relative, format ) {
-			if ( input === null ) return;
+	module.filter('niceDate', [function() {
+		return function(input, relative, format) {
+			if (input === null) return;
 			
-			var thisMoment = moment.utc( input );
+			var thisMoment = moment.utc(input).local();
 			
-			if ( relative == null ) relative = true;
+			if (angular.isUndefined(relative)) relative = true;
 			
-			if ( relative ) {
+			if (relative) {
 				return thisMoment.fromNow();
 			}
 
-			if ( !format ) format = "Do MMMM YYYY @ h:mm a";
+			if (!format) format = "Do MMMM YYYY @ h:mm a";
 			
-			return thisMoment.local().format( format );
+			return thisMoment.format(format);
 		};
 	}]);
 

@@ -88,4 +88,28 @@ describe('module: Shift.Core.Filters', function() {
 			expect($filter('default')(0, 'Zero')).toBe('Zero');
 		});
 	});
+
+	describe('filter: niceDate', function() {
+		it('should exist', function() {
+			expect($filter('niceDate')).not.toBe(null);
+		});
+
+		it('should return an undefined value if a null input is provided', function() {
+			expect($filter('niceDate')(null)).toBeUndefined();
+		});
+
+		it('should return a relative value when requested', function() {
+			var thisMoment = moment().startOf('hour').utc();
+			var thatMoment = moment().startOf('hour').utc();
+
+			expect($filter('niceDate')(thisMoment.format('YYYY-MM-DD HH:mm:ss'))).toEqual(thatMoment.fromNow());
+		});
+
+		it('should return a specifically formatted date when requested', function() {
+			var thisMoment = moment().startOf('hour').utc();
+			var thatMoment = moment().startOf('hour').utc();
+
+			expect($filter('niceDate')(thisMoment.format('YYYY-MM-DD HH:mm:ss'), false, 'YYYY')).toEqual(thatMoment.format('YYYY'));
+		});
+	});
 });
