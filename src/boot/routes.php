@@ -26,10 +26,9 @@ Route::get('install', 'Tectonic\Shift\Modules\Security\Controllers\InstallationC
 
 Route::get('test', function()
 {
-    return App::make('Tectonic\Shift\Modules\Localisation\Repositories\LocaleRepositoryInterface')->getId('en_GB');
-
     $lang = App::make('shift.translator');
-    $translations = App::make('Tectonic\Shift\Modules\Localisation\Repositories\LocalisationRepositoryInterface')->getUILocalisations();
+    $translations = App::make('Tectonic\Shift\Modules\Localisation\Repositories\LocalisationRepositoryInterface')->getUILocalisations(1);
     $lang->setKeys($translations);
-    return $lang->all();
+
+    return json_encode($lang->all());
 });

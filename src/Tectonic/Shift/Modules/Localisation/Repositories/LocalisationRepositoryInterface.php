@@ -4,5 +4,5 @@ use Tectonic\Shift\Library\Support\BaseRepositoryInterface;
 
 interface LocalisationRepositoryInterface extends BaseRepositoryInterface
 {
-    public function getUILocalisations();
+    public function getUILocalisations($localeId);
 }
