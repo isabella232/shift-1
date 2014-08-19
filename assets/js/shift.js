@@ -5,17 +5,12 @@ _.mixin(_.str.exports());
 	'use strict';
 
 	var module = angular.module('shift', [
-        'Shift.Library.Core.Services',
-        'Shift.Library.DefaultControllers',
-        'Shift.Library.Defaults',
-        'Shift.Library.Router',
         'Shift.Home.Setup',
         'Shift.Home.Controllers'
     ]);
 
-	module.config(['$locationProvider', 'ShiftRouteProvider', function($location, Router) {
-//        $location.html5Mode(true);
-//
-//        Route.init();
-	}]);
+	module.config(['$locationProvider', function($location) {
+        $location.html5Mode(true);
+    }]);
+
 })();

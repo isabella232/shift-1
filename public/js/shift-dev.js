@@ -3364,7 +3364,7 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 			$get: ['Config', function(Config) {
 				var routes = [];
 				var order = 0;
-				
+
 				/**
 				 * Registers a route and stores it on the internal routes variable.
 				 */
@@ -3825,21 +3825,21 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 (function() {
 	'use strict';
 
-	var module = angular.module('Shift.Accounts.Setup', ['Shift.Library.Defaults']);
+	//var module = angular.module('Shift.Accounts.Setup', ['Shift.Library.Defaults']);
 
-	module.config(['ShiftRouteProvider', function(ShiftRouteProvider) {
-		ShiftRouteProvider('accounts', 'shift');
-	}]);
+	//module.config(['ShiftRouteProvider', function(ShiftRouteProvider) {
+	//	ShiftRouteProvider('accounts', 'shift');
+	//}]);
 
 })();
 
 (function() {
     'use strict';
 
-    var module = angular.module('Shift.Home.Controllers', ['Shift.Library.Defaults']);
+    var module = angular.module('Shift.Home.Controllers', []);
 
-    module.controller('shift.home', ['$scope', function($scope) {
-
+    module.controller('Shift.Home', ['$scope', function($scope) {
+        $scope.title = "Shift 2.0";
     }]);
 
 })();
@@ -3847,11 +3847,19 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 (function() {
     'use strict';
 
-    var module = angular.module('Shift.Home.Setup', ['Shift.Library.Defaults']);
+    var module = angular.module('Shift.Home.Setup', ['ngRoute']); // 'Shift.Library.Router'
 
-    module.config(['ShiftRouteProvider', function(ShiftRouteProvider) {
-        ShiftRouteProvider('home', {
-            templateUrl: '/packages/tectonic/shift/views/home.html'
+    module.config(['$routeProvider', function($routeProvider) {
+
+        // The Shift Router isn't working yet. As a test user ngRoute
+        /*ShiftRoute('/', {
+            templateUrl: '/packages/tectonic/shift/views/home.html',
+            controller: 'Shift.Home'
+        });*/
+
+        $routeProvider.when('/', {
+            templateUrl: '/packages/tectonic/shift/views/home.html',
+            controller: 'Shift.Home'
         });
     }]);
 
@@ -3863,17 +3871,12 @@ _.mixin(_.str.exports());
 	'use strict';
 
 	var module = angular.module('shift', [
-        'Shift.Library.Core.Services',
-        'Shift.Library.DefaultControllers',
-        'Shift.Library.Defaults',
-        'Shift.Library.Router',
         'Shift.Home.Setup',
         'Shift.Home.Controllers'
     ]);
 
-	module.config(['$locationProvider', 'ShiftRouteProvider', function($location, Router) {
-//        $location.html5Mode(true);
-//
-//        Route.init();
-	}]);
+	module.config(['$locationProvider', function($location) {
+        $location.html5Mode(true);
+    }]);
+
 })();
