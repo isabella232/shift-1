@@ -84,4 +84,80 @@
 		this.serverFormat = 'YYYY-MM-DD HH:mm:ss';
 		this.clientFormat = 'YYYY-MM-DD HH:mm';
 	}]);
+
+    /**
+     * This service deals will language and localisation for UI elements. It will find/retrieve
+     * a language element/item from the language object stored on the $rootScope.
+     */
+    module.service('Language', ['$rootScope', function($rootScope) {
+
+        /**
+         * Error string to display is language item is NOT found.
+         *
+         * @type {string}
+         */
+        this.errorString = "NO ITEM FOUND";
+
+        /**
+         * Find a language item and return it as a string for
+         * display on the UI. If no item is found return an
+         * easy to spot string so it can be added or corrected.
+         *
+         * @param bundle
+         * @param item
+         * @returns {string}
+         */
+        this.find = function(bundle, item) {
+            var locale = this.getLocale();
+            var object = $rootScope.language[bundle].lang[locale];
+
+            return this.getPropertyByString(object, item);
+        };
+
+        /**
+         * Return a property in object by dot notated string. If the access string is empty,
+         * returns the object. Otherwise, keeps going along access path until second last accessor.
+         * If that's an object, returns the last object[accessor] value. Otherwise, return the value
+         * of this.errorString.
+         * .
+         * @param obj
+         * @param propertyString
+         * @returns {string}
+         */
+        this.getPropertyByString = function(obj, propertyString) {
+            if (!propertyString)
+                return obj;
+
+            var prop, props = propertyString.split('.');
+
+            for (var i = 0, iLen = props.length - 1; i < iLen; i++) {
+                prop = props[i];
+
+                var candidate = obj[prop];
+                if (candidate !== undefined) {
+                    obj = candidate;
+                } else {
+                    break;
+                }
+            }
+
+            var string = obj[props[i]];
+
+            if(angular.isUndefined(string))
+                return this.errorString;
+
+            return string;
+        }
+
+        /**
+         * Return the current locale code in use. E.g. 'en_GB'.
+         *
+         * @returns {string}
+         */
+        this.getLocale = function() {
+            return $rootScope.config.localeCode;
+        }
+
+    }]);
+
 })();

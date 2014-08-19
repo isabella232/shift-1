@@ -42,7 +42,7 @@ gulp.task('publish' , function() {
 gulp.task('scripts-watch' , function() {
 	gulp.run('scripts');
 
-	gulp.watch(input + 'js/src/**' , function() {
+	gulp.watch(input + 'js/**', function() {
 		gulp.run('scripts');
 	});
 });

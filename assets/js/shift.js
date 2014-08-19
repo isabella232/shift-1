@@ -6,11 +6,25 @@ _.mixin(_.str.exports());
 
 	var module = angular.module('shift', [
         'Shift.Home.Setup',
-        'Shift.Home.Controllers'
+        'Shift.Home.Controllers',
+        'Shift.Library.Core.Services'
     ]);
 
 	module.config(['$locationProvider', function($location) {
         $location.html5Mode(true);
+    }]);
+
+    module.run(['$rootScope', 'Language', function($rootScope, Language) {
+        $rootScope.language = window.language;
+
+        $rootScope.config = {};
+
+        $rootScope.config.localeCode = 'en_GB';
+
+        $rootScope.findMe = function(bundle, item) {
+            return Language.find(bundle, item);
+        };
+
     }]);
 
 })();

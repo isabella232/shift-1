@@ -3269,7 +3269,7 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 (function(){
     'use strict';
 
-    var module = angular.module('Shift.Library.Defaults', ['$ngResource']);
+    var module = angular.module('Shift.Library.Defaults', ['$ngResource', 'Shift.Library.Router']);
 
     /**
      * The DefaultRoutes factory object provides routes for the the most common application requests. These include
@@ -3450,6 +3450,82 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 (function() {
 	'use strict';
 
+	//var module = angular.module('Shift.Accounts.Controllers', ['Shift.Library.Defaults']);
+
+	/*module.controller('shift.accounts', [
+		'$rootScope',
+		'$scope',
+		'$filter',
+		'Seeker',
+		'Deletism',
+		'Filter',
+		'Account',
+		DefaultControllers.index
+	]);
+
+	module.controller('shift.accounts.new', [
+		'$rootScope',
+		'$scope',
+		'$filter',
+		'Account',
+		DefaultControllers.create
+	]);
+
+	module.controller('shift.accounts.edit', [
+		'$rootScope',
+		'$scope',
+		'$filter',
+		'install',
+		DefaultControllers.update
+	]);*/
+
+})();
+
+(function() {
+	'use strict';
+
+	//var module = angular.module('Shift.Accounts.Setup', ['Shift.Library.Defaults']);
+
+	//module.config(['ShiftRouteProvider', function(ShiftRouteProvider) {
+	//	ShiftRouteProvider('accounts', 'shift');
+	//}]);
+
+})();
+
+(function() {
+    'use strict';
+
+    var module = angular.module('Shift.Home.Controllers', []);
+
+    module.controller('Shift.Home', ['$scope', function($scope) {
+        $scope.title = "Shift 2.0";
+    }]);
+
+})();
+
+(function() {
+    'use strict';
+
+    var module = angular.module('Shift.Home.Setup', ['ngRoute']); // 'Shift.Library.Router'
+
+    module.config(['$routeProvider', function($routeProvider) {
+
+        // The Shift Router isn't working yet. As a test user ngRoute
+        /*ShiftRoute('/', {
+            templateUrl: '/packages/tectonic/shift/views/home.html',
+            controller: 'Shift.Home'
+        });*/
+
+        $routeProvider.when('/', {
+            templateUrl: '/packages/tectonic/shift/views/home.html',
+            controller: 'Shift.Home'
+        });
+    }]);
+
+})();
+(function() {
+	'use strict';
+
 	var module = angular.module('Shift.Library.Core.Filters', ['Shift.Library.Core.Services']);
 
 	/**
@@ -3462,7 +3538,7 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 	module.filter('ucfirst', ['$filter', function($filter) {
 		return function(input) {
 			var lc = $filter('lowercase')(input);
-			
+
 			return _.capitalize(lc);
 		};
 	}]);
@@ -3539,7 +3615,7 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 	module.filter('default', [function() {
 		return function(input, defaultValue) {
 			if (!input) return defaultValue;
-			
+
 			return input;
 		};
 	}]);
@@ -3557,23 +3633,23 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 	module.filter( 'niceDate', [ function() {
 		return function( input, relative, format ) {
 			if ( input === null ) return;
-			
+
 			var thisMoment = moment.utc( input );
-			
+
 			if ( relative == null ) relative = true;
-			
+
 			if ( relative ) {
 				return thisMoment.fromNow();
 			}
 
 			if ( !format ) format = "Do MMMM YYYY @ h:mm a";
-			
+
 			return thisMoment.local().format( format );
 		};
 	}]);
 
 	/**
-	 * Easy helper filter for providing date output of common date formats. There is 
+	 * Easy helper filter for providing date output of common date formats. There is
 	 * no extensibility provided or necessary for this filter. If you want more options,
 	 * use the niceDate filter provided above.
 	 */
@@ -3586,22 +3662,22 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 	/**
 	 * Converts a file size from bytes to KB/MB/GB with optional precision
 	 * to allow a few decimal points if needed.
-	 * 
+	 *
 	 * @param {String} unit      Unit expects either 'kb', 'mb' or 'gb'.
 	 * @param {Number} precision Number of decimal points.
-	 * 
+	 *
 	 * @return {String}
 	 */
 	module.filter( 'filesize' , [function() {
 		return function( input , unit , precision ) {
 			unit = !unit ? 'kb' : unit.toLowerCase();
 			if ( !precision ) precision = 0;
-			
+
 			// Default units.
 			var kb = 1024,
 				mb = kb * 1024,
 				gb = mb * 1024;
-			
+
 			if ( unit == 'gb' ) {
 				return (input / gb).toFixed(precision) + ' GB';
 			}
@@ -3622,7 +3698,7 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 	module.filter( 'extension' , [function() {
 		return function( input ) {
 			if ( !input.length ) return input;
-			
+
 			// Return the last part of the array.
 			// Assuming that the filename provided is valid, we should have no issues.
 			return input.split( '.' ).pop();
@@ -3638,7 +3714,7 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 	module.filter( 'activeIndicator' , [function() {
 		return function( input ) {
 			input = parseInt( input );
-			
+
 			return input == 1 ? 'Active' : 'Inactive';
 		};
 	}]);
@@ -3646,7 +3722,7 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 	/**
 	 * Provies a more versatile filter than the one above, allowing developers to define
 	 * what text to use for both truthy and falsy statements.
-	 * 
+	 *
 	 * @return string
 	 */
 	module.filter( 'enabledIndicator', [ function() {
@@ -3659,35 +3735,35 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 
 	/**
 	 * Truncate a long piece of string into a limited number of words.
-	 * 
+	 *
 	 * @param {string}  input
 	 * @param {integer} limit Defaults to 10 words.
 	 * @param {string}  end   Defualts to '…'
-	 * 
+	 *
 	 * @return {string}
 	 */
 	module.filter( 'truncate' , [function() {
 		return function( input , limit , end ) {
 			if ( !input ) return input;
-			
+
 			// Parameter defaults.
 			if ( isNaN( limit ) ) limit = 10;
 			if ( !angular.isString( end ) ) end = '…';
-			
+
 			// Replace line breaks with spaces.
 			input = input.replace( /\n/g , ' ' );
-			
+
 			// Get all the words, ignoring space and linebreaks.
 			var words = _.filter( input.split(' ') , function( w ) { return $.trim(w); });
-			
+
 			// The input is within the limit.
 			if ( words.length <= limit ) return input;
-			
+
 			// The input is larger than the limit.
 			return _.first( words , limit ).join( ' ' ) + end;
 		};
 	}]);
-	
+
 	/**
 	 * Replaces new lines to html line breaks.
 	 * This must be used within a 'ng-bind-html-unsafe' directive.
@@ -3786,84 +3862,84 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 		this.serverFormat = 'YYYY-MM-DD HH:mm:ss';
 		this.clientFormat = 'YYYY-MM-DD HH:mm';
 	}]);
-})();
 
-(function() {
-	'use strict';
+    /**
+     * This service deals will language and localisation for UI elements. It will find/retrieve
+     * a language element/item from the language object stored on the $rootScope.
+     */
+    module.service('Language', ['$rootScope', function($rootScope) {
 
-	var module = angular.module('Shift.Accounts.Controllers', ['Shift.Library.Defaults']);
+        /**
+         * Error string to display is language item is NOT found.
+         *
+         * @type {string}
+         */
+        this.errorString = "NO ITEM FOUND";
 
-	/*module.controller('shift.accounts', [
-		'$rootScope',
-		'$scope',
-		'$filter',
-		'Seeker',
-		'Deletism',
-		'Filter',
-		'Account',
-		DefaultControllers.index
-	]);
+        /**
+         * Find a language item and return it as a string for
+         * display on the UI. If no item is found return an
+         * easy to spot string so it can be added or corrected.
+         *
+         * @param bundle
+         * @param item
+         * @returns {string}
+         */
+        this.find = function(bundle, item) {
+            var locale = this.getLocale();
+            var object = $rootScope.language[bundle].lang[locale];
 
-	module.controller('shift.accounts.new', [
-		'$rootScope',
-		'$scope',
-		'$filter',
-		'Account',
-		DefaultControllers.create
-	]);
+            return this.getPropertyByString(object, item);
+        };
 
-	module.controller('shift.accounts.edit', [
-		'$rootScope',
-		'$scope',
-		'$filter',
-		'install',
-		DefaultControllers.update
-	]);*/
+        /**
+         * Return a property in object by dot notated string. If the access string is empty,
+         * returns the object. Otherwise, keeps going along access path until second last accessor.
+         * If that's an object, returns the last object[accessor] value. Otherwise, return the value
+         * of this.errorString.
+         * .
+         * @param obj
+         * @param propertyString
+         * @returns {string}
+         */
+        this.getPropertyByString = function(obj, propertyString) {
+            if (!propertyString)
+                return obj;
 
-})();
+            var prop, props = propertyString.split('.');
 
-(function() {
-	'use strict';
+            for (var i = 0, iLen = props.length - 1; i < iLen; i++) {
+                prop = props[i];
 
-	//var module = angular.module('Shift.Accounts.Setup', ['Shift.Library.Defaults']);
+                var candidate = obj[prop];
+                if (candidate !== undefined) {
+                    obj = candidate;
+                } else {
+                    break;
+                }
+            }
 
-	//module.config(['ShiftRouteProvider', function(ShiftRouteProvider) {
-	//	ShiftRouteProvider('accounts', 'shift');
-	//}]);
+            var string = obj[props[i]];
 
-})();
+            if(angular.isUndefined(string))
+                return this.errorString;
 
-(function() {
-    'use strict';
+            return string;
+        }
 
-    var module = angular.module('Shift.Home.Controllers', []);
+        /**
+         * Return the current locale code in use. E.g. 'en_GB'.
+         *
+         * @returns {string}
+         */
+        this.getLocale = function() {
+            return $rootScope.config.localeCode;
+        }
 
-    module.controller('Shift.Home', ['$scope', function($scope) {
-        $scope.title = "Shift 2.0";
     }]);
 
 })();
 
-(function() {
-    'use strict';
-
-    var module = angular.module('Shift.Home.Setup', ['ngRoute']); // 'Shift.Library.Router'
-
-    module.config(['$routeProvider', function($routeProvider) {
-
-        // The Shift Router isn't working yet. As a test user ngRoute
-        /*ShiftRoute('/', {
-            templateUrl: '/packages/tectonic/shift/views/home.html',
-            controller: 'Shift.Home'
-        });*/
-
-        $routeProvider.when('/', {
-            templateUrl: '/packages/tectonic/shift/views/home.html',
-            controller: 'Shift.Home'
-        });
-    }]);
-
-})();
 // Required for underscore string module
 _.mixin(_.str.exports());
 
@@ -3872,11 +3948,25 @@ _.mixin(_.str.exports());
 
 	var module = angular.module('shift', [
         'Shift.Home.Setup',
-        'Shift.Home.Controllers'
+        'Shift.Home.Controllers',
+        'Shift.Library.Core.Services'
     ]);
 
 	module.config(['$locationProvider', function($location) {
         $location.html5Mode(true);
+    }]);
+
+    module.run(['$rootScope', 'Language', function($rootScope, Language) {
+        $rootScope.language = window.language;
+
+        $rootScope.config = {};
+
+        $rootScope.config.localeCode = 'en_GB';
+
+        $rootScope.findMe = function(bundle, item) {
+            return Language.find(bundle, item);
+        };
+
     }]);
 
 })();
