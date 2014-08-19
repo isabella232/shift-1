@@ -144,4 +144,18 @@ describe('module: Shift.Core.Filters', function() {
 			expect($filter('filesize')(10457757687, 'gb', 2)).toEqual('9.74 GB');
 		});
 	});
+
+	describe('filter: extension', function() {
+		it('should exist', function() {
+			expect($filter('extension')).not.toBe(null);
+		});
+
+		it('should return the file extension from a string', function() {
+			expect($filter('extension')('filename.jpeg')).toEqual('jpeg');
+		});
+
+		it('should return null if an extension is not found', function() {
+			expect($filter('extension')('filename')).toBe(null);
+		});
+	});
 });

@@ -3595,6 +3595,7 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 	module.filter('filesize' , [function() {
 		return function(input , unit , precision) {
 			unit = !unit ? 'kb' : unit.toLowerCase();
+
 			if (!precision) precision = 0;
 			
 			// Default units.
@@ -3622,6 +3623,8 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 	module.filter('extension' , [function() {
 		return function(input) {
 			if (!input.length) return input;
+
+			if (input.indexOf('.') == -1) return null;
 			
 			// Return the last part of the array.
 			// Assuming that the filename provided is valid, we should have no issues.
