@@ -112,4 +112,14 @@ describe('module: Shift.Core.Filters', function() {
 			expect($filter('niceDate')(thisMoment.format('YYYY-MM-DD HH:mm:ss'), false, 'YYYY')).toEqual(thatMoment.format('YYYY'));
 		});
 	});
+
+	describe('filter: commonDate', function() {
+		it('should exist', function() {
+			expect($filter('commonDate')).not.toBe(null);
+		});
+
+		it('should return a date-based common format', function() {
+			expect($filter('commonDate')('2012-12-11 07:56:23')).toEqual('7am, 11th December');
+		});
+	});
 });

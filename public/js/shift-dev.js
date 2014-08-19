@@ -3558,9 +3558,9 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 		return function(input, relative, format) {
 			if (input === null) return;
 			
-			var thisMoment = moment.utc(input);
+			var thisMoment = moment.utc(input).local();
 			
-			if (relative == null) relative = true;
+			if (angular.isUndefined(relative)) relative = true;
 			
 			if (relative) {
 				return thisMoment.fromNow();
@@ -3568,7 +3568,7 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 
 			if (!format) format = "Do MMMM YYYY @ h:mm a";
 			
-			return thisMoment.local().format(format);
+			return thisMoment.format(format);
 		};
 	}]);
 
@@ -3577,9 +3577,9 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 	 * no extensibility provided or necessary for this filter. If you want more options,
 	 * use the niceDate filter provided above.
 	 */
-	module.filter( 'commonDate', [ '$filter', function( $filter ) {
-		return function( input ) {
-			return $filter( 'niceDate' )( input, false, 'ha, Do MMMM' );
+	module.filter('commonDate', ['$filter', function($filter) {
+		return function(input) {
+			return $filter('niceDate')(input, false, 'ha, Do MMMM');
 		}
 	}]);
 

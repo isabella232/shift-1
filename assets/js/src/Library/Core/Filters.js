@@ -128,9 +128,9 @@
 	 * no extensibility provided or necessary for this filter. If you want more options,
 	 * use the niceDate filter provided above.
 	 */
-	module.filter( 'commonDate', [ '$filter', function( $filter ) {
-		return function( input ) {
-			return $filter( 'niceDate' )( input, false, 'ha, Do MMMM' );
+	module.filter('commonDate', ['$filter', function($filter) {
+		return function(input) {
+			return $filter('niceDate')(input, false, 'ha, Do MMMM');
 		}
 	}]);
 
