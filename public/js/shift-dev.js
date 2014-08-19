@@ -3450,82 +3450,6 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 (function() {
 	'use strict';
 
-	//var module = angular.module('Shift.Accounts.Controllers', ['Shift.Library.Defaults']);
-
-	/*module.controller('shift.accounts', [
-		'$rootScope',
-		'$scope',
-		'$filter',
-		'Seeker',
-		'Deletism',
-		'Filter',
-		'Account',
-		DefaultControllers.index
-	]);
-
-	module.controller('shift.accounts.new', [
-		'$rootScope',
-		'$scope',
-		'$filter',
-		'Account',
-		DefaultControllers.create
-	]);
-
-	module.controller('shift.accounts.edit', [
-		'$rootScope',
-		'$scope',
-		'$filter',
-		'install',
-		DefaultControllers.update
-	]);*/
-
-})();
-
-(function() {
-	'use strict';
-
-	//var module = angular.module('Shift.Accounts.Setup', ['Shift.Library.Defaults']);
-
-	//module.config(['ShiftRouteProvider', function(ShiftRouteProvider) {
-	//	ShiftRouteProvider('accounts', 'shift');
-	//}]);
-
-})();
-
-(function() {
-    'use strict';
-
-    var module = angular.module('Shift.Home.Controllers', []);
-
-    module.controller('Shift.Home', ['$scope', function($scope) {
-        $scope.title = "Shift 2.0";
-    }]);
-
-})();
-
-(function() {
-    'use strict';
-
-    var module = angular.module('Shift.Home.Setup', ['ngRoute']); // 'Shift.Library.Router'
-
-    module.config(['$routeProvider', function($routeProvider) {
-
-        // The Shift Router isn't working yet. As a test user ngRoute
-        /*ShiftRoute('/', {
-            templateUrl: '/packages/tectonic/shift/views/home.html',
-            controller: 'Shift.Home'
-        });*/
-
-        $routeProvider.when('/', {
-            templateUrl: '/packages/tectonic/shift/views/home.html',
-            controller: 'Shift.Home'
-        });
-    }]);
-
-})();
-(function() {
-	'use strict';
-
 	var module = angular.module('Shift.Library.Core.Filters', ['Shift.Library.Core.Services']);
 
 	/**
@@ -3874,7 +3798,7 @@ function ngViewFillContentFactory($compile, $controller, $route) {
          *
          * @type {string}
          */
-        this.errorString = "NO ITEM FOUND";
+        this.errorString = "ERROR: ITEM NOT FOUND!";
 
         /**
          * Find a language item and return it as a string for
@@ -3925,7 +3849,7 @@ function ngViewFillContentFactory($compile, $controller, $route) {
                 return this.errorString;
 
             return string;
-        }
+        };
 
         /**
          * Return the current locale code in use. E.g. 'en_GB'.
@@ -3934,12 +3858,88 @@ function ngViewFillContentFactory($compile, $controller, $route) {
          */
         this.getLocale = function() {
             return $rootScope.config.localeCode;
-        }
+        };
 
     }]);
 
 })();
 
+(function() {
+	'use strict';
+
+	//var module = angular.module('Shift.Accounts.Controllers', ['Shift.Library.Defaults']);
+
+	/*module.controller('shift.accounts', [
+		'$rootScope',
+		'$scope',
+		'$filter',
+		'Seeker',
+		'Deletism',
+		'Filter',
+		'Account',
+		DefaultControllers.index
+	]);
+
+	module.controller('shift.accounts.new', [
+		'$rootScope',
+		'$scope',
+		'$filter',
+		'Account',
+		DefaultControllers.create
+	]);
+
+	module.controller('shift.accounts.edit', [
+		'$rootScope',
+		'$scope',
+		'$filter',
+		'install',
+		DefaultControllers.update
+	]);*/
+
+})();
+
+(function() {
+	'use strict';
+
+	//var module = angular.module('Shift.Accounts.Setup', ['Shift.Library.Defaults']);
+
+	//module.config(['ShiftRouteProvider', function(ShiftRouteProvider) {
+	//	ShiftRouteProvider('accounts', 'shift');
+	//}]);
+
+})();
+
+(function() {
+    'use strict';
+
+    var module = angular.module('Shift.Home.Controllers', []);
+
+    module.controller('Shift.Home', ['$scope', function($scope) {
+        $scope.title = "Shift 2.0";
+    }]);
+
+})();
+
+(function() {
+    'use strict';
+
+    var module = angular.module('Shift.Home.Setup', ['ngRoute']); // 'Shift.Library.Router'
+
+    module.config(['$routeProvider', function($routeProvider) {
+
+        // The Shift Router isn't working yet. As a test user ngRoute
+        /*ShiftRoute('/', {
+            templateUrl: '/packages/tectonic/shift/views/home.html',
+            controller: 'Shift.Home'
+        });*/
+
+        $routeProvider.when('/', {
+            templateUrl: '/packages/tectonic/shift/views/home.html',
+            controller: 'Shift.Home'
+        });
+    }]);
+
+})();
 // Required for underscore string module
 _.mixin(_.str.exports());
 
@@ -3963,7 +3963,7 @@ _.mixin(_.str.exports());
 
         $rootScope.config.localeCode = 'en_GB';
 
-        $rootScope.findMe = function(bundle, item) {
+        $rootScope.lang = function(bundle, item) {
             return Language.find(bundle, item);
         };
 

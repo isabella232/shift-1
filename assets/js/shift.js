@@ -21,7 +21,7 @@ _.mixin(_.str.exports());
 
         $rootScope.config.localeCode = 'en_GB';
 
-        $rootScope.findMe = function(bundle, item) {
+        $rootScope.lang = function(bundle, item) {
             return Language.find(bundle, item);
         };
 

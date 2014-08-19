@@ -96,7 +96,7 @@
          *
          * @type {string}
          */
-        this.errorString = "NO ITEM FOUND";
+        this.errorString = "ERROR: ITEM NOT FOUND!";
 
         /**
          * Find a language item and return it as a string for
@@ -147,7 +147,7 @@
                 return this.errorString;
 
             return string;
-        }
+        };
 
         /**
          * Return the current locale code in use. E.g. 'en_GB'.
@@ -156,7 +156,7 @@
          */
         this.getLocale = function() {
             return $rootScope.config.localeCode;
-        }
+        };
 
     }]);
 
