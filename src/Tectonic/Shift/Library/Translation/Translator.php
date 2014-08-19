@@ -2,6 +2,7 @@
 
 use Illuminate\Translation\LoaderInterface;
 use Illuminate\Translation\Translator as IlluminteTranslator;
+use Tectonic\Shift\Modules\Localisation\Repositories\LocalisationRepositoryInterface;
 
 /**
  * Class Translator
@@ -26,14 +27,21 @@ use Illuminate\Translation\Translator as IlluminteTranslator;
 class Translator extends IlluminteTranslator
 {
     /**
+     * @var LocaleRepositoryInterface
+     */
+    protected $repo;
+
+    /**
      * Construct class and autoload any specifed package/module language files.
      *
      * @param LoaderInterface $loaderInterface
      * @param string $locale
      * @param array $autoloads Modules/packages to autoload language files
      */
-    public function __construct(LoaderInterface $loaderInterface, $locale, array $autoloads = [])
+    public function __construct(LoaderInterface $loaderInterface, LocalisationRepositoryInterface $repo, $locale, array $autoloads = [])
     {
+        $this->repo = $repo;
+
         parent::__construct($loaderInterface, $locale);
 
         $this->autoload($autoloads);
@@ -64,10 +72,21 @@ class Translator extends IlluminteTranslator
     }
 
     /**
+     * Return JSON encode string of loaded array
+     *
+     * @return string
+     */
+    public function allToJson()
+    {
+        return json_encode($this->loaded);
+    }
+
+    /**
      * Set or update a key/value pair in the loaded array
      *
      * @param $key
      * @param $value
+     * @return $this
      */
     public function setKey($key, $value)
     {
@@ -82,6 +101,8 @@ class Translator extends IlluminteTranslator
         $array = $value;
 
         unset($array);
+
+        return $this;
     }
 
     /**
@@ -89,16 +110,20 @@ class Translator extends IlluminteTranslator
      *
      * @param $key
      * @param $value
+     * @return $this
      */
     public function updateKey($key, $value)
     {
         $this->setKey($key, $value);
+
+        return $this;
     }
 
     /**
      * Set multiple key/value pair in the loaded array
      *
      * @param array $keys
+     * @return $this
      */
     public function setKeys(array $keys)
     {
@@ -106,5 +131,14 @@ class Translator extends IlluminteTranslator
         {
             $this->setKey($key, $value);
         }
+
+        return $this;
+    }
+
+    public function setUICustomisations($locale_id = 1)
+    {
+        $this->setKeys($this->repo->getUILocalisations($locale_id));
+
+        return $this;
     }
 }

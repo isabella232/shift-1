@@ -9,6 +9,8 @@
 
     <div ng-view></div>
 
+    {{ $language }}
+
     @include('shift::partials.footer.foot')
 
 </body>
