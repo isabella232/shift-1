@@ -122,4 +122,26 @@ describe('module: Shift.Core.Filters', function() {
 			expect($filter('commonDate')('2012-12-11 07:56:23')).toEqual('7am, 11th December');
 		});
 	});
+
+	describe('filter: filesize', function() {
+		it('should exist', function() {
+			expect($filter('filesize')).not.toBe(null);
+		});
+
+		it('should convert the value to the correct number of kilobytes', function() {
+			expect($filter('filesize')(1057687, 'kb')).toEqual('1033 KB');
+		});
+
+		it('should convert the value to the correct number of megabytes', function() {
+			expect($filter('filesize')(12354123123, 'mb')).toEqual('11782 MB');
+		});
+
+		it('should convert the value to the correct number of gigabytes', function() {
+			expect($filter('filesize')(1057687, 'gb')).toEqual('0 GB');
+		});
+
+		it('should respect the precision requirement', function() {
+			expect($filter('filesize')(10457757687, 'gb', 2)).toEqual('9.74 GB');
+		});
+	});
 });

@@ -3592,20 +3592,20 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 	 * 
 	 * @return {String}
 	 */
-	module.filter( 'filesize' , [function() {
-		return function( input , unit , precision ) {
+	module.filter('filesize' , [function() {
+		return function(input , unit , precision) {
 			unit = !unit ? 'kb' : unit.toLowerCase();
-			if ( !precision ) precision = 0;
+			if (!precision) precision = 0;
 			
 			// Default units.
 			var kb = 1024,
 				mb = kb * 1024,
 				gb = mb * 1024;
 			
-			if ( unit == 'gb' ) {
+			if (unit == 'gb') {
 				return (input / gb).toFixed(precision) + ' GB';
 			}
-			else if ( unit == 'mb' ) {
+			else if (unit == 'mb') {
 				return (input / mb).toFixed(precision) + ' MB';
 			}
 			else {
@@ -3619,13 +3619,13 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 	 *
 	 * @return {string}
 	 */
-	module.filter( 'extension' , [function() {
-		return function( input ) {
-			if ( !input.length ) return input;
+	module.filter('extension' , [function() {
+		return function(input) {
+			if (!input.length) return input;
 			
 			// Return the last part of the array.
 			// Assuming that the filename provided is valid, we should have no issues.
-			return input.split( '.' ).pop();
+			return input.split('.').pop();
 		};
 	}]);
 
