@@ -24,7 +24,7 @@ _.mixin(_.str.exports());
 
         /**
          * Return a localised string for a specific bundle language item.
-         * 
+         *
          * @param {string} bundle
          * @param {string} item
          * @returns {string}
