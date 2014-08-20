@@ -15,6 +15,7 @@ var scripts = [
     input + 'js/vendor/moment.min.js',
     input + 'js/vendor/underscore.min.js',
     input + 'js/vendor/underscore.string.min.js',
+    input + 'js/vendor/jquery.js',
     input + 'js/vendor/angular.js',
     input + 'js/vendor/angular-resource.js',
     input + 'js/vendor/angular-route.js',

@@ -194,4 +194,22 @@ describe('module: Shift.Core.Filters', function() {
 			expect($filter('enabledIndicator')(0)).toEqual('Disabled');
 		});
 	});
+
+	describe('filter: truncate', function() {
+		it('should exist', function() {
+			expect($filter('truncate')).not.toBe(null);
+		});
+
+		it('should limit a string to 3 words', function() {
+			expect($filter('truncate')('this is a string of six words', 3)).toEqual('this is a…');
+		});
+
+		it('should use a custom suffix when provided', function() {
+			expect($filter('truncate')('this is a string of six words', 2, '|||')).toEqual('this is|||');
+		});
+
+		it('should limit a string to 10 words by default', function() {
+			expect($filter('truncate')('this is a string of six words plus six other ones as well')).toEqual('this is a string of six words plus six other…');
+		});
+	});
 });

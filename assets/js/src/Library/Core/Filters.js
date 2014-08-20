@@ -219,25 +219,25 @@
 	 * 
 	 * @return {string}
 	 */
-	module.filter( 'truncate' , [function() {
-		return function( input , limit , end ) {
-			if ( !input ) return input;
+	module.filter('truncate', [function() {
+		return function(input, limit, end) {
+			if (!input) return input;
 			
 			// Parameter defaults.
-			if ( isNaN( limit ) ) limit = 10;
-			if ( !angular.isString( end ) ) end = '…';
+			if (isNaN(limit)) limit = 10;
+			if (!angular.isString(end)) end = '…';
 			
 			// Replace line breaks with spaces.
-			input = input.replace( /\n/g , ' ' );
+			input = input.replace(/\n/g , ' ');
 			
 			// Get all the words, ignoring space and linebreaks.
-			var words = _.filter( input.split(' ') , function( w ) { return $.trim(w); });
+			var words = _.filter(input.split(' ') , function(w) { return $.trim(w); });
 			
 			// The input is within the limit.
-			if ( words.length <= limit ) return input;
+			if (words.length <= limit) return input;
 			
 			// The input is larger than the limit.
-			return _.first( words , limit ).join( ' ' ) + end;
+			return _.first(words, limit).join(' ') + end;
 		};
 	}]);
 	
