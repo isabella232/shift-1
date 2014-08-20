@@ -158,4 +158,40 @@ describe('module: Shift.Core.Filters', function() {
 			expect($filter('extension')('filename')).toBe(null);
 		});
 	});
+
+	describe('filter: activeIndicator', function() {
+		it('should exist', function() {
+			expect($filter('activeIndicator')).not.toBe(null);
+		});
+
+		it('should show a truthy value as active', function() {
+			expect($filter('activeIndicator')(true)).toEqual('Active');
+		});
+
+		it('should show a falsey value as inactive', function() {
+			expect($filter('activeIndicator')(0)).toEqual('Inactive');
+		});
+	});
+
+	describe('filter: enabledIndicator', function() {
+		it('should exist', function() {
+			expect($filter('enabledIndicator')).not.toBe(null);
+		});
+
+		it('should show a truthy value as the selected string', function() {
+			expect($filter('enabledIndicator')(1, 'Yeah!', 'Na :(')).toEqual('Yeah!');
+		});
+
+		it('should show a falsey value as the selected string', function() {
+			expect($filter('enabledIndicator')(0, 'Yes', 'No')).toEqual('No');
+		});
+
+		it('should show the default "Enabled" string if no requested string is provided', function() {
+			expect($filter('enabledIndicator')(1)).toEqual('Enabled');
+		});
+
+		it('should show the default "Disabled" string if no requested string is provided', function() {
+			expect($filter('enabledIndicator')(0)).toEqual('Disabled');
+		});
+	});
 });

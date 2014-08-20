@@ -3638,11 +3638,9 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 	 *
 	 * @return {string}
 	 */
-	module.filter( 'activeIndicator' , [function() {
-		return function( input ) {
-			input = parseInt( input );
-			
-			return input == 1 ? 'Active' : 'Inactive';
+	module.filter('activeIndicator' , [function() {
+		return function(input) {
+			return input ? 'Active' : 'Inactive';
 		};
 	}]);
 
@@ -3652,11 +3650,12 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 	 * 
 	 * @return string
 	 */
-	module.filter( 'enabledIndicator', [ function() {
-		return function( input, truthy, falsy ) {
-			input = parseInt( input );
+	module.filter('enabledIndicator', [function() {
+		return function(input, truthy, falsy) {
+			if (angular.isUndefined(truthy)) truthy = 'Enabled';
+			if (angular.isUndefined(falsy)) falsy = 'Disabled';
 
-			return input == 1 ? truthy : falsy;
+			return input ? truthy : falsy;
 		};
 	}]);
 
