@@ -3805,13 +3805,15 @@ function ngViewFillContentFactory($compile, $controller, $route) {
          * display on the UI. If no item is found return an
          * easy to spot string so it can be added or corrected.
          *
-         * @param bundle
-         * @param item
+         * @param {object} language
+         * @param {string} local
+         * @param {string} bundle
+         * @param {string} item
+         *
          * @returns {string}
          */
-        this.find = function(bundle, item) {
-            var locale = this.getLocale();
-            var object = $rootScope.language[bundle].lang[locale];
+        this.find = function(language, locale, bundle, item) {
+            var object = language[bundle].lang[locale];
 
             return this.getPropertyByString(object, item);
         };
@@ -3822,8 +3824,9 @@ function ngViewFillContentFactory($compile, $controller, $route) {
          * If that's an object, returns the last object[accessor] value. Otherwise, return the value
          * of this.errorString.
          * .
-         * @param obj
-         * @param propertyString
+         * @param {object} obj
+         * @param {string} propertyString
+         *
          * @returns {string}
          */
         this.getPropertyByString = function(obj, propertyString) {
@@ -3849,15 +3852,6 @@ function ngViewFillContentFactory($compile, $controller, $route) {
                 return this.errorString;
 
             return string;
-        };
-
-        /**
-         * Return the current locale code in use. E.g. 'en_GB'.
-         *
-         * @returns {string}
-         */
-        this.getLocale = function() {
-            return $rootScope.config.localeCode;
         };
 
     }]);
@@ -3959,12 +3953,20 @@ _.mixin(_.str.exports());
     module.run(['$rootScope', 'Language', function($rootScope, Language) {
         $rootScope.language = window.language;
 
+        // These config setting will be set dynamically either based upon
+        // user or installation settings.
         $rootScope.config = {};
-
         $rootScope.config.localeCode = 'en_GB';
 
+        /**
+         * Return a localised string for a specific bundle language item.
+         * 
+         * @param {string} bundle
+         * @param {string} item
+         * @returns {string}
+         */
         $rootScope.lang = function(bundle, item) {
-            return Language.find(bundle, item);
+            return Language.find($rootScope.language, $rootScope.config.localeCode, bundle, item);
         };
 
     }]);

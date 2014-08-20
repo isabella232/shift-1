@@ -103,13 +103,15 @@
          * display on the UI. If no item is found return an
          * easy to spot string so it can be added or corrected.
          *
-         * @param bundle
-         * @param item
+         * @param {object} language
+         * @param {string} local
+         * @param {string} bundle
+         * @param {string} item
+         *
          * @returns {string}
          */
-        this.find = function(bundle, item) {
-            var locale = this.getLocale();
-            var object = $rootScope.language[bundle].lang[locale];
+        this.find = function(language, locale, bundle, item) {
+            var object = language[bundle].lang[locale];
 
             return this.getPropertyByString(object, item);
         };
@@ -120,8 +122,9 @@
          * If that's an object, returns the last object[accessor] value. Otherwise, return the value
          * of this.errorString.
          * .
-         * @param obj
-         * @param propertyString
+         * @param {object} obj
+         * @param {string} propertyString
+         *
          * @returns {string}
          */
         this.getPropertyByString = function(obj, propertyString) {
@@ -147,15 +150,6 @@
                 return this.errorString;
 
             return string;
-        };
-
-        /**
-         * Return the current locale code in use. E.g. 'en_GB'.
-         *
-         * @returns {string}
-         */
-        this.getLocale = function() {
-            return $rootScope.config.localeCode;
         };
 
     }]);

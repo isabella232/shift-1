@@ -62,4 +62,43 @@ describe('module: Shift.Library.Core.Services', function() {
 			expect(DateTimeFormats.clientFormat).toBe('YYYY-MM-DD HH:mm');
 		});
 	});
+
+    describe('service: Language', function() {
+
+        var $rootScope, Language;
+
+        beforeEach(inject(function(_$rootScope_, _Language_) {
+            $rootScope = {
+                getConfig: function() {
+                    return { localeCode: 'en_GB' };
+                }
+            };
+            $rootScope.config = { localeCode: 'en_GB' };
+            Language = _Language_;
+        }));
+
+        it('should return the correct error string', function() {
+            expect(Language.errorString).toBe('ERROR: ITEM NOT FOUND!');
+        });
+
+        it('should return the correct language item', function() {
+            var language = {
+                shift: {
+                    lang: {
+                        en_GB: {
+                            labels: {
+                                first_name: 'John',
+                                last_name: 'Smith'
+                            }
+                        }
+                    }
+                }
+            };
+
+            expect(Language.find(language, 'en_GB', 'shift', 'labels.first_name')).toBe('John');
+            expect(Language.find(language, 'en_GB', 'shift', 'labels.last_name')).toBe('Smith');
+            expect(Language.find(language, 'en_GB', 'shift', 'labels.age')).toBe(Language.errorString);
+        });
+
+    });
 });
