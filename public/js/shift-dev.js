@@ -13291,12 +13291,11 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 	 * Replaces new lines to html line breaks.
 	 * This must be used within a 'ng-bind-html-unsafe' directive.
 	 */
-	module.filter( 'nl2br', [ function() {
-		return function( input ) {
-			return input.split( "\n" ).join( '<br>' );
+	module.filter('nl2br', [function() {
+		return function(input) {
+			return input.split("\n").join('<br>');
 		};
 	}]);
-
 })();
 
 (function() {

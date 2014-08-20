@@ -212,4 +212,17 @@ describe('module: Shift.Core.Filters', function() {
 			expect($filter('truncate')('this is a string of six words plus six other ones as well')).toEqual('this is a string of six words plus six other…');
 		});
 	});
+
+	describe('filter: nl2br', function() {
+		it('should exist', function() {
+			expect($filter('nl2br')).not.toBe(null);
+		});
+
+		it('should convert newline characters to br tags', function() {
+			var string = "here is a string!\n" +
+				"And here is another!";
+
+			expect($filter('nl2br')(string)).toEqual('here is a string!<br>And here is another!');
+		});
+	});
 });
