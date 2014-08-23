@@ -64,10 +64,13 @@ describe('module: Shift.Library.Core.Services', function() {
 	});
 
 	describe('service: Resource', function() {
-		var Resource, $mockRestangular;
+		var Resource, $mockRestangular, $mockServiceModel;
 		
 		beforeEach(function() {
 			$mockRestangular = function() {};
+			$mockServiceModel = {};
+
+			$mockRestangular.all = jasmine.createSpy('all').andReturn($mockServiceModel);
 
 			module('Shift.Library.Core.Services', function($provide) {
 				$provide.value('Restangular', $mockRestangular);
@@ -79,94 +82,84 @@ describe('module: Shift.Library.Core.Services', function() {
 		});
 
 		it('should instantiate a restangular resource', function() {
-			$mockRestangular.all = jasmine.createSpy('all');
-
 			new Resource('users');
 
 			expect($mockRestangular.all).toHaveBeenCalled();
 		});
 
-		describe('methods', function() {
-			var $mockServiceModel = {};
+		it('should create an item', function() {
+			$mockServiceModel.post = jasmine.createSpy('post');
 
-			beforeEach(function() {
-				$mockRestangular.all = jasmine.createSpy('all').andReturn($mockServiceModel);
-			});
+			var user = new Resource('users');
+			var params = {name: 'Kirk'};
 
-			it('should create an item', function() {
-				$mockServiceModel.post = jasmine.createSpy('post');
+			user.create(params);
 
-				var user = new Resource('users');
-				var params = {name: 'Kirk'};
+			expect($mockServiceModel.post).toHaveBeenCalledWith(params);
+		});
 
-				user.create(params);
+		it('should destroy an item', function() {
+			var item = {remove: function(){}};
+			var user = new Resource('users');
 
-				expect($mockServiceModel.post).toHaveBeenCalledWith(params);
-			});
+			spyOn(item, 'remove');
 
-			it('should destroy an item', function() {
-				var item = {remove: function(){}};
-				var user = new Resource('users');
+			user.destroy(item);
 
-				spyOn(item, 'remove');
+			expect(item.remove).toHaveBeenCalled();
+		});
 
-				user.destroy(item);
+		it('should get an existing item', function() {
+			$mockServiceModel.get = jasmine.createSpy('get');
 
-				expect(item.remove).toHaveBeenCalled();
-			});
+			var resource = new Resource('users');
 
-			it('should get an existing item', function() {
-				$mockServiceModel.get = jasmine.createSpy('get');
+			resource.get(1);
 
-				var resource = new Resource('users');
+			expect($mockServiceModel.get).toHaveBeenCalledWith(1);
+		});
 
-				resource.get(1);
+		it('should get all items', function() {
+			$mockServiceModel.getList = jasmine.createSpy('getList');
 
-				expect($mockServiceModel.get).toHaveBeenCalledWith(1);
-			});
+			var resource = new Resource('users');
 
-			it('should get all items', function() {
-				$mockServiceModel.getList = jasmine.createSpy('getList');
+			resource.all();
 
-				var resource = new Resource('users');
+			expect($mockServiceModel.getList).toHaveBeenCalled();
+		});
 
-				resource.all();
+		it('should update an existing item', function() {
+			var item = {put: function(){}};
+			var user = new Resource('users');
 
-				expect($mockServiceModel.getList).toHaveBeenCalled();
-			});
+			spyOn(item, 'put');
 
-			it('should update an existing item', function() {
-				var item = {put: function(){}};
-				var user = new Resource('users');
+			user.update(item);
 
-				spyOn(item, 'put');
-				
-				user.update(item);
+			expect(item.put).toHaveBeenCalled();
+		});
 
-				expect(item.put).toHaveBeenCalled();
-			});
+		it('should save a new item', function() {
+			$mockServiceModel.post = jasmine.createSpy('post');
 
-			it('should save a new item', function() {
-				$mockServiceModel.post = jasmine.createSpy('post');
+			var resource = new Resource('users');
+			var params = {name: 'Kirk'};
 
-				var resource = new Resource('users');
-				var params = {name: 'Kirk'};
+			resource.save(params);
 
-				resource.save(params);
+			expect($mockServiceModel.post).toHaveBeenCalledWith(params);
+		});
 
-				expect($mockServiceModel.post).toHaveBeenCalledWith(params);
-			});
+		it('should save an existing item', function() {
+			var item = {id: 1, name: 'Kirk', put: function(){}};
+			var resource = new Resource('users');
 
-			it('should save an existing item', function() {
-				var item = {id: 1, name: 'Kirk', put: function(){}};
-				var resource = new Resource('users');
+			spyOn(item, 'put');
 
-				spyOn(item, 'put');
+			resource.save(item);
 
-				resource.save(item);
-
-				expect(item.put).toHaveBeenCalled();
-			});
+			expect(item.put).toHaveBeenCalled();
 		});
 	});
 });

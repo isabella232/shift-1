@@ -14650,31 +14650,68 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 	 * or not (PUT for update and POST for create).
 	 */
 	module.factory('Resource', ['Restangular', function(Restangular) {
-		function Model(serviceName) {
+		function Resource(serviceName) {
 			this.serviceModel = Restangular.all(serviceName);
 		}
 
-		Model.prototype.create = function(item) {
-			return this.serviceModel.post(item);
+		/**
+		 * Create an item based on the parameters provided.
+		 * 
+		 * @param params
+		 * @returns {*}
+		 */
+		Resource.prototype.create = function(params) {
+			return this.serviceModel.post(params);
 		};
-
-		Model.prototype.destroy = function(item) {
+		
+		/**
+		 * Destroy a specific item.
+		 * 
+		 * @param item
+		 * @returns {*}
+		 */
+		Resource.prototype.destroy = function(item) {
 			return item.remove();
 		};
 
-		Model.prototype.get = function(id) {
+		/**
+		 * Return a single item based on the id provided.
+		 * 
+		 * @param id
+		 * @returns {*|Array|Mixed|promise}
+		 */
+		Resource.prototype.get = function(id) {
 			return this.serviceModel.get(id);
 		};
 
-		Model.prototype.all = function() {
+		/**
+		 * Returns all items, without pagination.
+		 *
+		 * @returns {*}
+		 */
+		Resource.prototype.all = function() {
 			return this.serviceModel.getList();
 		};
 
-		Model.prototype.update = function(item) {
+		/**
+		 * Update a specific item.
+		 *
+		 * @param item
+		 * @returns {*}
+		 */
+		Resource.prototype.update = function(item) {
 			return item.put();
 		};
 
-		Model.prototype.save = function(item) {
+		/**
+		 * Save an existing item. The difference between this and say, create/update, is that
+		 * save has a little logic tied in. If an id is present on the object, then it will
+		 * do an update call. If there is no id, it will do a create call.
+		 *
+		 * @param item
+		 * @returns {*}
+		 */
+		Resource.prototype.save = function(item) {
 			if (angular.isUndefined(item.id)) {
 				return this.create(item);
 			}
@@ -14683,7 +14720,7 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 			}
 		};
 
-		return Model;
+		return Resource;
 	}]);
 
 	/**
