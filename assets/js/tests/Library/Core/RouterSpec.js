@@ -1,12 +1,12 @@
 'use strict';
 
-describe('provider: ShiftRouteProvider', function() {
+describe('provider: ShiftRoute', function() {
 	var shiftRouteProvider;
 
-	beforeEach(module('Shift.Library.Router'));
+	beforeEach(module('Shift.Library.Core.Router'));
 
-	beforeEach(inject(['ShiftRoute', function($s) {
-		shiftRouteProvider = $s;
+	beforeEach(inject(['ShiftRoute', function(_shiftRouteProvider_) {
+		shiftRouteProvider = _shiftRouteProvider_;
 	}]));
 
 	it('should be able to register new routes', function() {

@@ -14251,107 +14251,6 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 (function() {
 	'use strict';
 
-	var module = angular.module('Shift.Library.Router', ['ngRoute', 'Shift.Library.Core.Services']);
-
-	/**
-	 * ShiftRouteProvider
-	 *
-	 * This is used by the Shift and other libraries to help register routes that are then later used
-	 * by angular to match routes with controllers. Arguments provided should be identical to the routeProvider
-	 * used in angularjs. This is simply a register to ensure we can define routes across modules, and have our
-	 * main module (app) have them executed.
-	 */
-	module.provider('ShiftRoute', function() {
-		return {
-			$get: ['Config', function(Config) {
-				var routes = [];
-				var order = 0;
-
-				/**
-				 * Registers a route and stores it on the internal routes variable.
-				 */
-				return {
-					register: function(route, options) {
-						var thisOptions = angular.copy(options);
-						var url = this.routeUrl(route);
-
-						thisOptions.url = url;
-
-						// push the templateurl option through our viewPath code
-						if (thisOptions.templateUrl) thisOptions.templateUrl = this.viewPath(thisOptions);
-
-						if (typeof thisOptions.order == 'undefined') {
-							thisOptions.order = order;
-							order = order + 10;
-						}
-
-						routes.push(thisOptions);
-					},
-
-					/**
-					 * Returns the routes that have been registered.
-					 */
-					get: function() {
-						return this.sortItems(routes);
-					},
-
-					/**
-					 * Sorts routes based on their order property and returns the ordered routes.
-					 *
-					 * @return array
-					 */
-					sortItems: function(routes) {
-						return _.sortBy(routes, function(route) {
-							return route.order;
-						});
-					},
-
-					/**
-					 * Determines the actual URL (based on bootstrap pathing prefix) which is used for the route.
-					 *
-					 * @return string
-					 */
-					routeUrl: function(url, baseUrl) {
-						baseUrl = (!baseUrl) ? Config.get('app.base') : Config.get('app.url');
-						if (url.substr(-1, 1) == '/') url = url.substr(0, url.length-1);
-						url = [Config.get('app.base'), url].join('/');
-
-						return url;
-					},
-
-					/**
-					 * Looks at the provided options (should contain the property: templateUrl) and determines where a
-					 * view path may be found.
-					 *
-					 * @param object options
-					 * @return string
-					 */
-					viewPath: function(options) {
-						if (options.bundle) {
-							return viewPath(options.templateUrl, options.bundle);
-						}
-
-						return viewPath(options.templateUrl);
-					},
-
-					/**
-					 * Function: init
-					 * Based on all registered routes, Router will now register them all with angular. This should be called once the app is ready.
-					 */
-					init: function($routeProvider) {
-						angular.forEach(this.get() , function(route) {
-							$routeProvider.when(route.url, route);
-						});
-					}
-				};
-			}]
-		}
-	});
-})();
-
-(function() {
-	'use strict';
-
 	var module = angular.module('Shift.Library.Core.Filters', ['Shift.Library.Core.Services']);
 
 	/**
@@ -14606,6 +14505,107 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 (function() {
 	'use strict';
 
+	var module = angular.module('Shift.Library.Core.Router', ['ngRoute', 'Shift.Library.Core.Services']);
+
+	/**
+	 * ShiftRouteProvider
+	 *
+	 * This is used by the Shift and other libraries to help register routes that are then later used
+	 * by angular to match routes with controllers. Arguments provided should be identical to the routeProvider
+	 * used in angularjs. This is simply a register to ensure we can define routes across modules, and have our
+	 * main module (app) have them executed.
+	 */
+	module.provider('ShiftRoute', function() {
+		return {
+			$get: ['Config', function(Config) {
+				var routes = [];
+				var order = 0;
+
+				/**
+				 * Registers a route and stores it on the internal routes variable.
+				 */
+				return {
+					register: function(route, options) {
+						var thisOptions = angular.copy(options);
+						var url = this.routeUrl(route);
+
+						thisOptions.url = url;
+
+						// push the templateurl option through our viewPath code
+						if (thisOptions.templateUrl) thisOptions.templateUrl = this.viewPath(thisOptions);
+
+						if (typeof thisOptions.order == 'undefined') {
+							thisOptions.order = order;
+							order = order + 10;
+						}
+
+						routes.push(thisOptions);
+					},
+
+					/**
+					 * Returns the routes that have been registered.
+					 */
+					get: function() {
+						return this.sortItems(routes);
+					},
+
+					/**
+					 * Sorts routes based on their order property and returns the ordered routes.
+					 *
+					 * @return array
+					 */
+					sortItems: function(routes) {
+						return _.sortBy(routes, function(route) {
+							return route.order;
+						});
+					},
+
+					/**
+					 * Determines the actual URL (based on bootstrap pathing prefix) which is used for the route.
+					 *
+					 * @return string
+					 */
+					routeUrl: function(url, baseUrl) {
+						baseUrl = (!baseUrl) ? Config.get('app.base') : Config.get('app.url');
+						if (url.substr(-1, 1) == '/') url = url.substr(0, url.length-1);
+						url = [Config.get('app.base'), url].join('/');
+
+						return url;
+					},
+
+					/**
+					 * Looks at the provided options (should contain the property: templateUrl) and determines where a
+					 * view path may be found.
+					 *
+					 * @param object options
+					 * @return string
+					 */
+					viewPath: function(options) {
+						if (options.bundle) {
+							return viewPath(options.templateUrl, options.bundle);
+						}
+
+						return viewPath(options.templateUrl);
+					},
+
+					/**
+					 * Function: init
+					 * Based on all registered routes, Router will now register them all with angular. This should be called once the app is ready.
+					 */
+					init: function($routeProvider) {
+						angular.forEach(this.get() , function(route) {
+							$routeProvider.when(route.url, route);
+						});
+					}
+				};
+			}]
+		}
+	});
+})();
+
+(function() {
+	'use strict';
+
 	var module = angular.module('Shift.Library.Core.Services', ['restangular']);
 
 	/**
@@ -14737,36 +14737,33 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 })();
 
 (function() {
-    'use strict';
+	'use strict';
 
-    var module = angular.module('Shift.Home.Controllers', []);
+	var module = angular.module('Shift.Library.Core.View', []);
 
-    module.controller('Shift.Home', ['$scope', function($scope) {
-        $scope.title = "Shift 2.0";
-    }]);
+	module.provider('View', function() {
+		return {
+			$get: ['Config', function(Config) {
+				return {
+					path: function(template, pkg) {
+						if (angular.isUndefined(pkg)) {
+							var chunks = ['tpl'];
+						}
+						else {
+							var chunks = ['packages', pkg, 'tpl'];
+						}
 
+						chunks.push(Config.get('app.skin'));
+						chunks.push(template);
+
+						return '/' + chunks.join('/');;
+					}
+				};
+			}]
+		};
+	});
 })();
 
-(function() {
-    'use strict';
-
-    var module = angular.module('Shift.Home.Setup', ['ngRoute']); // 'Shift.Library.Router'
-
-    module.config(['$routeProvider', function($routeProvider) {
-
-        // The Shift Router isn't working yet. As a test user ngRoute
-        /*ShiftRoute('/', {
-            templateUrl: '/packages/tectonic/shift/views/home.html',
-            controller: 'Shift.Home'
-        });*/
-
-        $routeProvider.when('/', {
-            templateUrl: '/packages/tectonic/shift/views/home.html',
-            controller: 'Shift.Home'
-        });
-    }]);
-
-})();
 (function() {
 	'use strict';
 
@@ -14804,14 +14801,45 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 (function() {
 	'use strict';
 
-	//var module = angular.module('Shift.Accounts.Setup', ['Shift.Library.Defaults']);
+	var module = angular.module('Shift.Accounts.Setup', ['Shift.Library.Defaults']);
 
-	//module.config(['ShiftRouteProvider', function(ShiftRouteProvider) {
-	//	ShiftRouteProvider('accounts', 'shift');
-	//}]);
+	module.config(['ShiftRouteProvider', function(ShiftRouteProvider) {
+		ShiftRouteProvider('accounts');
+	}]);
 
 })();
 
+(function() {
+    'use strict';
+
+    var module = angular.module('Shift.Home.Controllers', []);
+
+    module.controller('Shift.Home', ['$scope', function($scope) {
+        $scope.title = "Shift 2.0";
+    }]);
+
+})();
+
+(function() {
+    'use strict';
+
+    var module = angular.module('Shift.Home.Setup', ['ngRoute']); // 'Shift.Library.Router'
+
+    module.config(['$routeProvider', function($routeProvider) {
+
+        // The Shift Router isn't working yet. As a test user ngRoute
+        /*ShiftRoute('/', {
+            templateUrl: '/packages/tectonic/shift/views/home.html',
+            controller: 'Shift.Home'
+        });*/
+
+        $routeProvider.when('/', {
+            templateUrl: '/packages/tectonic/shift/views/home.html',
+            controller: 'Shift.Home'
+        });
+    }]);
+
+})();
 // Required for underscore string module
 _.mixin(_.str.exports());
 
