@@ -19,7 +19,7 @@ describe('provider: ViewProvider', function() {
 	it('should retrieve a configuration value for the application skin', function() {
 		viewProvider.path('index.html');
 
-		expect($mockConfig.get).toHaveBeenCalledWith('app.skin');
+		expect($mockConfig.get).toHaveBeenCalledWith('app.skin', 'tectonic');
 	});
 
 	it('should provide a base template location when no package is provided', function() {
