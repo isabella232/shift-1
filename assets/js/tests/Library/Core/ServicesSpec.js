@@ -37,6 +37,12 @@ describe('module: Shift.Library.Core.Services', function() {
 
 			expect(Config.all()).toEqual(options);
 		});
+
+		it('should be able to hydrate the service with a base64 string', function() {
+			Config.hydrateBase64('eyJ1c2VyIjogeyJuYW1lIjogIktpcmsifSwgImFjY291bnQiOiAiNTQ2NzMyMyJ9');
+
+			expect(Config.all()).toEqual({"user": {"name": "Kirk"}, "account": "5467323"});
+		});
 	});
 
 	describe('service: DateTimeFormats', function() {

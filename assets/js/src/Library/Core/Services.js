@@ -11,28 +11,64 @@
 		var config = {};
 		var self = this;
 
-		// Hydrate the configuration service with the required options
+		/**
+		 * Hydrate the configuration object with a JSON object of configuration options.
+		 *
+		 * @param configurationOptions
+		 */
 		this.hydrate = function(configurationOptions) {
 			angular.forEach(configurationOptions, function(value, key) {
 				self.add(key, value);
 			});
 		};
 
-		// Register a new configuration option and its associated value
+		/**
+		 * Register a new configuration option and its associated value.
+		 *
+		 * @param key
+		 * @param value
+		 */
 		this.add = function(key, value) {
 			config[key] = value;
 		};
 
-		// Return a given configuration key's value
+		/**
+		 * Return a given configuration key's value
+		 *
+		 * @param key
+		 * @returns {*}
+		 */
 		this.get = function(key) {
 			if (angular.isUndefined(config[key])) return null;
 
 			return config[key];
 		};
 
-		// Returns all configuration options
+		/**
+		 * Returns all configuration options
+		 *
+		 * @returns {{}}
+		 */
 		this.all = function() {
 			return config;
+		};
+
+		/**
+		 * Hydrates the Config service with a string that was Base64-encoded.
+		 *
+		 * @param string
+		 */
+		this.hydrateBase64 = function(base64String) {
+			var configuration = window.atob(base64String);
+
+			try {
+				var json = JSON.parse(configuration);
+
+				this.hydrate(json);
+			}
+			catch(error) {
+				console.log(error);
+			}
 		};
 	}]);
 
