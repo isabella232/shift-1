@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 
-	var module = angular.module('Shift.Library.Core.Services', ['ngResource']);
+	var module = angular.module('Shift.Library.Core.Services', ['restangular']);
 
 	/**
 	 * The Config service simply manages all configuration options for a given application,
@@ -37,40 +37,48 @@
 	}]);
 
 	/**
+	 * The Resource factory service creates a more involved resource object that can be used and extended by children,
+	 * without having to hack in weird or strange endpoint implementations on the AngularJS ngResource module.
+	 *
 	 * The Resource service extends AngularJS' default $ngResource and makes it more compliant with modern RESTful
 	 * standards and practises. What this means is, $save will call the appropriate method whether the records exists
 	 * or not (PUT for update and POST for create).
 	 */
-	module.service('Resource', ['$resource', function($resource) {
-		return function(url, params, methods) {
-			var defaults = {
-				update: {method: 'put', isArray: false},
-				create: {method: 'post'}
-			};
+	module.factory('Resource', ['Restangular', function(Restangular) {
+		function Model(serviceName) {
+			this.serviceModel = Restangular.all(serviceName);
+		}
 
-			methods = _.extend(defaults, methods);
-
-			var resource = $resource(url, params, methods);
-
-			resource.prototype.$save = function(data, callback) {
-				if (!this.id) {
-					this.$create(data, callback);
-				}
-				else {
-					this.$update(data, callback);
-				}
-			};
-
-			resource.lower = function() {
-				return this.name.toLowerCase();
-			};
-
-			resource.lowerPlural = function() {
-				return this.lower().pluralize();
-			};
-
-			return resource;
+		Model.prototype.create = function(item) {
+			return this.serviceModel.post(item);
 		};
+
+		Model.prototype.destroy = function(item) {
+			return item.remove();
+		};
+
+		Model.prototype.get = function(id) {
+			return this.serviceModel.get(id);
+		};
+
+		Model.prototype.all = function() {
+			return this.serviceModel.getList();
+		};
+
+		Model.prototype.update = function(item) {
+			return item.put();
+		};
+
+		Model.prototype.save = function(item) {
+			if (angular.isUndefined(item.id)) {
+				return this.create(item);
+			}
+			else {
+				return this.update(item);
+			}
+		};
+
+		return Model;
 	}]);
 
 	/**
