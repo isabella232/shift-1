@@ -235,7 +235,7 @@
 			
 			// The input is within the limit.
 			if (words.length <= limit) return input;
-			
+
 			// The input is larger than the limit.
 			return _.first(words, limit).join(' ') + end;
 		};
