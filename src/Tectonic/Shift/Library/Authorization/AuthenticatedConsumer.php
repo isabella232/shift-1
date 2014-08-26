@@ -19,18 +19,16 @@ final class AuthenticatedConsumer
 	private $authority;
 
 	/**
-	 * @var UserConsumer
+	 * @var ConsumerInterface
 	 */
 	private $consumer;
 
 	/**
-	 * @param ConsumerInterface $consumer
 	 * @param Authority $authority
 	 */
-	public function __construct(ConsumerInterface $consumer, Authority $authority)
+	public function __construct(Authority $authority)
 	{
 		$this->authority = $authority;
-		$this->consumer = $consumer;
 	}
 
 	/**
@@ -47,6 +45,16 @@ final class AuthenticatedConsumer
 			}
 		}
 	}
+
+    /**
+     * Sets the consumer that is currently authorised to work with the api.
+     *
+     * @param ConsumerInterface $consumer
+     */
+    public function setConsumer(ConsumerInterface $consumer)
+    {
+        $this->consumer = $consumer;
+    }
 
 	/**
 	 * Wrapper method for Authority's can() method. Exact same usage. The first parameter

@@ -15,10 +15,12 @@ class BouncerTest extends TestCase
 	{
 		parent::setUp();
 
-		$mockConsumer = m::mock('Tectonic\Shift\Library\Authorization\ConsumerInterface');
+		$mockConsumer = m::mock('Tests\Stubs\ConsumerStub');
 		$this->mockAuthority = m::mock('Authority\Authority');
 
-		$this->authenticatedConsumer = new AuthenticatedConsumer($mockConsumer, $this->mockAuthority);
+		$this->authenticatedConsumer = new AuthenticatedConsumer($this->mockAuthority);
+        $this->authenticatedConsumer->setConsumer($mockConsumer);
+
 		$this->bouncer = new Bouncer('User', $this->authenticatedConsumer);
 	}
 

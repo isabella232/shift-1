@@ -16,20 +16,18 @@ class AccountFilter extends SearchFilter implements SearchFilterInterface
     protected $accountIdField = 'account_id';
 
     /**
-     * Stores the accounts service object.
+     * Stores the authenticated consumer object.
      *
      * @var
      */
-    protected $accountService;
+    protected $authenticatedConsumer;
 
     /**
      * Simple constructor, some basic dependency injection.
-     *
-     * @param AccountsService $accountsService
      */
-    public function __construct(AccountsService $accountsService)
+    public function __construct()
     {
-        $this->accountsService = $accountsService;
+        $this->authenticatedConsumer = App::make('AuthenticatedConsumer');
     }
 
 	/**
@@ -37,7 +35,7 @@ class AccountFilter extends SearchFilter implements SearchFilterInterface
 	 */
 	public function criteria()
 	{
-        $accountId = $this->accountsService->getAccountId();
+        $accountId = $this->authenticatedConsumer->getAccountId();
 
         $this->getQuery()->where($this->accountIdField, '=', $accountId);
 	}

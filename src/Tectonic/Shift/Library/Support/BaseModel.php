@@ -30,8 +30,20 @@ class BaseModel extends \Eloquent
      */
     public function __call($method, $arguments)
     {
+        // We have to disable account restriction when this passes, so that we do not end up
+        // in an endless loop while tryint to access method that do not actually exist on model
+        // objects (Eloquent passes them to the query builder). We then re-enable it for future
+        // magic method calls. //- Kirk
         if ($this->accountRestricted && static::$accountRestrictionEnabled) {
-            return $this->whereAccountId(/* @TODO: get the account id */);
+            static::disableAccountRestriction();
+
+            $query = $this->whereAccountId(/* @TODO: get the account id from the authenticated consumer */);
+
+            call_user_func_array([$query, $method], $arguments);
+
+            static::enableAccountRestriction();
+
+            return $query;
         }
 
         return parent::__call($method, $arguments);

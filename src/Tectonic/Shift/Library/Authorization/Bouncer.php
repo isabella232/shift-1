@@ -1,5 +1,6 @@
 <?php namespace Tectonic\Shift\Library\Authorization;
 
+use App;
 use Log;
 use Illuminate\Support\Str;
 
@@ -41,12 +42,12 @@ final class Bouncer
 	 * such as User or EntrySubmission.etc.
 	 *
 	 * @param $resource
-	 * @param AuthenticatedConsumer $consumer
 	 */
-	public function __construct($resource, AuthenticatedConsumer $consumer)
+	public function __construct($resource)
 	{
 		$this->resource = $resource;
-		$this->consumer = $consumer;
+
+        $this->consumer = App::make('Tectonic\Shift\Library\Authorization\AuthenticatedConsumer');
 	}
 
 	/**

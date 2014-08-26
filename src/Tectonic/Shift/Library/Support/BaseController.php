@@ -103,7 +103,7 @@ abstract class BaseController extends Controller
 	public function deleteDestroy($id = null)
 	{
         if ($id) {
-            $ids = (array) $id;
+            $ids = [$id];
         }
         else {
             $ids = Input::get();

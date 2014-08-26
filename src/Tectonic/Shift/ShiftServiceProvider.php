@@ -93,7 +93,8 @@ class ShiftServiceProvider extends ServiceProvider
 	{
 		return [
 			'Basset\BassetServiceProvider',
-			'Authority\AuthorityL4\AuthorityL4ServiceProvider'
+			'Authority\AuthorityL4\AuthorityL4ServiceProvider',
+			'Tectonic\Shift\Library\Authorization\AuthorizationServiceProvider'
 		];
 	}
 
