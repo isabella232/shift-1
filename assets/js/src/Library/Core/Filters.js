@@ -105,7 +105,7 @@
 	 * @param boolean relative
 	 * @return string
 	 */
-	module.filter( 'niceDate', [ function() {
+	module.filter('niceDate', [ function() {
 		return function( input, relative, format ) {
 			if ( input === null ) return;
 
@@ -128,9 +128,9 @@
 	 * no extensibility provided or necessary for this filter. If you want more options,
 	 * use the niceDate filter provided above.
 	 */
-	module.filter( 'commonDate', [ '$filter', function( $filter ) {
-		return function( input ) {
-			return $filter( 'niceDate' )( input, false, 'ha, Do MMMM' );
+	module.filter('commonDate', ['$filter', function($filter) {
+		return function(input) {
+			return $filter('niceDate')(input, false, 'ha, Do MMMM');
 		}
 	}]);
 
@@ -143,20 +143,21 @@
 	 *
 	 * @return {String}
 	 */
-	module.filter( 'filesize' , [function() {
-		return function( input , unit , precision ) {
+	module.filter('filesize' , [function() {
+		return function(input , unit , precision) {
 			unit = !unit ? 'kb' : unit.toLowerCase();
-			if ( !precision ) precision = 0;
+
+			if (!precision) precision = 0;
 
 			// Default units.
 			var kb = 1024,
 				mb = kb * 1024,
 				gb = mb * 1024;
 
-			if ( unit == 'gb' ) {
+			if (unit == 'gb') {
 				return (input / gb).toFixed(precision) + ' GB';
 			}
-			else if ( unit == 'mb' ) {
+			else if (unit == 'mb') {
 				return (input / mb).toFixed(precision) + ' MB';
 			}
 			else {
@@ -170,13 +171,15 @@
 	 *
 	 * @return {string}
 	 */
-	module.filter( 'extension' , [function() {
-		return function( input ) {
-			if ( !input.length ) return input;
+	module.filter('extension' , [function() {
+		return function(input) {
+			if (!input.length) return input;
+
+			if (input.indexOf('.') == -1) return null;
 
 			// Return the last part of the array.
 			// Assuming that the filename provided is valid, we should have no issues.
-			return input.split( '.' ).pop();
+			return input.split('.').pop();
 		};
 	}]);
 
@@ -186,11 +189,9 @@
 	 *
 	 * @return {string}
 	 */
-	module.filter( 'activeIndicator' , [function() {
-		return function( input ) {
-			input = parseInt( input );
-
-			return input == 1 ? 'Active' : 'Inactive';
+	module.filter('activeIndicator' , [function() {
+		return function(input) {
+			return input ? 'Active' : 'Inactive';
 		};
 	}]);
 
@@ -200,11 +201,12 @@
 	 *
 	 * @return string
 	 */
-	module.filter( 'enabledIndicator', [ function() {
-		return function( input, truthy, falsy ) {
-			input = parseInt( input );
+	module.filter('enabledIndicator', [function() {
+		return function(input, truthy, falsy) {
+			if (angular.isUndefined(truthy)) truthy = 'Enabled';
+			if (angular.isUndefined(falsy)) falsy = 'Disabled';
 
-			return input == 1 ? truthy : falsy;
+			return input ? truthy : falsy;
 		};
 	}]);
 
@@ -217,25 +219,25 @@
 	 *
 	 * @return {string}
 	 */
-	module.filter( 'truncate' , [function() {
-		return function( input , limit , end ) {
-			if ( !input ) return input;
-
+	module.filter('truncate', [function() {
+		return function(input, limit, end) {
+			if (!input) return input;
+			
 			// Parameter defaults.
-			if ( isNaN( limit ) ) limit = 10;
-			if ( !angular.isString( end ) ) end = '…';
-
+			if (isNaN(limit)) limit = 10;
+			if (!angular.isString(end)) end = '…';
+			
 			// Replace line breaks with spaces.
-			input = input.replace( /\n/g , ' ' );
-
+			input = input.replace(/\n/g , ' ');
+			
 			// Get all the words, ignoring space and linebreaks.
-			var words = _.filter( input.split(' ') , function( w ) { return $.trim(w); });
-
+			var words = _.filter(input.split(' ') , function(w) { return $.trim(w); });
+			
 			// The input is within the limit.
-			if ( words.length <= limit ) return input;
-
+			if (words.length <= limit) return input;
+			
 			// The input is larger than the limit.
-			return _.first( words , limit ).join( ' ' ) + end;
+			return _.first(words, limit).join(' ') + end;
 		};
 	}]);
 
@@ -243,10 +245,9 @@
 	 * Replaces new lines to html line breaks.
 	 * This must be used within a 'ng-bind-html-unsafe' directive.
 	 */
-	module.filter( 'nl2br', [ function() {
-		return function( input ) {
-			return input.split( "\n" ).join( '<br>' );
+	module.filter('nl2br', [function() {
+		return function(input) {
+			return input.split("\n").join('<br>');
 		};
 	}]);
-
 })();

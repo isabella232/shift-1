@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 
-	var module = angular.module('Shift.Library.Router', ['ngRoute', 'Shift.Library.Core.Services']);
+	var module = angular.module('Shift.Library.Core.Router', ['ngRoute', 'Shift.Library.Core.Services']);
 
 	/**
 	 * ShiftRouteProvider
