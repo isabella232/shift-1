@@ -8,9 +8,5 @@
 {{ Asset::container('custom')->scripts() }}
 
 <script type="text/javascript">
-	/*var user       = {{-- $user --}};
-	var settings     = {{-- json_encode( $settings ) --}};
-	var config       = {{-- json_encode( $config ) --}};
-	var customViews  = {{-- json_encode( $custom_views ) --}};
-	var customFields = {{-- $custom_fields --}};*/
+	angular.value('Configuration', 'HTML::configuration()');
 </script>

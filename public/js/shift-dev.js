@@ -14672,7 +14672,12 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 				this.hydrate(json);
 			}
 			catch(error) {
-				console.log(error);
+				// We may need to think about this approach. Is it okay for a base64 string
+				// to not be properly decoded into JSON? Should the application fail at this point,
+				// or should we continue? I'm of the opinion at the moment that it should continue,
+				// but considering how crucial this method can be - we may need to reverse that decision.
+				// If so, it's a very easy change. //- Kirk
+				console.error(error);
 			}
 		};
 	}]);
