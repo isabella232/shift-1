@@ -5,21 +5,30 @@ use Tectonic\Shift\Modules\Localisation\Models\Localisation;
 
 class SqlLocalisationRepository extends SqlBaseRepository implements LocalisationRepositoryInterface
 {
-    public function __construct(Localisation $localisation)
+    /**
+     * @var LocaleRepositoryInterface
+     */
+    protected $localeRepo;
+
+    public function __construct(Localisation $localisation, LocaleRepositoryInterface $localeRepo)
     {
         $this->model = $localisation;
+        $this->localeRepo = $localeRepo;
     }
 
     /**
      * Return a key/value paired array of UI localisations/customisations
      *
+     * @param  $locales
      * @return array
      */
-    public function getUILocalisations($localeId)
+    public function getUILocalisations($locales)
     {
+        $localeIds = $this->localeRepo->getLocaleIds($locales);
+
         return $this->model
             ->where('resource', '=', '')
-            ->where('locale_id', '=', $localeId)
+            ->whereIn('locale_id', $localeIds)
             ->lists('value', 'field');
     }
 

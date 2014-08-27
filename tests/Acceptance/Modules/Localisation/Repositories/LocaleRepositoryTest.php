@@ -30,8 +30,10 @@ class LocaleRepositoryTest extends TestCase
         Mockery::close(); // Destroy any existing mocks before creating new ones
 
         $this->cleanData = [
-            'locales'  => 'English (Great Britain)',
-            'code'     => 'en_GB',
+            ['locale'  => 'English (Great Britain)', 'code'     => 'en_GB'],
+            ['locale'  => 'English (Australian)', 'code'     => 'en_AU'],
+            ['locale'  => 'English (New Zealand)', 'code'     => 'en_NZ'],
+            ['locale'  => 'English (United States)', 'code'     => 'en_US'],
         ];
 
         $this->repository = new SqlLocaleRepository(new Locale());
@@ -52,5 +54,27 @@ class LocaleRepositoryTest extends TestCase
 
         $this->assertSame($locale->id, (int) $this->repository->getId($locale->code));
     }
+
+    public function testGetLocaleIdsReturnsArrayOfIds()
+    {
+        // Arrange
+        foreach($this->cleanData as $data)
+        {
+            $locale = $this->repository->getNew(['locale' => $data['locale'], 'code' => $data['code']]);
+            $locale->save();
+        }
+
+        // Act
+        $localeCodes = ['en_GB', 'en_NZ', 'en_AU'];
+        $result = $this->repository->getLocaleIds($localeCodes);
+
+        // Assert
+        $this->assertCount(3, $result);
+        $this->assertContains('1', $result);
+        $this->assertContains('2', $result);
+        $this->assertContains('3', $result);
+        $this->assertNotContains('4', $result);
+    }
+
 
 }

@@ -6,9 +6,9 @@ use Tectonic\Shift\Modules\Localisation\Support\LocaleTranslatorInterface;
 
 class SqlLocaleRepository extends SqlBaseRepository implements LocaleRepositoryInterface, LocaleTranslatorInterface
 {
-    public function __construct(Locale $local)
+    public function __construct(Locale $locale)
     {
-        $this->model = $local;
+        $this->model = $locale;
     }
 
     /**
@@ -29,7 +29,7 @@ class SqlLocaleRepository extends SqlBaseRepository implements LocaleRepositoryI
      * Translate 4-digit locale code in to the ID from the
      * locales database table.
      *
-     * @param string $code
+     * @param  string $code
      * @return int
      */
     public function getId($code)
@@ -37,5 +37,17 @@ class SqlLocaleRepository extends SqlBaseRepository implements LocaleRepositoryI
         $result = $this->model->where('code', '=', $code)->first(['id']);
 
         return $result->id;
+    }
+
+
+    /**
+     * Get the ID's of passed in locales codes
+     *
+     * @param  array $locales
+     * @return array
+     */
+    public function getLocaleIds($locales)
+    {
+        return $this->model->whereIn('code', $locales)->lists('id');
     }
 }

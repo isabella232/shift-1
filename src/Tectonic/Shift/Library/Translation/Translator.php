@@ -159,9 +159,9 @@ class Translator extends IlluminteTranslator
         return $this;
     }
 
-    public function setUICustomisations($locale_id = 1)
+    public function setUICustomisations($locales = ['en_GB'])
     {
-        $this->setKeys($this->repo->getUILocalisations($locale_id));
+        $this->setKeys($this->repo->getUILocalisations($locales));
 
         return $this;
     }
