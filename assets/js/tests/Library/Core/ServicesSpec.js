@@ -71,39 +71,52 @@ describe('module: Shift.Library.Core.Services', function() {
 
     describe('service: Language', function() {
 
-        var $rootScope, Language;
+        var Language;
 
-        beforeEach(inject(function(_$rootScope_, _Language_) {
-            $rootScope = {
-                getConfig: function() {
-                    return { localeCode: 'en_GB' };
-                }
-            };
-            $rootScope.config = { localeCode: 'en_GB' };
+        beforeEach(inject(function(_Language_){
             Language = _Language_;
         }));
 
         it('should return the correct error string', function() {
-            expect(Language.errorString).toBe('ERROR: ITEM NOT FOUND!');
+            expect(Language.errorString).toBe('ERROR: TRANSLATION NOT FOUND!');
         });
 
         it('should return the correct language item', function() {
-            var language = {
+            var dictionary = {
                 shift: {
                     lang: {
                         en_GB: {
                             labels: {
                                 first_name: 'John',
-                                last_name: 'Smith'
+                                last_name: 'Smith',
+                                colour: 'colour',
+                                button: 'button'
+                            }
+                        },
+                        en_US: {
+                            labels: {
+                                colour: 'color'
+                            }
+                        },
+                        fr_FR: {
+                            labels: {
+                                button: 'bouton'
                             }
                         }
                     }
                 }
             };
 
-            expect(Language.find(language, 'en_GB', 'shift', 'labels.first_name')).toBe('John');
-            expect(Language.find(language, 'en_GB', 'shift', 'labels.last_name')).toBe('Smith');
-            expect(Language.find(language, 'en_GB', 'shift', 'labels.age')).toBe(Language.errorString);
+            // User specific translation preference is 'fr_FR'
+            // Installation specific translation preference is 'en_US'
+            // Base/default translation is 'en_GB'
+            var locales = ['fr_FR', 'en_US', 'en_GB'];
+
+            expect(Language.find(dictionary, locales, 'shift', 'labels.first_name')).toBe('John');
+            expect(Language.find(dictionary, locales, 'shift', 'labels.last_name')).toBe('Smith');
+            expect(Language.find(dictionary, locales, 'shift', 'labels.colour')).toBe('color');
+            expect(Language.find(dictionary, locales, 'shift', 'labels.button')).toBe('bouton');
+            expect(Language.find(dictionary, locales, 'shift', 'labels.age')).toBe(Language.errorString);
         });
 
     });

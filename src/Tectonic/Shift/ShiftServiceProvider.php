@@ -148,7 +148,8 @@ class ShiftServiceProvider extends ServiceProvider
                 $this->app['translation.loader'],
                 $this->app['Tectonic\Shift\Modules\Localisation\Repositories\LocalisationRepositoryInterface'],
                 $this->app['config']['app.locale'],
-                $this->app['config']['shift::autoloads']
+                $this->app['config']['shift::language.autoloads'],
+                $this->app['config']['shift::language.locales']
             );
         });
 

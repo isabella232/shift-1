@@ -30,7 +30,7 @@ class LocaleRepositoryTest extends TestCase
         Mockery::close(); // Destroy any existing mocks before creating new ones
 
         $this->cleanData = [
-            'locales'  => 'English (Great Britain',
+            'locales'  => 'English (Great Britain)',
             'code'     => 'en_GB',
         ];
 

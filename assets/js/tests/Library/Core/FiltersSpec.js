@@ -123,7 +123,7 @@ describe('module: Shift.Core.Filters', function() {
 
 		it('should return a date-based common format', function() {
             var thisMoment = moment().startOf('hour').utc();
-            var thatMoment = moment().startOf('hour'); 
+            var thatMoment = moment().startOf('hour');
 
 			expect($filter('commonDate')(thisMoment.format('YYYY-MM-DD HH:mm:ss'))).toEqual(thatMoment.format('ha, Do MMMM'));
 		});

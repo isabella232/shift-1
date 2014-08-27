@@ -30,7 +30,12 @@ _.mixin(_.str.exports());
          * @returns {string}
          */
         $rootScope.lang = function(bundle, item) {
-            return Language.find($rootScope.language, $rootScope.config.localeCode, bundle, item);
+            var locales = [
+                '',                             // User specific locale code
+                $rootScope.config.localeCode,   // Installation specific locale code
+                'en_GB',                        // Base/default locale code
+            ];
+            return Language.find($rootScope.language, locales, bundle, item);
         };
 
     }]);

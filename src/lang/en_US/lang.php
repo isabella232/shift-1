@@ -2,14 +2,27 @@
 
 return [
 
-    'labels'  => [
-        'first_name' => 'First name US',
-        'last_name'  => 'Last name US'
+    // UI controls (labels, buttons, menu items etc)
+    'ui' => [
+        // Form labels
+        'labels'    => [
+            'first_name' => 'First name',
+            'last_name'  => 'Last name',
+            'company'    => 'C',
+        ],
+        // Form and action buttons
+        'buttons'   => [
+            'save'      => 'Save',
+            'submit'    => 'Submit'
+        ],
+        // Menu and navigation items
+        'menu'      => [
+            'home'      => 'Home'
+        ]
     ],
-    'buttons' => [
-        'save' => 'Save-US',
-        'submit' => 'Submit-US'
-    ],
-    'colour' => 'color',
+
+    // Other translations
+    'colour'        => 'color',
+    'localisation'  => 'localization'
 
 ];

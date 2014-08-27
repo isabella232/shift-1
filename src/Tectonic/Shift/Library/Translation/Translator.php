@@ -17,8 +17,9 @@ use Tectonic\Shift\Modules\Localisation\Repositories\LocalisationRepositoryInter
  *     'shift' => [                  // Module/package name
  *        'lang' => [                // File name (lang.php)
  *            'en_GB' => [           // Locale
- *                'labels' => [...]  // Key/value pairs
+ *                'ui' => [...]      // Key/value pairs
  *            ],
+ *            'en_US' => [...],
  *        ],
  *    ]
  * ];
@@ -32,32 +33,55 @@ class Translator extends IlluminteTranslator
     protected $repo;
 
     /**
-     * Construct class and autoload any specifed package/module language files.
+     * Construct class and autoload any specified package/module language files.
      *
      * @param LoaderInterface $loaderInterface
+     * @param LocalisationRepositoryInterface $repo
      * @param string $locale
      * @param array $autoloads Modules/packages to autoload language files
+     * @param array $locales
      */
-    public function __construct(LoaderInterface $loaderInterface, LocalisationRepositoryInterface $repo, $locale, array $autoloads = [])
+    public function __construct(
+        LoaderInterface $loaderInterface,
+        LocalisationRepositoryInterface $repo,
+        $locale,
+        array $autoloads = [],
+        array $locales= []
+    )
     {
         $this->repo = $repo;
 
         parent::__construct($loaderInterface, $locale);
 
-        $this->autoload($autoloads);
+        $this->autoload($autoloads, $locales);
     }
 
     /**
-     * Autoload the language file from each module namespace
+     * Autoload the language file (lang.php) from each module (bundle) namespace
      * into the cached loaded array.
      *
      * @param array $namespaces
+     * @param array $locales
      */
-    protected function autoload(array $namespaces)
+    protected function autoload(array $namespaces, array $locales)
     {
+        // Foreach namespace (e.g. shift, awardforce ...)
         foreach($namespaces as $namespace)
         {
-            $this->get($namespace . '::lang');
+            // If locales is an empty array, just pull in translations for the default locale (en_GB)
+            if(empty($locales))
+            {
+                $this->get($namespace . '::lang', [], null);
+            }
+            else
+            {
+                // If locales is NOT empty, loop through and pull in all locale translation files.
+                // E.g. lang/en_GB/lang.php, lang/en_US/lang.php ... etc
+                foreach($locales as $locale)
+                {
+                    $this->get($namespace . '::lang', [], $locale);
+                }
+            }
         }
     }
 
