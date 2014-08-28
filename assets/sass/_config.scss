@@ -1,0 +1,77 @@
+/*
+|--------------------------------------------------------------------------
+| Configuration
+|--------------------------------------------------------------------------
+| 
+| Store all global variables and font declarations here.
+| No styles should be defined here.
+| 
+*/
+
+// Colours.
+$colour-primary: #2e3641;
+$colour-secondary: #666;
+$colour-tertiary: #00a5b3;
+$colour-quaternary: #de6957;
+
+$colour-header-link: #edeff2;
+$colour-header-link-hover: $colour-tertiary;
+
+$colour-breadcrumbs: #edeff2;
+
+$colour-filters: #f9f9f9;
+
+$colour-warning: #f4cf6c;
+$colour-info: #5ec0c9;
+$colour-success: #4ec1a0;
+$colour-error: #e58e80;
+$colour-disabled: #ccc;
+
+$colour-tab-up: #c4c5c9;
+$colour-tab-over: $colour-tertiary;
+$colour-tab-active: $colour-primary;
+
+
+// Fonts.
+@import url(//fonts.googleapis.com/css?family=Open+Sans:400,600,700);
+
+$font-primary: 'Open Sans';
+
+
+// Directories and sprites.
+$img: '../img/';
+$sprite-main: $img + 'sprite.png';
+$sprite-alerts: $img + 'sprite-alerts.png';
+$sprite-file-icons: $img + 'sprite-file-icons.png';
+
+
+// Misc settings.
+$default-radius: 3px;
+
+
+$transition-speed: 0.25s;
+
+
+// Default width for modals.
+$modal-width: 500px;
+
+
+// Defaults for pill buttons.
+$button-pill-height: 24px;
+$button-pill-close-spacing: 3px;
+
+
+// Breakpoints.
+$desktop:  new-breakpoint( min-width 1024px 12 );
+$tablet:   new-breakpoint( min-width 769px max-width 1023px 12 );
+$mobile:   new-breakpoint( max-width 768px 12 );
+$handheld: new-breakpoint( max-width 1023px 12 );
+
+
+// When viewed on mobile/tablet, this variable determines how much padding is
+// added to the left and right of the element.
+$handheld-device-padding: 20px;
+
+
+// How far are the alerts from the edge of the screen?
+$alerts-container-margin: 30px;

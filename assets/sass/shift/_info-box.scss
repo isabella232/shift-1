@@ -1,0 +1,31 @@
+.info-box {
+	background: $colour-breadcrumbs;
+	border-radius: $default-radius;
+	position: relative;
+	
+	%no-selection {
+		@include user-select( none );
+		cursor: pointer;
+	}
+	.close-buttons {
+		@extend %no-selection;
+		@include position( absolute , 23px 18px 0 0 );
+	}
+	.heading {
+		@extend %no-selection;
+		background: url( $img + 'info-box-icon.png' ) 15px center no-repeat;
+		color: $colour-tertiary;
+		font-size: 24px;
+		margin: 0;
+		padding: 15px 60px 15px 50px;
+	}
+	.content {
+		padding: 0 20px 20px;
+		
+		h4 {
+			margin-bottom: 3px;
+			
+			+ p { margin-top: 3px; }
+		}
+	}
+}

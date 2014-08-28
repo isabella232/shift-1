@@ -1,19 +1,16 @@
+// Required for underscore string module
+_.mixin(_.str.exports());
+
 (function() {
 	'use strict';
 
-	var dependencies = [
-		'shift.users',
-		'shift.roles',
-	];
+	var module = angular.module('shift', [
+        'Shift.Home.Setup',
+        'Shift.Home.Controllers'
+    ]);
 
-	var module = angular.module('shift', dependencies);
+	module.config(['$locationProvider', function($location) {
+        $location.html5Mode(true);
+    }]);
 
-	module.config(['$locationProvider', 'ShiftRouteProvider' function($location, Router) {
-		$location.html5Mode(true);
-
-		Router.register('404', {
-			templateUrl: '404.html',
-			bundle: 'shift'
-		});
-	}]);
 })();

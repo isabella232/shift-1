@@ -1,0 +1,122 @@
+/* Styled buttons */
+button,
+a.button,
+.button {
+	@include transition( background $transition-speed );
+	border-radius: $default-radius;
+	background: $colour-tertiary;
+	border: 0;
+	color: white;
+	display: inline-block;
+	font: 700 1.285em/1.285em $font-primary;
+	padding: 5px 20px;
+	width: auto;
+	text-decoration: none;
+	cursor: hand;
+	
+	.ie & {
+		line-height: 1.31em;
+	}
+	
+	&:hover,
+	&:active,
+	&:focus {
+		background: lighten( $colour-tertiary , 7 );
+		outline: none !important; // disable dotted line on FF/IE after a link is clicked.
+	}
+	
+	&.primary {
+		background: $colour-quaternary;
+		
+		&:hover,
+		&:active,
+		&:focus { background: lighten( $colour-quaternary , 6 ); }
+		
+		&.big {
+			box-shadow: 0 2px 0 #bf5b4b;
+			
+			&.disabled { box-shadow: 0 2px 0 #bbb; }
+		}
+	}
+	&.secondary {
+		background: #c4c5c9;
+		
+		&:hover,
+		&:active,
+		&:focus { background: lighten( #c4c5c9 , 6 ); }
+	}
+	&.error {
+		background: $colour-error;
+
+		&:hover,
+		&:active,
+		&:focus { background: lighten( $colour-error , 6 ); }
+	}
+	&.small {
+		font-size: 1em;
+		font-weight: 400;
+		padding: 6px 10px 5px;
+	}
+	&.big {
+		font-size: 1.3em;
+		font-weight: 400;
+	}
+	&.icon {
+		padding: 10px 15px;
+		
+		span span {
+			padding-left: 5px;
+		}
+	}
+}
+
+
+/* Buttons placed right next to each other need more spacing */
+button, a.button, .button { margin-right: 5px; }
+
+
+// Used when we group a few buttons together.
+.button-group {
+	.horizontal {
+		margin-bottom: 7px;
+		
+		li { margin-right: 13px; }
+	}
+}
+
+
+.button-pill {
+	background: #eee;
+	border-radius: $button-pill-height / 2;
+	display: inline-block;
+	font-size: $button-pill-height / 2;
+	height: $button-pill-height;
+	line-height: $button-pill-height;
+	overflow: hidden;
+	padding: 0 ($button-pill-height / 2.25);
+	
+	span {
+		float: left;
+		
+		+ span { margin-left: $button-pill-close-spacing; }
+	}
+	
+	.button-pill-close {
+		@include transition( all $transition-speed );
+		@include position( relative , 0 -7px 0 0 );
+		@include size( $button-pill-height - ($button-pill-close-spacing*2) );
+		background: $colour-quaternary;
+		border-radius: 50%;
+		color: white;
+		cursor: pointer;
+		float: right;
+		font-size: $button-pill-height;
+		line-height: $button-pill-height - ($button-pill-close-spacing*2);
+		margin-top: $button-pill-close-spacing;
+		text-align: center;
+		
+		&:hover {
+			background: lighten( $colour-quaternary , 10 );
+		}
+	}
+}

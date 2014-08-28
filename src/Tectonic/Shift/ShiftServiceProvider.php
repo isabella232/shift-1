@@ -32,9 +32,12 @@ class ShiftServiceProvider extends ServiceProvider
         $this->registerViewFinder();
         $this->registerRouter();
         $this->registerAuthorityConfiguration();
+        $this->registerAssetContainer();
 
 		$this->bootFile('routes');
 		$this->bootFile('commands');
+
+
     }
 
 	/**
@@ -84,6 +87,17 @@ class ShiftServiceProvider extends ServiceProvider
 		// });
 	}
 
+    /**
+     * Register the Asset container. This is an extended version of
+     * Orchetra\Asset\Factory
+     */
+    public function registerAssetContainer()
+    {
+        $this->app->bindShared('shift.asset', function($app) {
+            return new \Tectonic\Shift\Library\Support\Asset($app['orchestra.asset.dispatcher']);
+        });
+    }
+
 	/**
 	 * Get the services provided by the provider.
 	 *
@@ -107,7 +121,7 @@ class ShiftServiceProvider extends ServiceProvider
 	 */
 	public function bootFile($file)
 	{
-		require __DIR__.'/../../boot/'.$file.'.php';
+		require_once __DIR__.'/../../boot/'.$file.'.php';
 	}
 
     /**
@@ -115,36 +129,6 @@ class ShiftServiceProvider extends ServiceProvider
      */
     protected function loadBindings()
     {
-        // Register Utility Binding
-        $this->app->bind('utility', 'Tectonic\Shift\Library\Utility');
-
-        // Register UserRepositoryInterface binding
-	    $this->bind('Modules\Accounts\Repositories\UserRepositoryInterface', 'Modules\Accounts\Repositories\SqlUserRepository');
-	    $this->bind('Modules\Security\Repositories\RoleRepositoryInterface', 'Modules\Security\Repositories\SqlRoleRepository');
-
-	    $this->bind('Modules\CustomFields\Repositories\CustomFieldRepositoryInterface', 'Modules\CustomFields\Repositories\CustomFieldRepository');
+        $this->bootFile('bindings');
     }
-
-    /**
-     * Short hand method for setting bindings, ensuring that the Tectonic\Shift namespace does not
-     * need to be provided with each call when setting up bindings. They can, however - be provided
-     * if necessary.
-     *
-     * @param $name
-     * @param $class
-     */
-    public function bind($name, $class)
-	{
-		$rootNamespace = 'Tectonic\\Shift\\';
-
-        if (!str_contains($name, $rootNamespace)) {
-            $name = $rootNamespace.$name;
-        }
-
-        if (!str_contains($class, $rootNamespace)) {
-            $class = $rootNamespace.$class;
-        }
-
-		$this->app->bind($name, $class);
-	}
 }

@@ -1,0 +1,29 @@
+#footer {
+	background: #444;
+	color: #a1a1a1;
+	margin-top: 50px;
+	padding: 30px 0;
+	
+	p {
+		font-size: 0.813em;
+		margin: 55px 0 0;
+	}
+	a {
+		color: #a1a1a1;
+		text-decoration: none;
+		
+		&:hover { text-decoration: underline; }
+	}
+}
+
+#client-logo {}
+
+#copyright {
+	float: left;
+}
+
+#awardforce {
+	float: right;
+	font-size: 0.813em;
+	text-align: right;
+}

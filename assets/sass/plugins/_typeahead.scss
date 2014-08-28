@@ -1,0 +1,31 @@
+.twitter-typeahead {
+	background: #fff;
+
+	.tt-hint {
+		/* To stop the disabled look being applied by typeahead */
+		background: #fff !important;
+	}
+}
+
+.tt-dropdown-menu {
+	background: #fff;
+	border-radius: $default-radius;
+	border: 1px solid #999;
+	box-shadow: 4px 4px 0 0 rgba(0, 0, 0, .08);
+	min-width: 180px;
+	margin-top: 3px;
+
+	.tt-suggestion {
+		padding: 8px;
+
+		&.tt-is-under-cursor {
+			background: $colour-tertiary;
+			color: #fff;
+		}
+	}
+
+	p {
+		line-height: auto;
+		margin: 0;
+	}
+}

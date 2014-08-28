@@ -1,0 +1,15 @@
+#header,
+#footer,
+#client-extra,
+#navigation,
+div[class^='alert'] {
+	display: none;
+}
+
+.full-width-on-print {
+	@media print {
+		width: 100% !important;
+	}
+}
+
+.well { padding: 0; }

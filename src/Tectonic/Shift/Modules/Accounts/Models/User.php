@@ -6,7 +6,7 @@ use Tectonic\Shift\Library\Support\BaseModel;
 
 class User extends BaseModel
 {
-	protected $table = 'accounts';
+	protected $table = 'users';
 
-    protected $fillable = ['name', 'url'];
+    protected $fillable = ['name'];
 }

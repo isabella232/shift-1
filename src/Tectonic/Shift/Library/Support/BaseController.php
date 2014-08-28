@@ -28,25 +28,6 @@ abstract class BaseController extends Controller
     public $crudService;
 
 	/**
-	 * Construct the controller and define the filters required for requests. Any child
-	 * controller will need to call the parent constructor to ensure the access filters
-	 * are applied during requests.
-	 */
-	public function __construct()
-	{
-		$this->beforeFilter('@accessFilter');
-	}
-
-	/**
-	 * @param $route
-	 * @param $request
-	 */
-	public function accessFilter($route, $request)
-	{
-		dd($route);
-	}
-
-	/**
 	 * Display a listing of the resource.
 	 *
 	 * @return Response

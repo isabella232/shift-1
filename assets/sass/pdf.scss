@@ -1,0 +1,201 @@
+/*
+|--------------------------------------------------------------------------
+| Main pdf stylesheet file
+|--------------------------------------------------------------------------
+|
+*/
+
+// Bourbon and Neat. bourbon.io, neat.bourbon.io
+@import 'bourbon/bourbon';
+@import 'neat/neat';
+
+@import 'config';
+@import 'mixins';
+@import 'normalize';
+
+// Shift's core styles.
+@import 'shift/_shift';
+
+// Styles that come from any plugin.
+@import 'plugins/_plugins';
+
+// Page-specific styles.
+@import 'pages/_pages';
+
+// Miscellangeous styles. Can be used for page-specific styles.
+@import 'misc';
+
+// Shame.css - Anything you're not proud of, should go here.
+@import 'shame';
+
+// IE overrides.
+@import 'ie';
+
+html, body {
+	margin: 0;
+	padding: 0;
+}
+
+
+body {
+	background: white;
+	color: $colour-secondary;
+	font: 400 0.85em/1.375em $font-primary, $helvetica;
+	overflow-y: scroll;
+}
+
+// Main grid styles.
+.container {
+	max-width: 100% !important;
+	@include outer-container;
+	padding-left: $handheld-device-padding;
+	padding-right: $handheld-device-padding;
+	position: relative;
+}
+.row {
+	@include row;
+
+	&.panel {
+		border-top: 1px solid #d5d5d5;
+		padding-top: 15px;
+	}
+}
+.omega { @include omega; }
+
+.column-half           { @include span-columns( 6 of 12 ); }
+.column-third          { @include span-columns( 4 of 12 ); }
+.column-two-thirds     { @include span-columns( 8 of 12 ); }
+.column-quarter        { @include span-columns( 3 of 12 ); }
+.column-three-quarters { @include span-columns( 9 of 12 ); }
+.column-full           { @include span-columns( 12 of 12 ); }
+.column-sixth          { @include span-columns( 2 of 12 ); }
+
+.column-nest-half      { @include span-columns( 3 of 6 ); }
+
+.pdf {
+	h1 {
+		color: $colour-tertiary;
+		margin: 0;
+	}
+
+	img {
+		background: none;
+	}
+
+	h3 {
+		color: $colour-primary;
+		margin: 10px 0;
+		font-size: 25px;
+	}
+
+	h2 {
+		margin: 0;
+		float: left;
+
+		.darker {
+			color: $colour-primary;
+		}
+	}
+
+
+	dl {
+		margin-bottom: 20px;
+		overflow: hidden;
+	}
+
+	dt, dd, span, p {
+		font-size: 20px;
+		line-height: 28px;
+	}
+
+	h4 {
+		font-size: 20px;
+		color: $colour-tertiary;
+		font-weight: normal;
+		margin: 5px 0 5px 0;
+        line-height: 28px;
+	}
+
+	dt, dd {
+		float: left;
+		margin: 5px 0;
+		padding: 0;
+	}
+
+	dt {
+		width: 30%;
+		color: #999;
+		padding-right: 10px;
+		clear: left;
+	}
+
+	dd {
+		width: 70%;
+	}
+
+	.icon-title {
+		margin: 10px 5px;
+	}
+
+	.attachment-title {
+		margin-top: 7px;
+		color: #666;
+        padding-bottom: 50px;
+	}
+
+	.attachment-details {
+		margin-top: 10px;
+	}
+
+	.copy-holder {
+		padding-top: 10px;
+	}
+
+	.pdf-header {
+		padding: 10px 5px 20px 5px;
+		border-bottom: 10px $colour-primary solid;
+		overflow: hidden;
+	}
+
+	.pdf-footer {
+		padding: 10px 0;
+	}
+
+	.pdf-content {
+		padding: 30px 0;
+		border-bottom: 1px $colour-header-link dashed;
+		overflow: hidden;
+	}
+
+	span {
+		// Main sprite icons.
+		&[class^='icon-'] {
+			display: inline-block;
+			background: none;
+		}
+
+		&.icon-details, &.icon-criterion {
+			float: left;
+			width: 50px;
+		}
+
+        &.icon-attachment-pdf {
+          float: left;
+          width: 40px;
+
+          img {
+            width: 35px;
+          }
+
+        }
+
+		&.icon-logo {
+			float: right;
+			width: 50px;
+		}
+
+	}
+
+}
+
+
