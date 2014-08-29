@@ -20,6 +20,7 @@ var scripts = [
     input + 'js/vendor/restangular.js',
     input + 'js/vendor/angular-resource.js',
     input + 'js/vendor/angular-route.js',
+    input + 'js/vendor/stacktrace.js',
     input + 'js/src/**/*.js',
     input + 'js/shift.js'
 ];

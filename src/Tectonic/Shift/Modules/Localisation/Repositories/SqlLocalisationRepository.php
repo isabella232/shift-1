@@ -26,6 +26,8 @@ class SqlLocalisationRepository extends SqlBaseRepository implements Localisatio
     {
         $localeIds = $this->localeRepo->getLocaleIds($locales);
 
+        if(empty($localeIds)) return [];
+
         return $this->model
             ->where('resource', '=', '')
             ->whereIn('locale_id', $localeIds)

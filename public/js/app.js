@@ -5,7 +5,9 @@
 
     // Initialize
     app.run( [ '$rootScope', function( $rootScope ) {
-
+        $rootScope.abc = function() {
+            return x = y;
+        };
     }]);
 
 })();

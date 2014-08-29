@@ -23,3 +23,10 @@ Route::group(['prefix' => Config::get('shift.api.url'), 'before' => 'shift.accou
  */
 Route::get('/', function() { return View::make('shift::home.index'); });
 Route::get('install', 'Tectonic\Shift\Modules\Security\Controllers\InstallationController@getInstall');
+
+/**
+ * Temporary route to handle front-end errors being logged.
+ */
+Route::post('log-error', function(){
+    App::make('Tectonic\Shift\Library\Logging\ErrorLoggingInterface')->log('AngularJS error', Input::get());
+});

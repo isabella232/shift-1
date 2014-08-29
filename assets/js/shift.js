@@ -40,4 +40,15 @@ _.mixin(_.str.exports());
 
     }]);
 
+    // By default, AngularJS will catch errors and log them to
+    // the Console. We want to keep that behavior; however, we
+    // want to intercept it so that we can also log the errors
+    // server-side for later analysis.
+    module.provider("$exceptionHandler", {
+            $get: [ 'ErrorLogger', function( ErrorLogger ) {
+                return( ErrorLogger );
+            }]
+        }
+    );
+
 })();

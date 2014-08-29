@@ -145,16 +145,21 @@ class ShiftServiceProvider extends ServiceProvider
         $this->app->bindShared('shift.translator', function($app)
         {
             return new \Tectonic\Shift\Library\Translation\Translator(
-                $this->app['translation.loader'],
-                $this->app['Tectonic\Shift\Modules\Localisation\Repositories\LocalisationRepositoryInterface'],
-                $this->app['config']['app.locale'],
-                $this->app['config']['shift::language.autoloads'],
-                $this->app['config']['shift::language.locales']
+                $app['translation.loader'],
+                $app['Tectonic\Shift\Modules\Localisation\Repositories\LocalisationRepositoryInterface'],
+                $app['config']['app.locale'],
+                $app['config']['shift::language.autoloads'],
+                $app['config']['shift::language.locales']
             );
         });
 
         $this->app->bind('Symfony\Component\Translation\TranslatorInterface', function($app) {
             return $app['shift.translator'];
+        });
+
+        $this->app->bind('\Tectonic\Shift\Library\Logging\ErrorLoggingInterface', function($app)
+        {
+            return new \Tectonic\Shift\Library\Logging\FileErrorLogger($app['log']);
         });
     }
 
