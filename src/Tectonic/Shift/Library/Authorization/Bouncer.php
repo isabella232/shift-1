@@ -3,6 +3,7 @@
 use App;
 use Log;
 use Illuminate\Support\Str;
+use Tectonic\Shift\Library\Authorization\AuthenticatedConsumer;
 
 /**
  * Class Bouncer
@@ -46,8 +47,6 @@ final class Bouncer
 	public function __construct($resource)
 	{
 		$this->resource = $resource;
-
-        $this->consumer = App::make('Tectonic\Shift\Library\Authorization\AuthenticatedConsumer');
 	}
 
 	/**
@@ -157,7 +156,7 @@ final class Bouncer
 			}
 		}
 
-		Log::info('ACCESS REQUEST: DENIED');
+		Log::info('ACCESS REQUEST: DENIED for ');
 
 		return false;
 	}
@@ -189,14 +188,11 @@ final class Bouncer
 	 */
 	private function authoriseByRule($rule, $resource = null)
 	{
-		// Guest access allowed
-		if ('any' == $rule) return true;
-
 		if (is_null($resource)) {
 			$resource = $this->resource;
 		}
 
-		if ($this->consumer->can($rule, $resource)) {
+		if ($this->can($rule, $resource)) {
 			Log::info('ACCESS REQUEST: GRANTED FROM ' . $resource . ' ON RULE: ' . $rule);
 
 			return true;
@@ -204,6 +200,23 @@ final class Bouncer
 
 		return false;
 	}
+
+    /**
+     * Determines whether or not a consumer can view a resource.
+     *
+     * @param $rule
+     * @param $resource
+     * @return bool
+     */
+    private function can($rule, $resource)
+    {
+        // Guest access allowed
+        if ('any' == $rule) return true;
+
+        if (!$this->consumer) return false;
+
+        return $this->consumer->can($rule, $resource);
+    }
 
 	/**
 	 * Inverse action of allowed

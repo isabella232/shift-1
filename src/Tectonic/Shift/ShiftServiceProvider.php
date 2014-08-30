@@ -23,7 +23,7 @@ class ShiftServiceProvider extends ServiceProvider
 	{
 		$aliases = AliasLoader::getInstance();
 
-        $this->loadBindings();
+        $this->bootFile('bindings');
 
         $aliases->alias('Basset', 'Basset\Facade');
         $aliases->alias('Authority', 'Authority\AuthorityL4\Facades\Authority');
@@ -121,14 +121,6 @@ class ShiftServiceProvider extends ServiceProvider
 	 */
 	public function bootFile($file)
 	{
-		require_once __DIR__.'/../../boot/'.$file.'.php';
+		require __DIR__.'/../../boot/'.$file.'.php';
 	}
-
-    /**
-     * Loads the required bindings for the shift application, namely setting up interface contracts.
-     */
-    protected function loadBindings()
-    {
-        $this->bootFile('bindings');
-    }
 }

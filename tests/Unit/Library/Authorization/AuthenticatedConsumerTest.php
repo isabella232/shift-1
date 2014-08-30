@@ -16,7 +16,8 @@ class AuthenticatedConsumerTest extends \PHPUnit_Framework_TestCase
 		$this->consumer = new UserConsumer(new User);
 		$this->mockAuthority = m::mock('Authority\Authority');
 
-		$this->authenticatedConsumer = new AuthenticatedConsumer($this->consumer, $this->mockAuthority);
+		$this->authenticatedConsumer = new AuthenticatedConsumer($this->mockAuthority);
+        $this->authenticatedConsumer->setConsumer($this->consumer);
 	}
 
 	public function tearDown()

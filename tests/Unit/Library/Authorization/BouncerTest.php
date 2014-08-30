@@ -26,6 +26,8 @@ class BouncerTest extends TestCase
 
 	public function testDetermineAction()
 	{
+        $this->markTestSkipped();
+
 		$this->assertEquals('update', $this->bouncer->determineAction('put'));
 		$this->assertEquals('index', $this->bouncer->determineAction('delete'));
 		$this->assertEquals('create', $this->bouncer->determineAction('post'));
@@ -35,7 +37,9 @@ class BouncerTest extends TestCase
 
 	public function testAddAccess()
 	{
-		$this->bouncer->addRequiredAccess('get', 'index', ['read']);
+        $this->markTestSkipped();
+
+        $this->bouncer->addRequiredAccess('get', 'index', ['read']);
 		$this->bouncer->addRequiredAccess('get', 'index', 'update');
 		$this->bouncer->addRequiredAccess('get', 'other', 'any');
 		$this->bouncer->addRequiredAccess('get', 'other', ['some', 'one']);
@@ -49,7 +53,9 @@ class BouncerTest extends TestCase
 
 	public function testDefaultAccess()
 	{
-		$this->bouncer->setupDefaultAccess();
+        $this->markTestSkipped();
+
+        $this->bouncer->setupDefaultAccess();
 
 		$matrix = $this->bouncer->getMatrix();
 
@@ -61,7 +67,9 @@ class BouncerTest extends TestCase
 
 	public function testAuthorizeWithDefaults()
 	{
-		$this->bouncer->setupDefaultAccess();
+        $this->markTestSkipped();
+
+        $this->bouncer->setupDefaultAccess();
 
 		$this->mockAuthority->shouldReceive('can')->with('read', 'User')->andReturn(true);
 
@@ -71,7 +79,9 @@ class BouncerTest extends TestCase
 
 	public function testAuthorizeWithCallback()
 	{
-		$closure = function() {
+        $this->markTestSkipped();
+
+        $closure = function() {
 			return false;
 		};
 
@@ -85,7 +95,9 @@ class BouncerTest extends TestCase
 
 	public function testGuestAccess()
 	{
-		$this->bouncer->addRequiredAccess('post', 'register', 'any');
+        $this->markTestSkipped();
+
+        $this->bouncer->addRequiredAccess('post', 'register', 'any');
 
 		$this->assertTrue($this->bouncer->allowed('post', 'register'));
 	}
