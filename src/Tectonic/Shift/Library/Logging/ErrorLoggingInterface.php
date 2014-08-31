@@ -6,7 +6,8 @@ interface ErrorLoggingInterface
      * Log error
      *
      * @param string $message
-     * @param array  $data
+     * @param array $data
+     * @return
      */
-    public function log($message, array $data);
+    public function log($message, array $data = []);
 } 

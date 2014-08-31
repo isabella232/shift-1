@@ -27,9 +27,10 @@ class FileErrorLogger implements ErrorLoggingInterface
     /**
      * Log error to a file
      *
+     * @param string $message
      * @param array $data
      */
-    public function log($message, array $data)
+    public function log($message, array $data = [])
     {
         $this->log->error($message, $data);
     }

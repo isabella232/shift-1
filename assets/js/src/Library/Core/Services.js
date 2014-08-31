@@ -263,7 +263,7 @@
 
     /**
      * The "stacktrace.js" library is included in the /js/vendor directory
-     * is on the the Global scope; but, we don't want to reference
+     * and is on the the Global scope; but, we don't want to reference
      * global objects inside the AngularJS components - that's
      * not how AngularJS rolls.  So we want to wrap the
      * "stacktrace.js" features in a proper AngularJS factory that
@@ -332,7 +332,6 @@
             }
 
         }
-
 
         // Return the logging function.
         return( log );

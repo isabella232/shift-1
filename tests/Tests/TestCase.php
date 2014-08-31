@@ -41,6 +41,8 @@ class TestCase extends \Orchestra\Testbench\TestCase
 		// reset base path to point to our package's src directory
 		$app['path.base'] = __DIR__ . '/../../';
 
+        $app['config']->set('storage_path', __DIR__ .'/../../../../..');
+
 		$app['config']->set('database.default', 'test');
 		$app['config']->set('database.connections.test', array(
 			'driver'   => 'sqlite',
