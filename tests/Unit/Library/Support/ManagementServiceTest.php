@@ -4,7 +4,7 @@ use Mockery;
 use Tests\TestCase;
 use Tests\Stubs\ManagementServiceStub;
 
-class BaseManagementServiceTest extends TestCase
+class ManagementServiceTest extends TestCase
 {
     protected $mockValidator;
 

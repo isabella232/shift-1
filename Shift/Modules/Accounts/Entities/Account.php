@@ -1,6 +1,7 @@
 <?php
 
 namespace Tectonic\Shift\Modules\Accounts\Entities;
+use Tectonic\Shift\Modules\Users\Entities\User;
 
 /**
  * @entity(repositoryClass="Tectonic\Shift\Modules\Accounts\Repositories\DoctrineAccountRepository")

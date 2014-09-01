@@ -6,7 +6,7 @@ use Mockery as m;
 use Tests\TestCase;
 use Tectonic\Shift\Modules\Accounts\Repositories\EloquentAccountRepository;
 
-class SqlAccountRepositoryTest extends TestCase
+class DoctrineAccountRepositoryTest extends TestCase
 {
 	private $mockModel;
 	private $repository;

@@ -1,8 +1,8 @@
-<?php namespace Tests\Unit\Library\Support;
+<?php namespace Tests\Unit\Library\Support\Database\Eloquent;
 
 use Mockery as m;
 
-class SqlRoleRepositoryTest extends \PHPUnit_Framework_TestCase
+class EloquentRoleRepositoryTest extends \PHPUnit_Framework_TestCase
 {
 	public function tearDown()
 	{

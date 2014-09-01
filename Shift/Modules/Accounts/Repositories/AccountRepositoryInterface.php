@@ -2,9 +2,9 @@
 
 namespace Tectonic\Shift\Modules\Accounts\Repositories;
 
-use Tectonic\Shift\Library\Support\BaseRepositoryInterface;
+use Tectonic\Shift\Library\Support\Database\RepositoryInterface;
 
-interface AccountRepositoryInterface extends BaseRepositoryInterface
+interface AccountRepositoryInterface extends RepositoryInterface
 {
 	public function requireByDomain($domain);
 }

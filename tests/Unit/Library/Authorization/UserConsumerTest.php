@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Library\Authorization;
 
+use Tectonic\Shift\Modules\Users\Entities\User;
 use Tectonic\Shift\Library\Authorization\UserConsumer;
 
 class UserConsumerTest extends \Tests\TestCase
@@ -12,7 +13,7 @@ class UserConsumerTest extends \Tests\TestCase
     {
         parent::setUp();
 
-        $this->user = new \Tectonic\Shift\Modules\Accounts\Models\User;
+        $this->user = new User;
         $this->user->id = 1;
     }
 

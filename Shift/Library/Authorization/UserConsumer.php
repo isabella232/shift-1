@@ -2,7 +2,7 @@
 
 namespace Tectonic\Shift\Library\Authorization;
 
-use Tectonic\Shift\Modules\Accounts\Models\User;
+use Illuminate\Auth\UserInterface;
 
 /**
  * Class Consumer
@@ -12,6 +12,7 @@ use Tectonic\Shift\Modules\Accounts\Models\User;
  *
  * @package Tectonic\Shift\Library\Authorization
  */
+
 final class UserConsumer implements ConsumerInterface
 {
     /**
@@ -28,9 +29,9 @@ final class UserConsumer implements ConsumerInterface
 	/**
 	 * Constructs the class and sets the $id property.
 	 *
-     * @param User $user
+     * @param UserInterface $user
 	 */
-	public function __construct(User $user)
+	public function __construct(UserInterface $user)
 	{
         $this->user = $user;
 	}
@@ -64,6 +65,6 @@ final class UserConsumer implements ConsumerInterface
      */
     public function id()
     {
-        return $this->user->id;
+        return $this->user->getId();
     }
 }

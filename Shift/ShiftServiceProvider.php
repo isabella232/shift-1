@@ -3,6 +3,7 @@
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 use Tectonic\Shift\Library\Router;
+use Tectonic\Shift\Library\Support\Asset;
 use App;
 
 class ShiftServiceProvider extends ServiceProvider
@@ -94,7 +95,7 @@ class ShiftServiceProvider extends ServiceProvider
     public function registerAssetContainer()
     {
         $this->app->bindShared('shift.asset', function($app) {
-            return new \Tectonic\Shift\Library\Support\Asset($app['orchestra.asset.dispatcher']);
+            return new Asset($app['orchestra.asset.dispatcher']);
         });
     }
 
@@ -109,7 +110,8 @@ class ShiftServiceProvider extends ServiceProvider
 			'Basset\BassetServiceProvider',
 			'Authority\AuthorityL4\AuthorityL4ServiceProvider',
 			'Tectonic\Shift\Library\Authorization\AuthorizationServiceProvider',
-            'Tectonic\Shift\Modules\Accounts\AccountsServiceProvider'
+            'Tectonic\Shift\Modules\Accounts\AccountsServiceProvider',
+            'Tectonic\Shift\Modules\Users\UsersServiceProvider',
 		];
 	}
 

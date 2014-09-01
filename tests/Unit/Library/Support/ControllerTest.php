@@ -6,7 +6,7 @@ use Tests\TestCase;
 use Tests\Stubs\ControllerStub;
 use Illuminate\Support\Facades\Facade;
 
-class BaseControllerTest extends TestCase
+class ControllerTest extends TestCase
 {
 
     protected $controller,

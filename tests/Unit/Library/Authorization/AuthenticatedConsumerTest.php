@@ -3,7 +3,7 @@
 use Mockery as m;
 use Tectonic\Shift\Library\Authorization\UserConsumer;
 use Tectonic\Shift\Library\Authorization\AuthenticatedConsumer;
-use Tectonic\Shift\Modules\Accounts\Models\User;
+use Tectonic\Shift\Modules\Users\Entities\User;
 
 class AuthenticatedConsumerTest extends \PHPUnit_Framework_TestCase
 {
