@@ -20,4 +20,4 @@ abstract class Entity
             }
         }
     }
-} 
+}
