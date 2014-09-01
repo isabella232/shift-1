@@ -19,6 +19,33 @@ class ValidationException extends \Exception implements JsonableInterface
     protected $message = 'There is something wrong with the input provided. Please check the information you have entered and try again.';
 
     /**
+     * Stores an array of the fields that failed validation.
+     *
+     * @var array
+     */
+    protected $failedFields = [];
+
+    /**
+     * Returns the validation errors that were generated at validation time.
+     *
+     * @return array
+     */
+    public function getValidationErrors()
+    {
+        return $this->errors;
+    }
+    
+    /**
+     * Returns an array of the field names that failed validation.
+     *
+     * @return array
+     */
+    public function getFailedFields()
+    {
+        return $this->failedFields;
+    }
+
+    /**
      * Set the validation errors that occurred.
      *
      * @param array $errors

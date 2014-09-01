@@ -1,6 +1,6 @@
 <?php
 
-namespace Tectonic\Shift\Modules\Accounts\Controllers;
+namespace Tectonic\Shift\Controllers;
 
 use Tectonic\Shift\Library\Support\BaseController;
 use Tectonic\Shift\Modules\Accounts\Services\AccountManagementService;

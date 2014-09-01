@@ -11,6 +11,10 @@
  */
 abstract class BaseManagementService
 {
+    /**
+     * Stores the repository that will handle the
+     * @var
+     */
     protected $repository;
 
     protected $validator;
