@@ -1,5 +1,6 @@
 <?php namespace Tectonic\Shift\Library\Support\Database\Doctrine;
 
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Tectonic\Shift\Library\Support\Database\RecordNotFoundException;
 use Tectonic\Shift\Library\Support\Database\RepositoryInterface;
@@ -22,21 +23,17 @@ abstract class Repository extends EntityRepository implements RepositoryInterfac
 
     /**
      * Some simple validation on the class implementation.
+     *
+     * @param EntityManager $entityManager
+     * @throws EntityIsNullException
      */
-    public function __construct()
+    public function __construct(EntityManager $entityManager)
     {
+	    $this->entityManager = $entityManager;
+
         if (is_null($this->entity)) {
             throw new EntityIsNullException;
         }
-    }
-
-    /**
-     * Returns the entity manager used but will throw an EntityNotFoundException if
-     * no entity has been specified by a child implementation.
-     */
-    public function entity()
-    {
-        return $this->entity;
     }
 
     /**
@@ -58,7 +55,7 @@ abstract class Repository extends EntityRepository implements RepositoryInterfac
      */
     public function getById($id)
     {
-        return $this->entityManager()->find($this->entity(), $id);
+        return $this->entityManager()->find($this->entity, $id);
     }
 
     /**
@@ -79,16 +76,6 @@ abstract class Repository extends EntityRepository implements RepositoryInterfac
         }
 
         return $model;
-    }
-
-    /**
-     * Returns the entity that is being used by the repository.
-     *
-     * @return Eloquent
-     */
-    public function getEntity()
-    {
-        return $this->entity;
     }
 
     /**

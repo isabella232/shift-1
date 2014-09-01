@@ -19,7 +19,7 @@ class AccountsServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bindShared('Tectonic\Shift\Modules\Accounts\Repositories\AccountRepositoryInterface', function() {
-            return App::make('Tectonic\Shift\Modules\Accounts\Repositories\SqlAccountRepository');
+            return App::make('Tectonic\Shift\Modules\Accounts\Repositories\DoctrineAccountRepository');
         });
     }
 

@@ -4,7 +4,7 @@ namespace Tests\Unit\Modules\Accounts\Repositories;
 
 use Mockery as m;
 use Tests\TestCase;
-use Tectonic\Shift\Modules\Accounts\Repositories\EloquentAccountRepository;
+use Tectonic\Shift\Modules\Accounts\Repositories\DoctrineAccountRepository;
 
 class DoctrineAccountRepositoryTest extends TestCase
 {
