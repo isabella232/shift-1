@@ -13,6 +13,7 @@ use Tectonic\Shift\Modules\Accounts\Repositories\AccountRepositoryInterface;
  *
  * @package Tectonic\Shift\Modules\Accounts\Services
  */
+
 class AccountManagementService extends ManagementService
 {
 	/**
@@ -29,7 +30,7 @@ class AccountManagementService extends ManagementService
 	 * @param $domain
 	 * @return Account
 	 */
-	public function getRequestedDomain($domain)
+	public function getAccountForDomain($domain)
 	{
 		return $this->repository->requireByDomain($domain);
 	}

@@ -24,6 +24,6 @@ class AccountManagementServiceTest  extends TestCase
 	{
 		$this->mockRepository->shouldReceive('requireByDomain')->with('whatever')->andReturn('account');
 
-		$this->assertEquals('account', $this->service->getRequestedDomain('whatever'));
+		$this->assertEquals('account', $this->service->getAccountForDomain('whatever'));
 	}
 }

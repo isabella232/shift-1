@@ -1,4 +1,9 @@
-<?php namespace Tectonic\Shift\Library\Support;
+<?php
+
+namespace Tectonic\Shift\Library\Support;
+
+use App;
+use Event;
 
 /**
  * Class BaseManagementService
@@ -9,6 +14,7 @@
  *
  * @package Tectonic\Shift\Library\Support
  */
+
 abstract class ManagementService
 {
     /**
@@ -17,37 +23,51 @@ abstract class ManagementService
      */
     protected $repository;
 
-    protected $validator;
+	/**
+	 * Validation class used for resource creation.
+	 *
+	 * @var
+	 */
+	protected $createValidator;
+
+	/**
+	 * Validation class used for resource updates.
+	 *
+	 * @var
+	 */
+	protected $updateValidator;
 
     /**
      * Create a new resource
      *
-     * @param array $data
-     *
+     * @param array $input
      * @return mixed
      */
-    public function create($data)
+    public function create($input)
     {
-        $this->validator
-            ->setInput($data)
-            ->forMethod('create')
-            ->validate();
+        App::make($this->createValidator, [$input])->validate();
 
-        $resource = $this->repository->getNew($data);
+        $resource = $this->repository->getNew($input);
 
-        return $this->repository->save($resource);
+	    $this->repository->save($resource);
+	    $this->notify('created', $resource);
+
+        return $resource;
     }
 
     /**
      * Get a specified resource
      *
      * @param int $id
-     *
      * @return mixed
      */
     public function get($id)
     {
-        return $this->repository->requireById($id);
+        $resource = $this->repository->requireById($id);
+
+	    $this->notify('retrieved', $resource);
+
+	    return $resource;
     }
 
     /**
@@ -55,19 +75,18 @@ abstract class ManagementService
      *
      * @param int $id
      * @param array $input
-     *
      * @return mixed
      */
     public function update($id, $input)
     {
         $resource = $this->repository->requireById($id);
 
-        $this->validator->setInput($input)
-            ->forMethod('update')
-            ->using($resource)
-            ->validate();
+	    App::make($this->updateValidator, [$input])->validate();
 
-        return $this->repository->update($resource, $input);
+        $this->repository->update($resource, $input);
+	    $this->notify('updated', $resource);
+
+	    return $resource;
     }
 
     /**
@@ -81,6 +100,14 @@ abstract class ManagementService
     {
         $resource = $this->repository->requireById($id);
 
-        return $this->repository->delete($resource);
+        $this->repository->delete($resource);
+		$this->notify('deleted', $resource);
+
+	    return $resource;
     }
+
+	public function notify($event, $resource)
+	{
+		Event::fire(class_basename($resource).': '.$event, [$resource]);
+	}
 }
