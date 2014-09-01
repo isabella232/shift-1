@@ -2,7 +2,7 @@
 
 namespace Tectonic\Shift\Library\Support\Database\Eloquent;
 
-class BaseModel extends \Eloquent
+class Model extends \Eloquent
 {
     /**
      * If the data relating to this model is restricted by account, then we can alter

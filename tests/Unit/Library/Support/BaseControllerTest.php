@@ -3,7 +3,7 @@
 use Input;
 use Mockery as m;
 use Tests\TestCase;
-use Tests\Stubs\BaseControllerStub;
+use Tests\Stubs\ControllerStub;
 use Illuminate\Support\Facades\Facade;
 
 class BaseControllerTest extends TestCase
@@ -22,7 +22,7 @@ class BaseControllerTest extends TestCase
 
         Input::swap($this->mockInput);
 
-        $this->controller = new BaseControllerStub($this->mockService);
+        $this->controller = new ControllerStub($this->mockService);
     }
 
     public function testGetIndex()

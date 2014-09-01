@@ -1,8 +1,8 @@
 <?php namespace Tectonic\Shift\Modules\CustomFields\Models;
 
-use Tectonic\Shift\Library\Support\Database\Eloquent\BaseModel;
+use Tectonic\Shift\Library\Support\Database\Eloquent\Model;
 
-class CustomField extends BaseModel
+class CustomField extends Model
 {
 
     /**

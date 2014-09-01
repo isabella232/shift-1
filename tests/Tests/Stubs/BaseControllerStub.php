@@ -2,9 +2,9 @@
 
 namespace Tests\Stubs;
 
-use Tectonic\Shift\Library\Support\BaseController;
+use Tectonic\Shift\Library\Support\Controller;
 
-class BaseControllerStub extends BaseController
+class ControllerStub extends Controller
 {
 	public $searchClass = 'Tests\Stubs\SearchStub';
 

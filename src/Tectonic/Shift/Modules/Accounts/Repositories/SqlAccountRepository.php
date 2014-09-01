@@ -3,10 +3,10 @@
 namespace Tectonic\Shift\Modules\Accounts\Repositories;
 
 use Tectonic\Shift\Modules\Accounts\Models\Account;
-use Tectonic\Shift\Library\Support\Database\Eloquent\EloquentBaseRepository;
+use Tectonic\Shift\Library\Support\Database\Eloquent\Repository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class EloquentAccountRepository extends EloquentBaseRepository implements AccountRepositoryInterface
+class EloquentAccountRepository extends Repository implements AccountRepositoryInterface
 {
 	public function __construct(Account $account)
 	{

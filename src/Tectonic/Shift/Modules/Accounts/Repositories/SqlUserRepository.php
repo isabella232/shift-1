@@ -3,9 +3,9 @@
 namespace Tectonic\Shift\Modules\Accounts\Repositories;
 
 use Tectonic\Shift\Modules\Accounts\Models\User;
-use Tectonic\Shift\Library\Support\Database\Eloquent\EloquentBaseRepository;
+use Tectonic\Shift\Library\Support\Database\Eloquent\Repository;
 
-class EloquentUserRepository extends EloquentBaseRepository implements UserRepositoryInterface
+class EloquentUserRepository extends Repository implements UserRepositoryInterface
 {
 	public function __construct(User $user)
 	{

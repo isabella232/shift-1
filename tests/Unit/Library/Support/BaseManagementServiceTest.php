@@ -2,7 +2,7 @@
 
 use Mockery;
 use Tests\TestCase;
-use Tests\Stubs\BaseManagementServiceStub;
+use Tests\Stubs\ManagementServiceStub;
 
 class BaseManagementServiceTest extends TestCase
 {
@@ -18,7 +18,7 @@ class BaseManagementServiceTest extends TestCase
 
         $this->mockValidator = Mockery::mock('MockValidator');
         $this->mockRepository = Mockery::mock('MockRepository');
-        $this->managementService = new BaseManagementServiceStub($this->mockRepository, $this->mockValidator);
+        $this->managementService = new ManagementServiceStub($this->mockRepository, $this->mockValidator);
     }
 
     /**

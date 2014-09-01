@@ -1,8 +1,8 @@
 <?php namespace Tests\Stubs;
 
-use Tectonic\Shift\Library\Support\BaseManagementService;
+use Tectonic\Shift\Library\Support\ManagementService;
 
-class BaseManagementServiceStub extends BaseManagementService
+class ManagementServiceStub extends ManagementService
 {
     public function __construct($repository, $validator)
     {

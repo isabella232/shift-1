@@ -3,13 +3,13 @@
 namespace Tectonic\Shift\Library\Support;
 
 use App;
-use Illuminate\Routing\Controller;
+use Illuminate\Routing\Controller as Ctrl;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
 use Tectonic\Shift\Library\BaseValidator;
 use Tectonic\Shift\Library\SqlBaseRepositoryInterface;
 
-abstract class BaseController extends Controller
+abstract class Controller extends Ctrl
 {
 	/**
 	 * Stores the full path to the search class to be used for search. The default search

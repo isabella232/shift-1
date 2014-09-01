@@ -9,7 +9,7 @@
  *
  * @package Tectonic\Shift\Library\Support
  */
-abstract class BaseManagementService
+abstract class ManagementService
 {
     /**
      * Stores the repository that will handle the

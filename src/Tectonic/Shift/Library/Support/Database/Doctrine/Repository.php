@@ -1,10 +1,10 @@
 <?php namespace Tectonic\Shift\Library\Support\Database\Doctrine;
 
 use Doctrine\ORM\EntityRepository;
-use Tectonic\Shift\Library\Support\BaseRepositoryInterface;
 use Tectonic\Shift\Library\Support\Database\RecordNotFoundException;
+use Tectonic\Shift\Library\Support\Database\RepositoryInterface;
 
-abstract class Repository extends EntityRepository implements BaseRepositoryInterface
+abstract class Repository extends EntityRepository implements RepositoryInterface
 {
     /**
      * Stores the entity manager object for querying.

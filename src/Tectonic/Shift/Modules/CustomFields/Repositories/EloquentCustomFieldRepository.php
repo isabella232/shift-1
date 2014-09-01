@@ -1,9 +1,9 @@
 <?php namespace Tectonic\Shift\Modules\CustomFields\Repositories;
 
-use Tectonic\Shift\Library\Support\Database\Eloquent\EloquentBaseRepository;
+use Tectonic\Shift\Library\Support\Database\Eloquent\Repository;
 use Tectonic\Shift\Modules\CustomFields\Models\CustomField;
 
-class EloquentCustomFieldRepository extends EloquentBaseRepository implements CustomFieldRepositoryInterface
+class EloquentCustomFieldRepository extends Repository implements CustomFieldRepositoryInterface
 {
     public function __construct(CustomField $model)
     {

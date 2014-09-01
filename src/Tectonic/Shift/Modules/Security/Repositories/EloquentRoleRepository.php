@@ -4,9 +4,9 @@ namespace Tectonic\Shift\Modules\Security\Repositories;
 
 use DB;
 use Tectonic\Shift\Modules\Security\Models\Role;
-use Tectonic\Shift\Library\Support\Database\Eloquent\EloquentBaseRepository;
+use Tectonic\Shift\Library\Support\Database\Eloquent\Repository;
 
-class EloquentRoleRepository extends EloquentBaseRepository implements RoleRepositoryInterface
+class EloquentRoleRepository extends Repository implements RoleRepositoryInterface
 {
 	public function __construct(Role $role)
 	{

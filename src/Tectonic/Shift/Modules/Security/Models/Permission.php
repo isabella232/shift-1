@@ -2,9 +2,9 @@
 
 namespace Tectonic\Shift\Modules\Security\Models;
 
-use Tectonic\Shift\Library\Support\Database\Eloquent\BaseModel;
+use Tectonic\Shift\Library\Support\Database\Eloquent\Model;
 
-class Permission extends BaseModel
+class Permission extends Model
 {
     /**
      * Each permission is assigned to a given role.

@@ -2,7 +2,7 @@
 
 namespace Tectonic\Shift\Modules\Accounts\Services;
 
-use Tectonic\Shift\Library\Support\BaseManagementService;
+use Tectonic\Shift\Library\Support\ManagementService;
 use Tectonic\Shift\Modules\Accounts\Repositories\AccountRepositoryInterface;
 
 /**
@@ -13,7 +13,7 @@ use Tectonic\Shift\Modules\Accounts\Repositories\AccountRepositoryInterface;
  *
  * @package Tectonic\Shift\Modules\Accounts\Services
  */
-class AccountManagementService extends BaseManagementService
+class AccountManagementService extends ManagementService
 {
 	/**
 	 * @param AccountRepositoryInterface $repository

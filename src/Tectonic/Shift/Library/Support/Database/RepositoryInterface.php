@@ -8,7 +8,7 @@ namespace Tectonic\Shift\Library\Support\Database;
  * this, and if there are any changes in the requirements, they can define them there.
  */
 
-interface BaseRepositoryInterface
+interface RepositoryInterface
 {
 	/**
 	 * Create a resource based on the data provided.

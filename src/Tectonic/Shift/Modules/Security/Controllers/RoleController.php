@@ -2,10 +2,10 @@
 
 namespace Tectonic\Shift\Modules\Security\Controllers;
 
-use Tectonic\Shift\Library\Support\BaseController;
+use Tectonic\Shift\Library\Support\Controller;
 use Tectonic\Shift\Modules\Security\Services\RoleManagementService;
 
-class RoleController extends BaseController
+class RoleController extends Controller
 {
 	public function __construct(RoleManagementService $roleManagementService)
 	{

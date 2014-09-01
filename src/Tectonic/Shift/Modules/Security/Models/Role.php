@@ -2,9 +2,9 @@
 
 namespace Tectonic\Shift\Modules\Security\Models;
 
-use Tectonic\Shift\Library\Support\Database\Eloquent\BaseModel;
+use Tectonic\Shift\Library\Support\Database\Eloquent\Model;
 
-class Role extends BaseModel
+class Role extends Model
 {
     protected $softDelete = true;
 

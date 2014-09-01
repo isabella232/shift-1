@@ -3,9 +3,9 @@
 namespace Tectonic\Shift\Library\Support\Database\Eloquent;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Tectonic\Shift\Library\Support\BaseRepositoryInterface;
+use Tectonic\Shift\Library\Support\Database\RepositoryInterface;
 
-abstract class EloquentBaseRepository implements BaseRepositoryInterface
+abstract class Repository implements RepositoryInterface
 {
     /**
      * Many resources within shift may be restricted by the account the user is assigned to (if applicable).
@@ -81,7 +81,7 @@ abstract class EloquentBaseRepository implements BaseRepositoryInterface
      *
      * @return Resource
      */
-    public function getNew($data = [])
+    public function getNew(array $data = [])
     {
         return $this->model->newInstance($data);
     }
