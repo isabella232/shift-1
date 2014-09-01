@@ -1,12 +1,12 @@
-<?php namespace Tectonic\Shift\Library\Support;
+<?php
 
-use Tectonic\Shift\Library\Eloquent;
-use Illuminate\Database\Eloquent\Model;
+namespace Tectonic\Shift\Library\Support\Database\Eloquent;
+
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Tectonic\Shift\Library\Support\BaseRepositoryInterface;
 
-abstract class SqlBaseRepository implements BaseRepositoryInterface
+abstract class EloquentBaseRepository implements BaseRepositoryInterface
 {
-
     /**
      * Many resources within shift may be restricted by the account the user is assigned to (if applicable).
      * As a result, resources can

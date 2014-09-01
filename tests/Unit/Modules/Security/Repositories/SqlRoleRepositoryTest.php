@@ -2,7 +2,7 @@
 
 use Mockery as m;
 use Tests\TestCase;
-use Tectonic\Shift\Modules\Security\Repositories\SqlRoleRepository;
+use Tectonic\Shift\Modules\Security\Repositories\EloquentRoleRepository;
 
 class SqlRoleRepositoryTest extends TestCase
 {
@@ -12,7 +12,7 @@ class SqlRoleRepositoryTest extends TestCase
         $mockModel->shouldReceive('whereDefault')->once()->with(true)->andReturn($mockModel);
         $mockModel->shouldReceive('first')->once()->andReturn('defaultRole');
 
-        $repository = new SqlRoleRepository($mockModel);
+        $repository = new EloquentRoleRepository($mockModel);
 
         $this->assertEquals('defaultRole', $repository->getByDefault());
     }
@@ -32,7 +32,7 @@ class SqlRoleRepositoryTest extends TestCase
         $mockModel->shouldReceive('whereDefault')->once()->with(true)->andReturn($mockModel);
         $mockModel->shouldReceive('first')->once()->andReturn($previousDefaultRole);
 
-        $repository = new SqlRoleRepository($mockModel);
+        $repository = new EloquentRoleRepository($mockModel);
         $repository->setDefault($newRole);
     }
 }

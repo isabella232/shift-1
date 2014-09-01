@@ -3,13 +3,13 @@
 use Mockery;
 use Tests\TestCase;
 use Tectonic\Shift\Modules\CustomFields\Models\CustomField;
-use Tectonic\Shift\Modules\CustomFields\Repositories\SqlCustomFieldRepository;
+use Tectonic\Shift\Modules\CustomFields\Repositories\EloquentCustomFieldRepository;
 
 class CustomFieldRepositoryTest extends TestCase
 {
 
     /**
-     * @var SqlCustomFieldRepository
+     * @var EloquentCustomFieldRepository
      */
     protected $repository;
 
@@ -43,7 +43,7 @@ class CustomFieldRepositoryTest extends TestCase
             'order'        => 1
         ];
 
-        $this->repository = new SqlCustomFieldRepository(new CustomField());
+        $this->repository = new EloquentCustomFieldRepository(new CustomField());
     }
 
     /**
@@ -55,7 +55,7 @@ class CustomFieldRepositoryTest extends TestCase
     {
         // Arrange
         $customField = CustomField::create($this->cleanData);
-        $repository  = new SqlCustomFieldRepository(new CustomField);
+        $repository  = new EloquentCustomFieldRepository(new CustomField);
 
         // Act
         $result = $repository->getById($customField->id);
@@ -75,7 +75,7 @@ class CustomFieldRepositoryTest extends TestCase
     {
         // Arrange
         $model = new CustomField();
-        $repository = new SqlCustomFieldRepository($model);
+        $repository = new EloquentCustomFieldRepository($model);
         $idToFind = 1001; // A record with this ID does not exist
 
         // Act

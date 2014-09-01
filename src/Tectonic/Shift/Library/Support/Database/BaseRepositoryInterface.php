@@ -1,6 +1,6 @@
 <?php
 
-namespace Tectonic\Shift\Library\Support;
+namespace Tectonic\Shift\Library\Support\Database;
 
 /**
  * Nearly all repositories will require the following methods. This is to ensure we're dealing with a 
@@ -10,14 +10,13 @@ namespace Tectonic\Shift\Library\Support;
 
 interface BaseRepositoryInterface
 {
-
 	/**
 	 * Create a resource based on the data provided.
 	 *
-	 * @param array $data An array of key->value pairs to be provided to the new resource.
+     * @param array $data Optional
 	 * @return Resource
 	 */
-	public function getNew($data = []);
+	public function getNew(array $data = []);
 
 	/**
 	 * Delete a specific resource. Returns the resource that was deleted.

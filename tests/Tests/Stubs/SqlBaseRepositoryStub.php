@@ -2,9 +2,9 @@
 
 namespace Tests\Stubs;
 
-use Tectonic\Shift\Library\Support\SqlBaseRepository;
+use Tectonic\Shift\Library\Support\Database\Eloquent\EloquentBaseRepository;
 
-class SqlBaseRepositoryStub extends SqlBaseRepository
+class EloquentBaseRepositoryStub extends EloquentBaseRepository
 {
 	public function __construct($model, $search)
 	{

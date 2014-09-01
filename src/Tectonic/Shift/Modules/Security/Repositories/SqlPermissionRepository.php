@@ -3,9 +3,9 @@
 namespace Tectonic\Shift\Modules\Security\Repositories;
 
 use Tectonic\Shift\Modules\Security\Models\Permission;
-use Tectonic\Shift\Library\Support\SqlBaseRepository;
+use Tectonic\Shift\Library\Support\Database\Eloquent\EloquentBaseRepository;
 
-class SqlPermissionRepository extends SqlBaseRepository implements PermissionRepositoryInterface
+class EloquentPermissionRepository extends EloquentBaseRepository implements PermissionRepositoryInterface
 {
 	public function __construct(Permission $permission)
 	{

@@ -1,6 +1,6 @@
 <?php namespace Tectonic\Shift\Modules\CustomFields\Models;
 
-use Tectonic\Shift\Library\Support\BaseModel;
+use Tectonic\Shift\Library\Support\Database\Eloquent\BaseModel;
 
 class CustomField extends BaseModel
 {

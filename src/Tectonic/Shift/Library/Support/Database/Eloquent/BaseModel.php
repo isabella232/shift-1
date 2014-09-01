@@ -1,6 +1,6 @@
 <?php
 
-namespace Tectonic\Shift\Library\Support;
+namespace Tectonic\Shift\Library\Support\Database\Eloquent;
 
 class BaseModel extends \Eloquent
 {

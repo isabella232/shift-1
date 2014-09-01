@@ -4,7 +4,7 @@ namespace Tests\Unit\Modules\Accounts\Repositories;
 
 use Mockery as m;
 use Tests\TestCase;
-use Tectonic\Shift\Modules\Accounts\Repositories\SqlAccountRepository;
+use Tectonic\Shift\Modules\Accounts\Repositories\EloquentAccountRepository;
 
 class SqlAccountRepositoryTest extends TestCase
 {
@@ -16,7 +16,7 @@ class SqlAccountRepositoryTest extends TestCase
 		parent::setUp();
 
 		$this->mockModel = m::mock('Tectonic\Shift\Modules\Accounts\Models\Account');
-		$this->repository = new SqlAccountRepository($this->mockModel);
+		$this->repository = new EloquentAccountRepository($this->mockModel);
 	}
 
     public function testQueryingForValidDomain()

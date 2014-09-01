@@ -2,7 +2,7 @@
 
 namespace Tectonic\Shift\Modules\Accounts\Entities;
 
-use Tectonic\Shift\Library\Support\BaseModel;
+use Tectonic\Shift\Library\Support\Database\Eloquent\BaseModel;
 
 class Domain extends BaseModel
 {
