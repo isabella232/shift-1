@@ -1,4 +1,4 @@
-<?php namespace Tectonic\Shift\Modules\Accounts\UseCases\Validators;
+<?php namespace Tectonic\Shift\Modules\Accounts\Validators;
 
 use Tectonic\Shift\Library\Validation\Validator;
 

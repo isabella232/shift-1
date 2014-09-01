@@ -1,5 +1,7 @@
 <?php namespace Tectonic\Shift\Library\Validation;
 
+use Validator;
+
 /**
  * Class Validation
  *
@@ -11,8 +13,6 @@
  *
  * @package Tectonic\Shift\Library\Validation
  */
-
-use Validator;
 
 abstract class Validation
 {
@@ -38,6 +38,19 @@ abstract class Validation
      * @var array
      */
     protected $rules = [];
+
+	/**
+	 * Set the input for validation.
+	 *
+	 * @param array $input
+	 * @return Validation
+	 */
+	public function setInput(array $input = [])
+	{
+		$this->input = $input;
+
+		return $this;
+	}
 
     /**
      * Validates the rules provided either by a custom method or on the class against the user input provided.

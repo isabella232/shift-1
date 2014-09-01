@@ -3,7 +3,7 @@
 namespace Tectonic\Shift\Controllers;
 
 use Tectonic\Shift\Library\Support\Controller;
-use Tectonic\Shift\Modules\Accounts\UseCases\Validators\AccountValidator;
+use Tectonic\Shift\Modules\Accounts\Validators\AccountValidator;
 use Tectonic\Shift\Modules\Accounts\Repositories\UserRepositoryInterface;
 
 class UserController extends Controller

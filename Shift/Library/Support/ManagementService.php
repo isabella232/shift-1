@@ -45,7 +45,7 @@ abstract class ManagementService
      */
     public function create($input)
     {
-        App::make($this->createValidator, [$input])->validate();
+        $this->createValidator->setInput($input)->validate();
 
         $resource = $this->repository->getNew($input);
 
@@ -81,7 +81,7 @@ abstract class ManagementService
     {
         $resource = $this->repository->requireById($id);
 
-	    App::make($this->updateValidator, [$input])->validate();
+	    $this->updateValidator->setInput($input)->validate();
 
         $this->repository->update($resource, $input);
 	    $this->notify('updated', $resource);

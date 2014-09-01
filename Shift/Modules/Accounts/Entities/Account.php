@@ -2,11 +2,17 @@
 
 namespace Tectonic\Shift\Modules\Accounts\Entities;
 
+use Mitch\LaravelDoctrine\Traits\SoftDeletes;
+use Mitch\LaravelDoctrine\Traits\Timestamps;
+
 /**
  * @entity(repositoryClass="Tectonic\Shift\Modules\Accounts\Repositories\DoctrineAccountRepository")
  */
 class Account
 {
+	use Timestamps;
+	use SoftDeletes;
+
     /**
      * @Id @Column(type="integer")
      * @GeneratedValue

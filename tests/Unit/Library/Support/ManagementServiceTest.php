@@ -6,17 +6,17 @@ use Tests\Stubs\ManagementServiceStub;
 
 class ManagementServiceTest extends TestCase
 {
-    protected $mockValidator;
-
+    protected $mockCreateValidator;
+    protected $mockUpdateValidator;
     protected $mockRepository;
-
     protected $managementService;
 
     public function setUp()
     {
         parent::setUp();
 
-        $this->mockValidator = Mockery::mock('MockValidator');
+        $this->mockCreateValidator = Mockery::mock('MockValidator');
+        $this->mockUpdateValidator = Mockery::mock('MockValidator');
         $this->mockRepository = Mockery::mock('MockRepository');
         $this->managementService = new ManagementServiceStub($this->mockRepository, $this->mockValidator);
     }
@@ -30,7 +30,6 @@ class ManagementServiceTest extends TestCase
         $data = [];
 
         $this->mockValidator->shouldReceive('setInput')->with($data)->once()->andReturn($this->mockValidator);
-        $this->mockValidator->shouldReceive('forMethod')->with('create')->once()->andReturn($this->mockValidator);
         $this->mockValidator->shouldReceive('validate')->once();
 
         $this->mockRepository->shouldReceive('getNew')->with($data)->andReturn('new resource');
@@ -63,8 +62,6 @@ class ManagementServiceTest extends TestCase
         $params = [];
 
         $this->mockValidator->shouldReceive('setInput')->once()->andReturn($this->mockValidator);
-        $this->mockValidator->shouldReceive('forMethod')->with('update')->once()->andReturn($this->mockValidator);
-        $this->mockValidator->shouldReceive('using')->with('found resource')->once()->andReturn($this->mockValidator);
         $this->mockValidator->shouldReceive('validate')->once();
 
         $this->mockRepository->shouldReceive('requireById')->with($id)->andReturn('found resource');

@@ -51,7 +51,7 @@ abstract class Repository extends EntityRepository implements RepositoryInterfac
      */
     public function entityManager()
     {
-        return $this->_em;
+        return $this->entityManager;
     }
 
     /**
