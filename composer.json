@@ -5,29 +5,36 @@
         {
             "name": "Kirk Bushell",
             "email": "kirk@tectonic.com.au"
-        }
+        },
+	    {
+		    "name": "Tim Sheehan",
+		    "email": "tim@tectonic.com.au"
+	    },
+	    {
+		    "name": "Jason Morton",
+		    "email": "jason@tectonic.com.au"
+	    }
     ],
     "require": {
-        "php": ">=5.4.0",
+        "php": ">=5.5.0",
+	    "laravel/framework": "~4.2",
         "jasonlewis/basset": "dev-master",
-	    "machuga/authority-l4" : "dev-master",
+	    "machuga/authority-l4": "dev-master",
         "orchestra/asset": "2.2.*",
         "mitchellvanw/laravel-doctrine": "0.*"
     },
     "require-dev": {
         "mockery/mockery": "dev-master@dev",
-        "illuminate/support": "~4.1",
-        "illuminate/routing": "~4.1",
-	    "orchestra/testbench": "2.1.*",
+	    "orchestra/testbench": "2.2.*",
         "phpunit/phpunit": "3.7.*"
     },
     "autoload": {
-        "psr-0": {
-            "Tectonic\\Shift": "src/",
-            "Tests": "tests/"
+        "psr-4": {
+            "Tectonic\\Shift\\": "Shift/",
+            "Tests\\": "tests/Tests"
         },
         "classmap": [
-            "src/migrations"
+            "migrations"
         ]
     },
     "minimum-stability": "dev",

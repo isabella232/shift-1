@@ -122,6 +122,6 @@ class ShiftServiceProvider extends ServiceProvider
 	 */
 	public function bootFile($file)
 	{
-		require __DIR__.'/../../boot/'.$file.'.php';
+		require __DIR__.'/../boot/'.$file.'.php';
 	}
 }
