@@ -4,7 +4,7 @@ use Doctrine\ORM\EntityRepository;
 use Tectonic\Shift\Library\Support\BaseRepositoryInterface;
 use Tectonic\Shift\Library\Support\Database\RecordNotFoundException;
 
-abstract class DoctrineBaseRepository extends EntityRepository implements BaseRepositoryInterface
+abstract class Repository extends EntityRepository implements BaseRepositoryInterface
 {
     /**
      * Stores the entity manager object for querying.
@@ -34,9 +34,19 @@ abstract class DoctrineBaseRepository extends EntityRepository implements BaseRe
      * Returns the entity manager used but will throw an EntityNotFoundException if
      * no entity has been specified by a child implementation.
      */
-    public function getEntity()
+    public function entity()
     {
         return $this->entity;
+    }
+
+    /**
+     * Returns the Doctrine entity manager.
+     *
+     * @return mixed
+     */
+    public function entityManager()
+    {
+        return $this->_em;
     }
 
     /**
@@ -48,7 +58,7 @@ abstract class DoctrineBaseRepository extends EntityRepository implements BaseRe
      */
     public function getById($id)
     {
-        return $this->getEntity()->find($this->entity, $id);
+        return $this->entityManager()->find($this->entity(), $id);
     }
 
     /**
@@ -65,7 +75,7 @@ abstract class DoctrineBaseRepository extends EntityRepository implements BaseRe
         $model = $this->getById($id);
         
         if (!$model) {
-            throw with(new RecordNotFoundException($this->entity, $id))->setModel(get_class($this->model));
+            throw with(new RecordNotFoundException($this->entity, $id));
         }
 
         return $model;
@@ -109,10 +119,10 @@ abstract class DoctrineBaseRepository extends EntityRepository implements BaseRe
     public function delete($resource, $permanent = false)
     {
         if ($permanent) {
-            $resource->forceDelete();
+            $this->entityManager()->remove($resource);
         }
         else {
-            $resource->delete();
+            // @TODO: Remove entity via soft-delete
         }
 
         return $resource;
@@ -126,9 +136,9 @@ abstract class DoctrineBaseRepository extends EntityRepository implements BaseRe
      *
      * @return Resource
      */
-    public function update($resource, $data = [])
+    public function update($resource, array $data = [])
     {
-        if (is_array($data) && count($data) > 0) {
+        if ($data) {
             $this->decorate($resource, $data);
         }
 
@@ -146,8 +156,8 @@ abstract class DoctrineBaseRepository extends EntityRepository implements BaseRe
      */
     public function save($resource)
     {
-        $this->getEntity()->persist($resource);
-        $this->getEntity()->flush();
+        $this->entityManager()->persist($resource);
+        $this->entityManager()->flush();
     }
 
     /**

@@ -2,21 +2,19 @@
 
 namespace Tectonic\Shift\Modules\Accounts\Entities;
 
-use Tectonic\Shift\Library\Support\Database\Eloquent\BaseModel;
-
-class Domain extends BaseModel
+class Domain
 {
-	protected $table = 'domains';
+    /**
+     * @Id @Column(type="integer")
+     * @GeneratedValue
+     */
+    private $id;
 
-    protected $fillable = ['domain'];
+    /**
+     * @Column(type="string")
+     */
+    private $domain;
 
-	/**
-	 * Each domain belongs to one account.
-	 *
-	 * @return mixed
-	 */
-	public function account()
-	{
-		return $this->belongsTo('Tectonic\Shift\Modules\Accounts\Models\Account');
-	}
+
+    private $accountId;
 }

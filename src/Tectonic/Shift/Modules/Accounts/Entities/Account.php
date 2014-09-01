@@ -14,10 +14,14 @@ class Account
     private $id;
 
     /**
-     * @ManyToOne(targetEntity="\Tectonic\Shift\Modules\Users\Entities\User")
      * @Column(type="integer", name="user_id")
      */
     private $userId;
+
+    /**
+     * @ManyToOne(targetEntity="Tectonic\Shift\Modules\Users\Entities\User")
+     */
+    private $user;
 
     /**
      * @Column(type="string")
@@ -38,4 +42,29 @@ class Account
      * @Column(type="datetime", name="deleted_at")
      */
     private $deletedAt;
+
+    /**
+     * @OneToMany(targetEntity="Tectonic\Shift\Modules\Accounts\Entities\Domain", mappedBy="accountId")
+     */
+    private $domains;
+
+    /**
+     * Returns an array of the domains that have been registered to this account.
+     *
+     * @return array
+     */
+    public function getDomains()
+    {
+        return $this->domains;
+    }
+
+    /**
+     * Returns the user that is currently responsible for the account.
+     *
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
 }

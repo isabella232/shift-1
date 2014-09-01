@@ -11,12 +11,14 @@
         "php": ">=5.4.0",
         "jasonlewis/basset": "dev-master",
 	    "machuga/authority-l4" : "dev-master",
-        "orchestra/asset": "2.2.*"
+        "orchestra/asset": "2.2.*",
+        "mitchellvanw/laravel-doctrine": "0.*",
+        "doctrine/orm": "~2.5"
     },
     "require-dev": {
         "mockery/mockery": "dev-master@dev",
-        "illuminate/support": "4.1.x",
-        "illuminate/routing": "4.1.x",
+        "illuminate/support": "~4.2",
+        "illuminate/routing": "~4.2",
 	    "orchestra/testbench": "2.1.*",
         "phpunit/phpunit": "3.7.*"
     },

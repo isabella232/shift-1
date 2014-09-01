@@ -2,12 +2,12 @@
 
 namespace Tectonic\Shift\Modules\Accounts\Repositories;
 
-use Tectonic\Shift\Library\Support\Database\Doctrine\DoctrineBaseRepository;
+use Tectonic\Shift\Library\Support\Database\Doctrine\Repository;
 
-class DoctrineAccountRepository extends DoctrineBaseRepository implements AccountRepositoryInterface
+class DoctrineAccountRepository extends Repository implements AccountRepositoryInterface
 {
     public function requireByDomain($domain)
     {
-        $this->_em->find
+        $this->entityManager()->findOneByDomain($domain);
     }
 }
