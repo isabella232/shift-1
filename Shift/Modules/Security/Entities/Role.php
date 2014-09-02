@@ -7,6 +7,7 @@ use Mitch\LaravelDoctrine\Traits\Timestamps;
  * Class Role
  *
  * @entity(repositoryClass="Tectonic\Shift\Modules\Security\Repositories\DoctrineRoleRepository")
+ * @table(name="roles")
  */
 class Role
 {
@@ -20,12 +21,12 @@ class Role
     private $id;
 
     /**
-     * @Column(type="integer", name="account_id")
+     * @Column(type="integer", name="account_id" options={"unsigned"=true})
      */
     private $accountId;
 
     /**
-     * @Column(type="integer")
+     * @Column(type="integer" options={"unsigned"=true})
      */
     private $access;
 
@@ -35,7 +36,7 @@ class Role
     private $name;
 
     /**
-     * @Column(type="boolean")
+     * @Column(type="boolean" options={"default"=0})
      */
     private $default;
 

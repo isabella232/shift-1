@@ -1,12 +1,13 @@
-<?php
-
-namespace Tectonic\Shift\Modules\Accounts\Entities;
+<?php namespace Tectonic\Shift\Modules\Accounts\Entities;
 
 use Mitch\LaravelDoctrine\Traits\SoftDeletes;
 use Mitch\LaravelDoctrine\Traits\Timestamps;
 
 /**
+ * Account Class
+ *
  * @entity(repositoryClass="Tectonic\Shift\Modules\Accounts\Repositories\DoctrineAccountRepository")
+ * @table(name="accounts")
  */
 class Account
 {
@@ -20,7 +21,7 @@ class Account
     private $id;
 
     /**
-     * @Column(type="integer", name="user_id")
+     * @Column(type="integer", name="user_id"  options={"unsigned"=true})
      */
     private $userId;
 

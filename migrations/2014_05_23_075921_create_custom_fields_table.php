@@ -28,6 +28,7 @@ class CreateCustomFieldsTable extends Migration {
             $table->boolean('registration');
             $table->integer('order');
             $table->timestamps();
+            $table->softDeletes();
         });
 	}
 
