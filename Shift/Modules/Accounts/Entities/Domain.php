@@ -2,10 +2,13 @@
 
 namespace Tectonic\Shift\Modules\Accounts\Entities;
 
+use Mitch\LaravelDoctrine\Traits\Timestamps;
 use Tectonic\Shift\Modules\Accounts\ValueObjects\DomainName;
 
 class Domain
 {
+    use Timestamps;
+
     /**
      * @Id @Column(type="integer")
      * @GeneratedValue
