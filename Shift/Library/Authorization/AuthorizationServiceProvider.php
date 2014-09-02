@@ -35,7 +35,7 @@ class ShiftServiceProvider extends ServiceProvider
 	}
 
 	/**
-	 * Here we register our own custom view finder, which extends the one that Laravel uses.
+	 * Here we register our authenticated consumer
 	 */
 	public function registerAuthenticatedConsumer()
 	{
