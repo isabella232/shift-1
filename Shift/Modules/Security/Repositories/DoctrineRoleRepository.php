@@ -36,7 +36,7 @@ class DoctrineRoleRepository extends Repository implements RoleRepositoryInterfa
         if ($existingRole->getId() == $role->getId()) {
             return $existingRole;
         }
-        
+
         $existingRole->default = false;
         $role->default = true;
 
