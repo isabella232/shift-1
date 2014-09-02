@@ -2,8 +2,11 @@
 
 namespace Tectonic\Shift\Modules\Accounts\Services;
 
+use Event;
 use Tectonic\Shift\Library\Support\ManagementService;
+use Tectonic\Shift\Modules\Accounts\Entities\Account;
 use Tectonic\Shift\Modules\Accounts\Repositories\AccountRepositoryInterface;
+use Tectonic\Shift\Modules\Users\Entities\User;
 
 /**
  * Class AccountsService

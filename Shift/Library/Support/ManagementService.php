@@ -99,14 +99,20 @@ abstract class ManagementService
     public function delete($id)
     {
         $resource = $this->repository->requireById($id);
-
+        
         $this->repository->delete($resource);
 		$this->notify('deleted', $resource);
 
 	    return $resource;
     }
 
-	public function notify($event, $resource)
+    /**
+     * Fires an event for the resource based on the event and resource.
+     *
+     * @param $event
+     * @param $resource
+     */
+    public function notify($event, $resource)
 	{
 		Event::fire(class_basename($resource).': '.$event, [$resource]);
 	}
