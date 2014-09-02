@@ -17,7 +17,7 @@ interface RoleRepositoryInterface extends RepositoryInterface
     /**
      * Set the default role to the role provided.
      *
-     * @param Role $role
+     * @param $role
      */
-    public function setDefault(Role $role);
+    public function setDefault($role);
 }

@@ -67,7 +67,7 @@ abstract class Repository extends EntityRepository implements RepositoryInterfac
 
 	    $query->where($query->expr()->eq($this->field('id'), $id));
 
-        return $this->entityManager()->find($this->entity, $id);
+        return $query->getResult();
     }
 
 	/**
