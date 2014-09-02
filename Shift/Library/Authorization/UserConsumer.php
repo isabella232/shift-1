@@ -2,8 +2,6 @@
 
 namespace Tectonic\Shift\Library\Authorization;
 
-use Illuminate\Auth\UserInterface;
-
 /**
  * Class Consumer
  *
@@ -44,7 +42,7 @@ final class UserConsumer implements ConsumerInterface
      */
     public function getAccounts()
     {
-        return [];
+        return $this->user->getAccounts();
     }
 
     /**

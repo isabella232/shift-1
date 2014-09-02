@@ -2,10 +2,12 @@
 
 namespace Tests\Unit\Library\Authorization;
 
-use Tectonic\Shift\Modules\Users\Entities\User;
+use Mockery as m;
 use Tectonic\Shift\Library\Authorization\UserConsumer;
+use Tectonic\Shift\Library\Authorization\UserInterface;
+use Tests\TestCase;
 
-class UserConsumerTest extends \Tests\TestCase
+class UserConsumerTest extends TestCase
 {
     private $user;
 
@@ -13,13 +15,14 @@ class UserConsumerTest extends \Tests\TestCase
     {
         parent::setUp();
 
-        $this->user = new User;
-        $this->user->id = 1;
+        $this->user = m::mock(UserInterface::class);
     }
 
     public function testConsumerConstruction()
     {
         $consumer = new UserConsumer($this->user);
+
+        $this->user->shouldReceive('getId')->once()->andReturn(1);
 
         $this->assertEquals(1, $consumer->id());
     }

@@ -25,12 +25,12 @@ class Domain
     /**
      * Construct a new domain entity. Account id and the domain name are always required.
      *
-     * @param $accountId
+     * @param Account $account
      * @param DomainName $domain
      */
-    public function __construct($accountId, DomainName $domain)
+    public function __construct(Account $account, DomainName $domain)
     {
-        $this->accountId = $accountId;
+        $this->accountId = $account->getId();
         $this->domain = $domain;
     }
 
