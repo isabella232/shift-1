@@ -15,14 +15,17 @@ class AccountManagementServiceTest  extends TestCase
 	{
 		parent::setUp();
 
-		$this->mockRepository  = m::mock('Tectonic\Shift\Modules\Accounts\Repositories\AccountRepositoryInterface');
+		$this->mockRepository = m::mock('Tectonic\Shift\Modules\Accounts\Repositories\AccountRepositoryInterface');
 
-		$this->service  = new AccountManagementService($this->mockRepository);
+		$this->service = new AccountManagementService($this->mockRepository);
 	}
 
 	public function testRequestedDomain()
 	{
-		$this->mockRepository->shouldReceive('requireByDomain')->with('whatever')->andReturn('account');
+		$this->mockRepository
+            ->shouldReceive('requireByDomain')
+            ->with('whatever')->once()
+            ->andReturn('account');
 
 		$this->assertEquals('account', $this->service->getAccountForDomain('whatever'));
 	}

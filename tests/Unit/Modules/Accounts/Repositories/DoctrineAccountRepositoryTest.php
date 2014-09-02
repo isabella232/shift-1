@@ -26,7 +26,7 @@ class DoctrineAccountRepositoryTest extends TestCase
 
         $this->mockEntityManager
 	        ->shouldReceive('findOneByDomain')
-	        ->once()->with($domain)
+	        ->with($domain)->once()
 	        ->andReturn('account');
 
         $this->assertEquals('account', $this->repository->requireByDomain($domain));

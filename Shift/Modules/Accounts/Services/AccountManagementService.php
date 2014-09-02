@@ -35,6 +35,7 @@ class AccountManagementService extends ManagementService
 	 */
 	public function getAccountForDomain($domain)
 	{
+        // @TODO: Limit by valid domains
 		return $this->repository->requireByDomain($domain);
 	}
 }

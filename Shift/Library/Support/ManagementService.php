@@ -99,7 +99,7 @@ abstract class ManagementService
     public function delete($id)
     {
         $resource = $this->repository->requireById($id);
-        
+
         $this->repository->delete($resource);
 		$this->notify('deleted', $resource);
 

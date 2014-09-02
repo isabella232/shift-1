@@ -3,7 +3,6 @@
 namespace Tests;
 
 use DB;
-use Exception;
 use Illuminate;
 use Mockery as m;
 use Symfony;

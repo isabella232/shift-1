@@ -18,7 +18,12 @@ class ManagementServiceTest extends TestCase
         $this->mockCreateValidator = Mockery::mock('MockValidator');
         $this->mockUpdateValidator = Mockery::mock('MockValidator');
         $this->mockRepository = Mockery::mock('MockRepository');
-        $this->managementService = new ManagementServiceStub($this->mockRepository, $this->mockValidator);
+
+        $this->managementService = new ManagementServiceStub(
+            $this->mockRepository,
+            $this->mockCreateValidator,
+            $this->mockUpdateValidator
+        );
     }
 
     /**
@@ -29,13 +34,13 @@ class ManagementServiceTest extends TestCase
     {
         $data = [];
 
-        $this->mockValidator->shouldReceive('setInput')->with($data)->once()->andReturn($this->mockValidator);
-        $this->mockValidator->shouldReceive('validate')->once();
+        $this->mockCreateValidator->shouldReceive('setInput')->with($data)->once()->andReturn($this->mockCreateValidator);
+        $this->mockCreateValidator->shouldReceive('validate')->once();
 
-        $this->mockRepository->shouldReceive('getNew')->with($data)->andReturn('new resource');
-        $this->mockRepository->shouldReceive('save')->with('new resource')->andReturn('saved resource');
+        $this->mockRepository->shouldReceive('getNew')->with($data)->once()->andReturn('new resource');
+        $this->mockRepository->shouldReceive('save')->with('new resource')->once()->andReturn('saved resource');
 
-        $this->assertEquals($this->managementService->create($data), 'saved resource');
+        $this->assertEquals($this->managementService->create($data), 'new resource');
     }
 
     /**
@@ -61,13 +66,13 @@ class ManagementServiceTest extends TestCase
         $id = 1;
         $params = [];
 
-        $this->mockValidator->shouldReceive('setInput')->once()->andReturn($this->mockValidator);
-        $this->mockValidator->shouldReceive('validate')->once();
+        $this->mockUpdateValidator->shouldReceive('setInput')->once()->andReturn($this->mockUpdateValidator);
+        $this->mockUpdateValidator->shouldReceive('validate')->once();
 
         $this->mockRepository->shouldReceive('requireById')->with($id)->andReturn('found resource');
         $this->mockRepository->shouldReceive('update')->with('found resource', $params)->andReturn('updated resource');
 
-        $this->assertEquals($this->managementService->update($id, $params), 'updated resource');
+        $this->assertEquals($this->managementService->update($id, $params), 'found resource');
     }
 
     /**
@@ -77,9 +82,9 @@ class ManagementServiceTest extends TestCase
     public function testDelete()
     {
         $id = 1;
-        $this->mockRepository->shouldReceive('requireById')->with($id)->andReturn('found resource');
-        $this->mockRepository->shouldReceive('delete')->with('found resource')->andReturn('deleted resource');
+        $this->mockRepository->shouldReceive('requireById')->with($id)->once()->andReturn('found resource');
+        $this->mockRepository->shouldReceive('delete')->with('found resource')->once();
 
-        $this->assertEquals($this->managementService->delete($id), 'deleted resource');
+        $this->assertEquals($this->managementService->delete($id), 'found resource');
     }
 }
