@@ -21,6 +21,6 @@ class DoctrineAccountRepository extends Repository implements AccountRepositoryI
 	 */
 	public function requireByDomain($domain)
     {
-        $this->entityManager()->findOneByDomain($domain);
+        return $this->entityManager()->findOneByDomain($domain);
     }
 }
