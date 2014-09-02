@@ -16,4 +16,14 @@ class User extends Entity implements UserInterface
 	{
 		return 0;
 	}
+
+    /**
+     * Returns an array of accounts that the user is assigned to.
+     *
+     * @return array
+     */
+    public function getAccounts()
+    {
+        return [];
+    }
 }

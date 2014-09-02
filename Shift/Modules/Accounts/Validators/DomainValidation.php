@@ -24,8 +24,8 @@ class DomainValidation extends Validation
      */
     public function getRules()
     {
-        Validator::extend('domainFormat', function($domainName) {
-            return preg_match('([a-z0-9]+\.([a-z0-9]+)\.([a-z]{2,3)/i', $domainName);
+        Validator::extend('domainFormat', function($field, $value) {
+            return preg_match('/^([a-z0-9]+\.)?([a-z0-9\-]+)\.([a-z]{2,3})$/i', $value);
         });
 
         $rules = [

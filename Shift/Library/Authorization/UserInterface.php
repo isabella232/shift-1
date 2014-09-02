@@ -10,4 +10,11 @@ interface UserInterface
 	 * @return mixed
 	 */
 	public function getId();
+
+    /**
+     * Returns an array of accounts.
+     *
+     * @return array
+     */
+    public function getAccounts();
 }

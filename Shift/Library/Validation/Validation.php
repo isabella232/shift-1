@@ -71,6 +71,8 @@ abstract class Validation
 
             throw $exception;
         }
+
+        return true;
     }
 
     /**

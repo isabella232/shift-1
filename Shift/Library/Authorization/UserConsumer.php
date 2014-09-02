@@ -5,9 +5,9 @@ namespace Tectonic\Shift\Library\Authorization;
 /**
  * Class Consumer
  *
- * Simple value object for user with the AuthenticatedConsumer class. Must have an id
- * value.
+ * Simple value object for user with the AuthenticatedConsumer class.
  *
+ * @author Kirk Bushell
  * @package Tectonic\Shift\Library\Authorization
  */
 
