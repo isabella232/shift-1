@@ -6,8 +6,12 @@ use Mitch\LaravelDoctrine\Traits\SoftDeletes;
 use Mitch\LaravelDoctrine\Traits\Timestamps;
 
 /**
+ * Account
+ *
  * @entity(repositoryClass="Tectonic\Shift\Modules\Accounts\Repositories\DoctrineAccountRepository")
+ * @package Tectonic\Shift\Modules\Accounts\Entities
  */
+
 class Account
 {
 	use Timestamps;
@@ -53,6 +57,16 @@ class Account
      * @OneToMany(targetEntity="Tectonic\Shift\Modules\Accounts\Entities\Domain", mappedBy="accountId")
      */
     private $domains;
+
+    /**
+     * Required variables for account creation and hydration.
+     *
+     * @param $name
+     */
+    public function __construct($name)
+    {
+        $this->name = $name;
+    }
 
     /**
      * Returns an array of the domains that have been registered to this account.

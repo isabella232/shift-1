@@ -2,7 +2,7 @@
 
 use Tectonic\Shift\Library\Validation\Validator;
 
-class AccountValidator extends Validator
+class AccountValidation extends Validator
 {
     protected $rules = [
         'name' => ['required'],
