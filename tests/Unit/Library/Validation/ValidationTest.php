@@ -29,4 +29,16 @@ class ValidationTest extends TestCase
             $this->assertArrayHasKey('name', $errors);
         }
     }
+
+    public function testInputReturnValues()
+    {
+        $input = ['key' => 'value'];
+
+        $validator = new ValidationStub;
+        $validator->setInput($input);
+
+        $this->assertEquals($input, $validator->getInput());
+        $this->assertEquals('value', $validator->getInput('key'));
+        $this->assertNull($validator->getInput('does not exist'));
+    }
 }

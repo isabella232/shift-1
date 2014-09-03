@@ -29,13 +29,12 @@ class AccountManagementService extends ManagementService
 
 	/**
 	 * Find a domain that has been registered with the system.
-	 *
+	 * 
 	 * @param $domain
 	 * @return Account
 	 */
 	public function getAccountForDomain($domain)
 	{
-        // @TODO: Limit by valid domains
 		return $this->repository->requireByDomain($domain);
 	}
 }

@@ -31,8 +31,15 @@ class CurrentAccountService
         $this->account = $account;
     }
 
+    /**
+     * Determines the account that is being used for the current request.
+     *
+     * @return Account
+     */
     public function determineCurrentAccount()
     {
         $domain = Request::getHttpHost();
+
+        return $this->accountRepository->requireByDomain($domain);
     }
 } 

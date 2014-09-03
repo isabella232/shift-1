@@ -53,6 +53,23 @@ abstract class Validation
 	}
 
     /**
+     * @param null $field
+     * @return array
+     */
+    public function getInput($field = null)
+    {
+        if (!is_null($field)) {
+            if (isset($this->input[$field])) {
+                return $this->input[$field];
+            }
+
+            return;
+        }
+
+        return $this->input;
+    }
+
+    /**
      * Validates the rules provided either by a custom method or on the class against the user input provided.
      *
      * @throws ValidationConfigurationException
