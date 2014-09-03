@@ -2,7 +2,7 @@
 
 use Mockery as m;
 
-class EloquentRoleRepositoryTest extends \PHPUnit_Framework_TestCase
+class EloquentBaseRepositoryTest extends \PHPUnit_Framework_TestCase
 {
 	public function tearDown()
 	{
@@ -12,9 +12,8 @@ class EloquentRoleRepositoryTest extends \PHPUnit_Framework_TestCase
 	public function setUp()
 	{
 		$this->model = m::mock('Model');
-		$this->repository = m::mock('Tests\Stubs\SqlBaseRepositoryStub')->makePartial();
-
-		$this->repository->setModel($this->model);
+		$repository = new \Tests\Stubs\SqlBaseRepositoryStub($this->model);
+        $this->repository = m::mock($repository)->makePartial();
 	}
 
 	public function testGetByIdShouldReturnASpecificRecord()
