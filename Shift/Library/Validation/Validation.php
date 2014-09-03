@@ -59,14 +59,25 @@ abstract class Validation
     public function getInput($field = null)
     {
         if (!is_null($field)) {
-            if (isset($this->input[$field])) {
-                return $this->input[$field];
-            }
-
-            return;
+            return $this->getValue($field);
         }
 
         return $this->input;
+    }
+
+    /**
+     * Returns the value of a single field.
+     *
+     * @param $field
+     * @return mixed
+     */
+    public function getValue($field)
+    {
+        if (isset($this->input[$field])) {
+            return $this->input[$field];
+        }
+
+        return;
     }
 
     /**

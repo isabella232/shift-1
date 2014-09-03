@@ -38,7 +38,7 @@ class ValidationTest extends TestCase
         $validator->setInput($input);
 
         $this->assertEquals($input, $validator->getInput());
-        $this->assertEquals('value', $validator->getInput('key'));
-        $this->assertNull($validator->getInput('does not exist'));
+        $this->assertEquals('value', $validator->getValue('key'));
+        $this->assertNull($validator->getValue('does not exist'));
     }
 }
