@@ -3,6 +3,7 @@
 namespace Tectonic\Shift\Modules\Accounts\Repositories;
 
 use Tectonic\Shift\Modules\Accounts\Entities\Account;
+use Tectonic\Shift\Modules\Accounts\Entities\Domain;
 use Tectonic\Shift\Library\Support\Database\Doctrine\Repository;
 
 class DoctrineAccountRepository extends Repository implements AccountRepositoryInterface
@@ -18,9 +19,16 @@ class DoctrineAccountRepository extends Repository implements AccountRepositoryI
 	 * Require an account based on the domain that has been provided.
 	 *
 	 * @param $domain
+     * @return array
 	 */
 	public function requireByDomain($domain)
     {
-        return $this->entityManager()->findOneByDomain($domain);
+        $query = $this->entityManager()->createQuery()
+            ->select(Account::class.' accounts, '.Domain::class.' domains')
+            ->join('accounts.domains', 'domains')
+            ->where('domains.domain = :domain')
+            ->setParameter('domain', $domain);
+
+        return $query->getResult();
     }
 }

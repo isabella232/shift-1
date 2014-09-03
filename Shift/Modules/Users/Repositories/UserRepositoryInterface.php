@@ -1,6 +1,6 @@
 <?php
 
-namespace Tectonic\Shift\Modules\Accounts\Repositories;
+namespace Tectonic\Shift\Modules\Users\Repositories;
 
 use Tectonic\Shift\Library\Support\BaseRepositoryInterface;
 

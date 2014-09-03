@@ -4,6 +4,7 @@ namespace Tectonic\Shift\Modules\Accounts\Entities;
 
 use Mitch\LaravelDoctrine\Traits\SoftDeletes;
 use Mitch\LaravelDoctrine\Traits\Timestamps;
+use Tectonic\Shift\Modules\Users\Entities\User;
 
 /**
  * Account
@@ -29,9 +30,9 @@ class Account
     private $userId;
 
     /**
-     * @ManyToOne(targetEntity="Tectonic\Shift\Modules\Users\Entities\User")
+     * @ManyToOne(targetEntity="Tectonic\Shift\Modules\Users\Entities\User", mappedBy="userId")
      */
-    private $user;
+    private $owner;
 
     /**
      * @Column(type="string")
@@ -68,8 +69,28 @@ class Account
      *
      * @return User
      */
-    public function getUser()
+    public function getOwner()
     {
-        return $this->user;
+        return $this->owner;
+    }
+
+    /**
+     * Set the owner for the account.
+     *
+     * @param User $user
+     */
+    public function setOwner(User $user)
+    {
+        $this->owner = $user->getId();
+    }
+
+    /**
+     * Add a new domain to an account.
+     *
+     * @param Domain $domain
+     */
+    public function addDomain(Domain $domain)
+    {
+        $this->domains[] = $domain;
     }
 }
