@@ -39,21 +39,6 @@ class Account
     private $name;
 
     /**
-     * @Column(type="datetime", name="created_at")
-     */
-    private $createdAt;
-
-    /**
-     * @Column(type="datetime", name="updated_at")
-     */
-    private $updatedAt;
-
-    /**
-     * @Column(type="datetime", name="deleted_at")
-     */
-    private $deletedAt;
-
-    /**
      * @OneToMany(targetEntity="Tectonic\Shift\Modules\Accounts\Entities\Domain", mappedBy="accountId")
      */
     private $domains;
