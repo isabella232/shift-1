@@ -26,6 +26,11 @@ class Domain
     private $accountId;
 
     /**
+     * @ManyToOne(targetEntity="Tectonic\Shift\Modules\Accounts\Entities\Account", mappedBy="accountId")
+     */
+    private $account;
+
+    /**
      * Construct a new domain entity. Account id and the domain name are always required.
      *
      * @param Account $account
@@ -45,5 +50,15 @@ class Domain
     public function getDomain()
     {
         return $this->domain->getDomainName();
+    }
+
+    /**
+     * Returns the account associated with this domain.
+     *
+     * @return mixed
+     */
+    public function getAccount()
+    {
+        return $this->account;
     }
 }
