@@ -27,3 +27,7 @@ Not much has changed in respect to the lifecycle of an application:
 	1. User registers (data persisted to database)
 	2. Event is fired with a new UserHasRegistered event object
 	3. Listeners anywhere in the application (preferably ones in subdomains) listen to event and work with a specific event object.
+
+## Helpers
+
+1. To migrate workbench migrations (as we're using PSR-4) run: `php artisan migrate --path=workbench/tectonic/shift` from the laravel root. NOTE: `php artisan migrate --bench=tectonic/shift` will not work!

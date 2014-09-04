@@ -9,15 +9,24 @@ abstract class Entity
      *
      * @param $method
      * @param array $arguments
+     * @throws BadMethodCallException
      */
     public function __call($method, array $arguments = [])
     {
-        if (substr($method, 0, 3) == 'get') {
-            $property = substr($method, 2);
+        $methodPossibility = substr($method, 0, 3);
+        $property = substr($method, 2);
 
-            if (property_exists($this, $property)) {
-                return $this->$property;
+        if (property_exists($this, $property)) {
+            switch ($methodPossibility) {
+                case 'get':
+                    return $this->$property;
+                    break;
+                case 'set':
+                    $this->$property = array_pop($arguments);
+                    break;
             }
         }
+
+        throw new BadMethodCallException;
     }
 }

@@ -11,7 +11,7 @@ use Tectonic\Shift\Library\Support\Database\Doctrine\Entity;
  * @ORM\Entity
  * @ORM\Table(name="users")
  */
-class User extends Entity implements UserInterface
+class User extends Entity
 {
     use Authentication;
 
@@ -36,11 +36,6 @@ class User extends Entity implements UserInterface
      * @ORM\Column(type="string")
      */
     private $lastName;
-
-    /**
-     * @ORM\Column(type="string")
-     */
-    private $password;
 
     /**
      * @ManyToMany(targetEntity="Tectonic\Shift\Modules\Accounts\Entities\Account", inversedBy="users")

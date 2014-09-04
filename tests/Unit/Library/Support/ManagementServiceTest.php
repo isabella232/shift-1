@@ -33,6 +33,7 @@ class ManagementServiceTest extends TestCase
     public function testCreate()
     {
         $data = [];
+        $msg = 'new resource created';
 
         $this->mockCreateValidator->shouldReceive('setInput')->with($data)->once()->andReturn($this->mockCreateValidator);
         $this->mockCreateValidator->shouldReceive('validate')->once();
@@ -65,14 +66,15 @@ class ManagementServiceTest extends TestCase
     {
         $id = 1;
         $params = [];
+        $msg = 'found resource and updating';
 
         $this->mockUpdateValidator->shouldReceive('setInput')->once()->andReturn($this->mockUpdateValidator);
         $this->mockUpdateValidator->shouldReceive('validate')->once();
 
-        $this->mockRepository->shouldReceive('requireById')->with($id)->andReturn('found resource');
-        $this->mockRepository->shouldReceive('update')->with('found resource', $params)->andReturn('updated resource');
+        $this->mockRepository->shouldReceive('requireById')->with($id)->andReturn($msg);
+        $this->mockRepository->shouldReceive('update')->with($msg, $params)->andReturn($msg);
 
-        $this->assertEquals($this->managementService->update($id, $params), 'found resource');
+        $this->assertEquals($this->managementService->update($id, $params), 'found resource and updating');
     }
 
     /**
@@ -82,6 +84,7 @@ class ManagementServiceTest extends TestCase
     public function testDelete()
     {
         $id = 1;
+
         $this->mockRepository->shouldReceive('requireById')->with($id)->once()->andReturn('found resource');
         $this->mockRepository->shouldReceive('delete')->with('found resource')->once();
 

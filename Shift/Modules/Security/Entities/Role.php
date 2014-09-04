@@ -5,6 +5,7 @@ namespace Tectonic\Shift\Modules\Security\Entities;
 use Mitch\LaravelDoctrine\Traits\SoftDeletes;
 use Mitch\LaravelDoctrine\Traits\Timestamps;
 use Tectonic\Shift\Library\Support\Database\Doctrine\Entity;
+use Tectonic\Shift\Modules\Accounts\Entities\Accountable;
 
 /**
  * Class Role
@@ -15,10 +16,43 @@ use Tectonic\Shift\Library\Support\Database\Doctrine\Entity;
  * role permissions.
  *
  * @entity(repositoryClass="Tectonic\Shift\Modules\Security\Repositories\DoctrineRoleRepository")
- * @package Tectonic\Shift\Modules\Security\Entities
+ * @table(name="roles")
  */
-
 class Role extends Entity
 {
+    use Accountable;
+    use Timestamps;
+    use SoftDeletes;
 
+    /**
+     * @Id @Column(type="integer")
+     * @GeneratedValue
+     */
+    private $id;
+
+    /**
+     * @Column(type="integer" options={"unsigned"=true})
+     */
+    private $access;
+
+    /**
+     * @Column(type="string")
+     */
+    private $name;
+
+    /**
+     * @Column(type="boolean" options={"default"=0})
+     */
+    private $default;
+
+    /**
+     * @OneToMany(targetEntity="Tectonic\Shift\Modules\Security\Entities\Permission", mappedBy="roleId")
+     */
+    private $permissions;
+
+    /**
+     * @OneToMany(targetEntity="Tectonic\Shift\Modules\Users\Entities\Users", mappedBy="userId")
+     */
+    private $users;
 }
+

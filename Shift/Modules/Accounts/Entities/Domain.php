@@ -1,12 +1,17 @@
-<?php
-
-namespace Tectonic\Shift\Modules\Accounts\Entities;
+<?php namespace Tectonic\Shift\Modules\Accounts\Entities;
 
 use Mitch\LaravelDoctrine\Traits\Timestamps;
 use Tectonic\Shift\Modules\Accounts\ValueObjects\DomainName;
 
+/**
+ * Class Domain
+ *
+ * @entity(repositoryClass="Tectonic\Shift\Modules\Accounts\Repositories\DoctrineDomainRepository")
+ * @table(name="domains")
+ */
 class Domain
 {
+    use Accountable;
     use Timestamps;
 
     /**

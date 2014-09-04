@@ -1,19 +1,17 @@
-<?php
-
-namespace Tectonic\Shift\Modules\Accounts\Entities;
+<?php namespace Tectonic\Shift\Modules\Accounts\Entities;
 
 use Mitch\LaravelDoctrine\Traits\SoftDeletes;
 use Mitch\LaravelDoctrine\Traits\Timestamps;
+use Tectonic\Shift\Library\Support\Database\Doctrine\Entity;
 use Tectonic\Shift\Modules\Users\Entities\User;
 
 /**
  * Account
  *
  * @entity(repositoryClass="Tectonic\Shift\Modules\Accounts\Repositories\DoctrineAccountRepository")
- * @package Tectonic\Shift\Modules\Accounts\Entities
+ * @table(name="accounts")
  */
-
-class Account
+class Account extends Entity
 {
 	use Timestamps;
 	use SoftDeletes;
@@ -25,7 +23,7 @@ class Account
     private $id;
 
     /**
-     * @Column(type="integer", name="user_id")
+     * @Column(type="integer", name="user_id"  options={"unsigned"=true})
      */
     private $userId;
 

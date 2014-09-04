@@ -17,7 +17,7 @@ abstract class Repository extends EntityRepository implements RepositoryInterfac
 	/**
 	 * Stores the EntityManager class that is used for the queries.
 	 *
-	 * @var
+	 * @var EntityManager
 	 */
 	protected $entityManager;
 
@@ -33,6 +33,7 @@ abstract class Repository extends EntityRepository implements RepositoryInterfac
     /**
      * Some simple validation on the class implementation.
      *
+     * @param EntityManager $entityManager
      * @throws EntityIsNullException
      */
     public function __construct(EntityManager $entityManager)
@@ -205,7 +206,7 @@ abstract class Repository extends EntityRepository implements RepositoryInterfac
 	}
 
     /**
-     * Used to decorate a resoruce with the required data for persisting.
+     * Used to decorate a resource with the required data for persisting.
      *
      * @param $resource
      * @param $data
