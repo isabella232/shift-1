@@ -53,15 +53,12 @@ abstract class Validation
 	}
 
     /**
-     * @param null $field
+     * Returns the input array that was defined for validation.
+     *
      * @return array
      */
-    public function getInput($field = null)
+    public function getInput()
     {
-        if (!is_null($field)) {
-            return $this->getValue($field);
-        }
-
         return $this->input;
     }
 
@@ -90,7 +87,7 @@ abstract class Validation
     {
         $rules = $this->getRules();
 
-        $validator = Validator::make($this->input, $rules);
+        $validator = Validator::make($this->getInput(), $rules);
 
         if ($validator->fails()) {
             $exception = new ValidationException;

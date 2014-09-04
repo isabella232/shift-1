@@ -28,7 +28,7 @@ class DomainValidation extends Validation
             return preg_match('/^([a-z0-9]+\.)?([a-z0-9\-]+)\.([a-z]{2,3})$/i', $value);
         });
 
-        $id = $this->getInput('id');
+        $id = $this->getValue('id');
         $uniquenessValidator = 'unique:domains,domain'.($id ? ':'.$id : '');
 
         $rules = [

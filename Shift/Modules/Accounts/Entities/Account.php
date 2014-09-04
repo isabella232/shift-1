@@ -45,6 +45,12 @@ class Account
     private $domains;
 
     /**
+     * @ManyToMany(targetEntity="Tectonic\Shift\Modules\Accounts\Entities\Account", inversedBy="accounts")
+     * @JoinTable(name="account_user")
+     */
+    private $users;
+
+    /**
      * Required variables for account creation and hydration.
      *
      * @param $name
@@ -52,16 +58,6 @@ class Account
     public function __construct($name)
     {
         $this->name = $name;
-    }
-
-    /**
-     * Returns an array of the domains that have been registered to this account.
-     *
-     * @return array
-     */
-    public function getDomains()
-    {
-        return $this->domains;
     }
 
     /**
@@ -92,5 +88,35 @@ class Account
     public function addDomain(Domain $domain)
     {
         $this->domains[] = $domain;
+    }
+
+    /**
+     * Returns an array of all domains associated with this account.
+     *
+     * @return array Domain
+     */
+    public function getDomains()
+    {
+        return $this->domains;
+    }
+
+    /**
+     * Add a user as a qualified user of this account.
+     *
+     * @param User $user
+     */
+    public function addUser(User $user)
+    {
+        $this->users[] = $user;
+    }
+
+    /**
+     * Returns an array of all users that are registered with this account.
+     *
+     * @return array User
+     */
+    public function getUsers()
+    {
+        return $this->users;
     }
 }

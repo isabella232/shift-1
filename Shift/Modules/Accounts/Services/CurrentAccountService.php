@@ -21,11 +21,21 @@ class CurrentAccountService
         $this->accountRepository = $accountRepository;
     }
 
+    /**
+     * Returns the currently active account for this request.
+     *
+     * @return Account
+     */
     public function getCurrentAccount()
     {
         return $this->account;
     }
 
+    /**
+     * Set the account that is currently being used for this request.
+     *
+     * @param Account $account
+     */
     public function setCurrentAccount(Account $account)
     {
         $this->account = $account;

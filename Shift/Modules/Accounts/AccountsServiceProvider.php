@@ -21,6 +21,8 @@ class AccountsServiceProvider extends ServiceProvider
         $this->app->bindShared('Tectonic\Shift\Modules\Accounts\Repositories\AccountRepositoryInterface', function() {
             return App::make('Tectonic\Shift\Modules\Accounts\Repositories\DoctrineAccountRepository');
         });
+
+        $this->app->singleton('Tectonic\Shift\Modules\Accounts\Services\CurrentAccountService');
     }
 
     /**
