@@ -66,4 +66,14 @@ class User extends Entity
     {
         return [];
     }
+
+    /**
+     * Returns the name of the user concatenated together.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->firstName.' '.$this->lastName;
+    }
 }
