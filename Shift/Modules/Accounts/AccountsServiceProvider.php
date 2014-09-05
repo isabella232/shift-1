@@ -1,5 +1,6 @@
 <?php namespace Tectonic\Shift\Modules\Accounts;
 
+use App;
 use Illuminate\Support\ServiceProvider;
 
 class AccountsServiceProvider extends ServiceProvider
@@ -18,18 +19,44 @@ class AccountsServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bindShared('Tectonic\Shift\Modules\Accounts\Repositories\AccountRepositoryInterface', function() {
-            return App::make('Tectonic\Shift\Modules\Accounts\Repositories\DoctrineAccountRepository');
-        });
-
-        $this->app->singleton('Tectonic\Shift\Modules\Accounts\Services\CurrentAccountService');
+        $this->registerUserRepository();
+        $this->registerAccountRepository();
+        $this->registerCurrentAccountService();
     }
 
     /**
-     * Register the various classes required to Bootstrap Shift
+     * Register User repository bindings
+     *
+     * @return void
      */
-    public function boot()
+    protected function registerUserRepository()
     {
+        $this->app->bindShared('Tectonic\Shift\Modules\Accounts\Repositories\UserRepositoryInterface', function()
+        {
+            return App::make('Tectonic\Shift\Modules\Accounts\Repositories\SqlUserRepository');
+        });
+    }
 
+    /**
+     * Register Account repository bindings
+     *
+     * @return void
+     */
+    protected function registerAccountRepository()
+    {
+        $this->app->bindShared('Tectonic\Shift\Modules\Accounts\Repositories\AccountRepositoryInterface', function()
+        {
+            return App::make('Tectonic\Shift\Modules\Accounts\Repositories\DoctrineAccountRepository');
+        });
+    }
+
+    /**
+     * Register current account service
+     *
+     * @return void
+     */
+    protected function registerCurrentAccountService()
+    {
+        $this->app->singleton('Tectonic\Shift\Modules\Accounts\Services\CurrentAccountService');
     }
 }

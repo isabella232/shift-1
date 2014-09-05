@@ -8,7 +8,36 @@ use App;
 
 class ShiftServiceProvider extends ServiceProvider
 {
-	/**
+    /**
+     * A collection of Shift service providers to load/register.
+     *
+     * @var array
+     */
+    protected $serviceProviders = [
+        'Basset\BassetServiceProvider',
+        'Authority\AuthorityL4\AuthorityL4ServiceProvider',
+        'Mitch\LaravelDoctrine\LaravelDoctrineServiceProvider',
+        'Tectonic\Shift\Library\Authorization\AuthorizationServiceProvider',
+        'Tectonic\Shift\Modules\Users\UsersServiceProvider',
+        'Tectonic\Shift\Modules\Startup\StartupServiceProvider',
+        'Tectonic\Shift\Modules\Accounts\AccountsServiceProvider',
+        'Tectonic\Shift\Modules\Security\SecurityServiceProvider',
+        'Tectonic\Shift\Modules\CustomFields\CustomFieldsServiceProvider',
+        'Tectonic\Shift\Modules\Configuration\ConfigurationServiceProvider',
+    ];
+
+    /**
+     * A collection of custom aliases to register
+     *
+     * @var array
+     */
+    protected $aliases = [
+        'Basset'    => 'Basset\Facade',
+        'Authority' => 'Authority\AuthorityL4\Facades\Authority',
+        'Utility'   => 'Tectonic\Shift\Library\Facades\Utility'
+    ];
+
+    /**
 	 * Indicates if loading of the provider is deferred.
 	 *
 	 * @var bool
@@ -22,13 +51,9 @@ class ShiftServiceProvider extends ServiceProvider
 	 */
 	public function register()
 	{
-		$aliases = AliasLoader::getInstance();
+        $this->registerAliases();
 
         $this->bootFile('bindings');
-
-        $aliases->alias('Basset', 'Basset\Facade');
-        $aliases->alias('Authority', 'Authority\AuthorityL4\Facades\Authority');
-        $aliases->alias('Utility', 'Tectonic\Shift\Library\Facades\Utility');
 
         $this->registerViewFinder();
         $this->registerRouter();
@@ -106,14 +131,7 @@ class ShiftServiceProvider extends ServiceProvider
 	 */
 	public function provides()
 	{
-		return [
-			'Basset\BassetServiceProvider',
-			'Mitch\LaravelDoctrine\LaravelDoctrineServiceProvider',
-			'Authority\AuthorityL4\AuthorityL4ServiceProvider',
-			'Tectonic\Shift\Library\Authorization\AuthorizationServiceProvider',
-            'Tectonic\Shift\Modules\Accounts\AccountsServiceProvider',
-            'Tectonic\Shift\Modules\Users\UsersServiceProvider',
-		];
+		return $this->serviceProviders;
 	}
 
 	/**
@@ -127,4 +145,19 @@ class ShiftServiceProvider extends ServiceProvider
 	{
 		require __DIR__.'/../boot/'.$file.'.php';
 	}
+
+    /**
+     * Register aliases
+     *
+     * @returns void
+     */
+    protected function registerAliases()
+    {
+        $aliasLoader = AliasLoader::getInstance();
+
+        foreach($this->aliases as $key => $value)
+        {
+            $aliasLoader->alias($key, $value);
+        }
+    }
 }
