@@ -18,12 +18,12 @@ class Domain
      * @Id @Column(type="integer")
      * @GeneratedValue
      */
-    private $id;
+    protected $id;
 
     /**
      * @Column(type="string")
      */
-    private $domain;
+    protected $domain;
 
     /**
      * Construct a new domain entity. Account id and the domain name are always required.

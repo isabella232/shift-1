@@ -2,6 +2,8 @@
 
 namespace Tectonic\Shift\Library\Support\Database\Doctrine;
 
+use BadMethodCallException;
+
 abstract class Entity
 {
     /**
@@ -14,7 +16,7 @@ abstract class Entity
     public function __call($method, array $arguments = [])
     {
         $methodPossibility = substr($method, 0, 3);
-        $property = substr($method, 2);
+        $property = camel_case(substr($method, 3));
 
         if (property_exists($this, $property)) {
             switch ($methodPossibility) {
@@ -23,10 +25,11 @@ abstract class Entity
                     break;
                 case 'set':
                     $this->$property = array_pop($arguments);
+                    return;
                     break;
             }
         }
 
-        throw new BadMethodCallException;
+        throw new BadMethodCallException(static::class.'::'.$method.' does not exist.');
     }
 }

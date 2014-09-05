@@ -64,7 +64,7 @@ class User extends Entity
      */
     public function getAccounts()
     {
-        return [];
+        return $this->accounts;
     }
 
     /**

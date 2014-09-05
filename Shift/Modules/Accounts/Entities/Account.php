@@ -20,33 +20,33 @@ class Account extends Entity
      * @Id @Column(type="integer")
      * @GeneratedValue
      */
-    private $id;
+    protected $id;
 
     /**
      * @Column(type="integer", name="user_id"  options={"unsigned"=true})
      */
-    private $userId;
+    protected $userId;
 
     /**
      * @ManyToOne(targetEntity="Tectonic\Shift\Modules\Users\Entities\User", mappedBy="userId")
      */
-    private $owner;
+    protected $owner;
 
     /**
      * @Column(type="string")
      */
-    private $name;
+    protected $name;
 
     /**
      * @OneToMany(targetEntity="Tectonic\Shift\Modules\Accounts\Entities\Domain", mappedBy="accountId")
      */
-    private $domains;
+    protected $domains;
 
     /**
      * @ManyToMany(targetEntity="Tectonic\Shift\Modules\Accounts\Entities\Account", inversedBy="accounts")
      * @JoinTable(name="account_user")
      */
-    private $users;
+    protected $users;
 
     /**
      * Required variables for account creation and hydration.
