@@ -64,9 +64,11 @@ abstract class Repository extends EntityRepository implements RepositoryInterfac
      */
     public function getById($id)
     {
-	    $query = $this->createQuery();
+	    $queryBuilder = $this->createQuery();
+        $queryBuilder->where($this->field('id').' = :id');
+        $queryBuilder->setParameter('id', $id);
 
-	    $query->where($query->expr()->eq($this->field('id'), $id));
+        $query = $queryBuilder->getQuery();
 
         return $query->getResult();
     }
@@ -94,7 +96,7 @@ abstract class Repository extends EntityRepository implements RepositoryInterfac
     public function requireById($id)
     {
         $model = $this->getById($id);
-        
+
         if (!$model) {
             throw with(new RecordNotFoundException($this->entity, $id));
         }
@@ -179,19 +181,18 @@ abstract class Repository extends EntityRepository implements RepositoryInterfac
 	protected function createQuery()
 	{
 		$abbr = $this->entityAbbreviation();
-		$query = $this->entityManager()->createQueryBuilder();
+		$queryBuilder = $this->entityManager()->createQueryBuilder();
 
-		$query->select([$abbr]);
-		$query->from($this->entity, $abbr);
+		$queryBuilder->select([$abbr]);
+		$queryBuilder->from($this->entity, $abbr);
 
 		if ($this->restrictByAccount) {
 			/* @TODO: get the actual account id for the current request */
-			$expression = $query->expr()->eq($this->field('accountId'), 1);
-
-			$query->where($expression);
+			$queryBuilder->where($this->field('accountId').' = :accountId');
+            $queryBuilder->setParameter('accountId', 1);
 		}
 
-		return $query;
+		return $queryBuilder;
 	}
 
 	/**
