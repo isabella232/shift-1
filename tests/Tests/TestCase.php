@@ -26,7 +26,9 @@ class TestCase extends \Orchestra\Testbench\TestCase
 
 	protected function getPackageProviders()
 	{
-		return array('Tectonic\Shift\ShiftServiceProvider');
+		return [
+            'Tectonic\Shift\ShiftServiceProvider'
+        ];
 	}
 
 	/**

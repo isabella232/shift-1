@@ -13,4 +13,13 @@ interface UserRepositoryInterface extends BaseRepositoryInterface
      * @return mixed
      */
     public function getByEmail($email);
+
+    /**
+     * Find a user's record based on their email address, and an accountId.
+     *
+     * @param string $email
+     * @param integer $accountId
+     * @return object
+     */
+    public function getByEmailAndAccount($email, $accountId);
 }

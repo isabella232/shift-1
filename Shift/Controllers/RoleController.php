@@ -1,6 +1,6 @@
 <?php
 
-namespace Tectonic\Shift\Modules\Security\Controllers;
+namespace Tectonic\Shift\Controllers;
 
 use Tectonic\Shift\Library\Support\Controller;
 use Tectonic\Shift\Modules\Security\Services\RoleManagementService;

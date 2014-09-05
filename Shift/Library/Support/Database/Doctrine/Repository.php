@@ -2,6 +2,7 @@
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
+use Exception;
 use Tectonic\Shift\Library\Support\Database\RecordNotFoundException;
 use Tectonic\Shift\Library\Support\Database\RepositoryInterface;
 
@@ -170,6 +171,29 @@ abstract class Repository extends EntityRepository implements RepositoryInterfac
     public function save($resource)
     {
         $this->entityManager()->persist($resource);
+        $this->entityManager()->flush();
+
+        return $resource;
+    }
+
+    /**
+     * Save a number of resources at once. This is especially good with Doctrine as it allows
+     * us to send a batch save instead of persisting and flushing resources one-by-one.
+     *
+     * @TODO: Refactor for PHP 5.6 using variadic function arguments
+     */
+    public function saveAll()
+    {
+        $resources = func_get_args();
+
+        if (!$resources) {
+            throw new Exception('You must provide at least one $resource argument.');
+        }
+
+        foreach ($resources as $resource) {
+            $this->entityManager()->persist($resource);
+        }
+
         $this->entityManager()->flush();
     }
 

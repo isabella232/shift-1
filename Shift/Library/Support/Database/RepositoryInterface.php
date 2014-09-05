@@ -57,4 +57,12 @@ interface RepositoryInterface
 	 * @return mixed
 	 */
 	public function save($resource);
+
+    /**
+     * Save 1-n resources.
+     *
+     * @param ..$resources
+     * @return mixed
+     */
+    public function saveAll();
 }
