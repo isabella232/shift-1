@@ -3,6 +3,7 @@
 namespace Tectonic\Shift\Modules\Security\Repositories;
 
 use Tectonic\Shift\Library\Support\Database\Doctrine\Repository;
+use Tectonic\Shift\Modules\Security\Entities\Role;
 
 class DoctrineRoleRepository extends Repository implements RoleRepositoryInterface
 {
@@ -39,9 +40,8 @@ class DoctrineRoleRepository extends Repository implements RoleRepositoryInterfa
 
         $existingRole->default = false;
         $role->default = true;
-
-        $this->save($existingRole);
-        $this->save($role);
+        
+        $this->saveAll($existingRole, $role);
 
         return $role;
     }
