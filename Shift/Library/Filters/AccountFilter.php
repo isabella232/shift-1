@@ -2,7 +2,7 @@
 
 namespace Tectonic\Shift\Library\Filters;
 use Tectonic\Shift\Modules\Accounts\Services\AccountManagementService;
-use Tectonic\Shift\Modules\Accounts\Services\AccountsService;
+use Tectonic\Shift\Modules\Accounts\Services\CurrentAccountService;
 
 /**
  * Class AccountFilter
@@ -18,7 +18,7 @@ class AccountFilter
 	/**
 	 * @var \Tectonic\Shift\Modules\Accounts\Services\AccountsService
 	 */
-	private $accountsService;
+	private $currentAccountService;
 
 	/**
 	 * @var \Tectonic\Shift\Modules\Accounts\Services\AccountManagementService
@@ -26,23 +26,30 @@ class AccountFilter
 	private $accountManagementService;
 
 	/**
-	 * @param AccountsService $accountsService
+	 * @param CurrentAccountService $currentAccountService
 	 * @param AccountManagementService $accountManagementService
 	 */
-	public function __construct(AccountsService $accountsService, AccountManagementService $accountManagementService)
+	public function __construct(CurrentAccountService $currentAccountService, AccountManagementService $accountManagementService)
 	{
-		$this->accountsService = $accountsService;
+		$this->currentAccountService = $currentAccountService;
 		$this->accountManagementService = $accountManagementService;
 	}
 
 	/**
-	 * @param $route
-	 * @param $request
+	 * The following filter simply retrieves the current account based on the request information
+     * and then sets this value for future retrieval. If no account can be found for the request,
+     * then two things need to happen:
+     *
+     * 1. Check to see if ANY accounts have been configured if no accounts exist then
+     * 2. Ask the user if they'd like to setup the default (first) account. This is required
+     *    for new installations.
+     * 3. If an account does exist but does not match the domain, then we throw an account
+     *    not found exception and deal with that later.
 	 */
-	public function filter($route, $request)
+	public function filter()
 	{
-		$account = $this->accountManagementService->getRequestedDomain($request->server('SERVER_NAME'));
+		$account = $this->currentAccountService->determineCurrentAccount();
 
-		$this->accountsService->setCurrentAccount($account);
+		$this->currentAccountService->setCurrentAccount($account);
 	}
 }
