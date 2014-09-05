@@ -21,4 +21,11 @@ class RepositoryTest extends TestCase
     {
         $this->assertEquals('d.field', $this->repository->field('field'));
     }
+
+    public function testRetrievalById()
+    {
+        $this->mockEntityManager->shouldReceive->getResult()->andReturn('found record');
+
+        $this->assertEquals('found record', $this->repository->getById(1));
+    }
 } 
