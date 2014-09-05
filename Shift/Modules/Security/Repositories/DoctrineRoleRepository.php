@@ -40,7 +40,7 @@ class DoctrineRoleRepository extends Repository implements RoleRepositoryInterfa
 
         $existingRole->default = false;
         $role->default = true;
-        
+
         $this->saveAll($existingRole, $role);
 
         return $role;
