@@ -72,11 +72,8 @@ class ShiftServiceProvider extends ServiceProvider
 	public function register()
 	{
         $this->registerAliases();
-
         $this->registerRouter();
-
         $this->registerAuthorityConfiguration();
-
 		$this->requireFiles($this->filesToRegister);
     }
 
