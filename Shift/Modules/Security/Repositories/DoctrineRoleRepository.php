@@ -8,6 +8,13 @@ use Tectonic\Shift\Modules\Security\Entities\Role;
 class DoctrineRoleRepository extends Repository implements RoleRepositoryInterface
 {
     /**
+     * Required entity for the repository.
+     *
+     * @var string
+     */
+    protected $entity = Role::class;
+
+    /**
      * Returns the default role for an account.
      *
      * There is no way to do this without a set of account details.
