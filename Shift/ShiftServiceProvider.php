@@ -1,13 +1,43 @@
 <?php namespace Tectonic\Shift;
 
+use App;
+use Tectonic\Shift\Library\Router;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
-use Tectonic\Shift\Library\Router;
-use Tectonic\Shift\Library\Support\Asset;
-use App;
 
 class ShiftServiceProvider extends ServiceProvider
 {
+    /**
+     * A collection of custom aliases to register
+     *
+     * @var array
+     */
+    protected $aliases = [
+        'Basset'    => 'Basset\Facade',
+        'Authority' => 'Authority\AuthorityL4\Facades\Authority',
+        'Utility'   => 'Tectonic\Shift\Library\Facades\Utility'
+    ];
+
+    /**
+     * Files that require loading to bootstrap shift
+     *
+     * @var array
+     */
+    protected $filesToBoot = [
+        'macros',
+        'composers',
+    ];
+
+    /**
+     * Files we need to register (include)
+     *
+     * @var array
+     */
+    protected $filesToRegister = [
+        'routes',
+        'commands'
+    ];
+
     /**
      * A collection of Shift service providers to load/register.
      *
@@ -18,23 +48,13 @@ class ShiftServiceProvider extends ServiceProvider
         'Authority\AuthorityL4\AuthorityL4ServiceProvider',
         'Mitch\LaravelDoctrine\LaravelDoctrineServiceProvider',
         'Tectonic\Shift\Library\Authorization\AuthorizationServiceProvider',
+        'Tectonic\Shift\Library\LibraryServiceProvider',
         'Tectonic\Shift\Modules\Users\UsersServiceProvider',
         'Tectonic\Shift\Modules\Startup\StartupServiceProvider',
         'Tectonic\Shift\Modules\Accounts\AccountsServiceProvider',
         'Tectonic\Shift\Modules\Security\SecurityServiceProvider',
         'Tectonic\Shift\Modules\CustomFields\CustomFieldsServiceProvider',
         'Tectonic\Shift\Modules\Configuration\ConfigurationServiceProvider',
-    ];
-
-    /**
-     * A collection of custom aliases to register
-     *
-     * @var array
-     */
-    protected $aliases = [
-        'Basset'    => 'Basset\Facade',
-        'Authority' => 'Authority\AuthorityL4\Facades\Authority',
-        'Utility'   => 'Tectonic\Shift\Library\Facades\Utility'
     ];
 
     /**
@@ -53,45 +73,29 @@ class ShiftServiceProvider extends ServiceProvider
 	{
         $this->registerAliases();
 
-        $this->bootFile('bindings');
-
-        $this->registerViewFinder();
         $this->registerRouter();
+
         $this->registerAuthorityConfiguration();
-        $this->registerAssetContainer();
 
-		$this->bootFile('routes');
-		$this->bootFile('commands');
-
-
+		$this->requireFiles($this->filesToRegister);
     }
 
 	/**
 	 * Register the various classes required to Bootstrap Shift
+     *
+     * @returns void
 	 */
 	public function boot()
 	{
-		$this->bootFile('composers');
-		$this->bootFile('macros');
+		$this->requireFiles($this->filesToBoot);
 
 		$this->package('tectonic/shift');
 	}
 
 	/**
-	 * Register the router instance. This completely overwrites the one registered by Laravel.
-	 *
-	 * @return void
-	 */
-	protected function registerRouter()
-	{
-		$this->app['router'] = $this->app->share(function($app)
-		{
-			return new Router($app['events'], $app);
-		});
-	}
-
-	/**
 	 * Sets up the configuration required by Authority when it gets loaded.
+     *
+     * @returns void
 	 */
 	public function registerAuthorityConfiguration()
 	{
@@ -99,30 +103,6 @@ class ShiftServiceProvider extends ServiceProvider
 			$user = $authority->getCurrentUser();
 		});
 	}
-
-	/**
-	 * Here we register our own custom view finder, which extends the one that Laravel uses.
-	 */
-	public function registerViewFinder()
-	{
-		// $this->app->bindShared('view.finder', function($app)
-		// {
-		// 	$paths = $app['config']['view.paths'];
-
-		// 	return new FileViewFinder($app['files'], $paths);
-		// });
-	}
-
-    /**
-     * Register the Asset container. This is an extended version of
-     * Orchetra\Asset\Factory
-     */
-    public function registerAssetContainer()
-    {
-        $this->app->bindShared('shift.asset', function($app) {
-            return new Asset($app['orchestra.asset.dispatcher']);
-        });
-    }
 
 	/**
 	 * Get the services provided by the provider.
@@ -138,12 +118,15 @@ class ShiftServiceProvider extends ServiceProvider
 	 * Helper method for requiring boot files. These are files that generally have some basic configuration,
 	 * routes, global macros, or Laravel 4 commands that need to be registered.etc.
 	 *
-	 * @param string $file
-	 * @requires $file
+	 * @param array $files
+     * @returns void
 	 */
-	public function bootFile($file)
+	public function requireFiles(array $files)
 	{
-		require __DIR__.'/../boot/'.$file.'.php';
+        foreach($files as $file)
+        {
+            require __DIR__.'/../boot/'.$file.'.php';
+        }
 	}
 
     /**
@@ -159,5 +142,18 @@ class ShiftServiceProvider extends ServiceProvider
         {
             $aliasLoader->alias($key, $value);
         }
+    }
+
+    /**
+     * Register the router instance. This completely overwrites the one registered by Laravel.
+     *
+     * @return void
+     */
+    protected function registerRouter()
+    {
+        $this->app['router'] = $this->app->share(function($app)
+        {
+            return new Router($app['events'], $app);
+        });
     }
 }
