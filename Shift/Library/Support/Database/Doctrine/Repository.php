@@ -3,6 +3,7 @@
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Tectonic\Shift\Library\Support\Database\RecordNotFoundException;
 use Tectonic\Shift\Library\Support\Database\RepositoryInterface;
 
@@ -65,9 +66,32 @@ abstract class Repository extends EntityRepository implements RepositoryInterfac
      */
     public function getById($id)
     {
-	    $queryBuilder = $this->createQuery();
-        $queryBuilder->where($this->field('id').' = :id');
-        $queryBuilder->setParameter('id', $id);
+	    return $this->getBy('id', $id);
+    }
+
+    /**
+     * Get a specific resource identified by slug.
+     *
+     * @param string $slug
+     * @return Resource
+     */
+    public function getBySlug($slug)
+    {
+        return $this->getBy('slug', $slug);
+    }
+
+    /**
+     * Get a resource.
+     *
+     * @param $fieldName
+     * @param $parameter
+     * @return Resource
+     */
+    public function getBy($fieldName, $parameter)
+    {
+        $queryBuilder = $this->createQuery();
+        $queryBuilder->where($this->field($fieldName) . " = :{$fieldName}");
+        $queryBuilder->setParameter($fieldName, $parameter);
 
         $query = $queryBuilder->getQuery();
 
@@ -87,12 +111,12 @@ abstract class Repository extends EntityRepository implements RepositoryInterfac
 
     /**
      * Searches for a resource with the id provided. If no resource is found that matches
-     * the $id value, then it will throw a ModelNotFoundException.
+     * the $id value, then it will throw a RecordNotFoundException.
      *
      * @param $id
      *
      * @return Resource
-     * @throws ModelNotFoundException
+     * @throws RecordNotFoundException
      */
     public function requireById($id)
     {
@@ -100,6 +124,26 @@ abstract class Repository extends EntityRepository implements RepositoryInterfac
 
         if (!$model) {
             throw with(new RecordNotFoundException($this->entity, $id));
+        }
+
+        return $model;
+    }
+
+    /**
+     * Searches for a resource with the slug provided. If no resource is found matching
+     * the $slug provided, then it will throw a RecordNotFoundException.
+     *
+     * @param $slug
+     *
+     * @return Resource
+     * @throws mixed
+     */
+    public function requireBySlug($slug)
+    {
+        $model = $this->getBySlug($slug);
+
+        if(!$model) {
+            throw with(new RecordNotFoundException($this->entity, $slug));
         }
 
         return $model;

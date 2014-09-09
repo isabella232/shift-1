@@ -12,8 +12,8 @@ namespace Tectonic\Shift\Library\Support\Database;
 class RecordNotFoundException extends \Exception
 {
     /**
-     * @param string $resource String representation of the resouce, such as a model or entity name
-     * @param int $value The value used for the search
+     * @param string $resource String representation of the resource, such as a model or entity name
+     * @param int|string $value The value used for the search
      */
     public function __construct($resource, $value)
     {
