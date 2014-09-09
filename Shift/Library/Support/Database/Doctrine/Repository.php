@@ -1,5 +1,6 @@
 <?php namespace Tectonic\Shift\Library\Support\Database\Doctrine;
 
+use DateTime;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Exception;
@@ -180,8 +181,12 @@ abstract class Repository extends EntityRepository implements RepositoryInterfac
             $this->entityManager()->remove($resource);
         }
         else {
-            // @TODO: Remove entity via soft-delete
+            $this->decorate($resource, ['deletedAt' => new DateTime()]);
+            $this->entityManager()->persist($resource);
         }
+
+        // In order to hard-delete or soft-delete we need to invoke flush.
+        $this->entityManager()->flush();
 
         return $resource;
     }
