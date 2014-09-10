@@ -1,60 +1,77 @@
 <?php namespace Tectonic\Shift\Modules\CustomFields\Entities;
 
-use Mitch\LaravelDoctrine\Traits\SoftDeletes;
+use Doctrine\ORM\Mapping AS ORM;
 use Mitch\LaravelDoctrine\Traits\Timestamps;
 
 /**
  * Class CustomField
  *
- * @entity(repositoryClass="Tectonic\Shift\Modules\CustomFields\Repositories\DoctrineCustomFieldRepository")
- * @table(name="custom_fields")
+ * @ORM\Entity
+ * @ORM\Table(name="custom_fields")
+ * @ORM\HasLifecycleCallbacks()
  */
 class CustomField
 {
     use Timestamps;
-    use SoftDeletes;
 
     /**
-     * @Id @Column(type="integer")
-     * @GeneratedValue
+     * @ORM\Id @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
      */
-    private $id;
+    protected $id;
 
-    /** @Column(type="string" options={"default":"custom"}) **/
-    private $group;
+    /** @ORM\Column(type="string", options={"default": "custom"}) **/
+    protected $group;
 
-    /** @Column(type="string") **/
-    private $resource;
+    /** @ORM\Column(type="string") **/
+    protected $resource;
 
-    /** @Column(type="string") **/
-    private $type;
+    /** @ORM\Column(type="string") **/
+    protected $type;
 
-    /** @Column(type="string" name="field_title") **/
-    private $fieldTitle;
+    /** @ORM\Column(type="string", name="field_title") **/
+    protected $fieldTitle;
 
-    /** @Column(type="string" name="field_code") **/
-    private $fieldCode;
+    /** @ORM\Column(type="string", name="field_code") **/
+    protected $fieldCode;
 
-    /** @Column(type="string") **/
-    private $label;
+    /** @ORM\Column(type="string") **/
+    protected $label;
 
-    /** @Column(type="text") **/
-    private $options;
+    /** @ORM\Column(type="text") **/
+    protected $options;
 
-    /** @Column(type="text") **/
-    private $validation;
+    /** @ORM\Column(type="text") **/
+    protected $validation;
 
-    /** @Column(type="text") **/
-    private $settings;
+    /** @ORM\Column(type="text") **/
+    protected $settings;
 
-    /** @Column(type="boolean" options={"default":0}) **/
-    private $required;
+    /** @ORM\Column(type="boolean", options={"default":0}) **/
+    protected $required;
 
-    /** @Column(type="boolean") **/
-    private $registration;
+    /** @ORM\Column(type="boolean") **/
+    protected $registration;
 
-    /** @Column(type="integer") **/
-    private $order;
+    /** @ORM\Column(type="integer") **/
+    protected $order;
 
+    public function __call($method, array $arguments = [])
+    {
+        $methodPossibility = substr($method, 0, 3);
+        $property = camel_case(substr($method, 3));
+
+        if (property_exists($this, $property)) {
+            switch ($methodPossibility) {
+                case 'get':
+                    return $this->$property;
+                    break;
+                case 'set':
+                    $this->$property = array_pop($arguments);
+                    return;
+                    break;
+            }
+        }
+    }
 
 }

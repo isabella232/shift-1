@@ -20,3 +20,24 @@ Route::get('/', function()
 {
     return View::make('shift::home.index');
 });
+
+Route::get('test', function()
+{
+    $cf = new Tectonic\Shift\Modules\CustomFields\Entities\CustomField();
+    $cf->setGroup('Group');
+    $cf->setResource('Resource');
+    $cf->setType('Type');
+    $cf->setFieldTitle('FieldTitle');
+    $cf->setFieldCode('FieldCode');
+    $cf->setLabel('Label');
+    $cf->setOptions('Options');
+    $cf->setValidation('Validation');
+    $cf->setSettings('Settings');
+    $cf->setRequired(true);
+    $cf->setRegistration(true);
+    $cf->setOrder(1);
+
+    $em = App::make('Doctrine\ORM\EntityManagerInterface');
+    $em->persist($cf);
+    $em->flush();
+});

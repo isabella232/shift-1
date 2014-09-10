@@ -4,7 +4,11 @@ namespace Tectonic\Shift\Library\Support\Database\Doctrine;
 
 use BadMethodCallException;
 
-abstract class Entity
+/**
+ * Class Entity
+ * @package Tectonic\Shift\Library\Support\Database\Doctrine
+ */
+abstract class  Entity
 {
     /**
      * If a given property exists, then let's support a getter for that property.
