@@ -3,6 +3,7 @@
 use Doctrine\ORM\Mapping AS ORM;
 use Mitch\LaravelDoctrine\Traits\Timestamps;
 use Tectonic\Shift\Library\Support\Database\Doctrine\Entity;
+use Tectonic\Shift\Library\Traits\Slugs;
 
 /**
  * Class CustomField
@@ -14,6 +15,7 @@ use Tectonic\Shift\Library\Support\Database\Doctrine\Entity;
 class CustomField extends Entity
 {
     use Timestamps;
+    use Slugs;
 
     /**
      * @ORM\Id
