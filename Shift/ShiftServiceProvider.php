@@ -13,9 +13,10 @@ class ShiftServiceProvider extends ServiceProvider
      * @var array
      */
     protected $aliases = [
-        'Basset'    => 'Basset\Facade',
-        'Authority' => 'Authority\AuthorityL4\Facades\Authority',
-        'Utility'   => 'Tectonic\Shift\Library\Facades\Utility'
+        'Basset'        => 'Basset\Facade',
+        'Authority'     => 'Authority\AuthorityL4\Facades\Authority',
+        'Utility'       => 'Tectonic\Shift\Library\Facades\Utility',
+	    'EntityManager' => 'Mitch\LaravelDoctrine\EntityManagerFacade',
     ];
 
     /**

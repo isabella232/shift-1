@@ -1,7 +1,7 @@
 <?php namespace Tectonic\Shift\Library\Support\Database\Doctrine;
 
 use DateTime;
-use Doctrine\ORM\EntityManager;
+use EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;

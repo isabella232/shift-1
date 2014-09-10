@@ -27,7 +27,6 @@ class TestCase extends \Orchestra\Testbench\TestCase
 	protected function getPackageProviders()
 	{
 		return [
-            'Mitch\LaravelDoctrine\LaravelDoctrineServiceProvider',
             'Tectonic\Shift\ShiftServiceProvider'
         ];
 	}
