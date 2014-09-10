@@ -6,9 +6,9 @@ use Tectonic\Shift\Library\Support\Slug;
 trait Slugs
 {
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", name="`slug`")
      */
-    private $slug;
+    protected $slug;
 
     /**
      * @ORM\PostPersist
