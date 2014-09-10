@@ -6,8 +6,8 @@
 // Register all /api/ routes. All application requests for data basically
 // go via the API route group collection.
 Route::group(['prefix' => Config::get('shift.api.url'), 'before' => 'shift.account|shift.view'], function() {
-	Route::collection('roles', 'Tectonic\Shift\Modules\Security\Controllers\RoleController');
-	Route::collection('users', 'Tectonic\Shift\Modules\Accounts\Controllers\UserController');
+	Route::collection('roles', 'Tectonic\Shift\Controllers\RoleController');
+	Route::collection('users', 'Tectonic\Shift\Controllers\UserController');
     Route::collection('customfields', 'Tectonic\Shift\Modules\CustomFields\Controllers\CustomFieldController');
 });
 

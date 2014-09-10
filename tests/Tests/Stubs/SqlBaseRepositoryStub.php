@@ -13,4 +13,9 @@ class SqlBaseRepositoryStub extends Repository
     {
         $this->model = $model;
     }
+
+	public function saveAll()
+	{
+
+	}
 }

@@ -2,10 +2,10 @@
 
 namespace Tests\Unit\Modules\Accounts\Repositories;
 
+use EntityManager;
 use Mockery as m;
 use Tests\TestCase;
 use Tectonic\Shift\Modules\Accounts\Repositories\DoctrineAccountRepository;
-use Doctrine\ORM\EntityManager;
 
 class DoctrineAccountRepositoryTest extends TestCase
 {
@@ -16,7 +16,7 @@ class DoctrineAccountRepositoryTest extends TestCase
 	{
 		parent::setUp();
 
-		$this->mockEntityManager = m::mock(EntityManager::class);
+		$this->mockEntityManager = new EntityManager;
 		$this->repository = new DoctrineAccountRepository($this->mockEntityManager);
 	}
 
@@ -24,8 +24,7 @@ class DoctrineAccountRepositoryTest extends TestCase
     {
 	    $domain = 'www.somedomain.com';
 
-        $this->mockEntityManager
-	        ->shouldReceive('findOneByDomain')
+        EntityManager::shouldReceive('findOneByDomain')
 	        ->with($domain)->once()
 	        ->andReturn('account');
 
