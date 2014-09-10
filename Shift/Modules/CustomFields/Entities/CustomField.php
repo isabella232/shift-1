@@ -8,7 +8,7 @@ use Tectonic\Shift\Library\Support\Database\Doctrine\Entity;
  * Class CustomField
  *
  * @ORM\Entity
- * @ORM\Table(name="custom_fields")
+ * @ORM\Table(name="`custom_fields")
  * @ORM\HasLifecycleCallbacks()
  */
 class CustomField extends Entity
@@ -17,45 +17,45 @@ class CustomField extends Entity
 
     /**
      * @ORM\Id
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", name="`id`")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
-    /** @ORM\Column(type="string", options={"default": "custom"}) **/
+    /** @ORM\Column(type="string", options={"default": "custom"}, name="`group`") **/
     protected $group;
 
-    /** @ORM\Column(type="string") **/
+    /** @ORM\Column(type="string", name="`resource`") **/
     protected $resource;
 
-    /** @ORM\Column(type="string") **/
+    /** @ORM\Column(type="string", name="`type`") **/
     protected $type;
 
-    /** @ORM\Column(type="string", name="field_title") **/
+    /** @ORM\Column(type="string", name="`field_title`") **/
     protected $fieldTitle;
 
-    /** @ORM\Column(type="string", name="field_code") **/
+    /** @ORM\Column(type="string", name="`field_code") **/
     protected $fieldCode;
 
-    /** @ORM\Column(type="string") **/
+    /** @ORM\Column(type="string", name="`label`") **/
     protected $label;
 
-    /** @ORM\Column(type="text") **/
+    /** @ORM\Column(type="text", name="`options`") **/
     protected $options;
 
-    /** @ORM\Column(type="text") **/
+    /** @ORM\Column(type="text", name="`validation`") **/
     protected $validation;
 
-    /** @ORM\Column(type="text") **/
+    /** @ORM\Column(type="text", name="`settings`") **/
     protected $settings;
 
-    /** @ORM\Column(type="boolean", options={"default":0}) **/
+    /** @ORM\Column(type="boolean", options={"default": "0"}, name="`required`") **/
     protected $required;
 
-    /** @ORM\Column(type="boolean") **/
+    /** @ORM\Column(type="boolean", options={"default": "0"}, name="`registration`") **/
     protected $registration;
 
-    /** @ORM\Column(type="integer") **/
+    /** @ORM\Column(type="integer", name="`order`") **/
     protected $order;
 
 }
