@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Library\Support\Database\Doctrine;
 
-use EntityManager;
+use Doctrine\ORM\EntityManager;
 use Mockery as m;
 use Tests\Stubs\DoctrineRepositoryStub;
 use Tests\TestCase;
@@ -13,7 +13,7 @@ class RepositoryTest extends TestCase
 
     public function setUp()
     {
-        $this->mockEntityManager = new EntityManager;
+        $this->mockEntityManager = m::mock(EntityManager::class);
         $this->repository = new DoctrineRepositoryStub($this->mockEntityManager);
     }
 
@@ -24,7 +24,7 @@ class RepositoryTest extends TestCase
 
     public function testRetrievalById()
     {
-	    EntityManager::shouldReceive('getResult')->andReturn('found record');
+	    $this->mockEntityManager->shouldReceive('getResult')->andReturn('found record');
 
         $this->assertEquals('found record', $this->repository->getById(1));
     }
