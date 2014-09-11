@@ -26,7 +26,7 @@ class DoctrineAccountRepository extends Repository implements AccountRepositoryI
         $query = $this->entityManager()->createQuery()
             ->select(Account::class.' accounts')
             ->join('accounts.domains', Domain::class)
-            ->where('domains.domain = :domain')
+            ->where('domains.domain = \':domain\'')
             ->setParameter('domain', $domain);
 
         return $query->getSingleResult();

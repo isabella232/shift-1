@@ -1,7 +1,7 @@
 <?php namespace Tectonic\Shift\Library\Support\Database\Doctrine;
 
 use DateTime;
-use EntityManager;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -36,7 +36,6 @@ abstract class Repository extends EntityRepository implements RepositoryInterfac
     /**
      * Some simple validation on the class implementation.
      *
-     * @param EntityManager $entityManager
      * @throws EntityIsNullException
      */
     public function __construct(EntityManager $entityManager)
