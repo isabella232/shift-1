@@ -34,7 +34,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
 	/**
 	 * Define environment setup.
 	 *
-	 * @param  Illuminate\Foundation\Application    $app
+	 * @param  Illuminate\Foundation\Application $app
 	 * @return void
 	 */
 	protected function getEnvironmentSetUp($app)
@@ -67,11 +67,11 @@ class TestCase extends \Orchestra\Testbench\TestCase
 
 		$artisan->call('migrate', [
             '--database' => 'test',
-			'--path' => 'src/migrations'
+			'--path' => 'migrations'
 		]);
 
         // Sanity check. This will fail if migrations failed for whatever reason
-        //@TODO: bring back DB::table('roles')->get();
+        DB::table('roles')->get();
 	}
 
     /**
