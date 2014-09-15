@@ -48,11 +48,11 @@ class LocalisationServiceProvider extends ServiceProvider
         $this->app->bindShared('shift.translator', function($app)
         {
             return new \Tectonic\Shift\Library\Translation\Translator(
-                $this->app['translation.loader'],
-                $this->app['Tectonic\Shift\Modules\Localisation\Repositories\LocalisationRepositoryInterface'],
-                $this->app['config']['app.locale'],
-                $this->app['config']['shift::language.autoloads'],
-                $this->app['config']['shift::language.locales']
+                $app['translation.loader'],
+                $app['Tectonic\Shift\Modules\Localisation\Repositories\LocalisationRepositoryInterface'],
+                $app['config']['app.locale'],
+                $app['config']['shift::language.autoloads'],
+                $app['config']['shift::language.locales']
             );
         });
 
@@ -80,9 +80,9 @@ class LocalisationServiceProvider extends ServiceProvider
      */
     protected function registerLocaleRepository()
     {
-        $this->app->bindShared('Tectonic\Shift\Modules\Localisation\Repositories\LocaleRepositoryInterface', function()
+        $this->app->bindShared('Tectonic\Shift\Modules\Localisation\Contracts\LocaleRepositoryInterface', function()
         {
-            return App::make('Tectonic\Shift\Modules\Localisation\Repositories\LocaleRepository');
+            return $this->app->make('Tectonic\Shift\Modules\Localisation\Repositories\LocaleDoctrineRepository');
         });
     }
 
@@ -93,9 +93,9 @@ class LocalisationServiceProvider extends ServiceProvider
      */
     protected function registerLocalisationRepository()
     {
-        $this->app->bindShared('Tectonic\Shift\Modules\Localisation\Repositories\LocalisationRepositoryInterface', function()
+        $this->app->bindShared('Tectonic\Shift\Modules\Localisation\Contracts\LocalisationRepositoryInterface', function()
         {
-            return App::make('Tectonic\Shift\Modules\Localisation\Repositories\LocalisationRepository');
+            return $this->app->make('Tectonic\Shift\Modules\Localisation\Repositories\LocalisationDoctrineRepository');
         });
     }
 

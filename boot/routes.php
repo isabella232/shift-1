@@ -29,3 +29,10 @@ Route::get('/', function()
 {
     return View::make('shift::home.index');
 });
+
+Route::get('test', function()
+{
+    $repo = new \Tectonic\Shift\Modules\Localisation\Repositories\LocaleDoctrineRepository(App::make('Doctrine\ORM\EntityManager'));
+
+    return $repo;
+});
