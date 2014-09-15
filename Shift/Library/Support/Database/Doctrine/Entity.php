@@ -3,12 +3,16 @@
 namespace Tectonic\Shift\Library\Support\Database\Doctrine;
 
 use BadMethodCallException;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class Entity
+ *
+ * @Annotation
+ * @ORM\MappedSuperclass
  * @package Tectonic\Shift\Library\Support\Database\Doctrine
  */
-abstract class  Entity
+class Entity
 {
     /**
      * If a given property exists, then let's support a getter for that property.

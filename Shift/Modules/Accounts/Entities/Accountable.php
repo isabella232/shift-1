@@ -1,7 +1,8 @@
 <?php
 
-
 namespace Tectonic\Shift\Modules\Accounts\Entities;
+
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class Accountable
@@ -13,12 +14,12 @@ namespace Tectonic\Shift\Modules\Accounts\Entities;
 trait Accountable
 {
     /**
-     * @Column(type="integer")
+     * @ORM\Column(type="integer")
      */
     private $accountId;
 
     /**
-     * @ManyToOne(targetEntity="Tectonic\Shift\Modules\Accounts\Entities\Account", mappedBy="accountId")
+     * @ORM\ManyToOne(targetEntity="Tectonic\Shift\Modules\Accounts\Entities\Account")
      */
     private $account;
 

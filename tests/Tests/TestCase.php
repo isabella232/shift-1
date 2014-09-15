@@ -72,7 +72,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
 		]);
 
         // Sanity check. This will fail if migrations failed for whatever reason
-        DB::table('roles')->get();
+        //DB::table('roles')->get();
 	}
 
     /**

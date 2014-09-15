@@ -1,5 +1,6 @@
 <?php namespace Tectonic\Shift\Modules\Accounts\Entities;
 
+use Doctrine\ORM\Mapping as ORM;
 use Mitch\LaravelDoctrine\Traits\SoftDeletes;
 use Mitch\LaravelDoctrine\Traits\Timestamps;
 use Tectonic\Shift\Library\Support\Database\Doctrine\Entity;
@@ -8,8 +9,8 @@ use Tectonic\Shift\Modules\Users\Entities\User;
 /**
  * Account
  *
- * @entity(repositoryClass="Tectonic\Shift\Modules\Accounts\Repositories\DoctrineAccountRepository")
- * @table(name="accounts")
+ * @ORM\Entity(repositoryClass="Tectonic\Shift\Modules\Accounts\Repositories\DoctrineAccountRepository")
+ * @ORM\Table(name="accounts")
  */
 class Account extends Entity
 {
@@ -17,34 +18,35 @@ class Account extends Entity
 	use SoftDeletes;
 
     /**
-     * @Id @Column(type="integer")
-     * @GeneratedValue
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
      */
     protected $id;
 
     /**
-     * @Column(type="integer", name="user_id"  options={"unsigned"=true})
+     * @ORM\Column(type="integer", name="user_id", options={"unsigned"=true})
      */
     protected $userId;
 
     /**
-     * @ManyToOne(targetEntity="Tectonic\Shift\Modules\Users\Entities\User", mappedBy="userId")
+     * @ORM\ManyToOne(targetEntity="Tectonic\Shift\Modules\Users\Entities\User")
      */
     protected $owner;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $name;
 
     /**
-     * @OneToMany(targetEntity="Tectonic\Shift\Modules\Accounts\Entities\Domain", mappedBy="accountId")
+     * @ORM\OneToMany(targetEntity="Tectonic\Shift\Modules\Accounts\Entities\Domain", mappedBy="accountId")
      */
     protected $domains;
 
     /**
-     * @ManyToMany(targetEntity="Tectonic\Shift\Modules\Accounts\Entities\Account", inversedBy="accounts")
-     * @JoinTable(name="account_user")
+     * @ORM\ManyToMany(targetEntity="Tectonic\Shift\Modules\Accounts\Entities\Account", inversedBy="accounts")
+     * @ORM\JoinTable(name="account_user")
      */
     protected $users;
 

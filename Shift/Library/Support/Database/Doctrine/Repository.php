@@ -90,7 +90,7 @@ abstract class Repository extends EntityRepository implements RepositoryInterfac
     public function getBy($fieldName, $parameter)
     {
         $queryBuilder = $this->createQuery();
-        $queryBuilder->where($this->field($fieldName) . " = :{$fieldName}");
+        $queryBuilder->andWhere($this->field($fieldName)." = :".$fieldName);
         $queryBuilder->setParameter($fieldName, $parameter);
 
         $query = $queryBuilder->getQuery();

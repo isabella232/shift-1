@@ -2,6 +2,7 @@
 
 namespace Tectonic\Shift\Modules\Security\Entities;
 
+use Doctrine\ORM\Mapping as ORM;
 use Mitch\LaravelDoctrine\Traits\SoftDeletes;
 use Mitch\LaravelDoctrine\Traits\Timestamps;
 use Tectonic\Shift\Library\Support\Database\Doctrine\Entity;
@@ -15,8 +16,8 @@ use Tectonic\Shift\Modules\Accounts\Entities\Accountable;
  * an extremely important part of Shift. Users need to know what they're doing when modifying
  * role permissions.
  *
- * @entity(repositoryClass="Tectonic\Shift\Modules\Security\Repositories\DoctrineRoleRepository")
- * @table(name="roles")
+ * @ORM\Entity(repositoryClass="Tectonic\Shift\Modules\Security\Repositories\DoctrineRoleRepository")
+ * @ORM\Table(name="roles")
  */
 class Role extends Entity
 {
@@ -25,33 +26,34 @@ class Role extends Entity
     use SoftDeletes;
 
     /**
-     * @Id @Column(type="integer")
-     * @GeneratedValue
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
      */
     private $id;
 
     /**
-     * @Column(type="integer" options={"unsigned"=true})
+     * @ORM\Column(type="integer", options={"unsigned"=true})
      */
     private $access;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     private $name;
 
     /**
-     * @Column(type="boolean" options={"default"=0})
+     * @ORM\Column(name="`default`", type="boolean", options={"`default`"=0})
      */
     private $default;
 
     /**
-     * @OneToMany(targetEntity="Tectonic\Shift\Modules\Security\Entities\Permission", mappedBy="roleId")
+     * @ORM\OneToMany(targetEntity="Tectonic\Shift\Modules\Security\Entities\Permission", mappedBy="roleId")
      */
     private $permissions;
 
     /**
-     * @OneToMany(targetEntity="Tectonic\Shift\Modules\Users\Entities\Users", mappedBy="userId")
+     * @ORM\ManyToMany(targetEntity="Tectonic\Shift\Modules\Users\Entities\User", mappedBy="userId")
      */
     private $users;
 }

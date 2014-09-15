@@ -1,9 +1,9 @@
 <?php namespace Tectonic\Shift\Modules\Security\Validators;
 
-use Tectonic\Shift\Library\Validation\Validator;
+use Tectonic\Shift\Library\Validation\Validation;
 use Tectonic\Shift\Modules\Accounts\Services\CurrentAccountService;
 
-class RoleValidation extends Validator
+class RoleValidation extends Validation
 {
     /**
      * @var \Tectonic\Shift\Modules\Accounts\Services\CurrentAccountService
