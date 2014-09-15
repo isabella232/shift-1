@@ -14,14 +14,14 @@ use Doctrine\ORM\Mapping as ORM;
 trait Accountable
 {
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(name="account_id", type="integer")
      */
-    private $accountId;
+    protected $accountId;
 
     /**
      * @ORM\ManyToOne(targetEntity="Tectonic\Shift\Modules\Accounts\Entities\Account")
      */
-    private $account;
+	protected $account;
 
     /**
      * Returns the account associated with this domain.

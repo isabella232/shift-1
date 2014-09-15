@@ -38,8 +38,8 @@ class User extends Entity
     private $lastName;
 
     /**
-     * @ManyToMany(targetEntity="Tectonic\Shift\Modules\Accounts\Entities\Account", inversedBy="users")
-     * @JoinTable(name="account_user")
+     * @ORM\ManyToMany(targetEntity="Tectonic\Shift\Modules\Accounts\Entities\Account", inversedBy="users")
+     * @ORM\JoinTable(name="account_user")
      */
     private $accounts;
 

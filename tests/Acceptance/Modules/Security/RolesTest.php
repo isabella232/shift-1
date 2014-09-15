@@ -2,18 +2,18 @@
 
 namespace Tests\Api\Security;
 
+use App;
 use Tests\TestCase;
-use Tectonic\Shift\Modules\Security\Models\Role;
 
 class RolesTest extends TestCase
 {
-    protected $roleModel;
+    protected $roleRepository;
 
     public function setUp()
     {
         parent::setUp();
 
-        $this->roleModel = new Role;
+        $this->roleRepository = App::make('Tectonic\Shift\Modules\Security\Repositories\RoleRepositoryInterface');
     }
 
     public function testStoreNewRole()
@@ -27,7 +27,8 @@ class RolesTest extends TestCase
 
         // Act
         $this->call('POST', 'roles', $data);
-        $newRole = $this->roleModel->whereName($data['name'])->first();
+
+        $newRole = $this->roleRepository->getBy('name', $data['name'])->first();
 
         // Assert
         $this->assertResponseOk();
@@ -37,15 +38,17 @@ class RolesTest extends TestCase
     public function testSetDefaultRole()
     {
         $existingRoleData = [
-            'account_id' => null,
+            'account_id' => 1,
             'default' => true,
             'name' => 'Existing role'
         ];
 
-        $this->roleModel->create($existingRoleData);
+        $existingRole = $this->roleRepository->getNew($existingRoleData);
+
+	    $this->roleRepository->save($existingRole);
 
         $newRoleData = [
-            'account_id' => null,
+            'account_id' => 1,
             'default' => true,
             'name' => 'New default role'
         ];
@@ -54,8 +57,8 @@ class RolesTest extends TestCase
         $this->call('POST', 'roles', $newRoleData);
 
         // Assert
-        $newDefaultRole = $this->roleModel->whereDefault(true)->get();
-        $otherRoles = $this->roleModel->whereDefault(false)->get();
+        $newDefaultRole = $this->roleRepository->whereDefault(true)->get();
+        $otherRoles = $this->roleRepository->whereDefault(false)->get();
 
         $this->assertResponseOk();
         $this->assertCount(1, $newDefaultRole);
@@ -82,12 +85,12 @@ class RolesTest extends TestCase
             'name' => 'Existing role'
         ];
 
-        $role = $this->roleModel->create($existingRoleData);
+        $role = $this->roleRepository->create($existingRoleData);
 
         // Act
         $this->call('DELETE', 'roles', [$role->id]);
 
-        $deletedRole = $this->roleModel->withTrashed()->find($role->id);
+        $deletedRole = $this->roleRepository->withTrashed()->find($role->id);
 
         // Assert
         $this->assertResponseOk();
@@ -101,9 +104,9 @@ class RolesTest extends TestCase
     {
         $existingRole = $this->createNewRole();
 
-        $this->response = $this->call('PUT', 'roles/'.$existingRole->id, ['name' => 'Updated role name']);
+        $this->response = $this->call('PUT', 'roles/'.$existingRole->getId(), ['name' => 'Updated role name']);
 
-        $updatedRole = $this->roleModel->whereId($existingRole->id)->first();
+        $updatedRole = $this->roleRepository->whereId($existingRole->id)->first();
 
         $this->assertEquals('Updated role name', $updatedRole->name);
         $this->assertEquals($updatedRole->toArray(), $this->parseResponse(true));
@@ -113,11 +116,11 @@ class RolesTest extends TestCase
     {
         $existingRole = $this->createNewRole();
 
-        $this->response = $this->call('GET', 'roles/'.$existingRole->id);
+        $this->response = $this->call('GET', 'roles/'.$existingRole->getId());
         $parsedRole = $this->parseResponse();
 
         $this->assertEquals($existingRole->account_id, $parsedRole->account_id);
-        $this->assertEquals($existingRole->id, $parsedRole->id);
+        $this->assertEquals($existingRole->getId(), $parsedRole->id);
         $this->assertEquals($existingRole->name, $parsedRole->name);
         $this->assertEquals((int) $existingRole->default, $parsedRole->default);
     }
@@ -137,7 +140,8 @@ class RolesTest extends TestCase
         ];
 
         $existingRoleData = array_merge($defaultData, $data);
+	    $existingRole = $this->roleRepository->getNew($existingRoleData);
 
-        return $this->roleModel->create($existingRoleData);
+        return $this->roleRepository->save($existingRole);
     }
 }

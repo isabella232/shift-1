@@ -30,31 +30,26 @@ class Role extends Entity
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue
      */
-    private $id;
-
-    /**
-     * @ORM\Column(type="integer", options={"unsigned"=true})
-     */
-    private $access;
+    protected $id;
 
     /**
      * @ORM\Column(type="string")
      */
-    private $name;
+    protected $name;
 
     /**
      * @ORM\Column(name="`default`", type="boolean", options={"`default`"=0})
      */
-    private $default;
+    protected $default;
 
     /**
      * @ORM\OneToMany(targetEntity="Tectonic\Shift\Modules\Security\Entities\Permission", mappedBy="roleId")
      */
-    private $permissions;
+    protected $permissions;
 
     /**
      * @ORM\ManyToMany(targetEntity="Tectonic\Shift\Modules\Users\Entities\User", mappedBy="userId")
      */
-    private $users;
+    protected $users;
 }
 
