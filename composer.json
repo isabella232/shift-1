@@ -21,8 +21,8 @@
         "jasonlewis/basset": "dev-master",
 	    "machuga/authority-l4": "dev-master",
         "orchestra/asset": "2.2.*",
-        "mitchellvanw/laravel-doctrine": "0.*",
-        "hashids/hashids": "1.0.*@dev"
+        "hashids/hashids": "1.0.*@dev",
+	    "mitchellvanw/laravel-doctrine": "dev-master"
     },
     "require-dev": {
         "mockery/mockery": "dev-master@dev",
@@ -43,6 +43,10 @@
 		{
 			"type": "vcs",
 			"url": "git@github.com:orchestral/phpseclib.git"
+		},
+		{
+			"type": "vcs",
+			"url": "git@github.com:kirkbushell/laravel-doctrine.git"
 		}
 	]
 }
