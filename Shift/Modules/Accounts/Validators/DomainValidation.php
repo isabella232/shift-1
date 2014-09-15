@@ -29,7 +29,7 @@ class DomainValidation extends Validation
         });
 
         $rules = [
-            'domain' => ['required', 'domainFormat', 'unique:domains,domain:'.$this->getValue('id')]
+            'domain' => ['required', 'domainFormat', 'unique:domains,domain,'.$this->getValue('id')]
         ];
 
         return $rules;

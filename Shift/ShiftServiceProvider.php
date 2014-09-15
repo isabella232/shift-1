@@ -30,16 +30,6 @@ class ShiftServiceProvider extends ServiceProvider
     ];
 
     /**
-     * Files we need to register (include)
-     *
-     * @var array
-     */
-    protected $filesToRegister = [
-        'routes',
-        'commands'
-    ];
-
-    /**
      * A collection of Shift service providers to load/register.
      *
      * @var array
@@ -54,7 +44,18 @@ class ShiftServiceProvider extends ServiceProvider
         'Tectonic\Shift\Modules\Accounts\AccountsServiceProvider',
         'Tectonic\Shift\Modules\Security\SecurityServiceProvider',
         'Tectonic\Shift\Modules\CustomFields\CustomFieldsServiceProvider',
+        'Tectonic\Shift\Modules\Localisation\LocalisationServiceProvider',
         'Tectonic\Shift\Modules\Configuration\ConfigurationServiceProvider',
+    ];
+
+    /**
+     * Files we need to register (include)
+     *
+     * @var array
+     */
+    protected $filesToRegister = [
+        'routes',
+        'commands'
     ];
 
     /**

@@ -1,7 +1,7 @@
 <?php namespace Tectonic\Shift\Modules\CustomFields\Search;
 
-use Tectonic\Shift\Library\Search\Filters\OrderFilter;
 use Tectonic\Shift\Library\Search\Search;
+use Tectonic\Shift\Library\Search\Filters\OrderFilter;
 use Tectonic\Shift\Library\Search\Filters\KeywordFilter;
 use Tectonic\Shift\Modules\CustomFields\Models\CustomField;
 

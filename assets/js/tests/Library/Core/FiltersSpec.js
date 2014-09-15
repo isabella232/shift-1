@@ -57,7 +57,10 @@ describe('module: Shift.Core.Filters', function() {
 		});
 
 		it('should format a given server date, to a local client date format', function() {
-			expect($filter('localDate')('1982-12-09 00:54:13')).toBe('1982-12-09 00:54');
+            var thisMoment = moment().startOf('hour').utc();
+            var thatMoment = moment().startOf('hour');
+
+            expect($filter('localDate')(thisMoment.format('YYYY-MM-DD HH:mm:ss'))).toBe(thatMoment.format('YYYY-MM-DD HH:mm'));
 		});
 
 		it('should return any value that is falsy', function() {
@@ -119,7 +122,10 @@ describe('module: Shift.Core.Filters', function() {
 		});
 
 		it('should return a date-based common format', function() {
-			expect($filter('commonDate')('2012-12-11 07:56:23')).toEqual('7am, 11th December');
+            var thisMoment = moment().startOf('hour').utc();
+            var thatMoment = moment().startOf('hour');
+
+			expect($filter('commonDate')(thisMoment.format('YYYY-MM-DD HH:mm:ss'))).toEqual(thatMoment.format('ha, Do MMMM'));
 		});
 	});
 

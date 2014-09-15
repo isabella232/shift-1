@@ -228,13 +228,13 @@ abstract class Repository extends EntityRepository implements RepositoryInterfac
      * Save a number of resources at once. This is especially good with Doctrine as it allows
      * us to send a batch save instead of persisting and flushing resources one-by-one.
      *
-     * @TODO: Refactor for PHP 5.6 using variadic function arguments
+     * @param $resources
+     * @throws Exception
+     * @return mixed|void
      */
-    public function saveAll()
+    public function saveAll(...$resources)
     {
-        $resources = func_get_args();
-
-        if (!$resources) {
+        if (count($resources) == 0) {
             throw new Exception('You must provide at least one $resource argument.');
         }
 

@@ -9,7 +9,7 @@ use Tectonic\Shift\Library\Traits\Slugs;
  * Class CustomField
  *
  * @ORM\Entity
- * @ORM\Table(name="`custom_fields")
+ * @ORM\Table(name="`custom_fields`")
  * @ORM\HasLifecycleCallbacks()
  */
 class CustomField extends Entity
@@ -36,7 +36,7 @@ class CustomField extends Entity
     /** @ORM\Column(type="string", name="`field_title`") **/
     protected $fieldTitle;
 
-    /** @ORM\Column(type="string", name="`field_code") **/
+    /** @ORM\Column(type="string", name="`field_code`") **/
     protected $fieldCode;
 
     /** @ORM\Column(type="string", name="`label`") **/

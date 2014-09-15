@@ -69,6 +69,58 @@ describe('module: Shift.Library.Core.Services', function() {
 		});
 	});
 
+    describe('service: Language', function() {
+
+        var Language;
+
+        beforeEach(inject(function(_Language_){
+            Language = _Language_;
+        }));
+
+        it('should return the correct error string', function() {
+            expect(Language.errorString).toBe('ERROR: TRANSLATION NOT FOUND!');
+        });
+
+        it('should return the correct language item', function() {
+            var dictionary = {
+                shift: {
+                    lang: {
+                        en_GB: {
+                            labels: {
+                                first_name: 'John',
+                                last_name: 'Smith',
+                                colour: 'colour',
+                                button: 'button'
+                            }
+                        },
+                        en_US: {
+                            labels: {
+                                colour: 'color'
+                            }
+                        },
+                        fr_FR: {
+                            labels: {
+                                button: 'bouton'
+                            }
+                        }
+                    }
+                }
+            };
+
+            // User specific translation preference is 'fr_FR'
+            // Installation specific translation preference is 'en_US'
+            // Base/default translation is 'en_GB'
+            var locales = ['fr_FR', 'en_US', 'en_GB'];
+
+            expect(Language.find(dictionary, locales, 'shift', 'labels.first_name')).toBe('John');
+            expect(Language.find(dictionary, locales, 'shift', 'labels.last_name')).toBe('Smith');
+            expect(Language.find(dictionary, locales, 'shift', 'labels.colour')).toBe('color');
+            expect(Language.find(dictionary, locales, 'shift', 'labels.button')).toBe('bouton');
+            expect(Language.find(dictionary, locales, 'shift', 'labels.age')).toBe(Language.errorString);
+        });
+
+    });
+
 	describe('service: Resource', function() {
 		var Resource, $mockRestangular, $mockServiceModel;
 		

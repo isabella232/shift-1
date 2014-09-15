@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 
-	var module = angular.module('Shift.Accounts.Controllers', ['Shift.Library.Defaults']);
+	//var module = angular.module('Shift.Accounts.Controllers', ['Shift.Library.Defaults']);
 
 	/*module.controller('shift.accounts', [
 		'$rootScope',

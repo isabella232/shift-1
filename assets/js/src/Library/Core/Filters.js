@@ -13,7 +13,7 @@
 	module.filter('ucfirst', ['$filter', function($filter) {
 		return function(input) {
 			var lc = $filter('lowercase')(input);
-			
+
 			return _.capitalize(lc);
 		};
 	}]);
@@ -90,7 +90,7 @@
 	module.filter('default', [function() {
 		return function(input, defaultValue) {
 			if (!input) return defaultValue;
-			
+
 			return input;
 		};
 	}]);
@@ -105,26 +105,26 @@
 	 * @param boolean relative
 	 * @return string
 	 */
-	module.filter('niceDate', [function() {
-		return function(input, relative, format) {
-			if (input === null) return;
-			
-			var thisMoment = moment.utc(input).local();
-			
-			if (angular.isUndefined(relative)) relative = true;
-			
-			if (relative) {
+	module.filter('niceDate', [ function() {
+		return function( input, relative, format ) {
+			if ( input === null ) return;
+
+			var thisMoment = moment.utc( input );
+
+			if ( relative == null ) relative = true;
+
+			if ( relative ) {
 				return thisMoment.fromNow();
 			}
 
-			if (!format) format = "Do MMMM YYYY @ h:mm a";
-			
-			return thisMoment.format(format);
+			if ( !format ) format = "Do MMMM YYYY @ h:mm a";
+
+			return thisMoment.local().format( format );
 		};
 	}]);
 
 	/**
-	 * Easy helper filter for providing date output of common date formats. There is 
+	 * Easy helper filter for providing date output of common date formats. There is
 	 * no extensibility provided or necessary for this filter. If you want more options,
 	 * use the niceDate filter provided above.
 	 */
@@ -137,10 +137,10 @@
 	/**
 	 * Converts a file size from bytes to KB/MB/GB with optional precision
 	 * to allow a few decimal points if needed.
-	 * 
+	 *
 	 * @param {String} unit      Unit expects either 'kb', 'mb' or 'gb'.
 	 * @param {Number} precision Number of decimal points.
-	 * 
+	 *
 	 * @return {String}
 	 */
 	module.filter('filesize' , [function() {
@@ -148,12 +148,12 @@
 			unit = !unit ? 'kb' : unit.toLowerCase();
 
 			if (!precision) precision = 0;
-			
+
 			// Default units.
 			var kb = 1024,
 				mb = kb * 1024,
 				gb = mb * 1024;
-			
+
 			if (unit == 'gb') {
 				return (input / gb).toFixed(precision) + ' GB';
 			}
@@ -176,7 +176,7 @@
 			if (!input.length) return input;
 
 			if (input.indexOf('.') == -1) return null;
-			
+
 			// Return the last part of the array.
 			// Assuming that the filename provided is valid, we should have no issues.
 			return input.split('.').pop();
@@ -198,7 +198,7 @@
 	/**
 	 * Provies a more versatile filter than the one above, allowing developers to define
 	 * what text to use for both truthy and falsy statements.
-	 * 
+	 *
 	 * @return string
 	 */
 	module.filter('enabledIndicator', [function() {
@@ -212,11 +212,11 @@
 
 	/**
 	 * Truncate a long piece of string into a limited number of words.
-	 * 
+	 *
 	 * @param {string}  input
 	 * @param {integer} limit Defaults to 10 words.
 	 * @param {string}  end   Defualts to '…'
-	 * 
+	 *
 	 * @return {string}
 	 */
 	module.filter('truncate', [function() {
@@ -235,12 +235,12 @@
 			
 			// The input is within the limit.
 			if (words.length <= limit) return input;
-			
+
 			// The input is larger than the limit.
 			return _.first(words, limit).join(' ') + end;
 		};
 	}]);
-	
+
 	/**
 	 * Replaces new lines to html line breaks.
 	 * This must be used within a 'ng-bind-html-unsafe' directive.
