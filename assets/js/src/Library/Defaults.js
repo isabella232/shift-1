@@ -1,7 +1,7 @@
 (function(){
     'use strict';
 
-    var module = angular.module('Shift.Library.Defaults', ['$ngResource']);
+    var module = angular.module('Shift.Library.Defaults', ['$ngResource', 'Shift.Library.Router']);
 
     /**
      * The DefaultRoutes factory object provides routes for the the most common application requests. These include

@@ -87,17 +87,17 @@
 
 		/**
 		 * Create an item based on the parameters provided.
-		 * 
+		 *
 		 * @param params
 		 * @returns {*}
 		 */
 		Resource.prototype.create = function(params) {
 			return this.serviceModel.post(params);
 		};
-		
+
 		/**
 		 * Destroy a specific item.
-		 * 
+		 *
 		 * @param item
 		 * @returns {*}
 		 */
@@ -107,7 +107,7 @@
 
 		/**
 		 * Return a single item based on the id provided.
-		 * 
+		 *
 		 * @param id
 		 * @returns {*|Array|Mixed|promise}
 		 */
@@ -165,4 +165,100 @@
 		this.serverFormat = 'YYYY-MM-DD HH:mm:ss';
 		this.clientFormat = 'YYYY-MM-DD HH:mm';
 	}]);
+
+    /**
+     * This service deals will language and localisation for UI elements. It will find/retrieve
+     * a language element/item from the language object stored on the $rootScope.
+     *
+     * A 3 step process is performed:
+     *  1) If a user is logged in and has set their locale different to that of the installations default locale,
+     *     check for a translation in their required locale and return it if it exists.
+     *  2) If no logged in user OR no user specific locale is set, revert to checking for installations default
+     *     locale translation and return if it exists.
+     *  3) If no installation default locale translation exists, revert to our base translation (en_GB) and check
+     *     for a translation. Return an the value of "this.errorString" string is no translation exists.
+     */
+    module.service('Language', [function() {
+
+        /**
+         * Error string to display is language item is NOT found.
+         *
+         * @type {string}
+         */
+        this.errorString = "ERROR: TRANSLATION NOT FOUND!";
+
+        /**
+         * Find a language item and return it as a string for
+         * display on the UI. If no item is found return an
+         * easy to spot string so it can be added or corrected.
+         *
+         * @param {object} dictionary
+         * @param {array}  locales
+         * @param {string} bundle
+         * @param {string} item
+         *
+         * @returns {string}
+         */
+        this.find = function(dictionary, locales, bundle, item) {
+
+            // Set translation to error string by default. If a translation if found
+            // we will overwrite this value with the required translation.
+            var translation = this.errorString;
+
+            // For each locale preference, starting with the users, followed by the
+            // installations, then finally the base/default - find required translation.
+            for(var i = 0; i < locales.length; i++) {
+                var object = dictionary[bundle].lang[locales[i]];
+                var result = this.getPropertyByString(object, item);
+
+                // If a translation if found, break this loop and return result.
+                if( result !== this.errorString)
+                {
+                    translation = result;
+                    break;
+                }
+            }
+
+            return translation;
+        };
+
+        /**
+         * Return a property in object by dot notated string. If the access string is empty,
+         * returns the object. Otherwise, keeps going along access path until second last accessor.
+         * If that's an object, returns the last object[accessor] value. Otherwise, return the value
+         * of this.errorString.
+         * .
+         * @param {object} obj
+         * @param {string} propertyString
+         *
+         * @returns {string}
+         */
+        this.getPropertyByString = function(obj, propertyString) {
+            if (!propertyString)
+                return obj;
+
+            var prop, props = propertyString.split('.');
+
+            for (var i = 0, iLen = props.length - 1; i < iLen; i++) {
+                prop = props[i];
+
+                var candidate = obj[prop];
+                if (candidate !== undefined) {
+                    obj = candidate;
+                } else {
+                    break;
+                }
+            }
+
+            var string = obj[props[i]];
+
+            // Return an empty string
+            if(angular.isUndefined(string))
+                return this.errorString;
+
+            return string;
+        };
+
+    }]);
+
 })();

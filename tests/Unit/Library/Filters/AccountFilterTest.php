@@ -25,6 +25,9 @@ class AccountFilterTest extends TestCase
 	{
 		$domain = 'www.somedomain.com';
 
+        // The line below allows use to not receive errors when having custom __call() methods
+        if(defined('E_STRICT')) error_reporting('E_ALL ^ E_STRICT');
+
 		$mockAccount = m::mock('Tectonic\Shift\Modules\Accounts\Entities\Account');
 
 		$this->mockRequest->shouldReceive('server')->with('SERVER_NAME')->andReturn($domain);
