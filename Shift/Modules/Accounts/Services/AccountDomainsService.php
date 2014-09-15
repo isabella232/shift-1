@@ -2,7 +2,7 @@
 
 namespace Tectonic\Shift\Modules\Accounts\Services;
 
-use Tectonic\Shift\Library\Authorization\AuthenticatedConsumer;
+use Tectonic\Shift\Library\Authorization\Consumer;
 use Tectonic\Shift\Modules\Accounts\Entities\Account;
 use Tectonic\Shift\Modules\Accounts\Repositories\AccountRepositoryInterface;
 use Tectonic\Shift\Modules\Accounts\Repositories\DomainRepositoryInterface;

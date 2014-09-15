@@ -27,7 +27,8 @@ class TestCase extends \Orchestra\Testbench\TestCase
 	protected function getPackageProviders()
 	{
 		return [
-            'Tectonic\Shift\ShiftServiceProvider'
+            'Tectonic\Shift\ShiftServiceProvider',
+            'Tectonic\Shift\Modules\Security\SecurityServiceProvider',
         ];
 	}
 
@@ -46,7 +47,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
 		$app['config']->set('database.connections.test', array(
 			'driver'   => 'sqlite',
 			'database' => ':memory:',
-			'prefix'   => ''
+			'prefix'   => '',
 		));
 	}
 
@@ -90,4 +91,14 @@ class TestCase extends \Orchestra\Testbench\TestCase
 
         return json_decode($response, $asArray);
     }
+
+	/**
+	 * Test running migration.
+	 *
+	 * @test
+	 */
+	public function testRunningMigration()
+	{
+		DB::table('roles')->get();
+	}
 }

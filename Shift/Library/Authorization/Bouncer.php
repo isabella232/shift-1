@@ -3,7 +3,7 @@
 use App;
 use Log;
 use Illuminate\Support\Str;
-use Tectonic\Shift\Library\Authorization\AuthenticatedConsumer;
+use Tectonic\Shift\Library\Authorization\Consumer;
 
 /**
  * Class Bouncer
@@ -34,7 +34,7 @@ final class Bouncer
 	/**
 	 * Stores the authenticated consumer object which will be used for the authorization of requested actions.
 	 *
-	 * @var AuthenticatedConsumer
+	 * @var Consumer
 	 */
 	private $consumer;
 

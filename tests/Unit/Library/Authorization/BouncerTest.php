@@ -3,7 +3,7 @@
 use Mockery as m;
 use Tests\TestCase;
 use Tectonic\Shift\Library\Authorization\Bouncer;
-use Tectonic\Shift\Library\Authorization\AuthenticatedConsumer;
+use Tectonic\Shift\Library\Authorization\Consumer;
 
 class BouncerTest extends TestCase
 {
@@ -18,7 +18,7 @@ class BouncerTest extends TestCase
 		$mockConsumer = m::mock('Tests\Stubs\ConsumerStub');
 		$this->mockAuthority = m::mock('Authority\Authority');
 
-		$this->authenticatedConsumer = new AuthenticatedConsumer($this->mockAuthority);
+		$this->authenticatedConsumer = new Consumer($this->mockAuthority);
         $this->authenticatedConsumer->setConsumer($mockConsumer);
 
 		$this->bouncer = new Bouncer('User', $this->authenticatedConsumer);

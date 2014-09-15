@@ -1,5 +1,6 @@
 <?php namespace Tectonic\Shift\Modules\Users;
 
+use App;
 use Illuminate\Support\ServiceProvider;
 
 class UsersServiceProvider extends ServiceProvider
@@ -21,13 +22,5 @@ class UsersServiceProvider extends ServiceProvider
         $this->app->bindShared('Tectonic\Shift\Modules\Users\Repositories\UserRepositoryInterface', function() {
             return App::make('Tectonic\Shift\Modules\Users\Repositories\DoctrineUserRepository');
         });
-    }
-
-    /**
-     * Register the various classes required to Bootstrap Shift
-     */
-    public function boot()
-    {
-
     }
 }

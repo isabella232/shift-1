@@ -35,13 +35,12 @@ class ShiftServiceProvider extends ServiceProvider
      * @var array
      */
     protected $serviceProviders = [
-        'Basset\BassetServiceProvider',
+	    //'Basset\BassetServiceProvider',
         'Authority\AuthorityL4\AuthorityL4ServiceProvider',
         'Mitch\LaravelDoctrine\LaravelDoctrineServiceProvider',
         'Tectonic\Shift\Library\Authorization\AuthorizationServiceProvider',
         'Tectonic\Shift\Library\LibraryServiceProvider',
         'Tectonic\Shift\Modules\Users\UsersServiceProvider',
-        //'Tectonic\Shift\Modules\Startup\StartupServiceProvider',
         'Tectonic\Shift\Modules\Accounts\AccountsServiceProvider',
         'Tectonic\Shift\Modules\Security\SecurityServiceProvider',
         'Tectonic\Shift\Modules\CustomFields\CustomFieldsServiceProvider',
@@ -77,6 +76,7 @@ class ShiftServiceProvider extends ServiceProvider
         $this->registerAliases();
         $this->registerRouter();
         $this->registerAuthorityConfiguration();
+        $this->registerServiceProviders();
 		$this->requireFiles($this->filesToRegister);
     }
 

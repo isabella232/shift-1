@@ -1,9 +1,8 @@
 <?php namespace Tectonic\Shift\Library\Authorization;
 
 use Illuminate\Foundation\AliasLoader;
-use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
-use App;
+use App, Event;
 
 class AuthorizationServiceProvider extends ServiceProvider
 {
