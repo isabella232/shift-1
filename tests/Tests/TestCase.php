@@ -27,7 +27,8 @@ class TestCase extends \Orchestra\Testbench\TestCase
 	protected function getPackageProviders()
 	{
 		return [
-            'Tectonic\Shift\ShiftServiceProvider'
+            'Tectonic\Shift\ShiftServiceProvider',
+            'Tectonic\Shift\Modules\Security\SecurityServiceProvider',
         ];
 	}
 
@@ -46,7 +47,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
 		$app['config']->set('database.connections.test', array(
 			'driver'   => 'sqlite',
 			'database' => ':memory:',
-			'prefix'   => ''
+			'prefix'   => '',
 		));
 	}
 
@@ -66,12 +67,9 @@ class TestCase extends \Orchestra\Testbench\TestCase
 		$artisan = $this->app->make('artisan');
 
 		$artisan->call('migrate', [
-            '--database' => 'test',
-			'--path' => 'src/migrations'
+			'--database' => 'test',
+			'--path' => 'migrations'
 		]);
-
-        // Sanity check. This will fail if migrations failed for whatever reason
-        //@TODO: bring back DB::table('roles')->get();
 	}
 
     /**
@@ -90,4 +88,14 @@ class TestCase extends \Orchestra\Testbench\TestCase
 
         return json_decode($response, $asArray);
     }
+
+	/**
+	 * Test running migration.
+	 *
+	 * @test
+	 */
+	public function testRunningMigration()
+	{
+		DB::table('roles')->get();
+	}
 }

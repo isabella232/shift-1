@@ -45,8 +45,8 @@ class DoctrineRoleRepository extends Repository implements RoleRepositoryInterfa
             return $existingRole;
         }
 
-        $existingRole->default = false;
-        $role->default = true;
+        $existingRole->setDefault(false);
+        $role->setDefault(true);
 
         $this->saveAll($existingRole, $role);
 

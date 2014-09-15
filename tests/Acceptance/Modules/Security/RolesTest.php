@@ -21,7 +21,6 @@ class RolesTest extends TestCase
         // Arrange
         $data = [
             'account_id' => 1,
-            'access'     => 1,
             'name'       => 'Test Role',
             'default'    => false
         ];
@@ -39,7 +38,6 @@ class RolesTest extends TestCase
     {
         $existingRoleData = [
             'account_id' => null,
-            'access' => 1,
             'default' => true,
             'name' => 'Existing role'
         ];
@@ -48,7 +46,6 @@ class RolesTest extends TestCase
 
         $newRoleData = [
             'account_id' => null,
-            'access' => 1,
             'default' => true,
             'name' => 'New default role'
         ];
@@ -81,7 +78,6 @@ class RolesTest extends TestCase
     {
         $existingRoleData = [
             'account_id' => null,
-            'access' => 1,
             'default' => false,
             'name' => 'Existing role'
         ];
@@ -136,7 +132,6 @@ class RolesTest extends TestCase
     {
         $defaultData = [
             'account_id' => null,
-            'access' => 1,
             'default' => false,
             'name' => 'Existing role'
         ];
