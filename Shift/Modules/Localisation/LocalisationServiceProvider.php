@@ -21,7 +21,8 @@ class LocalisationServiceProvider extends ServiceProvider
         $this->registerAssetContainer();
         $this->registerTranslator();
         $this->registerLangSingleton();
-        $this->registerRepositories();
+        $this->registerLocaleRepository();
+        $this->registerLocalisationRepository();
         $this->registerCustomValidationRules();
     }
 
@@ -73,14 +74,29 @@ class LocalisationServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register repositories
+     * Register locale repository
      *
      * @return void
      */
-    protected function registerRepositories()
+    protected function registerLocaleRepository()
     {
-        $this->bind('Modules\Localisation\Repositories\LocaleRepositoryInterface', 'Modules\Localisation\Repositories\SqlLocaleRepository');
-        $this->bind('Modules\Localisation\Repositories\LocalisationRepositoryInterface', 'Modules\Localisation\Repositories\SqlLocalisationRepository');
+        $this->app->bindShared('Tectonic\Shift\Modules\Localisation\Repositories\LocaleRepositoryInterface', function()
+        {
+            return App::make('Tectonic\Shift\Modules\Localisation\Repositories\LocaleRepository');
+        });
+    }
+
+    /**
+     * Register localisation repository
+     *
+     * @return void
+     */
+    protected function registerLocalisationRepository()
+    {
+        $this->app->bindShared('Tectonic\Shift\Modules\Localisation\Repositories\LocalisationRepositoryInterface', function()
+        {
+            return App::make('Tectonic\Shift\Modules\Localisation\Repositories\LocalisationRepository');
+        });
     }
 
     /**
@@ -91,6 +107,7 @@ class LocalisationServiceProvider extends ServiceProvider
     private function registerCustomValidationRules()
     {
         // Add validation rule to validating ISO language codes (en-GB)
-        $this->app['Illuminate\Validation\Factory']->extend('localeCode', 'Tectonic\Shift\Modules\Localisation\Validators\LocaleCustomValidationRules@localeCode');
+        $this->app['Illuminate\Validation\Factory']
+            ->extend('localeCode', 'Tectonic\Shift\Modules\Localisation\Validators\LocaleCustomValidationRules@localeCode');
     }
 }
