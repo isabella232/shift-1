@@ -1,4 +1,4 @@
-<?php namespace Tectonic\Shift\Modules\Accounts;
+<?php namespace Tectonic\Shift\Modules\Users;
 
 use Illuminate\Support\ServiceProvider;
 

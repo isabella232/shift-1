@@ -41,7 +41,7 @@ class ShiftServiceProvider extends ServiceProvider
         'Tectonic\Shift\Library\Authorization\AuthorizationServiceProvider',
         'Tectonic\Shift\Library\LibraryServiceProvider',
         'Tectonic\Shift\Modules\Users\UsersServiceProvider',
-        'Tectonic\Shift\Modules\Startup\StartupServiceProvider',
+        //'Tectonic\Shift\Modules\Startup\StartupServiceProvider',
         'Tectonic\Shift\Modules\Accounts\AccountsServiceProvider',
         'Tectonic\Shift\Modules\Security\SecurityServiceProvider',
         'Tectonic\Shift\Modules\CustomFields\CustomFieldsServiceProvider',
@@ -73,6 +73,7 @@ class ShiftServiceProvider extends ServiceProvider
 	 */
 	public function register()
 	{
+        $this->registerServiceProviders();
         $this->registerAliases();
         $this->registerRouter();
         $this->registerAuthorityConfiguration();
@@ -110,8 +111,8 @@ class ShiftServiceProvider extends ServiceProvider
 	 */
 	public function provides()
 	{
-		return $this->serviceProviders;
-	}
+		return [];
+    }
 
 	/**
 	 * Helper method for requiring boot files. These are files that generally have some basic configuration,
@@ -154,5 +155,18 @@ class ShiftServiceProvider extends ServiceProvider
         {
             return new Router($app['events'], $app);
         });
+    }
+
+    /**
+     * Register service providers
+     *
+     * @return void
+     */
+    protected function registerServiceProviders()
+    {
+        foreach($this->serviceProviders as $provider)
+        {
+            $this->app->register($provider);
+        }
     }
 }

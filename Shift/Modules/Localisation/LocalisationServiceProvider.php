@@ -23,8 +23,13 @@ class LocalisationServiceProvider extends ServiceProvider
         $this->registerLangSingleton();
         $this->registerLocaleRepository();
         $this->registerLocalisationRepository();
+    }
+
+    public function boot()
+    {
         $this->registerCustomValidationRules();
     }
+
 
     /**
      * Register the Asset container. This is an extended version of Orchestra\Asset\Factory

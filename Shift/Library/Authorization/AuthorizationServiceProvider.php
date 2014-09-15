@@ -1,13 +1,11 @@
-<?php namespace Tectonic\Shift;
+<?php namespace Tectonic\Shift\Library\Authorization;
 
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
-use Tectonic\Shift\Library\Authorization\AuthenticatedConsumer;
-use Tectonic\Shift\Library\Router;
 use App;
 
-class ShiftServiceProvider extends ServiceProvider
+class AuthorizationServiceProvider extends ServiceProvider
 {
 	/**
 	 * Indicates if loading of the provider is deferred.

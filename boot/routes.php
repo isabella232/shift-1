@@ -32,7 +32,7 @@ Route::get('/', function()
 
 Route::get('test', function()
 {
-    $repo = new \Tectonic\Shift\Modules\Localisation\Repositories\LocaleDoctrineRepository(App::make('Doctrine\ORM\EntityManager'));
+    $repo = App::make('Tectonic\Shift\Modules\Localisation\Contracts\LocaleRepositoryInterface');
 
     return $repo;
 });
