@@ -1,13 +1,14 @@
 <?php namespace Tectonic\Shift\Modules\Accounts\Entities;
 
+use Doctrine\ORM\Mapping as ORM;
 use Mitch\LaravelDoctrine\Traits\Timestamps;
 use Tectonic\Shift\Modules\Accounts\ValueObjects\DomainName;
 
 /**
  * Class Domain
  *
- * @entity(repositoryClass="Tectonic\Shift\Modules\Accounts\Repositories\DoctrineDomainRepository")
- * @table(name="domains")
+ * @ORM\Entity(repositoryClass="Tectonic\Shift\Modules\Accounts\Repositories\DoctrineDomainRepository")
+ * @ORM\Table(name="domains")
  */
 class Domain
 {
@@ -15,13 +16,14 @@ class Domain
     use Timestamps;
 
     /**
-     * @Id @Column(type="integer")
-     * @GeneratedValue
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
      */
     protected $id;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $domain;
 

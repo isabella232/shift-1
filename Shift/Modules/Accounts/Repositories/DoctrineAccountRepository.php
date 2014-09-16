@@ -23,11 +23,14 @@ class DoctrineAccountRepository extends Repository implements AccountRepositoryI
 	 */
 	public function requireByDomain($domain)
     {
-        $query = $this->entityManager()->createQuery()
-            ->select(Account::class.' accounts')
-            ->join('accounts.domains', Domain::class)
-            ->where("domains.domain = ':domain'")
+        $qb = $this->entityManager()->createQueryBuilder()
+            ->select('a')
+            ->from(Account::class, 'a')
+            ->join(Domain::class, 'd')
+            ->where("d.domain = :domain")
             ->setParameter('domain', $domain);
+
+	    $query = $qb->getQuery();
 
         return $query->getSingleResult();
     }

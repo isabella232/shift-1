@@ -255,7 +255,7 @@ abstract class Repository extends EntityRepository implements RepositoryInterfac
 		$abbr = $this->entityAbbreviation();
 		$queryBuilder = $this->entityManager()->createQueryBuilder();
 
-		$queryBuilder->select([$abbr]);
+		$queryBuilder->select($abbr);
 		$queryBuilder->from($this->entity, $abbr);
 
 		if ($this->restrictByAccount) {

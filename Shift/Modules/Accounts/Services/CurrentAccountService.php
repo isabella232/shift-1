@@ -2,6 +2,7 @@
 
 namespace Tectonic\Shift\Modules\Accounts\Services;
 
+use Request;
 use Tectonic\Shift\Modules\Accounts\Entities\Account;
 use Tectonic\Shift\Modules\Accounts\Repositories\AccountRepositoryInterface;
 
