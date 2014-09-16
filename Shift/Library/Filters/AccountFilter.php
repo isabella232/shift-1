@@ -50,6 +50,10 @@ class AccountFilter
 	{
 		$account = $this->currentAccountService->determineCurrentAccount();
 
+		if (!$account) {
+
+		}
+
 		$this->currentAccountService->setCurrentAccount($account);
 	}
 }

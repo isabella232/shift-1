@@ -31,6 +31,7 @@ class Account extends Entity
 
     /**
      * @ORM\ManyToOne(targetEntity="Tectonic\Shift\Modules\Users\Entities\User")
+     * @ORM\JoinColumn(name="user_id")
      */
     protected $owner;
 
