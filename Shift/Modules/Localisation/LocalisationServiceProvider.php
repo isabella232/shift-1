@@ -1,6 +1,7 @@
 <?php namespace Tectonic\Shift\Modules\Localisation;
 
 use Illuminate\Support\ServiceProvider;
+use App;
 
 class LocalisationServiceProvider extends ServiceProvider
 {
@@ -87,7 +88,7 @@ class LocalisationServiceProvider extends ServiceProvider
     {
         $this->app->bindShared('Tectonic\Shift\Modules\Localisation\Contracts\LocaleRepositoryInterface', function()
         {
-            return $this->app->make('Tectonic\Shift\Modules\Localisation\Repositories\LocaleDoctrineRepository');
+            return $this->app->make('Tectonic\Shift\Modules\Localisation\Repositories\DoctrineLocaleRepository');
         });
     }
 
@@ -100,7 +101,7 @@ class LocalisationServiceProvider extends ServiceProvider
     {
         $this->app->bindShared('Tectonic\Shift\Modules\Localisation\Contracts\LocalisationRepositoryInterface', function()
         {
-            return $this->app->make('Tectonic\Shift\Modules\Localisation\Repositories\LocalisationDoctrineRepository');
+            return $this->app->make('Tectonic\Shift\Modules\Localisation\Repositories\DoctrineLocalisationRepository');
         });
     }
 

@@ -4,7 +4,7 @@ use Tectonic\Shift\Modules\Localisation\Entities\Locale;
 use Tectonic\Shift\Library\Support\Database\Doctrine\Repository;
 use Tectonic\Shift\Modules\Localisation\Contracts\LocaleRepositoryInterface;
 
-class LocaleDoctrineRepository extends Repository implements LocaleRepositoryInterface
+class DoctrineLocaleRepository extends Repository implements LocaleRepositoryInterface
 {
     protected $entity = Locale::class;
 
