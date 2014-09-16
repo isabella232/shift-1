@@ -2,15 +2,21 @@
 
 namespace Tests;
 
+use App;
 use DB;
 use Illuminate;
 use Mockery as m;
 use Symfony;
 use Route;
+use Tectonic\Shift\Modules\Accounts\Entities\Account;
+use Tectonic\Shift\Modules\Accounts\Services\CurrentAccountService;
 
 class TestCase extends \Orchestra\Testbench\TestCase
 {
-    /**
+	private $database = 'test';
+	protected $account;
+
+	/**
      * Stores a response created by a call to the API.
      *
      * @var null
@@ -42,11 +48,11 @@ class TestCase extends \Orchestra\Testbench\TestCase
 		// reset base path to point to our package's src directory
 		$app['path.base'] = __DIR__ . '/../../';
 
-		$app['config']->set('database.default', 'test');
-		$app['config']->set('database.connections.test', array(
+		$app['config']->set('database.default', $this->database);
+		$app['config']->set('database.connections.'.$this->database, array(
 			'driver'   => 'mysql',
 			'host'     => 'localhost',
-			'database' => 'test',
+			'database' => $this->database,
 			'username' => 'root',
 			'password' => '',
 			'prefix'   => '',
@@ -71,6 +77,14 @@ class TestCase extends \Orchestra\Testbench\TestCase
 		$artisan = $this->app->make('artisan');
 
 		$artisan->call('migrate', ['--path' => 'migrations']);
+
+		$this->account = new Account('Account');
+
+		$accountRepository = App::make('Tectonic\Shift\Modules\Accounts\Repositories\AccountRepositoryInterface');
+		$accountRepository->save($this->account);
+
+		$accountService = App::make(CurrentAccountService::class);
+		$accountService->setCurrentAccount($this->account);
 	}
 
     /**

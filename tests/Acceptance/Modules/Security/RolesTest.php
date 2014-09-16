@@ -14,6 +14,7 @@ class RolesTest extends TestCase
         parent::setUp();
 
         $this->roleRepository = App::make('Tectonic\Shift\Modules\Security\Repositories\RoleRepositoryInterface');
+        $this->accountRepository = App::make('Tectonic\Shift\Modules\Accounts\Repositories\AccountRepositoryInterface');
     }
 
     public function testStoreNewRole()
@@ -80,7 +81,6 @@ class RolesTest extends TestCase
     public function testDeleteRole()
     {
         $existingRoleData = [
-            'account_id' => null,
             'default' => false,
             'name' => 'Existing role'
         ];
@@ -134,13 +134,14 @@ class RolesTest extends TestCase
     private function createNewRole($data = [])
     {
         $defaultData = [
-            'account_id' => null,
             'default' => false,
             'name' => 'Existing role'
         ];
 
         $existingRoleData = array_merge($defaultData, $data);
+
 	    $existingRole = $this->roleRepository->getNew($existingRoleData);
+	    $existingRole->setAccount($this->account);
 
         return $this->roleRepository->save($existingRole);
     }

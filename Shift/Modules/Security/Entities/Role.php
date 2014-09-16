@@ -51,5 +51,13 @@ class Role extends Entity
      * @ORM\ManyToMany(targetEntity="Tectonic\Shift\Modules\Users\Entities\User", mappedBy="userId")
      */
     protected $users;
+
+	/**
+	 * @param $name
+	 */
+	public function __construct($name)
+	{
+		$this->name = $name;
+	}
 }
 

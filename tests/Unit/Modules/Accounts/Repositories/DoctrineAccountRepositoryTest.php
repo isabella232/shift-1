@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Modules\Accounts\Repositories;
+namespace Tests\Acceptance\Modules\Accounts\Repositories;
 
 use Doctrine\ORM\EntityManager;
 use Mockery as m;
@@ -13,6 +13,7 @@ class DoctrineAccountRepositoryTest extends TestCase
 	private $repository;
 	private $mockEntityManager;
 
+	// @TODO: Setup the test to actually hit the database
 	public function setUp()
 	{
 		parent::setUp();

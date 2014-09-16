@@ -1,9 +1,9 @@
 <?php namespace Tests\Acceptance\Modules\Localisation\Repositories;
 
+use App;
 use Mockery;
 use Tests\TestCase;
-use Tectonic\Shift\Modules\Localisation\Models\Locale;
-use Tectonic\Shift\Modules\Localisation\Repositories\SqlLocaleRepository;
+use Tectonic\Shift\Modules\Localisation\Repositories\LocaleDoctrineRepository;
 
 class LocaleRepositoryTest extends TestCase
 {
@@ -36,7 +36,7 @@ class LocaleRepositoryTest extends TestCase
             ['locale'  => 'English (United States)', 'code'     => 'en_US'],
         ];
 
-        $this->repository = new SqlLocaleRepository(new Locale());
+        $this->repository = App::make(LocaleDoctrineRepository::class);
     }
 
     public function testGetCodeByIdReturnsCorrectCode()

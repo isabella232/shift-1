@@ -1,5 +1,6 @@
 <?php namespace Tectonic\Shift\Library\Support\Database\Doctrine;
 
+use App;
 use DateTime;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
@@ -7,6 +8,7 @@ use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Tectonic\Shift\Library\Support\Database\RecordNotFoundException;
 use Tectonic\Shift\Library\Support\Database\RepositoryInterface;
+use Tectonic\Shift\Modules\Accounts\Services\CurrentAccountService;
 
 abstract class Repository extends EntityRepository implements RepositoryInterface
 {
@@ -58,15 +60,20 @@ abstract class Repository extends EntityRepository implements RepositoryInterfac
     }
 
     /**
-     * Get a specific resource.
+     * Get a specific resource. When searching by id, only 1 record should ever be returned.
      *
      * @param integer $id
-     *
      * @return Resource
      */
     public function getById($id)
     {
-	    return $this->getBy('id', $id);
+	    $resource = $this->getBy('id', $id);
+
+	    if (!$resource) {
+		    return null;
+	    }
+
+	    return $resource[0];
     }
 
     /**
@@ -157,7 +164,7 @@ abstract class Repository extends EntityRepository implements RepositoryInterfac
      */
     public function getNew(array $data = [])
     {
-        $entity = (new $this->entity);
+	    $entity = $this->newEntity($data);
 
         if ($data) {
             $this->decorate($entity, $data);
@@ -259,9 +266,10 @@ abstract class Repository extends EntityRepository implements RepositoryInterfac
 		$queryBuilder->from($this->entity, $abbr);
 
 		if ($this->restrictByAccount) {
-			/* @TODO: get the actual account id for the current request */
+			$accountService = App::make(CurrentAccountService::class);
+
 			$queryBuilder->where($this->field('accountId').' = :accountId');
-            $queryBuilder->setParameter('accountId', 1);
+            $queryBuilder->setParameter('accountId', $accountService->getCurrentAccount()->getId());
 		}
 
 		return $queryBuilder;
@@ -293,4 +301,36 @@ abstract class Repository extends EntityRepository implements RepositoryInterfac
 
         return $resource;
     }
+
+	/**
+	 * Constructs a new entity by first figuring out the constructor arguments and then calling them correctly. It cannot do this
+	 * for all arguments, only primitive types. If you need specific requirements for your entity, overload the getNew method
+	 * and create your own entities in child repositories.
+	 *
+	 * @param array $data
+	 */
+	private function newEntity(array $data = [])
+	{
+		$reflector = new \ReflectionClass($this->entity);
+		$constructor = $reflector->getConstructor();
+
+		if (null !== $constructor) {
+			$constructorArguments = [];
+
+			$method = $reflector->getMethod('__construct');
+			$params = $method->getParameters();
+
+			foreach ($params as $param) {
+				$parameter = $param->getName();
+
+				if (isset($data[$parameter])) {
+					$constructorArguments[] = $data[$parameter];
+				}
+			}
+
+			return $reflector->newInstanceArgs($constructorArguments);
+		}
+
+		return (new $this->entity);
+	}
 }

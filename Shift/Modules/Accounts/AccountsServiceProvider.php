@@ -1,7 +1,10 @@
 <?php namespace Tectonic\Shift\Modules\Accounts;
 
 use App;
+use Tectonic\Shift\Modules\Accounts\Services\CurrentAccountService;
 use Illuminate\Support\ServiceProvider;
+use Tectonic\Shift\Modules\Accounts\Repositories\AccountRepositoryInterface;
+use Tectonic\Shift\Modules\Accounts\Repositories\DoctrineAccountRepository;
 
 class AccountsServiceProvider extends ServiceProvider
 {
@@ -31,10 +34,7 @@ class AccountsServiceProvider extends ServiceProvider
      */
     protected function registerUserRepository()
     {
-        $this->app->bindShared('Tectonic\Shift\Modules\Accounts\Repositories\UserRepositoryInterface', function()
-        {
-            return App::make('Tectonic\Shift\Modules\Accounts\Repositories\SqlUserRepository');
-        });
+        $this->app->singleton('Tectonic\Shift\Modules\Accounts\Repositories\UserRepositoryInterface', 'Tectonic\Shift\Modules\Accounts\Repositories\DoctrineUserRepository');
     }
 
     /**
@@ -44,10 +44,7 @@ class AccountsServiceProvider extends ServiceProvider
      */
     protected function registerAccountRepository()
     {
-        $this->app->singleton('Tectonic\Shift\Modules\Accounts\Repositories\AccountRepositoryInterface', function()
-        {
-            return App::make('Tectonic\Shift\Modules\Accounts\Repositories\DoctrineAccountRepository');
-        });
+        $this->app->singleton(AccountRepositoryInterface::class, DoctrineAccountRepository::class);
     }
 
     /**
@@ -57,6 +54,6 @@ class AccountsServiceProvider extends ServiceProvider
      */
     protected function registerCurrentAccountService()
     {
-        $this->app->singleton('Tectonic\Shift\Modules\Accounts\Services\CurrentAccountService');
+        $this->app->singleton(CurrentAccountService::class);
     }
 }
