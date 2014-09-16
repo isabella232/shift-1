@@ -26,13 +26,13 @@ class DoctrineAccountRepository extends Repository implements AccountRepositoryI
 	 */
 	public function requireByDomain($domain)
     {
-		$domain = $this->getByDomain($domain);
+		$domains = $this->getByDomain($domain);
 
-	    if (!$domain or count($domain) > 1) {
+	    if (!$domains or count($domains) > 1) {
 			throw new AccountNotFoundException("An account for domain [$domain] could not be found.");
 	    }
 
-	    return $domain[0];
+	    return $domains[0];
     }
 
 	/**

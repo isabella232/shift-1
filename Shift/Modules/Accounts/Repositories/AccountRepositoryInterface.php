@@ -6,5 +6,5 @@ use Tectonic\Shift\Library\Support\Database\RepositoryInterface;
 
 interface AccountRepositoryInterface extends RepositoryInterface
 {
-	public function requireByDomain($domain);
+	public function requireByDomain($domains);
 }
