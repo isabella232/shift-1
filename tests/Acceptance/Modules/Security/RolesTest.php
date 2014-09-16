@@ -29,7 +29,7 @@ class RolesTest extends TestCase
         // Act
         $this->call('POST', 'roles', $data);
 
-        $newRole = $this->roleRepository->getBy('name', $data['name'])->first();
+        $newRole = $this->roleRepository->getBy('name', $data['name']);
 
         // Assert
         $this->assertResponseOk();
@@ -80,17 +80,12 @@ class RolesTest extends TestCase
 
     public function testDeleteRole()
     {
-        $existingRoleData = [
-            'default' => false,
-            'name' => 'Existing role'
-        ];
-
-        $role = $this->roleRepository->create($existingRoleData);
+        $role = $this->createNewRole();
 
         // Act
-        $this->call('DELETE', 'roles', [$role->id]);
+        $this->call('DELETE', 'roles', [$role->getId()]);
 
-        $deletedRole = $this->roleRepository->withTrashed()->find($role->id);
+        $deletedRole = $this->roleRepository->getById($role->getId());
 
         // Assert
         $this->assertResponseOk();
@@ -106,10 +101,9 @@ class RolesTest extends TestCase
 
         $this->response = $this->call('PUT', 'roles/'.$existingRole->getId(), ['name' => 'Updated role name']);
 
-        $updatedRole = $this->roleRepository->whereId($existingRole->id)->first();
+        $updatedRole = $this->roleRepository->getById($existingRole->getId());
 
-        $this->assertEquals('Updated role name', $updatedRole->name);
-        $this->assertEquals($updatedRole->toArray(), $this->parseResponse(true));
+        $this->assertEquals('Updated role name', $updatedRole->getName());
     }
 
     public function testGetSpecificRole()
@@ -119,10 +113,10 @@ class RolesTest extends TestCase
         $this->response = $this->call('GET', 'roles/'.$existingRole->getId());
         $parsedRole = $this->parseResponse();
 
-        $this->assertEquals($existingRole->account_id, $parsedRole->account_id);
+        $this->assertEquals($existingRole->getAccountId(), $parsedRole->accountId);
         $this->assertEquals($existingRole->getId(), $parsedRole->id);
-        $this->assertEquals($existingRole->name, $parsedRole->name);
-        $this->assertEquals((int) $existingRole->default, $parsedRole->default);
+        $this->assertEquals($existingRole->getName(), $parsedRole->name);
+        $this->assertEquals((int) $existingRole->getDefault(), $parsedRole->default);
     }
 
     /**

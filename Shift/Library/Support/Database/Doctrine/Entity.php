@@ -4,6 +4,7 @@ namespace Tectonic\Shift\Library\Support\Database\Doctrine;
 
 use BadMethodCallException;
 use Doctrine\ORM\Mapping as ORM;
+use Illuminate\Support\Contracts\JsonableInterface;
 
 /**
  * Class Entity
@@ -12,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\MappedSuperclass
  * @package Tectonic\Shift\Library\Support\Database\Doctrine
  */
-class Entity
+class Entity implements JsonableInterface
 {
     /**
      * If a given property exists, then let's support a getter for that property.
@@ -40,4 +41,16 @@ class Entity
 
         throw new BadMethodCallException(static::class.'::'.$method.' does not exist.');
     }
+
+	/**
+	 * This is just a shorthand method, for now. This will need to be removed, and instead - all our responses via entities
+	 * sent to an entity transformer for each resource that can handle how data is returned as part of the response.
+	 *
+	 * @param int $options
+	 * @return string
+	 */
+	public function toJson($options = 0)
+	{
+		return json_encode(get_object_vars($this), $options);
+	}
 }
