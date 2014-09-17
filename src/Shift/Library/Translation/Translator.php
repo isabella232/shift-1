@@ -178,9 +178,9 @@ class Translator extends IlluminateTranslator
      */
     public function setUICustomisations($locales = [])
     {
-        //if(empty($locales)) $locales = $this->supportedLocales;
+        if(empty($locales)) $locales = $this->supportedLocales;
 
-        //$this->setKeys($this->repo->getUILocalisations($locales));
+        $this->setKeys($this->repo->getUILocalisations($locales));
 
         return $this;
     }

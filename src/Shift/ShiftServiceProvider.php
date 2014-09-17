@@ -125,7 +125,7 @@ class ShiftServiceProvider extends ServiceProvider
 	{
         foreach($files as $file)
         {
-            require __DIR__.'/../boot/'.$file.'.php';
+            require __DIR__.'/../../boot/'.$file.'.php';
         }
 	}
 

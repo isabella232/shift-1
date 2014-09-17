@@ -47,15 +47,27 @@ class DoctrineLocalisationRepository extends Repository implements LocalisationR
         $localeIds = $this->localeRepo->getLocaleIds($locales);
 
         $query = $this->entityManager()->createQueryBuilder()
-            ->select('l')
+            ->select(['l.field', 'l.value'])
             ->from($this->entity, 'l')
             ->where('l.resource = :resource')
             ->andWhere('l.locale_id IN (:locale_ids)')
             ->setParameter('resource', 'UI')
             ->setParameter('locale_ids', $localeIds);
 
-        $result = $query->getQuery();
+        $results = $query->getQuery()->getArrayResult();
 
-        return $result->getArrayResult();
+        return $this->flattenUILocalisations($results);
+    }
+
+    protected function flattenUILocalisations($results)
+    {
+        $array = [];
+
+        foreach($results as $result)
+        {
+            $array[$result['field']] = $result['value'];
+        }
+
+        return $array;
     }
 }
