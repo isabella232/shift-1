@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
     'label' => [
         'email'    => 'Email',
@@ -8,4 +8,4 @@ return array(
         'colour'   => 'colour',
     ],
 
-);
+];

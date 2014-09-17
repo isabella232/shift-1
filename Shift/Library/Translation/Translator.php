@@ -1,8 +1,8 @@
 <?php namespace Tectonic\Shift\Library\Translation;
 
 use Illuminate\Translation\LoaderInterface;
-use Illuminate\Translation\Translator as IlluminteTranslator;
-use Tectonic\Shift\Modules\Localisation\Repositories\LocalisationRepositoryInterface;
+use Illuminate\Translation\Translator as IlluminateTranslator;
+use Tectonic\Shift\Modules\Localisation\Contracts\LocalisationRepositoryInterface;
 
 /**
  * Class Translator
@@ -25,12 +25,21 @@ use Tectonic\Shift\Modules\Localisation\Repositories\LocalisationRepositoryInter
  * ];
  *
  */
-class Translator extends IlluminteTranslator
+class Translator extends IlluminateTranslator
 {
     /**
-     * @var LocaleRepositoryInterface
+     * Locale repository
+     *
+     * @var LocalisationRepositoryInterface
      */
     protected $repo;
+
+    /**
+     * A list of supported locales.
+     *
+     * @var array
+     */
+    protected $supportedLocales;
 
     /**
      * Construct class and autoload any specified package/module language files.
@@ -50,6 +59,7 @@ class Translator extends IlluminteTranslator
     )
     {
         $this->repo = $repo;
+        $this->supportedLocales = $locales;
 
         parent::__construct($loaderInterface, $locale);
 
@@ -57,7 +67,7 @@ class Translator extends IlluminteTranslator
     }
 
     /**
-     * Autoload the language file (lang.php) from each module (bundle) namespace
+     * Autoload the language file (lang.php) from each module (bundle/package) namespace
      * into the cached loaded array.
      *
      * @param array $namespaces
@@ -159,9 +169,18 @@ class Translator extends IlluminteTranslator
         return $this;
     }
 
-    public function setUICustomisations($locales = ['en_GB'])
+    /**
+     * Get custom UI localisations from data store, and update the loaded
+     * array, by over writing default values with custom localisation.
+     *
+     * @param  array $locales
+     * @return $this
+     */
+    public function setUICustomisations($locales = [])
     {
-        $this->setKeys($this->repo->getUILocalisations($locales));
+        //if(empty($locales)) $locales = $this->supportedLocales;
+
+        //$this->setKeys($this->repo->getUILocalisations($locales));
 
         return $this;
     }

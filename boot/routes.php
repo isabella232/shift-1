@@ -32,7 +32,7 @@ Route::get('/', function()
 
 Route::get('test', function()
 {
-    $repo = App::make('Tectonic\Shift\Modules\Localisation\Contracts\LocaleRepositoryInterface');
-
-    return $repo;
+    return App::make('shift.translator')
+        ->setUICustomisations(Config::get('shift::language.locales'))
+        ->allToJson();
 });

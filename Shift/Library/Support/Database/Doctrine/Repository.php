@@ -38,6 +38,7 @@ abstract class Repository extends EntityRepository implements RepositoryInterfac
     /**
      * Some simple validation on the class implementation.
      *
+     * @param  EntityManager $entityManager
      * @throws EntityIsNullException
      */
     public function __construct(EntityManager $entityManager)

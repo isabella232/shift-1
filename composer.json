@@ -16,13 +16,14 @@
 	    }
     ],
     "require": {
-        "php": ">=5.5.0",
+        "php": ">=5.6.0",
 	    "laravel/framework": "~4.2",
         "jasonlewis/basset": "dev-master",
 	    "machuga/authority-l4": "dev-master",
         "orchestra/asset": "2.2.*",
         "hashids/hashids": "1.0.*@dev",
-	    "mitchellvanw/laravel-doctrine": "dev-master"
+	    "mitchellvanw/laravel-doctrine": "dev-master",
+        "jms/serializer": "dev-master"
     },
     "require-dev": {
         "mockery/mockery": "dev-master@dev",

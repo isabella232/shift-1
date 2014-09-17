@@ -16,23 +16,31 @@ class DoctrineLocaleRepository extends Repository implements LocaleRepositoryInt
      */
     public function getLocaleIds($locales)
     {
-        // TODO: Implement getLocaleIds() method.
+        $localeIds = [];
+
+        foreach($locales as $locale)
+        {
+            $localeIds[] = $this->getLocaleId($locale);
+        }
+
+        return $localeIds;
     }
 
     /**
-     * Get the ID of a locale by it's code ('en-GB')
+     * Get the ID of a locale by it's code ('en_GB')
      *
-     * @param string $localeCode
+     * @param  string $localeCode
      * @return int
      */
     public function getLocaleId($localeCode)
     {
-        $query = $this->entityManager()->createQuery()
-            ->select(Locale::class . ' locales')
-            ->where("locales.code = ':code'")
+        $query = $this->entityManager()->createQueryBuilder()
+            ->select('l')
+            ->from($this->entity, 'l')
+            ->where('l.code = :code')
             ->setParameter('code', $localeCode);
 
-        $result = $query->getSingleResult();
+        $result = $query->getQuery()->getSingleResult();
 
         return $result->getId();
     }
@@ -46,7 +54,7 @@ class DoctrineLocaleRepository extends Repository implements LocaleRepositoryInt
     public function getLocaleCode($localeId)
     {
         $query = $this->entityManager()->createQuery()
-            ->select(Locale::class . ' locales')
+            ->select($this->entity . ' locales')
             ->where("locales.code = ':id'")
             ->setParameter('id', $localeId);
 

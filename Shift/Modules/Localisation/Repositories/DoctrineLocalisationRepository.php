@@ -1,16 +1,61 @@
 <?php namespace Tectonic\Shift\Modules\Localisation\Repositories;
 
+use Doctrine\ORM\EntityManager;
 use Tectonic\Shift\Library\Support\Database\Doctrine\Repository;
+use Tectonic\Shift\Modules\Localisation\Contracts\LocaleRepositoryInterface;
 use Tectonic\Shift\Modules\Localisation\Contracts\LocalisationRepositoryInterface;
+use Tectonic\Shift\Modules\Localisation\Entities\Localisation;
 
-class LocalisationDoctrineRepository extends Repository implements LocalisationRepositoryInterface
+class DoctrineLocalisationRepository extends Repository implements LocalisationRepositoryInterface
 {
     /**
-     * @param  int   $localeId
+     * Localisation entity
+     *
+     * @var \Tectonic\Shift\Modules\Localisation\Entities\Localisation
+     */
+    protected $entity = Localisation::class;
+
+    /**
+     * Locale repository
+     *
+     * @var \Tectonic\Shift\Modules\Localisation\Contracts\LocaleRepositoryInterface
+     */
+    protected $localeRepo;
+
+    /**
+     * Constructor
+     *
+     * @param EntityManager $entityManager
+     * @param LocaleRepositoryInterface $localeRepo
+     * @throws \Tectonic\Shift\Library\Support\Database\Doctrine\EntityIsNullException
+     */
+    public function __construct(EntityManager $entityManager, LocaleRepositoryInterface $localeRepo)
+    {
+        parent::__construct($entityManager);
+
+        $this->localeRepo = $localeRepo;
+    }
+
+    /**
+     * Return a key/value paired array of UI localisations/customisations
+     *
+     * @param  array $locales
      * @return array
      */
-    public function getUILocalisations($localeId)
+    public function getUILocalisations($locales)
     {
-        // TODO: Implement getUILocalisations() method.
+        $localeIds = $this->localeRepo->getLocaleIds($locales);
+
+        $query = $this->entityManager()->createQueryBuilder()
+            ->select('l')
+            ->from($this->entity, 'l')
+            ->where('l.resource = :resource')
+            ->andWhere('l.locale_id IN (:locale_ids)')
+            ->setParameter('resource', 'UI')
+            ->setParameter('locale_ids', $localeIds);
+
+        $result = $query->getQuery();
+
+        return $result->getArrayResult();
     }
 }

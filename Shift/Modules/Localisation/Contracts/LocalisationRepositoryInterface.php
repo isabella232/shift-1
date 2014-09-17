@@ -5,8 +5,8 @@ interface LocalisationRepositoryInterface
     /**
      * Return a key/value paired array of UI localisations/customisations
      *
-     * @param  int   $localeId
+     * @param  array $locales
      * @return array
      */
-    public function getUILocalisations($localeId);
+    public function getUILocalisations($locales);
 }
