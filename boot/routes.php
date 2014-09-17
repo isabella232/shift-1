@@ -32,6 +32,14 @@ Route::get('/', function()
 
 Route::get('test', function()
 {
+    $repo = App::make('Tectonic\Shift\Modules\Localisation\Contracts\LocaleRepositoryInterface');
+    $data = $repo->getById(1);
+
+    $serializer = JMS\Serializer\SerializerBuilder::create()->build();
+    $jsonContent = $serializer->serialize($data, 'json');
+
+    return $jsonContent;
+
     //return Lang::get('shift::item', [], 'en_GB');;
     return App::make('shift.translator')->setUICustomisations()->allToJson();
 });

@@ -8,6 +8,7 @@ use Tectonic\Shift\Library\Support\Database\Doctrine\Entity;
  *
  * @ORM\Entity
  * @ORM\Table(name="`locales`")
+ * @ExclusionPolicy("None")
  */
 class Locale extends Entity
 {

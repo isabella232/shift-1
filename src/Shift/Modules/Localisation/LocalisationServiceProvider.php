@@ -29,6 +29,10 @@ class LocalisationServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerCustomValidationRules();
+
+        \Doctrine\Common\Annotations\AnnotationRegistry::registerAutoloadNamespace(
+            'JMS\Serializer\Annotation', __DIR__.'/../../../../vendor/jms/serializer/src'
+        );
     }
 
 
