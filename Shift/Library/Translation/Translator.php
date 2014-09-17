@@ -55,7 +55,7 @@ class Translator extends IlluminateTranslator
         LocalisationRepositoryInterface $repo,
         $locale,
         array $autoloads = [],
-        array $locales= []
+        array $locales = []
     )
     {
         $this->repo = $repo;
@@ -63,7 +63,7 @@ class Translator extends IlluminateTranslator
 
         parent::__construct($loaderInterface, $locale);
 
-        $this->autoload($autoloads, $locales);
+        $this->autoload($autoloads, $this->supportedLocales);
     }
 
     /**
@@ -81,7 +81,7 @@ class Translator extends IlluminateTranslator
             // If locales is an empty array, just pull in translations for the default locale (en_GB)
             if(empty($locales))
             {
-                $this->get($namespace . '::lang', [], null);
+                $this->get("{$namespace}::lang", [], null);
             }
             else
             {
@@ -89,7 +89,7 @@ class Translator extends IlluminateTranslator
                 // E.g. lang/en_GB/lang.php, lang/en_US/lang.php ... etc
                 foreach($locales as $locale)
                 {
-                    $this->get($namespace . '::lang', [], $locale);
+                    $this->get("{$namespace}::lang", [], $locale);
                 }
             }
         }

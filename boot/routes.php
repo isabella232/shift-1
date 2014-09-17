@@ -32,7 +32,6 @@ Route::get('/', function()
 
 Route::get('test', function()
 {
-    return App::make('shift.translator')
-        ->setUICustomisations(Config::get('shift::language.locales'))
-        ->allToJson();
+    //return Lang::get('shift::item', [], 'en_GB');;
+    return dd(App::make('shift.translator')->all());
 });
