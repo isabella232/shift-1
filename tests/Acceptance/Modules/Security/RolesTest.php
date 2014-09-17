@@ -21,7 +21,6 @@ class RolesTest extends TestCase
     {
         // Arrange
         $data = [
-            'account_id' => 1,
             'name'       => 'Test Role',
             'default'    => false
         ];
@@ -33,23 +32,18 @@ class RolesTest extends TestCase
 
         // Assert
         $this->assertResponseOk();
-        $this->assertSame($data['name'], $newRole->name);
+        $this->assertSame($data['name'], $newRole[0]->getName());
     }
 
     public function testSetDefaultRole()
     {
         $existingRoleData = [
-            'account_id' => 1,
-            'default' => true,
-            'name' => 'Existing role'
+            'default' => true
         ];
 
-        $existingRole = $this->roleRepository->getNew($existingRoleData);
-
-	    $this->roleRepository->save($existingRole);
+        $existingRole = $this->createNewRole($existingRoleData);
 
         $newRoleData = [
-            'account_id' => 1,
             'default' => true,
             'name' => 'New default role'
         ];
@@ -58,8 +52,8 @@ class RolesTest extends TestCase
         $this->call('POST', 'roles', $newRoleData);
 
         // Assert
-        $newDefaultRole = $this->roleRepository->whereDefault(true)->get();
-        $otherRoles = $this->roleRepository->whereDefault(false)->get();
+        $newDefaultRole = $this->roleRepository->getBy('default', true);
+        $otherRoles = $this->roleRepository->getBy('default', false);
 
         $this->assertResponseOk();
         $this->assertCount(1, $newDefaultRole);
@@ -82,17 +76,13 @@ class RolesTest extends TestCase
     {
         $role = $this->createNewRole();
 
-        // Act
         $this->call('DELETE', 'roles', [$role->getId()]);
 
         $deletedRole = $this->roleRepository->getById($role->getId());
 
         // Assert
         $this->assertResponseOk();
-        $this->assertThat(
-            $deletedRole->deleted_at,
-            $this->logicalNot($this->equalTo(null))
-        );
+        $this->assertNull($deletedRole);
     }
 
     public function testUpdateRole()

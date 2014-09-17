@@ -2,8 +2,7 @@
 
 use App;
 use Tectonic\Shift\Library\Router;
-use Illuminate\Foundation\AliasLoader;
-use Illuminate\Support\ServiceProvider;
+use Tectonic\Shift\Library\ServiceProvider;
 
 class ShiftServiceProvider extends ServiceProvider
 {
@@ -72,8 +71,8 @@ class ShiftServiceProvider extends ServiceProvider
 	 */
 	public function register()
 	{
-        $this->registerServiceProviders();
-        $this->registerAliases();
+        parent::register();
+
         $this->registerRouter();
         $this->registerAuthorityConfiguration();
         $this->registerServiceProviders();
@@ -130,21 +129,6 @@ class ShiftServiceProvider extends ServiceProvider
 	}
 
     /**
-     * Register aliases
-     *
-     * @returns void
-     */
-    protected function registerAliases()
-    {
-        $aliasLoader = AliasLoader::getInstance();
-
-        foreach($this->aliases as $key => $value)
-        {
-            $aliasLoader->alias($key, $value);
-        }
-    }
-
-    /**
      * Register the router instance. This completely overwrites the one registered by Laravel.
      *
      * @return void
@@ -155,18 +139,5 @@ class ShiftServiceProvider extends ServiceProvider
         {
             return new Router($app['events'], $app);
         });
-    }
-
-    /**
-     * Register service providers
-     *
-     * @return void
-     */
-    protected function registerServiceProviders()
-    {
-        foreach($this->serviceProviders as $provider)
-        {
-            $this->app->register($provider);
-        }
     }
 }

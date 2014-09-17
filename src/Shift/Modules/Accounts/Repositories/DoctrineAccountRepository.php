@@ -16,6 +16,15 @@ class DoctrineAccountRepository extends Repository implements AccountRepositoryI
 	 */
 	protected $entity = Account::class;
 
+
+	/**
+	 * Accounts are the top-level root domain of the entire system. Therefore, they are removed
+	 * from the default account restriction for querying.
+	 *
+	 * @var bool
+	 */
+	protected $restrictByAccount = false;
+
 	/**
 	 * Require an account based on the domain that has been provided. If no account is found,
 	 * an AccountNotFoundException is thrown.rsi

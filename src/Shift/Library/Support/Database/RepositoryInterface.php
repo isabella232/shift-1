@@ -36,6 +36,15 @@ interface RepositoryInterface
 	public function getById($id);
 
 	/**
+	 * Acts as a generic method for retrieving a record by a given field/value pair.
+	 *
+	 * @param $field
+	 * @param $value
+	 * @return mixed
+	 */
+	public function getBy($field, $value);
+
+	/**
 	 * Similar to getById, but should raise an EntityNotFoundException.
 	 *
 	 * @param $id

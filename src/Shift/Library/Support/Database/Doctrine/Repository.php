@@ -300,6 +300,12 @@ abstract class Repository extends EntityRepository implements RepositoryInterfac
             $resource->{'set'.$key}($value);
         }
 
+	    if ($this->restrictByAccount) {
+		    $accountService = App::make(CurrentAccountService::class);
+
+		    $resource->setAccount($accountService->getCurrentAccount());
+	    }
+
         return $resource;
     }
 

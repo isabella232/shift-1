@@ -50,14 +50,9 @@ class TestCase extends \Orchestra\Testbench\TestCase
 
 		$app['config']->set('database.default', $this->database);
 		$app['config']->set('database.connections.'.$this->database, array(
-			'driver'   => 'mysql',
-			'host'     => 'localhost',
-			'database' => $this->database,
-			'username' => 'root',
-			'password' => '',
-			'prefix'   => '',
-			'charset'  => 'utf8',
-			'collation' => 'utf8_unicode_ci',
+			'driver'   => 'sqlite',
+			'database' => ':memory:',
+			'prefix'   => ''
 		));
 	}
 
@@ -75,12 +70,12 @@ class TestCase extends \Orchestra\Testbench\TestCase
         Route::disableFilters();
 
 		$artisan = $this->app->make('artisan');
-
-		$artisan->call('migrate', ['--path' => 'migrations']);
-
-		$this->account = new Account('Account');
+		$artisan->call('doctrine:schema:create');
 
 		$accountRepository = App::make('Tectonic\Shift\Modules\Accounts\Repositories\AccountRepositoryInterface');
+
+		$this->account = $accountRepository->getNew(['name' => 'Test account', 'userId' => 1]);
+
 		$accountRepository->save($this->account);
 
 		$accountService = App::make(CurrentAccountService::class);

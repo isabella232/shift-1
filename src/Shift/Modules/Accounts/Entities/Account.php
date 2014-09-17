@@ -25,7 +25,7 @@ class Account extends Entity
     protected $id;
 
     /**
-     * @ORM\Column(type="integer", name="user_id", options={"unsigned"=true})
+     * @ORM\Column(type="integer", name="user_id", options={"unsigned"=true}, nullable=true)
      */
     protected $userId;
 

@@ -1,8 +1,8 @@
 <?php namespace Tectonic\Shift\Modules\Accounts;
 
 use App;
+use Tectonic\Shift\Library\ServiceProvider;
 use Tectonic\Shift\Modules\Accounts\Services\CurrentAccountService;
-use Illuminate\Support\ServiceProvider;
 use Tectonic\Shift\Modules\Accounts\Repositories\AccountRepositoryInterface;
 use Tectonic\Shift\Modules\Accounts\Repositories\DoctrineAccountRepository;
 
@@ -22,19 +22,8 @@ class AccountsServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->registerUserRepository();
         $this->registerAccountRepository();
         $this->registerCurrentAccountService();
-    }
-
-    /**
-     * Register User repository bindings
-     *
-     * @return void
-     */
-    protected function registerUserRepository()
-    {
-        $this->app->singleton('Tectonic\Shift\Modules\Accounts\Repositories\UserRepositoryInterface', 'Tectonic\Shift\Modules\Accounts\Repositories\DoctrineUserRepository');
     }
 
     /**
