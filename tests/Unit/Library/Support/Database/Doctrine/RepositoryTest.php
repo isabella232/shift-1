@@ -9,11 +9,16 @@ use Tests\TestCase;
 
 class RepositoryTest extends TestCase
 {
-    private $mockEntityManager;
+    private $mockEntityManager,
+			$mockQueryBuilder;
 
     public function setUp()
     {
+	    parent::setUp();
+
         $this->mockEntityManager = m::mock(EntityManager::class);
+        $this->mockQueryBuilder = m::mock('queryBuilder');
+
         $this->repository = new DoctrineRepositoryStub($this->mockEntityManager);
     }
 
@@ -24,7 +29,18 @@ class RepositoryTest extends TestCase
 
     public function testRetrievalById()
     {
-	    $this->mockEntityManager->shouldReceive('getResult')->andReturn('found record');
+	    $this->mockEntityManager->shouldReceive('createQueryBuilder')->once()->andReturn($this->mockQueryBuilder);
+
+	    $mockQueryObject = m::mock('query');
+
+	    $this->mockQueryBuilder->shouldReceive('select')->once()->with('t');
+	    $this->mockQueryBuilder->shouldReceive('from')->once()->with('Tests\Stubs\DoctrineEntityStub', 't');
+	    $this->mockQueryBuilder->shouldReceive('where')->once();
+	    $this->mockQueryBuilder->shouldReceive('setParameter')->twice();
+	    $this->mockQueryBuilder->shouldReceive('andWhere')->once()->with('t.id = :id');
+	    $this->mockQueryBuilder->shouldReceive('getQuery')->once()->andReturn($mockQueryObject);
+
+	    $mockQueryObject->shouldReceive('getResult')->andReturn(['found record']);
 
         $this->assertEquals('found record', $this->repository->getById(1));
     }
