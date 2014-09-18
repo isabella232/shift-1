@@ -15,9 +15,7 @@ class BouncerTest extends TestCase
 	{
 		parent::setUp();
 
-		$mockConsumer = m::mock('Tests\Stubs\ConsumerStub');
 		$this->mockAuthority = m::mock('Authority\Authority');
-
 		$this->consumer = new Consumer($this->mockAuthority);
 
 		$this->bouncer = new Bouncer('User', $this->consumer);
