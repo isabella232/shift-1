@@ -276,9 +276,10 @@ abstract class Repository extends EntityRepository implements RepositoryInterfac
 	/**
 	 * Creates a new query object and utilises the account restriction feature.
 	 *
+	 * @param boolean $skipAccountRestriction Override defined account-restriction behaviour.
 	 * @return mixed
 	 */
-	protected function createQuery()
+	protected function createQuery($skipAccountRestriction = false)
 	{
 		$abbr = $this->entityAbbreviation();
 		$queryBuilder = $this->entityManager()->createQueryBuilder();
@@ -286,7 +287,7 @@ abstract class Repository extends EntityRepository implements RepositoryInterfac
 		$queryBuilder->select($abbr);
 		$queryBuilder->from($this->entity, $abbr);
 
-		if ($this->restrictByAccount) {
+		if ($this->restrictByAccount && !$skipAccountRestriction) {
 			$accountService = App::make(CurrentAccountService::class);
 
 			$queryBuilder->where($this->field('account').' = :account');

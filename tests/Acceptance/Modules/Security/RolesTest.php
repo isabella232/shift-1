@@ -103,7 +103,7 @@ class RolesTest extends TestCase
         $this->assertEquals($existingRole->getName(), $parsedRole->name);
         $this->assertEquals((int) $existingRole->getDefault(), $parsedRole->default);
     }
-	
+
     /**
      * Used to create new role objects, including using some default data if no requirements are needed.
      *
