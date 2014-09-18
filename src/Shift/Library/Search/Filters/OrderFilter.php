@@ -2,9 +2,6 @@
 
 namespace Tectonic\Shift\Library\Search\Filters;
 
-use Tectonic\Shift\Library\Search\Filters\SearchFilterInterface;
-use Tectonic\Shift\Library\Search\Search;
-
 class OrderFilter implements SearchFilterInterface
 {
 
@@ -54,7 +51,7 @@ class OrderFilter implements SearchFilterInterface
 		$field = isset($input['order']) ? $input['order'] : 'id';
 		$direction = isset($input['direction']) ? $input['direction'] : 'desc';
 
-		return new static($field, $direction);
+		return static::byFieldAndDirection($field, $direction);
 	}
 
 	/**
@@ -63,8 +60,6 @@ class OrderFilter implements SearchFilterInterface
 	public function applyToDoctrine($queryBuilder)
 	{
 		$queryBuilder->orderBy($this->sortField($queryBuilder), $this->sortDirection());
-		
-		return $this;
 	}
 	
 	/**

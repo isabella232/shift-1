@@ -3,48 +3,41 @@
 use Mockery as m;
 use Tectonic\Shift\Library\Search\Filters\OrderFilter;
 
-class OrderFilterTest extends \PHPUnit_Framework_TestCase
+class OrderFilterTest extends \Tests\TestCase
 {
-	protected $mockSearch;
-
-	public function tearDown()
-	{
-		m::close();
-	}
+	private $queryBuilder;
 
 	public function setUp()
 	{
-		$this->mockQuery = m::mock('Eloquent');
+		parent::setUp();
 
-		$this->mockSearch = m::mock('Tectonic\Shift\Library\Search\Search')->makePartial();
-		$this->mockSearch->setQuery($this->mockQuery);
-
-		$this->filter = new OrderFilter;
-		$this->filter->setSearch($this->mockSearch);
+		$this->queryBuilder = m::mock('querybuilder');
 	}
 
-	public function testCallingCriteriaWithoutParamsShouldCallDefaults()
+	public function testByFieldAndDirection()
 	{
-		$this->mockQuery->shouldReceive('orderBy')->once()->with('id', 'DESC');
+		$this->queryBuilder->shouldReceive('getRootAliases')->andReturn('alias');
+		$this->queryBuilder->shouldReceive('orderBy')->with('a.field', 'ASC');
 
-		$this->filter->criteria($this->mockSearch);
+		$filter = OrderFilter::byFieldAndDirection('field', 'asc');
+		$filter->applyToDoctrine($this->queryBuilder);
 	}
 
-	public function testCallingCriteriaWithCustomOrderParamsShouldCallQueryAppropriately()
+	public function testByInputWithOnlyField()
 	{
-		$this->mockSearch->setParams(['order' => 'name', 'direction' => 'asc']);
+		$this->queryBuilder->shouldReceive('getRootAliases')->andReturn('alias');
+		$this->queryBuilder->shouldReceive('orderBy')->with('a.something', 'DESC');
 
-		$this->mockQuery->shouldReceive('orderBy')->once()->with('name', 'ASC');
-
-		$this->filter->criteria($this->mockSearch);
+		$filter = OrderFilter::byInput(['order' => 'something']);
+		$filter->applyToDoctrine($this->queryBuilder);
 	}
 
-	public function testCallingCriteriaWithInvalidDirectionShouldStillUseDefault()
+	public function testByInputWithOnlyDirection()
 	{
-		$this->mockSearch->setParams(['order' => 'field', 'direction' => 'bogus']);
+		$this->queryBuilder->shouldReceive('getRootAliases')->andReturn('alias');
+		$this->queryBuilder->shouldReceive('orderBy')->with('a.id', 'ASC');
 
-		$this->mockQuery->shouldReceive('orderBy')->once()->with('field', 'DESC');
-
-		$this->filter->criteria($this->mockSearch);
+		$filter = OrderFilter::byInput(['direction' => 'asc']);
+		$filter->applyToDoctrine($this->queryBuilder);
 	}
 }
