@@ -3,30 +3,34 @@
 use Mockery as m;
 use Tectonic\Shift\Library\Search\Filters\KeywordFilter;
 
-class KeywordFilterTest extends \PHPUnit_Framework_TestCase
+class KeywordFilterTest extends \Tests\TestCase
 {
-	protected $mockSearch;
-
-	public function tearDown()
+	/**
+	 * @covers KeywordFilter::applyToDoctrine
+	 */
+	public function testExpectationsWhenKeywordsAreProvided()
 	{
-		m::close();
+		$mockBuilder = m::mock('querybuilder');
+		$mockBuilder->shouldReceive('getRootAliases')->andReturn('alias');
+		$mockBuilder->shouldReceive('andWhere')->with('a.name LIKE :keywords');
+		$mockBuilder->shouldReceive('setParameter')->with('keywords', '%keywords%');
+
+		$filter = KeywordFilter::fromKeywords('keywords');
+		$filter->applyToDoctrine($mockBuilder);
 	}
 
-	public function setUp()
+	/**
+	 * @covers KeywordFilter::applyToDoctrine
+	 */
+	public function testExpectationsWhenNoKeywordsAreProvided()
 	{
-		$this->mockQuery = m::mock('Eloquent');
-		$this->mockSearch = m::mock('Tectonic\Shift\Library\Search\Search')->makePartial();
-		$this->mockSearch->setQuery($this->mockQuery);
-		$this->mockSearch->setParams(['keyword' => 'kirk']);
+		$mockBuilder = m::mock('querybuilder');
 
-		$this->filter = new KeywordFilter;
-		$this->filter->setSearch($this->mockSearch);
-	}
+		$mockBuilder->shouldReceive('getRootAliases')->never();
+		$mockBuilder->shouldReceive('andWhere')->never();
+		$mockBuilder->shouldReceive('setParameter')->never();
 
-	public function testCallingCriteriaShouldAlterTheQuery()
-	{
-		$this->mockQuery->shouldReceive('where')->once()->with('name', 'LIKE', '%kirk%');
-
-		$this->filter->criteria($this->mockSearch);
+		$filter = KeywordFilter::fromKeywords('');
+		$filter->applyToDoctrine($mockBuilder);
 	}
 }
