@@ -23,13 +23,9 @@ class DoctrineRoleRepository extends Repository implements RoleRepositoryInterfa
      */
     public function getByDefault()
     {
-        $query = $this->createQuery();
-
-        $query->where($query->expr()->eq($this->field('default'), true));
-
-        return $query->getResult();
+        return $this->getBy('default', true);
     }
-
+	
     /**
      * Set the default role for an account. It will also unset another role, if another
      * role is the current default role for the account.

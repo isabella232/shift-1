@@ -30,7 +30,7 @@ class RoleValidation extends Validation
         return [
             'name' => [
                 'required',
-                'unique:roles,name,NULL,id,account_id,'.$this->currentAccountService->getCurrentAccount()->getId()
+                //'unique:roles,name,NULL,id,account_id,'.$this->currentAccountService->getCurrentAccount()->getId() @TODO: Get this working via doctrine!
             ]
         ];
     }

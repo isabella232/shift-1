@@ -17,6 +17,7 @@ use Tectonic\Shift\Modules\Accounts\Entities\Accountable;
  * role permissions.
  *
  * @ORM\Entity(repositoryClass="Tectonic\Shift\Modules\Security\Repositories\DoctrineRoleRepository")
+ * @ORM\HasLifecycleCallbacks()
  * @ORM\Table(name="roles")
  */
 class Role extends Entity

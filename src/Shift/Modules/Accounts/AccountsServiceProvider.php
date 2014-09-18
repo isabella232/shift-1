@@ -1,4 +1,6 @@
-<?php namespace Tectonic\Shift\Modules\Accounts;
+<?php
+
+namespace Tectonic\Shift\Modules\Accounts;
 
 use App;
 use Tectonic\Shift\Library\ServiceProvider;
@@ -22,6 +24,8 @@ class AccountsServiceProvider extends ServiceProvider
      */
     public function register()
     {
+	    parent::register();
+
         $this->registerAccountRepository();
         $this->registerCurrentAccountService();
     }

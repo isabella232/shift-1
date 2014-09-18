@@ -33,6 +33,11 @@ abstract class ServiceProvider extends Provider
 		$this->registerAliases();
 	}
 
+	/**
+	 * When booting any service provider issued by Shift or any child packages, it's important
+	 * that upon boot we register any entity paths that the system wants to use. This is used
+	 * for database migrations via Doctrine.
+	 */
 	public function boot()
 	{
 		$this->setupEntityPaths();
@@ -73,13 +78,33 @@ abstract class ServiceProvider extends Provider
 	protected function setupEntityPaths()
 	{
 		$directory = $this->getServiceProviderDirectory('Entities');
-		$configuration = [];
+		$configuration = $this->cleanupConfiguration(Config::get('doctrine::doctrine.metadata', []));
 
-		if (File::exists($directory) and File::isDirectory($directory)) {
+		if (File::isDirectory($directory)) {
 			$configuration[] = $directory;
-
-			Config::set('doctrine::doctrine.metadata', append_config($configuration));
 		}
+
+		Config::set('doctrine::doctrine.metadata', append_config($configuration));
+	}
+
+	/**
+	 * Due to the way in which the configuration array is initially configured, it can mean that the first
+	 * path doesn't actually exist. As a result, we want to loop through the configuration on each use case
+	 * and remove any paths that don't actually exist.
+	 */
+	private function cleanupConfiguration(array $configuration = [])
+	{
+		$keysToRemove = [];
+
+		foreach ($configuration as $key => $path) {
+			if (!File::isDirectory($path)) {
+				$keysToRemove[$key] = null;
+			}
+		}
+
+		$diff = array_diff_key($configuration, $keysToRemove);
+
+		return $diff;
 	}
 
 	/**

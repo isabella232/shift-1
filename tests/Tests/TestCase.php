@@ -70,6 +70,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
         Route::disableFilters();
 
 		$artisan = $this->app->make('artisan');
+		$artisan->call('doctrine:schema:drop');
 		$artisan->call('doctrine:schema:create');
 
 		$accountRepository = App::make('Tectonic\Shift\Modules\Accounts\Repositories\AccountRepositoryInterface');
@@ -98,14 +99,4 @@ class TestCase extends \Orchestra\Testbench\TestCase
 
         return json_decode($response, $asArray);
     }
-
-	/**
-	 * Test running migration.
-	 *
-	 * @test
-	 */
-	public function testRunningMigration()
-	{
-		DB::table('roles')->get();
-	}
 }
