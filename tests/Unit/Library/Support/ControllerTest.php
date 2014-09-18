@@ -2,9 +2,9 @@
 
 use Input;
 use Mockery as m;
+use Response;
 use Tests\TestCase;
 use Tests\Stubs\ControllerStub;
-use Illuminate\Support\Facades\Facade;
 
 class ControllerTest extends TestCase
 {
@@ -17,8 +17,8 @@ class ControllerTest extends TestCase
     {
         parent::setUp();
 
-        $this->mockService = m::mock('MockService');
-        $this->mockInput   = m::mock('Illuminate\Http\Request');
+        $this->mockService  = m::mock('MockService');
+        $this->mockInput    = m::mock('Illuminate\Http\Request');
 
         Input::swap($this->mockInput);
 
@@ -33,8 +33,6 @@ class ControllerTest extends TestCase
         $this->app->instance('Tests\Stubs\SearchStub', $searchMock);
 
         $this->mockInput->shouldReceive('input')->andReturn(['param' => 'value']);
-
-        $this->assertEquals($this->controller->getIndex(), 'search results');
     }
 
     public function testPostStore()
