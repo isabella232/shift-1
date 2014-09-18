@@ -10,6 +10,7 @@ use Tectonic\Shift\Modules\Users\Entities\User;
  * Account
  *
  * @ORM\Entity(repositoryClass="Tectonic\Shift\Modules\Accounts\Repositories\DoctrineAccountRepository")
+ * @ORM\HasLifecycleCallbacks()
  * @ORM\Table(name="accounts")
  */
 class Account extends Entity

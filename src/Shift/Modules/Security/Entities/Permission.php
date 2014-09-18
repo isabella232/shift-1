@@ -13,23 +13,44 @@ use Tectonic\Shift\Library\Support\Database\Doctrine\Entity;
  * an extremely important part of Shift. Users need to know what they're doing when modifying
  * role permissions.
  *
- * @ORM\Entity(repositoryClass="Tectonic\Shift\Modules\Security\Repositories\DoctrineRoleRepository")
- * @ORM\Table(name="roles")
+ * @ORM\Entity(repositoryClass="Tectonic\Shift\Modules\Security\Repositories\DoctrinePermissionRepository")
+ * @ORM\Table(name="permissions")
  */
 class Permission extends Entity
 {
-    /**
-     * @ORM\Column(type="boolean", options={"default"=0})
-     */
-    private $default;
+	/**
+	 * @ORM\Id
+	 * @ORM\Column(type="integer")
+	 */
+	protected $roleId;
+
+	/**
+	 * @ORM\Id
+	 * @ORM\Column(type="string")
+	 */
+	protected $action;
+
+	/**
+	 * @ORM\Id
+	 * @ORM\Column(type="string")
+	 */
+	protected $resource;
+
+	/**
+	 * @ORM\Column(type="string")
+	 */
+	protected $type;
 
     /**
      * @ORM\ManyToOne(targetEntity="Tectonic\Shift\Modules\Security\Entities\Role")
      */
-    private $role;
+    protected $role;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="Tectonic\Shift\Modules\Users\Entities\Users", mappedBy="userId")
-     */
-    private $users;
+	public function __construct(Role $role, $resource, $action, $type)
+	{
+		$this->setRole($role);
+		$this->setResource($resource);
+		$this->setAction($action);
+		$this->setType($type);
+	}
 }

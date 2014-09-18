@@ -1,6 +1,6 @@
 <?php namespace Tectonic\Shift\Modules\Security;
 
-use Illuminate\Support\ServiceProvider;
+use Tectonic\Shift\Library\ServiceProvider;
 
 class SecurityServiceProvider extends ServiceProvider
 {
