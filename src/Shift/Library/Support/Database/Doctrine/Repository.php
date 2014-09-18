@@ -260,8 +260,10 @@ abstract class Repository extends EntityRepository implements RepositoryInterfac
      * @throws Exception
      * @return mixed|void
      */
-    public function saveAll(...$resources)
+    public function saveAll()
     {
+	    $resources = func_get_args();
+
         if (count($resources) == 0) {
             throw new Exception('You must provide at least one $resource argument.');
         }

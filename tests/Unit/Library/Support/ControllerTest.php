@@ -28,13 +28,12 @@ class ControllerTest extends TestCase
     public function testGetIndex()
     {
         $searchMock = m::mock('searchclass');
-        $searchMock->shouldReceive('setParams')->with(['param' => 'value']);
-        $searchMock->shouldReceive('execute')->andReturn($searchMock);
-        $searchMock->shouldReceive('results')->andReturn('search results');
+        $searchMock->shouldReceive('fromInput')->with(['param' => 'value'])->andReturn('search results');
 
         $this->app->instance('Tests\Stubs\SearchStub', $searchMock);
 
         $this->mockInput->shouldReceive('input')->andReturn(['param' => 'value']);
+
         $this->assertEquals($this->controller->getIndex(), 'search results');
     }
 
