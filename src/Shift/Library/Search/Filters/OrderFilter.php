@@ -5,7 +5,7 @@ namespace Tectonic\Shift\Library\Search\Filters;
 use Tectonic\Shift\Library\Search\Filters\SearchFilterInterface;
 use Tectonic\Shift\Library\Search\Search;
 
-class OrderFilter extends SearchFilter implements SearchFilterInterface
+class OrderFilter implements SearchFilterInterface
 {
 
 	/**
@@ -13,23 +13,42 @@ class OrderFilter extends SearchFilter implements SearchFilterInterface
 	 * 
 	 * @var string
 	 */
-	public $defaultField = 'id';
+	protected $field = null;
 
 	/**
 	 * Default order direction.
 	 * 
 	 * @var string
 	 */
-	public $defaultDirection = 'DESC';
-	
+	protected $direction = null;
+
+	/**
+	 * @param string $field
+	 * @param string $direction
+	 */
+	protected function __construct($field, $direction)
+	{
+		$this->field = $field;
+		$this->direction = $direction;
+	}
+
+	/**
+	 * Create a new order filter from a syntax-friendly static method.
+	 *
+	 * @param string $field
+	 * @param string $direction
+	 */
+	public static function fromOrder($field = 'id', $direction = 'DESC')
+	{
+		return new static($field, $direction);
+	}
+
 	/**
 	 * Add an order by clause to the search query.
-	 *
-	 * @return OrderFilter
 	 */
-	public function criteria()
+	public function applyToDoctrine($queryBuilder)
 	{
-		$this->getQuery()->orderBy($this->sortField(), $this->sortDirection());
+		$queryBuilder->orderBy($this->sortField($queryBuilder), $this->sortDirection());
 		
 		return $this;
 	}
@@ -39,9 +58,9 @@ class OrderFilter extends SearchFilter implements SearchFilterInterface
 	 * 
 	 * @return string 
 	 */
-	protected function sortField()
+	protected function sortField($queryBuilder)
 	{
-		return @$this->getParam('order') ?: $this->defaultField;
+		return $queryBuilder->getRootAliases()[0].'.'.$this->field;
 	}
 
 	/**
@@ -52,16 +71,13 @@ class OrderFilter extends SearchFilter implements SearchFilterInterface
 	protected function sortDirection()
 	{
 		$validDirections = ['ASC', 'DESC'];
+		$direction = strtoupper($this->direction);
 
-		if ($this->hasParam('direction')) {
-			$direction = strtoupper($this->getParam('direction'));
-
-			if (in_array($direction, $validDirections)) {
-				return $direction;
-			}
+		if (!in_array($direction, $validDirections)) {
+			throw new \Exception("$direction is not a valid direction for SQL querying. Use either ASC or DESC.");
 		}
 
-		return $this->defaultDirection;
+		return $direction;
 	}
 
 }
