@@ -97,6 +97,8 @@ class TestCase extends \Orchestra\Testbench\TestCase
             $response = $this->response->getContent();
         }
 
-        return json_decode($response, $asArray);
+	    $json = json_decode($response, $asArray);
+
+	    return $json;
     }
 }

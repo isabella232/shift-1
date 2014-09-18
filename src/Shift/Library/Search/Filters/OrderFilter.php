@@ -38,8 +38,22 @@ class OrderFilter implements SearchFilterInterface
 	 * @param string $field
 	 * @param string $direction
 	 */
-	public static function fromOrder($field = 'id', $direction = 'DESC')
+	public static function byFieldAndDirection($field, $direction)
 	{
+		return new static($field, $direction);
+	}
+
+	/**
+	 * We can also filter from a more generic, unknown array. Here, the OrderFilter will be a bit smarter
+	 * and apply ordering conditions based on the input available.
+	 *
+	 * @param array $input
+	 */
+	public static function byInput(array $input = [])
+	{
+		$field = isset($input['order']) ? $input['order'] : 'id';
+		$direction = isset($input['direction']) ? $input['direction'] : 'desc';
+
 		return new static($field, $direction);
 	}
 

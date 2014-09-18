@@ -3,9 +3,9 @@
 namespace Tectonic\Shift\Library\Support;
 
 use App;
+use Input;
 use Illuminate\Routing\Controller as Ctrl;
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Response;
+use Response;
 use Tectonic\Shift\Library\BaseValidator;
 use Tectonic\Shift\Library\SqlBaseRepositoryInterface;
 
@@ -35,11 +35,9 @@ abstract class Controller extends Ctrl
 	public function getIndex()
 	{
 		$search = $this->resolveSearchClass();
+		$results = $search->fromInput(Input::get());
 
-		$search->setParams(Input::get());
-        $search->execute();
-
-		return $search->results();
+		return Response::json($results);
 	}
 
 	/**
@@ -49,7 +47,7 @@ abstract class Controller extends Ctrl
 	 */
 	public function postStore()
 	{
-        $this->crudService->create(Input::get());
+        return $this->crudService->create(Input::get());
 	}
 
 	/**
@@ -104,11 +102,7 @@ abstract class Controller extends Ctrl
 	 */
 	protected function resolveSearchClass()
 	{
-		$className = $this->resolveSearchClassName($this->searchClass);
-
-		$searchClass = App::make($className);
-
-		return $searchClass;
+		return App::make($this->resolveSearchClassName());
 	}
 
 	/**
@@ -119,6 +113,6 @@ abstract class Controller extends Ctrl
 	 */
 	protected function resolveSearchClassName()
 	{
-		return App::make($this->searchClass);
+		return $this->searchClass;
 	}
 }

@@ -58,12 +58,14 @@ class RolesTest extends TestCase
 
     public function testGetAllRoles()
     {
+	    $role = $this->createNewRole();
+
         // Act
         $this->response = $this->call('GET', 'roles');
 
         // Assert
         $this->assertResponseOk();
-        $this->assertEquals([], $this->parseResponse()->data);
+        $this->assertCount(1, $this->parseResponse());
     }
 
     public function testDeleteRole()
@@ -97,12 +99,11 @@ class RolesTest extends TestCase
         $this->response = $this->call('GET', 'roles/'.$existingRole->getId());
         $parsedRole = $this->parseResponse();
 
-        $this->assertEquals($existingRole->getAccountId(), $parsedRole->accountId);
         $this->assertEquals($existingRole->getId(), $parsedRole->id);
         $this->assertEquals($existingRole->getName(), $parsedRole->name);
         $this->assertEquals((int) $existingRole->getDefault(), $parsedRole->default);
     }
-
+	
     /**
      * Used to create new role objects, including using some default data if no requirements are needed.
      *
@@ -116,11 +117,13 @@ class RolesTest extends TestCase
             'name' => 'Existing role'
         ];
 
-        $existingRoleData = array_merge($defaultData, $data);
+        $roleData = array_merge($defaultData, $data);
 
-	    $existingRole = $this->roleRepository->getNew($existingRoleData);
-	    $existingRole->setAccount($this->account);
+	    $role = $this->roleRepository->getNew($roleData);
+	    $role->setAccount($this->account);
 
-        return $this->roleRepository->save($existingRole);
+	    $role = $this->roleRepository->save($role);
+
+        return $role;
     }
 }

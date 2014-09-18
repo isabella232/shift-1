@@ -289,8 +289,8 @@ abstract class Repository extends EntityRepository implements RepositoryInterfac
 		if ($this->restrictByAccount) {
 			$accountService = App::make(CurrentAccountService::class);
 
-			$queryBuilder->where($this->field('accountId').' = :accountId');
-            $queryBuilder->setParameter('accountId', $accountService->getCurrentAccount()->getId());
+			$queryBuilder->where($this->field('account').' = :account');
+            $queryBuilder->setParameter('account', $accountService->getCurrentAccount());
 		}
 
 		return $queryBuilder;

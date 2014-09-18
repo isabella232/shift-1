@@ -2,29 +2,46 @@
 
 namespace Tectonic\Shift\Modules\Security\Search;
 
-use Tectonic\Shift\Modules\Security\Models\Role;
+use Tectonic\Shift\Library\Search\SearchFilterCollection;
 use Tectonic\Shift\Library\Search\Filters\KeywordFilter;
 use Tectonic\Shift\Library\Search\Filters\OrderFilter;
+use Tectonic\Shift\Modules\Security\Repositories\RoleRepositoryInterface;
 
-class RoleSearch extends \Tectonic\Shift\Library\Search\Search
+class RoleSearch
 {
-	private $keywordFilter;
+	/**
+	 * Stores the role repository to be used for the search execution.
+	 *
+	 * @var RoleRepositoryInterface
+	 */
+	private $roleRepository;
 
-	private $orderFilter;
-
-	public function __construct(Role $role, KeywordFilter $keywordFilter, OrderFilter $orderFilter)
+	/**
+	 * Setup the class dependencies, in this case - just the repository.
+	 *
+	 * @param RoleRepositoryInterface $roleRepository
+	 */
+	public function __construct(RoleRepositoryInterface $roleRepository)
 	{
-		$this->setQuery($role);
-
-		$this->keywordFilter = $keywordFilter;
-		$this->orderFilter = $orderFilter;
-
-		$this->registerFilters();
+		$this->roleRepository = $roleRepository;
 	}
 
-	public function registerFilters()
+	/**
+	 * Setup the required filters necessary for executing a role search request, based on the $input provided.
+	 *
+	 * @param $input
+	 * @return mixed
+	 */
+	public function fromInput($input)
 	{
-		$this->addFilter($this->keywordFilter);
-		$this->addFilter($this->orderFilter);
+		$filterCollection = new SearchFilterCollection;
+
+		if (isset($input['keywords'])) {
+			$filterCollection->add(KeywordFilter::fromKeywords($input['keywords']));
+		}
+
+		$filterCollection->add(OrderFilter::byInput($input));
+
+		return $this->roleRepository->getByCriteria($filterCollection);
 	}
 }
