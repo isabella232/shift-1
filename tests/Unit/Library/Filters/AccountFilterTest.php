@@ -32,8 +32,8 @@ class AccountFilterTest extends TestCase
 
 		$this->mockRequest->shouldReceive('server')->with('SERVER_NAME')->andReturn($domain);
 		$this->mockAccountManagementService->shouldReceive('getRequestedDomain')->with($domain)->andReturn($mockAccount);
-		$this->mockCurrentAccountService->shouldReceive('determineCurrentAccount')->once();
-		$this->mockCurrentAccountService->shouldReceive('setCurrentAccount')->with($mockAccount);
+		$this->mockCurrentAccountService->shouldReceive('determineCurrentAccount')->once()->andReturn('account');
+		$this->mockCurrentAccountService->shouldReceive('setCurrentAccount')->once()->with('account');
 
 		$this->filter->filter(null, $this->mockRequest);
 	}

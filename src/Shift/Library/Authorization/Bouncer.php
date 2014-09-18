@@ -3,7 +3,6 @@
 use App;
 use Log;
 use Illuminate\Support\Str;
-use Tectonic\Shift\Library\Authorization\Consumer;
 
 /**
  * Class Bouncer
@@ -47,6 +46,16 @@ final class Bouncer
 	public function __construct($resource)
 	{
 		$this->resource = $resource;
+	}
+
+	/**
+	 * Sets the consumer object that is required for doing authorisation checks.
+	 *
+	 * @param Consumer $consumer
+	 */
+	public function setConsumer(Consumer $consumer)
+	{
+		$this->consumer = $consumer;
 	}
 
 	/**

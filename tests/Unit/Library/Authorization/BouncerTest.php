@@ -7,7 +7,7 @@ use Tectonic\Shift\Library\Authorization\Consumer;
 
 class BouncerTest extends TestCase
 {
-	private $authenticatedConsumer;
+	private $consumer;
 	private $bouncer;
 	private $mockAuthority;
 
@@ -18,17 +18,15 @@ class BouncerTest extends TestCase
 		$mockConsumer = m::mock('Tests\Stubs\ConsumerStub');
 		$this->mockAuthority = m::mock('Authority\Authority');
 
-		$this->authenticatedConsumer = new Consumer($this->mockAuthority);
-        $this->authenticatedConsumer->setConsumer($mockConsumer);
+		$this->consumer = new Consumer($this->mockAuthority);
 
-		$this->bouncer = new Bouncer('User', $this->authenticatedConsumer);
+		$this->bouncer = new Bouncer('User', $this->consumer);
+		$this->bouncer->setConsumer($this->consumer);
 	}
 
 	public function testDetermineAction()
 	{
-        $this->markTestSkipped();
-
-		$this->assertEquals('update', $this->bouncer->determineAction('put'));
+        $this->assertEquals('update', $this->bouncer->determineAction('put'));
 		$this->assertEquals('index', $this->bouncer->determineAction('delete'));
 		$this->assertEquals('create', $this->bouncer->determineAction('post'));
 		$this->assertEquals('view', $this->bouncer->determineAction('get'));
@@ -37,8 +35,6 @@ class BouncerTest extends TestCase
 
 	public function testAddAccess()
 	{
-        $this->markTestSkipped();
-
         $this->bouncer->addRequiredAccess('get', 'index', ['read']);
 		$this->bouncer->addRequiredAccess('get', 'index', 'update');
 		$this->bouncer->addRequiredAccess('get', 'other', 'any');
@@ -53,8 +49,6 @@ class BouncerTest extends TestCase
 
 	public function testDefaultAccess()
 	{
-        $this->markTestSkipped();
-
         $this->bouncer->setupDefaultAccess();
 
 		$matrix = $this->bouncer->getMatrix();
@@ -67,11 +61,9 @@ class BouncerTest extends TestCase
 
 	public function testAuthorizeWithDefaults()
 	{
-        $this->markTestSkipped();
-
         $this->bouncer->setupDefaultAccess();
 
-		$this->mockAuthority->shouldReceive('can')->with('read', 'User')->andReturn(true);
+		$this->mockAuthority->shouldReceive('can')->once()->with('read', 'User')->andReturn(true);
 
 		$this->assertTrue($this->bouncer->allowed('get', 'index'));
 		$this->assertFalse($this->bouncer->allowed('post', 'something'));
@@ -79,8 +71,6 @@ class BouncerTest extends TestCase
 
 	public function testAuthorizeWithCallback()
 	{
-        $this->markTestSkipped();
-
         $closure = function() {
 			return false;
 		};
@@ -95,8 +85,6 @@ class BouncerTest extends TestCase
 
 	public function testGuestAccess()
 	{
-        $this->markTestSkipped();
-
         $this->bouncer->addRequiredAccess('post', 'register', 'any');
 
 		$this->assertTrue($this->bouncer->allowed('post', 'register'));
