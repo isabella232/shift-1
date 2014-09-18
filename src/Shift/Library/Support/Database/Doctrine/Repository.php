@@ -6,11 +6,13 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Tectonic\Shift\Library\Search\SearchFilterCollection;
+use Tectonic\Shift\Library\Search\SearchRepositoryInterface;
 use Tectonic\Shift\Library\Support\Database\RecordNotFoundException;
 use Tectonic\Shift\Library\Support\Database\RepositoryInterface;
 use Tectonic\Shift\Modules\Accounts\Services\CurrentAccountService;
 
-abstract class Repository extends EntityRepository implements RepositoryInterface
+abstract class Repository extends EntityRepository implements RepositoryInterface, SearchRepositoryInterface
 {
     /**
      * The entity that this repository will use for the base level queries.
@@ -105,6 +107,24 @@ abstract class Repository extends EntityRepository implements RepositoryInterfac
 
         return $query->getResult();
     }
+
+	/**
+	 * Fetches a collection of resulting records based on a collection of search criteria.
+	 *
+	 * @param SearchFilterCollection $filters
+	 */
+	public function getByCriteria(SearchFilterCollection $filters)
+	{
+		$queryBuilder = $this->createQuery();
+
+		foreach ($filters as $filter) {
+			$filter->applyToDoctrine($queryBuilder);
+		}
+
+		$query = $queryBuilder->getQuery();
+
+		return $query->getResult();
+	}
 
 	/**
 	 * Generates the field based on the alias provided by the entity abbreviation method.

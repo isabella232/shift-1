@@ -117,19 +117,8 @@ abstract class Controller extends Ctrl
 	 * @param string $searchClass
 	 * @return string
 	 */
-	protected function resolveSearchClassName($searchClass = null)
+	protected function resolveSearchClassName()
 	{
-		if (!is_null($searchClass)) return $searchClass;
-
-		$class = get_class($this);
-		$class = str_replace('Tectonic\Shift\Modules\\', '', $class);
-
-		$classParts = explode('\\', $class);
-		$module     = array_shift($classParts);
-		$baseClass  = str_replace('Controller', '', array_pop($classParts)).'Search';
-
-		$searchClassName = implode('\\', ['Tectonic\Shift\Modules', $module, 'Search', $baseClass]);
-
-		return $searchClassName;
+		return App::make($this->searchClass);
 	}
 }

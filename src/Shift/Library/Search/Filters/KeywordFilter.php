@@ -2,10 +2,7 @@
 
 namespace Tectonic\Shift\Library\Search\Filters;
 
-use Tectonic\Shift\Library\Search\Filters\SearchFilterInterface;
-use Tectonic\Shift\Library\Search\Search;
-
-class KeywordFilter extends SearchFilter implements SearchFilterInterface
+class KeywordFilter implements SearchFilterInterface
 {	
 	/**
 	 * Default field for keyword searches. For most resources, which are quite basic,
@@ -17,12 +14,54 @@ class KeywordFilter extends SearchFilter implements SearchFilterInterface
 	public $defaultField = 'name';
 
 	/**
-	 * Simply checks the default field for the given keyword.
+	 * Keywords to search by.
+	 *
+	 * @var string
 	 */
-	public function criteria()
+	private $keywords;
+
+	/**
+	 * @param $keywords
+	 */
+	private function __construct($keywords)
 	{
-		if ($this->hasParam('keyword')) {
-			$this->getQuery()->where($this->defaultField, 'LIKE', '%' . $this->getParam('keyword') . '%');
+		$this->keywords = $keywords;
+	}
+
+	/**
+	 * Creates a new KeywordFilter from the keywords provided.
+	 *
+	 * @param $keywords
+	 * @return static
+	 */
+	public static function fromKeywords($keywords)
+	{
+		return new static($keywords);
+	}
+
+	/**
+	 * Applies the filter to the doctrine query builder.
+	 *
+	 * @param QueryBuilder $queryBuilder
+	 */
+	public function applyToDoctrine($queryBuilder)
+	{
+		if ($this->keywords) {
+			$queryBuilder->andWhere($this->fieldName($queryBuilder).' LIKE :keywords');
+			$queryBuilder->setParameter('keywords', '%'.$this->keywords.'%');
 		}
+	}
+
+	/**
+	 * Returns the field name to match against the keywords.
+	 *
+	 * @param $queryBuilder
+	 * @return string
+	 */
+	public function fieldName($queryBuilder)
+	{
+		$rootAliases = $queryBuilder->getRootAliases();
+
+		return $rootAliases[0].'.'.$this->defaultField;
 	}
 }
