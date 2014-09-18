@@ -23,9 +23,15 @@ class DoctrineRoleRepository extends Repository implements RoleRepositoryInterfa
      */
     public function getByDefault()
     {
-        return $this->getBy('default', true);
+	    $defaultRole = $this->getBy('default', true);
+
+	    if ($defaultRole) {
+		    return $defaultRole[0];
+	    }
+
+	    return null;
     }
-	
+
     /**
      * Set the default role for an account. It will also unset another role, if another
      * role is the current default role for the account.
@@ -37,15 +43,31 @@ class DoctrineRoleRepository extends Repository implements RoleRepositoryInterfa
     {
         $existingRole = $this->getByDefault();
 
-        if ($existingRole->getId() == $role->getId()) {
-            return $existingRole;
+        if (!is_null($existingRole)) {
+	        if ($existingRole->getId() == $role->getId()) {
+	           return $role;
+            }
+
+            $existingRole->setDefault(false);
+
+	        $this->saveAll($existingRole, $role);
         }
 
-        $existingRole->setDefault(false);
-        $role->setDefault(true);
-
-        $this->saveAll($existingRole, $role);
-
-        return $role;
+        return parent::save($role);
     }
+
+	/**
+	 * Saves the resource provided to the database.
+	 *
+	 * @param $resource
+	 * @return Resource
+	 */
+	public function save($resource)
+	{
+		if ($resource->getDefault()) {
+			return $this->setDefault($resource);
+		}
+
+		return parent::save($resource);
+	}
 }

@@ -39,7 +39,7 @@ class Role extends Entity
     protected $name;
 
     /**
-     * @ORM\Column(name="`default`", type="boolean", options={"`default`"=0})
+     * @ORM\Column(name="`default`", type="boolean", options={"`default`"=false})
      */
     protected $default;
 
