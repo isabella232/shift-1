@@ -165,7 +165,7 @@ final class Bouncer
 			}
 		}
 
-		Log::info('ACCESS REQUEST: DENIED for ');
+		Log::info('ACCESS REQUEST: DENIED.');
 
 		return false;
 	}
