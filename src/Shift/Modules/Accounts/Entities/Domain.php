@@ -35,8 +35,8 @@ class Domain
      */
     public function __construct(Account $account, DomainName $domain)
     {
-        $this->accountId = $account->getId();
-        $this->domain = $domain;
+        $this->account = $account;
+        $this->domain = $this->setDomain($domain);
     }
 
     /**
@@ -46,6 +46,17 @@ class Domain
      */
     public function getDomain()
     {
-        return $this->domain->getDomainName();
+        return $this->domain;
     }
+
+	/**
+	 * When setting a domain name, we always want to ensure that it's lowercase. The value
+	 * object handles that for us.
+	 *
+	 * @param DomainName $domain
+	 */
+	public function setDomain(DomainName $domain)
+	{
+		$this->domain = $domain->getDomainName();
+	}
 }

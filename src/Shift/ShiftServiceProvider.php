@@ -1,8 +1,10 @@
 <?php namespace Tectonic\Shift;
 
 use App;
+use Illuminate\Validation\Validator;
 use Tectonic\Shift\Library\Router;
 use Tectonic\Shift\Library\ServiceProvider;
+use Tectonic\Shift\Library\Validation\DoctrinePresenceVerifier;
 
 class ShiftServiceProvider extends ServiceProvider
 {
@@ -76,6 +78,7 @@ class ShiftServiceProvider extends ServiceProvider
         $this->registerRouter();
         $this->registerAuthorityConfiguration();
         $this->registerServiceProviders();
+        $this->registerValidationVerifier();
 		$this->requireFiles($this->filesToRegister);
     }
 
@@ -89,6 +92,18 @@ class ShiftServiceProvider extends ServiceProvider
 		$this->requireFiles($this->filesToBoot);
 
 		$this->package('tectonic/shift');
+	}
+
+	/**
+	 * Registers a new presence verifier for Laravel 4 validation. Specifically, this
+	 * is for the use of the Doctrine ORM.
+	 */
+	public function registerValidationVerifier()
+	{
+		$this->app->bindShared('validation.presence', function()
+		{
+			return new DoctrinePresenceVerifier;
+		});
 	}
 
 	/**
