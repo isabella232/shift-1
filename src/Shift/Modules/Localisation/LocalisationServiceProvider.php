@@ -1,7 +1,7 @@
 <?php namespace Tectonic\Shift\Modules\Localisation;
 
-use Illuminate\Support\ServiceProvider;
 use App;
+use Tectonic\Shift\Library\ServiceProvider;
 
 class LocalisationServiceProvider extends ServiceProvider
 {
@@ -19,6 +19,8 @@ class LocalisationServiceProvider extends ServiceProvider
      */
     public function register()
     {
+	    parent::register();
+
         $this->registerAssetContainer();
         $this->registerTranslator();
         $this->registerLangSingleton();
@@ -28,6 +30,8 @@ class LocalisationServiceProvider extends ServiceProvider
 
     public function boot()
     {
+	    parent::boot();
+
         $this->registerCustomValidationRules();
 
         \Doctrine\Common\Annotations\AnnotationRegistry::registerAutoloadNamespace(

@@ -10,7 +10,6 @@ class DoctrineLocaleRepository extends Repository implements LocaleRepositoryInt
 
     protected $restrictByAccount = false;
 
-
     /**
      * Get the ID's of passed in locales codes
      *
@@ -37,10 +36,8 @@ class DoctrineLocaleRepository extends Repository implements LocaleRepositoryInt
      */
     public function getLocaleId($localeCode)
     {
-        $query = $this->entityManager()->createQueryBuilder()
-            ->select('l')
-            ->from($this->entity, 'l')
-            ->where('l.code = :code')
+        $query = $this->createQuery()
+            ->andWhere('l.code = :code')
             ->setParameter('code', $localeCode);
 
         $result = $query->getQuery()->getSingleResult();
@@ -56,12 +53,11 @@ class DoctrineLocaleRepository extends Repository implements LocaleRepositoryInt
      */
     public function getLocaleCode($localeId)
     {
-        $query = $this->entityManager()->createQuery()
-            ->select($this->entity . ' locales')
-            ->where("locales.code = ':id'")
+        $query = $this->createQuery()
+            ->andWhere("l.id = :id")
             ->setParameter('id', $localeId);
 
-        $result = $query->getSingleResult();
+        $result = $query->getQuery()->getSingleResult();
 
         return $result->getCode();
     }

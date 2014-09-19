@@ -24,7 +24,7 @@ class RepositoryTest extends TestCase
 
     public function testField()
     {
-        $this->assertEquals('t.field', $this->repository->field('field'));
+        $this->assertEquals('d.field', $this->repository->field('field'));
     }
 
     public function testRetrievalById()
@@ -33,11 +33,11 @@ class RepositoryTest extends TestCase
 
 	    $mockQueryObject = m::mock('query');
 
-	    $this->mockQueryBuilder->shouldReceive('select')->once()->with('t');
-	    $this->mockQueryBuilder->shouldReceive('from')->once()->with('Tests\Stubs\DoctrineEntityStub', 't');
+	    $this->mockQueryBuilder->shouldReceive('select')->once()->with('d');
+	    $this->mockQueryBuilder->shouldReceive('from')->once()->with('Tests\Stubs\DoctrineEntityStub', 'd');
 	    $this->mockQueryBuilder->shouldReceive('where')->once();
 	    $this->mockQueryBuilder->shouldReceive('setParameter')->twice();
-	    $this->mockQueryBuilder->shouldReceive('andWhere')->once()->with('t.id = :id');
+	    $this->mockQueryBuilder->shouldReceive('andWhere')->once()->with('d.id = :id');
 	    $this->mockQueryBuilder->shouldReceive('getQuery')->once()->andReturn($mockQueryObject);
 
 	    $mockQueryObject->shouldReceive('getResult')->andReturn(['found record']);

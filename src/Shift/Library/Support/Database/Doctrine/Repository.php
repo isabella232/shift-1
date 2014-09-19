@@ -308,7 +308,7 @@ abstract class Repository extends EntityRepository implements RepositoryInterfac
 	 */
 	protected function entityAbbreviation()
 	{
-		return strtolower(substr($this->entity, 0, 1));
+		return strtolower(substr(class_basename($this->entity), 0, 1));
 	}
 
     /**

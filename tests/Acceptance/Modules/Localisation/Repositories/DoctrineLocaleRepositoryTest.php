@@ -3,9 +3,9 @@
 use App;
 use Mockery;
 use Tests\TestCase;
-use Tectonic\Shift\Modules\Localisation\Repositories\LocaleDoctrineRepository;
+use Tectonic\Shift\Modules\Localisation\Repositories\DoctrineLocaleRepository;
 
-class LocaleRepositoryTest extends TestCase
+class DoctrineLocaleRepositoryTest extends TestCase
 {
 
     /**
@@ -36,23 +36,25 @@ class LocaleRepositoryTest extends TestCase
             ['locale'  => 'English (United States)', 'code'     => 'en_US'],
         ];
 
-        $this->repository = App::make(LocaleDoctrineRepository::class);
+        $this->repository = App::make(DoctrineLocaleRepository::class);
     }
 
     public function testGetCodeByIdReturnsCorrectCode()
     {
         $locale = $this->repository->getNew(['locale' => 'English (Great Britain)', 'code' => 'en_GB']);
-        $locale->save();
 
-        $this->assertSame($locale->code, $this->repository->getCode($locale->id));
+	    $this->repository->save($locale);
+
+        $this->assertSame($locale->getCode(), $this->repository->getLocaleCode($locale->getId()));
     }
 
     public function testGetIdByCodeReturnsCorrectId()
     {
         $locale = $this->repository->getNew(['locale' => 'English (United States)', 'code' => 'en_US']);
-        $locale->save();
 
-        $this->assertSame($locale->id, (int) $this->repository->getId($locale->code));
+	    $this->repository->save($locale);
+
+        $this->assertSame($locale->getId(), (int) $this->repository->getLocaleId($locale->getCode()));
     }
 
     public function testGetLocaleIdsReturnsArrayOfIds()
@@ -61,7 +63,8 @@ class LocaleRepositoryTest extends TestCase
         foreach($this->cleanData as $data)
         {
             $locale = $this->repository->getNew(['locale' => $data['locale'], 'code' => $data['code']]);
-            $locale->save();
+
+	        $this->repository->save($locale);
         }
 
         // Act
