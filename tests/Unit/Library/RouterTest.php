@@ -4,16 +4,13 @@ use Mockery as m;
 
 class RouterTest extends \Tests\UnitTestCase
 {
-	public function setUp()
+    private $router;
+
+    public function setUp()
 	{
         parent::setUp();
 
 		$this->router = m::mock('Tectonic\Shift\Library\Router')->makePartial();
-	}
-
-	public function tearDown()
-	{
-		m::close();
 	}
 
     /**

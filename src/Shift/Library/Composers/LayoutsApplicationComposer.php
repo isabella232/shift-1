@@ -10,8 +10,8 @@ class LayoutsApplicationComposer
 	public function compose($view)
 	{
         $languageDictionary = App::make('shift.translator')
-                                ->setUICustomisations(Config::get('shift::language.locales'))
-                                ->allToJson();
+            ->setUICustomisations(Config::get('shift::language.locales'))
+            ->allToJson();
 
 		$view->with('settings', []);
         $view->with('language', $languageDictionary);
