@@ -3,7 +3,7 @@
 use Mockery as m;
 use Tectonic\Shift\Library\Search\Filters\OrderFilter;
 
-class OrderFilterTest extends \Tests\TestCase
+class OrderFilterTest extends \Tests\UnitTestCase
 {
 	private $queryBuilder;
 

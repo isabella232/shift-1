@@ -3,10 +3,10 @@
 use Input;
 use Mockery as m;
 use Response;
-use Tests\TestCase;
+use Tests\UnitTestCase;
 use Tests\Stubs\ControllerStub;
 
-class ControllerTest extends TestCase
+class ControllerTest extends UnitTestCase
 {
 
     protected $controller,

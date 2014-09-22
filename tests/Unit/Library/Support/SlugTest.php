@@ -1,10 +1,9 @@
 <?php namespace Tests\Unit\Library\Support;
 
 use Mockery as m;
-use PHPUnit_Framework_TestCase;
 use Tectonic\Shift\Library\Support\Slug;
 
-class SlugTest extends PHPUnit_Framework_TestCase
+class SlugTest extends \Tests\UnitTestCase
 {
 
     public function testSlugGeneratesEightCharacterStringByDefault()

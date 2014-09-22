@@ -2,9 +2,9 @@
 
 use Mockery as m;
 use Tectonic\Shift\Library\Filters\AccountFilter;
-use Tests\TestCase;
+use Tests\UnitTestCase;
 
-class AccountFilterTest extends TestCase
+class AccountFilterTest extends UnitTestCase
 {
 	private $mockCurrentAccountService;
 	private $mockAccountManagementService;

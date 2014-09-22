@@ -3,7 +3,7 @@
 use Mockery as m;
 use Tectonic\Shift\Library\Search\Filters\KeywordFilter;
 
-class KeywordFilterTest extends \Tests\TestCase
+class KeywordFilterTest extends \Tests\UnitTestCase
 {
 	/**
 	 * @covers KeywordFilter::applyToDoctrine

@@ -5,9 +5,9 @@ namespace Tests\Unit\Library\Authorization;
 use Mockery as m;
 use Tectonic\Shift\Library\Authorization\UserConsumer;
 use Tectonic\Shift\Library\Authorization\UserInterface;
-use Tests\TestCase;
+use Tests\UnitTestCase;
 
-class UserConsumerTest extends TestCase
+class UserConsumerTest extends UnitTestCase
 {
     private $user;
 

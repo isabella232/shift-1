@@ -4,7 +4,13 @@ namespace Tectonic\Shift\Library\Search;
 
 interface SearchInterface
 {
-	public function results();
-	public function setParams(array $params);
-	public function getParams();
+    /**
+     * All search implementations need to have a fromInput method. This is a method that executes
+     * the criteria registered based on the input array provided. This will usually come from
+     * an end user.
+     *
+     * @param array $input
+     * @return mixed
+     */
+    public function fromInput(array $input = []);
 }

@@ -3,9 +3,9 @@
 namespace Tests\Unit\Library\Support\Database\Doctrine;
 
 use Tests\Stubs\DoctrineEntityStub;
-use Tests\TestCase;
+use Tests\UnitTestCase;
 
-class EntityTest extends TestCase
+class EntityTest extends UnitTestCase
 {
     public function testMagicGetterAndSetterCalls()
     {

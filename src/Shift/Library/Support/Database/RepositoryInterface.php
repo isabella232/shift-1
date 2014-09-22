@@ -1,6 +1,7 @@
 <?php
 
 namespace Tectonic\Shift\Library\Support\Database;
+use Tectonic\Shift\Library\Search\SearchFilterCollection;
 
 /**
  * Nearly all repositories will require the following methods. This is to ensure we're dealing with a 
@@ -66,6 +67,14 @@ interface RepositoryInterface
 	 * @return mixed
 	 */
 	public function save($resource);
+
+    /**
+     * Retrieve a collection of results based on the search filters provided.
+     *
+     * @param SearchFilterCollection $filterCollection
+     * @return mixed
+     */
+    public function getByCriteria(SearchFilterCollection $filterCollection);
 
     /**
      * Save 1-n resources.

@@ -2,7 +2,7 @@
 
 use Mockery as m;
 
-class RouterTest extends \PHPUnit_Framework_TestCase
+class RouterTest extends \Tests\UnitTestCase
 {
 	public function setUp()
 	{

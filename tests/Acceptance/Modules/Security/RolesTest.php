@@ -3,9 +3,9 @@
 namespace Tests\Api\Security;
 
 use App;
-use Tests\TestCase;
+use Tests\AcceptanceTestCase;
 
-class RolesTest extends TestCase
+class RolesTest extends AcceptanceTestCase
 {
     protected $roleRepository;
 

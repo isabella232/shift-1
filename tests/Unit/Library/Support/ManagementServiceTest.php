@@ -1,10 +1,10 @@
 <?php namespace Tests\Unit\Library\Support;
 
 use Mockery;
-use Tests\TestCase;
+use Tests\UnitTestCase;
 use Tests\Stubs\ManagementServiceStub;
 
-class ManagementServiceTest extends TestCase
+class ManagementServiceTest extends UnitTestCase
 {
     protected $mockCreateValidator;
     protected $mockUpdateValidator;

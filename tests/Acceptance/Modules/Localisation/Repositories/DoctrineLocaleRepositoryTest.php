@@ -2,10 +2,10 @@
 
 use App;
 use Mockery;
-use Tests\TestCase;
+use Tests\AcceptanceTestCase;
 use Tectonic\Shift\Modules\Localisation\Repositories\DoctrineLocaleRepository;
 
-class DoctrineLocaleRepositoryTest extends TestCase
+class DoctrineLocaleRepositoryTest extends AcceptanceTestCase
 {
 
     /**

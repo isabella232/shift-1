@@ -5,9 +5,9 @@ namespace Tests\Unit\Library\Support\Database\Doctrine;
 use Doctrine\ORM\EntityManager;
 use Mockery as m;
 use Tests\Stubs\DoctrineRepositoryStub;
-use Tests\TestCase;
+use Tests\UnitTestCase;
 
-class RepositoryTest extends TestCase
+class RepositoryTest extends UnitTestCase
 {
     private $mockEntityManager,
 			$mockQueryBuilder;

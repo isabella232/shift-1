@@ -4,7 +4,7 @@ use Mockery as m;
 use Tests\Stubs\ExtenderStub;
 use Tests\Stubs\ExtensionStub;
 
-class ExtenderTest extends \PHPUnit_Framework_TestCase
+class ExtenderTest extends \Tests\UnitTestCase
 {
 
     public function tearDown()

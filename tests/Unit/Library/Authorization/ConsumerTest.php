@@ -5,7 +5,7 @@ use Tectonic\Shift\Library\Authorization\UserConsumer;
 use Tectonic\Shift\Library\Authorization\Consumer;
 use Tectonic\Shift\Library\Authorization\UserInterface;
 
-class ConsumerTest extends \PHPUnit_Framework_TestCase
+class ConsumerTest extends \Tests\UnitTestCase
 {
 	private $authenticatedConsumer;
 	private $consumer;

@@ -5,9 +5,10 @@ namespace Tectonic\Shift\Modules\Security\Search;
 use Tectonic\Shift\Library\Search\SearchFilterCollection;
 use Tectonic\Shift\Library\Search\Filters\KeywordFilter;
 use Tectonic\Shift\Library\Search\Filters\OrderFilter;
+use Tectonic\Shift\Library\Search\SearchInterface;
 use Tectonic\Shift\Modules\Security\Repositories\RoleRepositoryInterface;
 
-class RoleSearch
+class RoleSearch implements SearchInterface
 {
 	/**
 	 * Stores the role repository to be used for the search execution.
@@ -32,7 +33,7 @@ class RoleSearch
 	 * @param $input
 	 * @return mixed
 	 */
-	public function fromInput($input)
+	public function fromInput(array $input = [])
 	{
 		$filterCollection = new SearchFilterCollection;
 

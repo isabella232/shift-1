@@ -3,9 +3,9 @@
 use Mockery as m;
 use Tectonic\Shift\Library\Validation\ValidationException;
 use Tests\Stubs\ValidationStub;
-use Tests\TestCase;
+use Tests\UnitTestCase;
 
-class ValidationTest extends TestCase
+class ValidationTest extends UnitTestCase
 {
     /**
      * @expectedException Tectonic\Shift\Library\Validation\ValidationException

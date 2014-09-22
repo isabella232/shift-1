@@ -12,10 +12,8 @@ class UserSearch extends \Tectonic\Shift\Library\Search\Search
 
 	private $orderFilter;
 
-	public function __construct(User $user, KeywordFilter $keywordFilter, OrderFilter $orderFilter)
+	public function __construct(KeywordFilter $keywordFilter, OrderFilter $orderFilter)
 	{
-		$this->setQuery($user);
-
 		$this->keywordFilter = $keywordFilter;
 		$this->orderFilter = $orderFilter;
 

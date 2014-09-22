@@ -3,7 +3,7 @@
 use Mockery as m;
 use Tectonic\Shift\Library\Composers\LayoutsApplicationComposer;
 
-class LayoutsApplicationComposerTest extends \PHPUnit_Framework_TestCase
+class LayoutsApplicationComposerTest extends \Tests\UnitTestCase
 {
 	public function tearDown()
 	{

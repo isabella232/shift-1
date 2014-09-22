@@ -1,11 +1,11 @@
 <?php namespace Tests\Unit\Library\Authorization;
 
 use Mockery as m;
-use Tests\TestCase;
+use Tests\UnitTestCase;
 use Tectonic\Shift\Library\Authorization\Bouncer;
 use Tectonic\Shift\Library\Authorization\Consumer;
 
-class BouncerTest extends TestCase
+class BouncerTest extends UnitTestCase
 {
 	private $consumer;
 	private $bouncer;
