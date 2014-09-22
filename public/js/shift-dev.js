@@ -14171,7 +14171,7 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 (function(){
     'use strict';
 
-    var module = angular.module('Shift.Library.Defaults', ['$ngResource']);
+    var module = angular.module('Shift.Library.Defaults', ['$ngResource', 'Shift.Library.Router']);
 
     /**
      * The DefaultRoutes factory object provides routes for the the most common application requests. These include
@@ -14263,7 +14263,7 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 	module.filter('ucfirst', ['$filter', function($filter) {
 		return function(input) {
 			var lc = $filter('lowercase')(input);
-			
+
 			return _.capitalize(lc);
 		};
 	}]);
@@ -14340,7 +14340,7 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 	module.filter('default', [function() {
 		return function(input, defaultValue) {
 			if (!input) return defaultValue;
-			
+
 			return input;
 		};
 	}]);
@@ -14355,26 +14355,26 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 	 * @param boolean relative
 	 * @return string
 	 */
-	module.filter('niceDate', [function() {
-		return function(input, relative, format) {
-			if (input === null) return;
-			
-			var thisMoment = moment.utc(input).local();
-			
-			if (angular.isUndefined(relative)) relative = true;
-			
-			if (relative) {
+	module.filter('niceDate', [ function() {
+		return function( input, relative, format ) {
+			if ( input === null ) return;
+
+			var thisMoment = moment.utc( input );
+
+			if ( relative == null ) relative = true;
+
+			if ( relative ) {
 				return thisMoment.fromNow();
 			}
 
-			if (!format) format = "Do MMMM YYYY @ h:mm a";
-			
-			return thisMoment.format(format);
+			if ( !format ) format = "Do MMMM YYYY @ h:mm a";
+
+			return thisMoment.local().format( format );
 		};
 	}]);
 
 	/**
-	 * Easy helper filter for providing date output of common date formats. There is 
+	 * Easy helper filter for providing date output of common date formats. There is
 	 * no extensibility provided or necessary for this filter. If you want more options,
 	 * use the niceDate filter provided above.
 	 */
@@ -14387,10 +14387,10 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 	/**
 	 * Converts a file size from bytes to KB/MB/GB with optional precision
 	 * to allow a few decimal points if needed.
-	 * 
+	 *
 	 * @param {String} unit      Unit expects either 'kb', 'mb' or 'gb'.
 	 * @param {Number} precision Number of decimal points.
-	 * 
+	 *
 	 * @return {String}
 	 */
 	module.filter('filesize' , [function() {
@@ -14398,12 +14398,12 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 			unit = !unit ? 'kb' : unit.toLowerCase();
 
 			if (!precision) precision = 0;
-			
+
 			// Default units.
 			var kb = 1024,
 				mb = kb * 1024,
 				gb = mb * 1024;
-			
+
 			if (unit == 'gb') {
 				return (input / gb).toFixed(precision) + ' GB';
 			}
@@ -14426,7 +14426,7 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 			if (!input.length) return input;
 
 			if (input.indexOf('.') == -1) return null;
-			
+
 			// Return the last part of the array.
 			// Assuming that the filename provided is valid, we should have no issues.
 			return input.split('.').pop();
@@ -14448,7 +14448,7 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 	/**
 	 * Provies a more versatile filter than the one above, allowing developers to define
 	 * what text to use for both truthy and falsy statements.
-	 * 
+	 *
 	 * @return string
 	 */
 	module.filter('enabledIndicator', [function() {
@@ -14462,11 +14462,11 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 
 	/**
 	 * Truncate a long piece of string into a limited number of words.
-	 * 
+	 *
 	 * @param {string}  input
 	 * @param {integer} limit Defaults to 10 words.
 	 * @param {string}  end   Defualts to '…'
-	 * 
+	 *
 	 * @return {string}
 	 */
 	module.filter('truncate', [function() {
@@ -14485,12 +14485,12 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 			
 			// The input is within the limit.
 			if (words.length <= limit) return input;
-			
+
 			// The input is larger than the limit.
 			return _.first(words, limit).join(' ') + end;
 		};
 	}]);
-	
+
 	/**
 	 * Replaces new lines to html line breaks.
 	 * This must be used within a 'ng-bind-html-unsafe' directive.
@@ -14697,17 +14697,17 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 
 		/**
 		 * Create an item based on the parameters provided.
-		 * 
+		 *
 		 * @param params
 		 * @returns {*}
 		 */
 		Resource.prototype.create = function(params) {
 			return this.serviceModel.post(params);
 		};
-		
+
 		/**
 		 * Destroy a specific item.
-		 * 
+		 *
 		 * @param item
 		 * @returns {*}
 		 */
@@ -14717,7 +14717,7 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 
 		/**
 		 * Return a single item based on the id provided.
-		 * 
+		 *
 		 * @param id
 		 * @returns {*|Array|Mixed|promise}
 		 */
@@ -14775,6 +14775,102 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 		this.serverFormat = 'YYYY-MM-DD HH:mm:ss';
 		this.clientFormat = 'YYYY-MM-DD HH:mm';
 	}]);
+
+    /**
+     * This service deals will language and localisation for UI elements. It will find/retrieve
+     * a language element/item from the language object stored on the $rootScope.
+     *
+     * A 3 step process is performed:
+     *  1) If a user is logged in and has set their locale different to that of the installations default locale,
+     *     check for a translation in their required locale and return it if it exists.
+     *  2) If no logged in user OR no user specific locale is set, revert to checking for installations default
+     *     locale translation and return if it exists.
+     *  3) If no installation default locale translation exists, revert to our base translation (en_GB) and check
+     *     for a translation. Return an the value of "this.errorString" string is no translation exists.
+     */
+    module.service('Language', [function() {
+
+        /**
+         * Error string to display is language item is NOT found.
+         *
+         * @type {string}
+         */
+        this.errorString = "ERROR: TRANSLATION NOT FOUND!";
+
+        /**
+         * Find a language item and return it as a string for
+         * display on the UI. If no item is found return an
+         * easy to spot string so it can be added or corrected.
+         *
+         * @param {object} dictionary
+         * @param {array}  locales
+         * @param {string} bundle
+         * @param {string} item
+         *
+         * @returns {string}
+         */
+        this.find = function(dictionary, locales, bundle, item) {
+
+            // Set translation to error string by default. If a translation if found
+            // we will overwrite this value with the required translation.
+            var translation = this.errorString;
+
+            // For each locale preference, starting with the users, followed by the
+            // installations, then finally the base/default - find required translation.
+            for(var i = 0; i < locales.length; i++) {
+                var object = dictionary[bundle].lang[locales[i]];
+                var result = this.getPropertyByString(object, item);
+
+                // If a translation if found, break this loop and return result.
+                if( result !== this.errorString)
+                {
+                    translation = result;
+                    break;
+                }
+            }
+
+            return translation;
+        };
+
+        /**
+         * Return a property in object by dot notated string. If the access string is empty,
+         * returns the object. Otherwise, keeps going along access path until second last accessor.
+         * If that's an object, returns the last object[accessor] value. Otherwise, return the value
+         * of this.errorString.
+         * .
+         * @param {object} obj
+         * @param {string} propertyString
+         *
+         * @returns {string}
+         */
+        this.getPropertyByString = function(obj, propertyString) {
+            if (!propertyString)
+                return obj;
+
+            var prop, props = propertyString.split('.');
+
+            for (var i = 0, iLen = props.length - 1; i < iLen; i++) {
+                prop = props[i];
+
+                var candidate = obj[prop];
+                if (candidate !== undefined) {
+                    obj = candidate;
+                } else {
+                    break;
+                }
+            }
+
+            var string = obj[props[i]];
+
+            // Return an empty string
+            if(angular.isUndefined(string))
+                return this.errorString;
+
+            return string;
+        };
+
+    }]);
+
 })();
 
 (function() {
@@ -14826,7 +14922,7 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 (function() {
 	'use strict';
 
-	var module = angular.module('Shift.Accounts.Controllers', ['Shift.Library.Defaults']);
+	//var module = angular.module('Shift.Accounts.Controllers', ['Shift.Library.Defaults']);
 
 	/*module.controller('shift.accounts', [
 		'$rootScope',
@@ -14907,11 +15003,38 @@ _.mixin(_.str.exports());
 
 	var module = angular.module('shift', [
         'Shift.Home.Setup',
-        'Shift.Home.Controllers'
+        'Shift.Home.Controllers',
+        'Shift.Library.Core.Services'
     ]);
 
 	module.config(['$locationProvider', function($location) {
         $location.html5Mode(true);
+    }]);
+
+    module.run(['$rootScope', 'Language', function($rootScope, Language) {
+        $rootScope.language = window.language;
+
+        // These config setting will be set dynamically either based upon
+        // user or installation settings.
+        $rootScope.config = {};
+        $rootScope.config.localeCode = 'en_GB';
+
+        /**
+         * Return a localised string for a specific bundle language item.
+         *
+         * @param {string} bundle
+         * @param {string} item
+         * @returns {string}
+         */
+        $rootScope.lang = function(bundle, item) {
+            var locales = [
+                '',                             // User specific locale code
+                $rootScope.config.localeCode,   // Installation specific locale code
+                'en_GB',                        // Base/default locale code
+            ];
+            return Language.find($rootScope.language, locales, bundle, item);
+        };
+
     }]);
 
 })();

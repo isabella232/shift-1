@@ -2,9 +2,9 @@
 
 use Mockery as m;
 use Tectonic\Shift\Library\Filters\ViewFilter;
-use Tests\TestCase;
+use Tests\UnitTestCase;
 
-class ViewFilterTest extends TestCase
+class ViewFilterTest extends UnitTestCase
 {
 	private $mockUtility;
 	private $filter;
