@@ -18,7 +18,7 @@
     "require": {
         "php": ">=5.5.0",
 	    "machuga/authority-l4" : "dev-master",
-        "orchestra/asset": "2.2.*"
+        "orchestra/asset": "2.2.*",
 	    "laravel/framework": "~4.2",
         "jasonlewis/basset": "dev-master",
 	    "machuga/authority-l4": "dev-master",
