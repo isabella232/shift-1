@@ -8,12 +8,10 @@ class Asset extends Factory
     {
         $containers = $this->containers;
 
-        foreach($excludes as $exclude)
-        {
+        foreach($excludes as $exclude) {
             if(isset($containers[$exclude])) unset($containers[$exclude]);
         }
 
         return $containers;
     }
 }
-w

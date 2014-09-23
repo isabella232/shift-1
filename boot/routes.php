@@ -11,16 +11,17 @@ Route::filter('shift.account', 'Tectonic\Shift\Library\Filters\AccountFilter');
 Route::group(['prefix' => Config::get('shift.api.url'), 'before' => 'shift.account|shift.view'], function() {
     Route::collection('users', 'Tectonic\Shift\Controllers\UserController');
     Route::collection('roles', 'Tectonic\Shift\Controllers\RoleController');
-    Route::collection('locales', 'Tectonic\Shift\Modules\Localisation\Controllers\LocaleController');
-    Route::collection('customfields', 'Tectonic\Shift\Modules\CustomFields\Controllers\CustomFieldController');
-    Route::collection('localisations', 'Tectonic\Shift\Modules\Localisation\Controllers\LocalisationController');
+    Route::collection('locales', 'Tectonic\Shift\Controllers\LocaleController');
+    Route::collection('fields', 'Tectonic\Shift\Controllers\FieldController');
+    Route::collection('localisations', 'Tectonic\Shift\Controllers\LocalisationController');
 });
 
 /**
  * Home & non API routes
  */
 Route::get('/', function() { return View::make('shift::home.index'); });
-Route::get('install', 'Tectonic\Shift\Modules\Security\Controllers\InstallationController@getInstall');
+Route::get('install', 'Tectonic\Shift\Controllers\InstallationController@getInstall');
+Route::post('install', 'Tectonic\Shift\Controllers\InstallationController@postInstall');
 
 Route::filter('shift.view', 'Tectonic\Shift\Library\Filters\ViewFilter');
 Route::filter('shift.account', 'Tectonic\Shift\Library\Filters\AccountFilter');

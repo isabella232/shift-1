@@ -1,11 +1,11 @@
-<?php namespace Tectonic\Shift\Modules\CustomFields\Controllers;
+<?php namespace Tectonic\Shift\Controllers;
 
 use Tectonic\Shift\Library\Support\Controller;
 use Tectonic\Shift\Modules\CustomFields\Validators\CustomFieldValidator;
 use Tectonic\Shift\Modules\CustomFields\Services\CustomFieldManagementService;
 use Tectonic\Shift\Modules\CustomFields\Repositories\CustomFieldRepositoryInterface;
 
-class CustomFieldController extends Controller
+class FieldController extends Controller
 {
 
     public function __construct(

@@ -4,6 +4,7 @@ use App;
 use Illuminate\Validation\Validator;
 use Tectonic\Shift\Library\Router;
 use Tectonic\Shift\Library\ServiceProvider;
+use Tectonic\Shift\Library\Support\Asset;
 use Tectonic\Shift\Library\Validation\DoctrinePresenceVerifier;
 
 class ShiftServiceProvider extends ServiceProvider
@@ -14,10 +15,10 @@ class ShiftServiceProvider extends ServiceProvider
      * @var array
      */
     protected $aliases = [
-        'Basset'        => 'Basset\Facade',
+        'Asset'         => 'Orchestra\Support\Facades\Asset',
         'Authority'     => 'Authority\AuthorityL4\Facades\Authority',
-        'Utility'       => 'Tectonic\Shift\Library\Facades\Utility',
 	    'EntityManager' => 'Mitch\LaravelDoctrine\EntityManagerFacade',
+        'Utility'       => 'Tectonic\Shift\Library\Facades\Utility',
     ];
 
     /**
@@ -26,8 +27,9 @@ class ShiftServiceProvider extends ServiceProvider
      * @var array
      */
     protected $filesToBoot = [
+        'errors',
         'macros',
-        'composers',
+        'composers'
     ];
 
     /**
@@ -36,9 +38,9 @@ class ShiftServiceProvider extends ServiceProvider
      * @var array
      */
     protected $serviceProviders = [
-	    //'Basset\BassetServiceProvider',
         'Authority\AuthorityL4\AuthorityL4ServiceProvider',
         'Mitch\LaravelDoctrine\LaravelDoctrineServiceProvider',
+        'Orchestra\Asset\AssetServiceProvider',
         'Tectonic\Shift\Library\Authorization\AuthorizationServiceProvider',
         'Tectonic\Shift\Library\LibraryServiceProvider',
         'Tectonic\Shift\Modules\Accounts\AccountsServiceProvider',
@@ -77,6 +79,7 @@ class ShiftServiceProvider extends ServiceProvider
 
         $this->registerRouter();
         $this->registerAuthorityConfiguration();
+        $this->registerAssetManager();
         $this->registerServiceProviders();
         $this->registerValidationVerifier();
 		$this->requireFiles($this->filesToRegister);
@@ -90,7 +93,7 @@ class ShiftServiceProvider extends ServiceProvider
 	public function boot()
 	{
 		$this->requireFiles($this->filesToBoot);
-
+        
 		$this->package('tectonic/shift');
 	}
 
@@ -105,6 +108,13 @@ class ShiftServiceProvider extends ServiceProvider
 			return new DoctrinePresenceVerifier;
 		});
 	}
+
+    public function registerAssetManager()
+    {
+        $this->app->singleton('orchestra.asset', function($app) {
+            return new Asset($app['orchestra.asset.dispatcher']);
+        });
+    }
 
 	/**
 	 * Sets up the configuration required by Authority when it gets loaded.
