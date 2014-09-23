@@ -79,8 +79,6 @@ class ShiftServiceProvider extends ServiceProvider
 
         $this->registerRouter();
         $this->registerAuthorityConfiguration();
-        $this->registerAssetManager();
-        $this->registerServiceProviders();
         $this->registerValidationVerifier();
 		$this->requireFiles($this->filesToRegister);
     }
@@ -109,13 +107,6 @@ class ShiftServiceProvider extends ServiceProvider
 		});
 	}
 
-    public function registerAssetManager()
-    {
-        $this->app->singleton('orchestra.asset', function($app) {
-            return new AssetFactory($app['orchestra.asset.dispatcher']);
-        });
-    }
-
 	/**
 	 * Sets up the configuration required by Authority when it gets loaded.
      *
@@ -127,16 +118,6 @@ class ShiftServiceProvider extends ServiceProvider
 			$user = $authority->getCurrentUser();
 		});
 	}
-
-	/**
-	 * Get the services provided by the provider.
-	 *
-	 * @return array
-	 */
-	public function provides()
-	{
-		return [];
-    }
 
 	/**
 	 * Helper method for requiring boot files. These are files that generally have some basic configuration,

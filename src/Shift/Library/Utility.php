@@ -1,4 +1,9 @@
 <?php
+
+namespace Tectonic\Shift\Library;
+
+use Exception;
+
 /**
  * Wraps up a number of random-use methods, including event name generation, some basic
  * data transformation/morphing and other methods.
@@ -6,34 +11,9 @@
  * @author Kirk Bushell
  * @date   14th September 2013
  */
-namespace Tectonic\Shift\Library;
-
-use Exception;
-use Illuminate\Http\Request;
-use Illuminate\View\Environment as View;
 
 class Utility
 {
-	/**
-	 * Stores the request object for checks.
-	 *
-	 * @var Request
-	 */
-	protected $request;
-
-	/**
-	 * Stores the View object.
-	 *
-	 * @var View
-	 */
-	protected $view;
-
-	public function __construct(Request $request, View $view)
-	{
-		$this->request = $request;
-		$this->view = $view;
-	}
-
 	/**
 	 * Generates a name to be used when firing an event. This is to help standardise
 	 * the naming of events into one cohesive string. Class names should follow this
@@ -82,17 +62,5 @@ class Utility
 		}
 
 		return implode($eventNameParts);
-	}
-
-	/**
-	 * Returns the shift default layout if no JSON is not required.
-	 *
-	 * @return mixed
-	 */
-	public function noJsonView()
-	{
-		if (!$this->request->wantsJson()) {
-			return $this->view->make('shift::layouts.application');
-		}
 	}
 }
