@@ -36,7 +36,7 @@ class LibraryServiceProvider extends ServiceProvider
      */
     public function registerAssetContainer()
     {
-        $this->app->bindShared('shift.asset', function($app) {
+        $this->app->bindShared('orchestra.asset', function($app) {
             return new AssetFactory($app['orchestra.asset.dispatcher']);
         });
     }

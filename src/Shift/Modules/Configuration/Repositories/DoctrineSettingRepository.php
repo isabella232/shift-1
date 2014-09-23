@@ -2,6 +2,7 @@
 
 namespace Tectonic\Shift\Modules\Configuration\Repositories;
 
+use Tectonic\Shift\Modules\Configuration\Entities\Setting;
 use Tectonic\Shift\Library\Support\Database\Doctrine\Repository;
 use Tectonic\Shift\Library\Support\Database\RecordNotFoundException;
 
@@ -12,6 +13,8 @@ use Tectonic\Shift\Library\Support\Database\RecordNotFoundException;
  */
 class DoctrineSettingRepository extends Repository implements SettingRepositoryInterface
 {
+    protected $entity = Setting::class;
+
     /**
      * Is populated as soo nas getAll is called (acts as a cache).
      *
@@ -77,8 +80,8 @@ class DoctrineSettingRepository extends Repository implements SettingRepositoryI
         $settings = $this->getAll();
         $formatted = [];
 
-        foreach ($settings as $setting => $value) {
-            $formatted[$setting->setting] = $setting->value;
+        foreach ($settings as $s) {
+            $formatted[$s->setting] = $s->value;
         }
 
         return $formatted;

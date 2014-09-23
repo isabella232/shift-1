@@ -24,6 +24,8 @@ class ViewFilter
 
 	public function filter()
 	{
-		return $this->utility->noJsonView();
+        if (!Request::wantsJson()) {
+            return View::make('shift::layouts.application');
+        }
 	}
 }
