@@ -36,19 +36,4 @@ class UtilityTest extends \Tests\UnitTestCase
 	{
 		$this->assertEquals('shift::run.some.long.event.name', $this->utility->eventName('shift', 'run', 'some', 'long', 'event', 'name'));
 	}
-
-	public function testNoJsonViewShouldNotReturnTheViewIfTheRequestWantsJson()
-	{
-		$this->request->shouldReceive('wantsJson')->andReturn(true);
-
-		$this->assertNull($this->utility->noJsonView());
-	}
-
-	public function testNoJsonViewShouldReturnTheViewIfTheRequestDoesNotWantJson()
-	{
-		$this->request->shouldReceive('wantsJson')->andReturn(false);
-		$this->view->shouldReceive('make')->with('shift::layouts.application')->andReturn('view');
-
-		$this->assertEquals('view', $this->utility->noJsonView());
-	}
 }
