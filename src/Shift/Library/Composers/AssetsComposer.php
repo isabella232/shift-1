@@ -5,7 +5,7 @@ use Tectonic\Shift\Library\Facades\Asset;
 
 class AssetsComposer
 {
-    public function compose($view)
+    public function compose()
     {
         // Add required assets to the asset container
         $container = Asset::container('shift');

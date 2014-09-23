@@ -1,7 +1,9 @@
 <!doctype html>
 <html lang="en" ng-app="application" id="application">
 <head>
-    @include('shift::partials.header.assets')
+    @foreach(Asset::containers() as $container)
+        {{ $container->styles() }}
+    @endforeach
 </head>
 <body>
     <div>@yield('content')</div>

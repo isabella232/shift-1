@@ -93,7 +93,7 @@ class ShiftServiceProvider extends ServiceProvider
 	public function boot()
 	{
 		$this->requireFiles($this->filesToBoot);
-        
+
 		$this->package('tectonic/shift');
 	}
 
