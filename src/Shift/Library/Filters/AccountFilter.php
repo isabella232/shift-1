@@ -1,6 +1,9 @@
 <?php
 
 namespace Tectonic\Shift\Library\Filters;
+
+use Illuminate\Support\Facades\Redirect;
+use Tectonic\Shift\Controllers\InstallationController;
 use Tectonic\Shift\Modules\Accounts\Services\AccountManagementService;
 use Tectonic\Shift\Modules\Accounts\Services\CurrentAccountService;
 
@@ -51,7 +54,11 @@ class AccountFilter
 		$account = $this->currentAccountService->determineCurrentAccount();
 
 		if (!$account) {
+            $count = $this->accountManagementService->totalNumberOfAccounts();
 
+            if ($count === 0) {
+                return Redirect::action(InstallationController::class.'@getInstall');
+            }
 		}
 
 		$this->currentAccountService->setCurrentAccount($account);

@@ -40,4 +40,14 @@ class AccountManagementService extends ManagementService
 	{
 		return $this->repository->requireByDomain($domain);
 	}
+
+    /**
+     * Get the total number of accounts setup for this installation.
+     *
+     * @return integer
+     */
+    public function totalNumberOfAccounts()
+    {
+        return $this->repository->getCount();
+    }
 }

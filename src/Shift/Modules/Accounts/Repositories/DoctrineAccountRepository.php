@@ -63,4 +63,20 @@ class DoctrineAccountRepository extends Repository implements AccountRepositoryI
 
 		return $query->getResult();
 	}
+
+    /**
+     * Retrieves the total count for the number of accounts added to the system (both deleted and not).
+     *
+     * @return integer
+     */
+    public function getCount()
+    {
+        $qb = $this->entityManager()->createQueryBuilder()
+            ->select('COUNT(a.id)')
+            ->from(Account::class, 'a');
+
+        $query = $qb->getQuery();
+
+        return $query->getSingleScalarResult();
+    }
 }

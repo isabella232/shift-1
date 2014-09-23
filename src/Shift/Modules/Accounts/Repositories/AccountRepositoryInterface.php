@@ -21,4 +21,11 @@ interface AccountRepositoryInterface extends RepositoryInterface
 	 * @return mixed
 	 */
 	public function getByDomain($domains);
+
+    /**
+     * Return the total number of accounts currently available on the system.
+     *
+     * @return mixed
+     */
+    public function getCount();
 }
