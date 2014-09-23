@@ -1,5 +1,6 @@
 <?php namespace Tectonic\Shift\Library\Composers;
 
+use App;
 use Asset;
 
 class AssetsComposer

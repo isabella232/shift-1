@@ -7,6 +7,8 @@ use Tectonic\Shift\Library\ServiceProvider;
 use Tectonic\Shift\Modules\Accounts\Services\CurrentAccountService;
 use Tectonic\Shift\Modules\Accounts\Repositories\AccountRepositoryInterface;
 use Tectonic\Shift\Modules\Accounts\Repositories\DoctrineAccountRepository;
+use Tectonic\Shift\Modules\Accounts\Repositories\DomainRepositoryInterface;
+use Tectonic\Shift\Modules\Accounts\Repositories\DoctrineDomainRepository;
 
 class AccountsServiceProvider extends ServiceProvider
 {
@@ -26,7 +28,7 @@ class AccountsServiceProvider extends ServiceProvider
     {
 	    parent::register();
 
-        $this->registerAccountRepository();
+        $this->registerRepositories();
         $this->registerCurrentAccountService();
     }
 
@@ -35,9 +37,10 @@ class AccountsServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function registerAccountRepository()
+    protected function registerRepositories()
     {
         $this->app->singleton(AccountRepositoryInterface::class, DoctrineAccountRepository::class);
+        $this->app->singleton(DomainRepositoryInterface::class, DoctrineDomainRepository::class);
     }
 
     /**

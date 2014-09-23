@@ -6,6 +6,7 @@ use Event;
 use Tectonic\Shift\Library\Support\ManagementService;
 use Tectonic\Shift\Modules\Accounts\Entities\Account;
 use Tectonic\Shift\Modules\Accounts\Repositories\AccountRepositoryInterface;
+use Tectonic\Shift\Modules\Accounts\Validators\AccountValidation;
 use Tectonic\Shift\Modules\Users\Entities\User;
 
 /**
@@ -22,9 +23,11 @@ class AccountManagementService extends ManagementService
 	/**
 	 * @param AccountRepositoryInterface $repository
 	 */
-	public function __construct(AccountRepositoryInterface $repository)
+	public function __construct(AccountRepositoryInterface $repository, AccountValidation $validator)
 	{
 		$this->repository = $repository;
+        $this->createValidator = $validator;
+        $this->updateValidator = $validator;
 	}
 
 	/**

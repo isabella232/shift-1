@@ -32,6 +32,6 @@ class DomainName
      */
     public function getDomainName()
     {
-        return lowercase($this->domainName);
+        return strtolower($this->domainName);
     }
 }

@@ -25,7 +25,10 @@ class DomainValidation extends Validation
     public function getRules()
     {
         Validator::extend('domainFormat', function($field, $value) {
-            return preg_match('/^([a-z0-9]+\.)?([a-z0-9\-]+)\.([a-z]{2,3})$/i', $value);
+            $domainValidation = '([a-z0-9]+\.)?([a-z0-9\-]+)\.([a-z]{2,3})';
+            $ipPortValidation = '([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})(:[0-9]{2,5})?';
+
+            return preg_match("/^(($domainValidation)|($ipPortValidation))$/i", $value);
         });
 
         $rules = [

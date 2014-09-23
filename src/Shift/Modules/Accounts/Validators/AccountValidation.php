@@ -1,10 +1,16 @@
 <?php namespace Tectonic\Shift\Modules\Accounts\Validators;
 
-use Tectonic\Shift\Library\Validation\Validator;
+use Tectonic\Shift\Library\Validation\Validation;
 
-class AccountValidation extends Validator
+class AccountValidation extends Validation
 {
-    protected $rules = [
-        'name' => ['required']
-    ];
+    public function getRules()
+    {
+        return [
+            'name' => [
+                'required',
+                'unique:accounts,name,'.$this->getValue('id')
+            ]
+        ];
+    }
 }

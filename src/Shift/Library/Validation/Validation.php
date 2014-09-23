@@ -90,11 +90,7 @@ abstract class Validation
         $validator = Validator::make($this->getInput(), $rules);
 
         if ($validator->fails()) {
-            $exception = new ValidationException;
-            $exception->setValidationErrors($validator->messages()->all());
-            $exception->setFailedFields($validator->failed());
-
-            throw $exception;
+            throw new ValidationException($validator);
         }
 
         return true;

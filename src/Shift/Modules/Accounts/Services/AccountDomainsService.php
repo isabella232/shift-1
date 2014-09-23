@@ -29,22 +29,21 @@ class AccountDomainsService
     /**
      * Adds a new domain to an account.
      *
-     * @param $input
      * @param Account $account
+     * @param string $domain
      * @return mixed
      */
-    public function addDomain($input, Account $account)
+    public function addDomain(Account $account, $domain)
     {
-        (new DomainValidation)->setInput($input)->validate();
+        $domainData = [
+            'account' => $account,
+            'domain' => $domain
+        ];
 
-        $domain = $this->domainRepository->getNew($input);
-        $domain->account = $account;
+        (new DomainValidation)->setInput($domainData)->validate();
+
+        $domain = $this->domainRepository->getNew($domainData);
 
         return $this->domainRepository->save($domain);
-    }
-
-    public function addDomainForCurrentAccount()
-    {
-
     }
 }

@@ -9,12 +9,6 @@
     <header id="header">
         <div class="container">
             <a href="" class="logo"></a>
-            <div id="control-panel" user-panel ng-show="user"></div>
-            <div id="control-panel" ng-hide="user">
-                <ul class="horizontal">
-                    <li>Have an account? <a href="/">Login</a>.</li>
-                </ul>
-            </div>
         </div>
     </header>
 

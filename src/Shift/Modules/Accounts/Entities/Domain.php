@@ -8,6 +8,7 @@ use Tectonic\Shift\Modules\Accounts\ValueObjects\DomainName;
  * Class Domain
  *
  * @ORM\Entity(repositoryClass="Tectonic\Shift\Modules\Accounts\Repositories\DoctrineDomainRepository")
+ * @ORM\HasLifecycleCallbacks()
  * @ORM\Table(name="domains")
  */
 class Domain
@@ -36,7 +37,8 @@ class Domain
     public function __construct(Account $account, DomainName $domain)
     {
         $this->account = $account;
-        $this->domain = $this->setDomain($domain);
+
+        $this->setDomain($domain);
     }
 
     /**
