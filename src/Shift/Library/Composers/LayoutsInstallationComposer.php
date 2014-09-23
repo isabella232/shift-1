@@ -3,7 +3,7 @@
 namespace Tectonic\Shift\Library\Composers;
 
 use App;
-use Tectonic\Shift\Library\Facades\Asset;
+use Asset;
 
 class LayoutsInstallationComposer
 {

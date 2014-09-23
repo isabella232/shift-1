@@ -15,7 +15,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'public/js/shift-dev.js',
+      'public/js/shift.dev.js',
       'assets/js/tests/angular-mocks.js',
       'assets/js/tests/**/*Spec.js'
     ],

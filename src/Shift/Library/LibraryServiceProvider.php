@@ -1,7 +1,7 @@
 <?php namespace Tectonic\Shift\Library;
 
 use App;
-use Tectonic\Shift\Library\Support\Asset;
+use Tectonic\Shift\Library\Support\AssetFactory;
 
 class LibraryServiceProvider extends ServiceProvider
 {
@@ -37,7 +37,7 @@ class LibraryServiceProvider extends ServiceProvider
     public function registerAssetContainer()
     {
         $this->app->bindShared('shift.asset', function($app) {
-            return new Asset($app['orchestra.asset.dispatcher']);
+            return new AssetFactory($app['orchestra.asset.dispatcher']);
         });
     }
 }

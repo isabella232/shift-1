@@ -58,7 +58,7 @@ class LocalisationServiceProvider extends ServiceProvider
     public function registerAssetContainer()
     {
         $this->app->bindShared('shift.asset', function($app) {
-            return new \Tectonic\Shift\Library\Support\Asset($app['orchestra.asset.dispatcher']);
+            return new \Tectonic\Shift\Library\Support\AssetFactory($app['orchestra.asset.dispatcher']);
         });
     }
 

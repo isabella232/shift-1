@@ -4,7 +4,7 @@ use App;
 use Illuminate\Validation\Validator;
 use Tectonic\Shift\Library\Router;
 use Tectonic\Shift\Library\ServiceProvider;
-use Tectonic\Shift\Library\Support\Asset;
+use Tectonic\Shift\Library\Support\AssetFactory;
 use Tectonic\Shift\Library\Validation\DoctrinePresenceVerifier;
 
 class ShiftServiceProvider extends ServiceProvider
@@ -112,7 +112,7 @@ class ShiftServiceProvider extends ServiceProvider
     public function registerAssetManager()
     {
         $this->app->singleton('orchestra.asset', function($app) {
-            return new Asset($app['orchestra.asset.dispatcher']);
+            return new AssetFactory($app['orchestra.asset.dispatcher']);
         });
     }
 
