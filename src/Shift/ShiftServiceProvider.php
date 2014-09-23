@@ -41,12 +41,12 @@ class ShiftServiceProvider extends ServiceProvider
         'Mitch\LaravelDoctrine\LaravelDoctrineServiceProvider',
         'Tectonic\Shift\Library\Authorization\AuthorizationServiceProvider',
         'Tectonic\Shift\Library\LibraryServiceProvider',
-        'Tectonic\Shift\Modules\Users\UsersServiceProvider',
         'Tectonic\Shift\Modules\Accounts\AccountsServiceProvider',
-        'Tectonic\Shift\Modules\Security\SecurityServiceProvider',
+        'Tectonic\Shift\Modules\Configuration\ConfigurationServiceProvider',
         'Tectonic\Shift\Modules\CustomFields\CustomFieldsServiceProvider',
         'Tectonic\Shift\Modules\Localisation\LocalisationServiceProvider',
-        'Tectonic\Shift\Modules\Configuration\ConfigurationServiceProvider',
+        'Tectonic\Shift\Modules\Security\SecurityServiceProvider',
+        'Tectonic\Shift\Modules\Users\UsersServiceProvider',
     ];
 
     /**

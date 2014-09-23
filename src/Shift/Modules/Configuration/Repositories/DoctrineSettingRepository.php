@@ -1,4 +1,6 @@
-<?php namespace Tectonic\Shift\Modules\Configuration\Repositories;
+<?php
+
+namespace Tectonic\Shift\Modules\Configuration\Repositories;
 
 use Tectonic\Shift\Library\Support\Database\Doctrine\Repository;
 use Tectonic\Shift\Library\Support\Database\RecordNotFoundException;
@@ -8,7 +10,7 @@ use Tectonic\Shift\Library\Support\Database\RecordNotFoundException;
  *
  * @package Tectonic\Shift\Modules\Configuration\Repositories
  */
-class SettingRepository extends Repository implements SettingRepositoryInterface
+class DoctrineSettingRepository extends Repository implements SettingRepositoryInterface
 {
     /**
      * Is populated as soo nas getAll is called (acts as a cache).

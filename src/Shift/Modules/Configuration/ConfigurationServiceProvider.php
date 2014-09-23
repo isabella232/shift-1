@@ -1,18 +1,21 @@
 <?php namespace Tectonic\Shift\Modules\Configuration;
 
 use App;
-use Illuminate\Support\ServiceProvider;
+use Tectonic\Shift\Library\ServiceProvider;
+use Tectonic\Shift\Modules\Configuration\Repositories\SettingRepositoryInterface;
+use Tectonic\Shift\Modules\Configuration\Repositories\DoctrineSettingRepository;
 
 class ConfigurationServiceProvider extends ServiceProvider
 {
-
-    /**
-     * Register the service provider.
-     *
-     * @return void
-     */
     public function register()
     {
+        parent::register();
 
+        $this->registerSettingRepository();
+    }
+
+    private function registerSettingRepository()
+    {
+        $this->app->singleton(SettingRepositoryInterface::class, DoctrineSettingRepository::class);
     }
 }
