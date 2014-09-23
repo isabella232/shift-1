@@ -1,7 +1,9 @@
 <?php namespace Tectonic\Shift\Modules\Localisation;
 
 use App;
+use Event;
 use Tectonic\Shift\Library\ServiceProvider;
+use Tectonic\Shift\Modules\Localisation\Listeners\StartupListener;
 
 class LocalisationServiceProvider extends ServiceProvider
 {
@@ -11,6 +13,15 @@ class LocalisationServiceProvider extends ServiceProvider
      * @var bool
      */
     protected $defer = false;
+
+    /**
+     * Required listeners for the system.
+     *
+     * @var array
+     */
+    protected $listeners = [
+        StartupListener::class
+    ];
 
     /**
      * Register the service provider.
@@ -38,7 +49,6 @@ class LocalisationServiceProvider extends ServiceProvider
             'JMS\Serializer\Annotation', __DIR__.'/../../../../vendor/jms/serializer/src'
         );
     }
-
 
     /**
      * Register the Asset container. This is an extended version of Orchestra\Asset\Factory

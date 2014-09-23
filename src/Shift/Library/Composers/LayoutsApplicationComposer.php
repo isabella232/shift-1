@@ -25,11 +25,6 @@ class LayoutsApplicationComposer
 	{
         $configuration = $this->startupService->configuration();
 
-        $languageDictionary = App::make('shift.translator')
-            ->setUICustomisations(Config::get('shift::language.locales'))
-            ->allToJson();
-
 		$view->with('configuration', $configuration);
-        $view->with('language', $languageDictionary);
 	}
 }

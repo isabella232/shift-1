@@ -1,6 +1,8 @@
 <?php
 
 namespace Tectonic\Shift\Modules\Startup;
+
+use Event;
 use Tectonic\Shift\Modules\Configuration\Repositories\SettingRepositoryInterface;
 
 /**
@@ -30,12 +32,15 @@ class StartupService
 	/**
 	 * Application configuration required for bootstrap.
 	 *
+     * @fires Startup.Configuration.Started
 	 * @return array
 	 */
 	public function configuration()
 	{
         $configuration = [];
         $configuration['settings'] = $this->settingsRepository->getAllAsKeyValue();
+
+        Event::fire('Startup.Configuration.Started', [&$configuration]);
 
 		return $configuration;
 	}

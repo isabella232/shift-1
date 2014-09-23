@@ -23,6 +23,13 @@ abstract class ServiceProvider extends Provider
 	 */
 	protected $serviceProviders = [];
 
+    /**
+     * An array of the listeners that need to be registered with the system.
+     *
+     * @var array
+     */
+    protected $listeners = [];
+
 	/**
 	 * Base register method. Simply registers the aliases and service providers defined
 	 * by the service provider child class.
@@ -42,6 +49,17 @@ abstract class ServiceProvider extends Provider
 	{
 		$this->setupEntityPaths();
 	}
+
+    /**
+     * If there are any listeners defined on the service provider, here we'll loop through
+     * them and register them as subscribers with Laravel's events system.
+     */
+    protected function registerListeners()
+    {
+        foreach ($this->listeners as $listener) {
+            Event::subscribe(new $listener);
+        }
+    }
 
 	/**
 	 * Register aliases
