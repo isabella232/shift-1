@@ -1,0 +1,39 @@
+.filters {
+	background: $colour-filters;
+	margin-bottom: 60px;
+	position: relative;
+	
+	h2 { margin: 20px 0 0; }
+	
+	.collapsible {
+		overflow: hidden;
+		position: relative;
+	}
+	 
+	#filter-toggle {
+		@include position( absolute , 0 $handheld-device-padding -35px 0 );
+		border-radius: 0 0 $default-radius $default-radius;
+		margin-right: 0;
+		padding: 8px 20px 8px;
+	}
+	.close-button-column {
+		padding-top: 20px;
+	}
+}
+
+.active-filters {
+	@include position( absolute , 0 150px -35px 0 );
+	height: $button-pill-height;
+	overflow: hidden;
+	
+	// Update the styles of the ul.horizontal element to
+	// force everything to float right.
+	li {
+		float: right !important;
+		
+		+ li {
+			margin-left: 0 !important;
+			margin-right: 10px;
+		}
+	}
+}

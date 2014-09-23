@@ -1,0 +1,97 @@
+/**
+ * The following code is specific to the selector plugin and styles that we use across
+ * a few different forms. Because of the specificity of this code and its requirements,
+ * I figured it was best to keep it in its own file. //- Kirk
+ */
+
+.selector {
+	$space: 40px;
+	z-index: 1;
+
+	.head {
+		display: block;
+		height: $space;
+
+		&.chairperson {
+			font-size: 90%;
+			line-height: $space - 5;
+			padding-right: 5px;
+			padding-top: 5px;
+			text-align: right;
+		}
+	}
+
+	.list {
+		border-radius: $default-radius;
+		border: 1px solid #d5d5d5;
+		height: 185px;
+		width: 100%;
+		overflow-y: auto;
+		overflow-x: hidden;
+		position: relative;
+
+		&.headless {
+			margin-top: $space;
+		}
+
+		&.filterless {
+			height: 262px;
+			margin-top: 4px;
+		}
+
+		.used-elsewhere {
+			color: #999;
+		}
+
+		.icon-info {
+			margin-left: 5px;
+			position: relative;
+			-webkit-filter: grayscale( 0% );
+		}
+
+		td {
+			.controller {
+				display: block;
+				overflow: visible;
+				position: relative;
+			}
+
+			span {
+				display: inline-block;
+			}
+		}
+	}
+}
+
+.other-panels {
+	background: #fff;
+	border-radius: $default-radius;
+	border: 1px solid #d5d5d5;
+	box-shadow: 4px 4px 0 0 rgba(0, 0, 0, .08);
+	display: none;
+	font-size: 90%;
+	padding: 10px;
+	position: absolute;
+	z-index: 2;
+
+	&.dark {
+		border: 1px solid white;
+		background: $colour-primary;
+		border-radius: $default-radius;
+		color: white;
+		
+		a {
+			@include transition( all $transition-speed );
+
+			color: $colour-header-link;
+
+			&:hover {
+				color: $colour-header-link-hover;
+			}
+		}
+	}
+	
+	.header {
+		font-weight: bold;
+	}
+}

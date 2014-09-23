@@ -1,0 +1,43 @@
+@mixin lt-ie8 { .lt-ie8 & { @content; } }
+@mixin lt-ie9 { .lt-ie9 & { @content; } }
+@mixin lt-ie10 { .lt-ie10 & { @content; } }
+@mixin lt-ie11 { .lt-ie11 & { @content; } }
+@mixin ie { .ie & { @content; } }
+
+// 
+// Opacity mixin, adds support for older IE.
+// 
+@mixin opacity( $opacity ) {
+	filter: alpha(opacity=#{$opacity * 100});
+	opacity: $opacity;
+}
+
+
+// 
+// SCSS Sprite helper based on a grid.
+// 
+@mixin sprite( $x , $y , $img: $sprite-main , $grid-x: 50px , $grid-y: $grid-x ) {
+	background: url($img) no-repeat (-$x * $grid-x) (-$y * $grid-y);
+}
+
+// 
+// SCSS Sprite position helper based on a grid.
+// 
+@mixin sprite-position( $x , $y , $grid-x: 50px , $grid-y: $grid-x ) {
+	background-position: (-$x * $grid-x) (-$y * $grid-y);
+}
+
+
+// 
+// Alert types helpers.
+//
+@mixin new-alert( $colour , $grid-position ) {
+	$sprite-grid: 500px;
+	$adjustment: 17px;
+	
+	background-color: $colour;
+	background-position: 18px ( $sprite-grid * -$grid-position + $adjustment );
+	
+	&:hover { background-color: darken( $colour , 10 ); }
+	&.sticky { background-color: $colour; }
+}

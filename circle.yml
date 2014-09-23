@@ -1,7 +1,15 @@
 machine:
   php:
-    version: 5.4.6
+    version: 5.5.11
+  node:
+    version: v0.10.28
 
 dependencies:
   pre:
-    - composer config --global github-oauth.github.com 8af454cd0cb6cd9af4e7699fe4aba439e257651e
+    - composer config --global github-oauth.github.com ${COMPOSER_OAUTH_TOKEN}
+
+test:
+  override:
+    - phpunit tests
+    - ./node_modules/karma/bin/karma start ./shift.conf.js --single-run
+

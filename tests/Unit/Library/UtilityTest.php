@@ -3,7 +3,7 @@
 use Mockery as m;
 use Tectonic\Shift\Library\Utility;
 
-class UtilityTest extends \PHPUnit_Framework_TestCase
+class UtilityTest extends \Tests\UnitTestCase
 {
 	public function setUp()
 	{

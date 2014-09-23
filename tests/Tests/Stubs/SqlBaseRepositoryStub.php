@@ -1,14 +1,21 @@
-<?php
+<?php namespace Tests\Stubs;
 
-namespace Tests\Stubs;
+use Tectonic\Shift\Library\Support\Database\Eloquent\Repository;
 
-use Tectonic\Shift\Library\Support\SqlBaseRepository;
-
-class SqlBaseRepositoryStub extends SqlBaseRepository
+class SqlBaseRepositoryStub extends Repository
 {
-	public function __construct($model, $search)
+    public function __construct($model)
+    {
+        $this->model = $model;
+    }
+
+    public function setModel($model)
+    {
+        $this->model = $model;
+    }
+
+	public function saveAll()
 	{
-		$this->model = $model;
-		$this->search = $search;
+
 	}
 }

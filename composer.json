@@ -5,27 +5,43 @@
         {
             "name": "Kirk Bushell",
             "email": "kirk@tectonic.com.au"
-        }
+        },
+	    {
+		    "name": "Tim Sheehan",
+		    "email": "tim@tectonic.com.au"
+	    },
+	    {
+		    "name": "Jason Morton",
+		    "email": "jason@tectonic.com.au"
+	    }
     ],
     "require": {
-        "php": ">=5.4.0",
+        "php": ">=5.5.0",
+	    "machuga/authority-l4" : "dev-master",
+        "orchestra/asset": "2.2.*",
+	    "laravel/framework": "~4.2",
         "jasonlewis/basset": "dev-master",
-	    "machuga/authority-l4" : "dev-master"
+	    "machuga/authority-l4": "dev-master",
+        "orchestra/asset": "2.2.*",
+        "hashids/hashids": "1.0.*@dev",
+	    "mitchellvanw/laravel-doctrine": "dev-master",
+        "jms/serializer": "dev-master"
     },
     "require-dev": {
         "mockery/mockery": "dev-master@dev",
-        "illuminate/support": "4.1.x",
-        "illuminate/routing": "4.1.x",
-	    "orchestra/testbench": "2.1.*",
+        "illuminate/support": "4.2.x",
+        "illuminate/routing": "4.2.x",
+	    "orchestra/testbench": "2.2.*",
         "phpunit/phpunit": "3.7.*"
     },
     "autoload": {
-        "psr-0": {
-            "Tectonic\\Shift": "src/",
-            "Tests": "tests/"
+        "psr-4": {
+            "Tectonic\\Shift\\": "src/Shift/",
+            "Tests\\": "tests/Tests"
         },
         "classmap": [
-            "src/migrations"
+            "migrations",
+            "src"
         ]
     },
     "minimum-stability": "dev",
@@ -33,6 +49,10 @@
 		{
 			"type": "vcs",
 			"url": "git@github.com:orchestral/phpseclib.git"
+		},
+		{
+			"type": "vcs",
+			"url": "git@github.com:kirkbushell/laravel-doctrine.git"
 		}
 	]
 }

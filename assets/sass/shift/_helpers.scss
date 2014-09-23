@@ -1,0 +1,166 @@
+ul, ol {
+	&.expanded {
+		> li + li { margin-top: 5px; }
+	}
+	// Vertical and horizontal lists.
+	&.vertical, &.horizontal {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		overflow: hidden;
+	}
+	&.vertical {
+		&.expanded > li {
+			line-height: 1.3em;
+			
+			+ li { margin-top: 5px; }
+		}
+	}
+	&.horizontal {
+		> li { float: left; }
+		
+		&.expanded > li + li {
+			margin-top: 0;
+			margin-left: 10px;
+		}
+	}
+	
+	// Table-styled list.
+	&.table {
+		display: table;
+		width: 100%;
+		
+		> li {
+			display: table-cell;
+			float: none;
+			
+			> a { display: block; }
+		}
+	}
+}
+
+
+// Definition lists.
+dl {
+	&.tabular {
+		overflow: hidden;
+		
+		dt, dd {
+			float: left;
+			margin-bottom: 10px;
+		}
+		dt {
+			font-weight: bold;
+			width: 35%;
+		}
+		dd {
+			margin-left: 5%;
+			width: 60%;
+		}
+	}
+	
+	&.compact {
+		dt, dd { margin-bottom: 0; }
+	}
+}
+
+
+hr {
+	border: 0;
+	border-bottom: 1px solid #b7b7b7;
+	margin: 20px 0;
+	
+	&.compact {
+		margin: 10px 0;
+	}
+}
+
+
+// Helper classes to set a width on any element.
+.zero    { width: 0%;    }
+.ten     { width: 10%;   }
+.twenty  { width: 20%;   }
+.thirty  { width: 30%;   }
+.forty   { width: 40%;   }
+.fifty   { width: 49%;   }
+.sixty   { width: 60%;   }
+.seventy { width: 70%;   }
+.eighty  { width: 80%;   }
+.ninety  { width: 90%;   }
+.hundred { width: 100%;  }
+
+.quarter { width: 25%;   }
+.third   { width: 33.3%; }
+
+// The 3rd .third element to be a little bigger, for a perfect 100% width.
+.third + .third + .third { width: 33.4%; }
+
+
+
+.animate-slide {
+	@include transition( max-height $transition-speed );
+	max-height: 0;
+	
+	&.on { max-height: 500px; }
+}
+
+.animate-fade {
+	@include opacity( 0 );
+	@include transition( opacity $transition-speed );
+	
+	&.on { @include opacity( 1 ); }
+}
+
+
+
+// Force an element to be hidden.
+.hidden { display: none !important; }
+
+
+
+// CSS Island objects
+.island { margin-bottom: 30px; }
+.islet { margin-bottom: 15px; }
+
+
+
+.text-left   { text-align: left !important; }
+.text-right  { text-align: right !important; }
+.text-center { text-align: center !important; }
+
+.align-top    { vertical-align: top; }
+.align-middle { vertical-align: middle; }
+.align-bottom { vertical-align: bottom; }
+
+
+
+
+// Hide elements when they reach a specific breakpoint.
+.hide-on-mobile {
+	@include media( $mobile ) {
+		display: none !important;
+	}
+}
+.hide-on-tablet {
+	@include media( $tablet ) {
+		display: none !important;
+	}
+}
+.hide-on-handheld {
+	@extend .hide-on-mobile;
+	@extend .hide-on-tablet;
+}
+
+
+.dollar-sign {
+	line-height: 36px;
+	margin-right: 5px;
+}
+
+
+
+.well {
+	background-color: #edeff2;
+	border-radius: $default-radius;
+	padding: 10px;
+}

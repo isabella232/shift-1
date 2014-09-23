@@ -1,13 +1,13 @@
 <?php namespace Tests\Unit\Library\Authorization;
 
 use Mockery as m;
-use Tests\TestCase;
+use Tests\UnitTestCase;
 use Tectonic\Shift\Library\Authorization\Bouncer;
-use Tectonic\Shift\Library\Authorization\AuthenticatedConsumer;
+use Tectonic\Shift\Library\Authorization\Consumer;
 
-class BouncerTest extends TestCase
+class BouncerTest extends UnitTestCase
 {
-	private $authenticatedConsumer;
+	private $consumer;
 	private $bouncer;
 	private $mockAuthority;
 
@@ -15,16 +15,16 @@ class BouncerTest extends TestCase
 	{
 		parent::setUp();
 
-		$mockConsumer = m::mock('Tectonic\Shift\Library\Authorization\Consumer');
 		$this->mockAuthority = m::mock('Authority\Authority');
+		$this->consumer = new Consumer($this->mockAuthority);
 
-		$this->authenticatedConsumer = new AuthenticatedConsumer($mockConsumer, $this->mockAuthority);
-		$this->bouncer = new Bouncer('User', $this->authenticatedConsumer);
+		$this->bouncer = new Bouncer('User', $this->consumer);
+		$this->bouncer->setConsumer($this->consumer);
 	}
 
 	public function testDetermineAction()
 	{
-		$this->assertEquals('update', $this->bouncer->determineAction('put'));
+        $this->assertEquals('update', $this->bouncer->determineAction('put'));
 		$this->assertEquals('index', $this->bouncer->determineAction('delete'));
 		$this->assertEquals('create', $this->bouncer->determineAction('post'));
 		$this->assertEquals('view', $this->bouncer->determineAction('get'));
@@ -33,7 +33,7 @@ class BouncerTest extends TestCase
 
 	public function testAddAccess()
 	{
-		$this->bouncer->addRequiredAccess('get', 'index', ['read']);
+        $this->bouncer->addRequiredAccess('get', 'index', ['read']);
 		$this->bouncer->addRequiredAccess('get', 'index', 'update');
 		$this->bouncer->addRequiredAccess('get', 'other', 'any');
 		$this->bouncer->addRequiredAccess('get', 'other', ['some', 'one']);
@@ -47,7 +47,7 @@ class BouncerTest extends TestCase
 
 	public function testDefaultAccess()
 	{
-		$this->bouncer->setupDefaultAccess();
+        $this->bouncer->setupDefaultAccess();
 
 		$matrix = $this->bouncer->getMatrix();
 
@@ -59,9 +59,9 @@ class BouncerTest extends TestCase
 
 	public function testAuthorizeWithDefaults()
 	{
-		$this->bouncer->setupDefaultAccess();
+        $this->bouncer->setupDefaultAccess();
 
-		$this->mockAuthority->shouldReceive('can')->with('read', 'User')->andReturn(true);
+		$this->mockAuthority->shouldReceive('can')->once()->with('read', 'User')->andReturn(true);
 
 		$this->assertTrue($this->bouncer->allowed('get', 'index'));
 		$this->assertFalse($this->bouncer->allowed('post', 'something'));
@@ -69,7 +69,7 @@ class BouncerTest extends TestCase
 
 	public function testAuthorizeWithCallback()
 	{
-		$closure = function() {
+        $closure = function() {
 			return false;
 		};
 
@@ -83,7 +83,7 @@ class BouncerTest extends TestCase
 
 	public function testGuestAccess()
 	{
-		$this->bouncer->addRequiredAccess('post', 'register', 'any');
+        $this->bouncer->addRequiredAccess('post', 'register', 'any');
 
 		$this->assertTrue($this->bouncer->allowed('post', 'register'));
 	}

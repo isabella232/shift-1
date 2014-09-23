@@ -1,0 +1,31 @@
+/*
+|--------------------------------------------------------------------------
+| Global styles
+|--------------------------------------------------------------------------
+|
+| This file will do nothing other than load other stylesheets that are
+| considered global assets to the web app.
+|
+*/
+
+@import 'base';
+@import 'typography';
+@import 'buttons';
+@import 'header';
+@import 'filters';
+@import 'pagination';
+@import 'tabs';
+@import 'forms';
+@import 'tables';
+@import 'helpers';
+@import 'info-box';
+@import 'icons';
+@import 'alerts';
+@import 'modals';
+@import 'footer';
+@import 'selector';
+@import 'spacing';
+@import 'scrollbars';
+@import 'tips';
+@import 'voting';
+@import 'thumbnailview';

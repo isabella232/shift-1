@@ -1,0 +1,34 @@
+#modal-container {
+	@include position( fixed , 0px 0px 0px 0px );
+	background: rgba( white , 0.85 );
+	z-index: 500;
+}
+
+#modal-content {
+	background: white;
+	border-radius: $default-radius;
+	border: 8px solid $colour-primary;
+	height: 200px;
+	margin: 100px auto;
+	max-height: 500px;
+	min-height: 200px;
+	min-width: 300px;
+	padding: 20px;
+	position: relative;
+	width: $modal-width;
+}
+
+#modal-close {
+	@include position( absolute , 11px 6px 0 0 );
+	@include transition( all 0.25s );
+	@include opacity( 0.7 );
+	cursor: pointer;
+	
+	&:hover { @include opacity( 1 ); }
+}
+
+#modal-scrollable-content {
+	@include position( absolute , 40px 0px 0px 20px );
+	overflow-y: auto;
+	padding: 0 20px 20px 0;
+}

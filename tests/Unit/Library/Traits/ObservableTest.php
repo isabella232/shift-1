@@ -5,7 +5,7 @@ use Mockery as m;
 use Tests\Stubs\ObservableStub;
 use Tests\Stubs\ObserverStub;
 
-class ObservableTest extends \PHPUnit_Framework_TestCase
+class ObservableTest extends \Tests\UnitTestCase
 {
 
     public $mockDispatcher, $mockObserver;
