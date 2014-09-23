@@ -9,26 +9,21 @@
  */
 HTML::macro('setting', function($setting)
 {
-	/*$value = App::make('SettingsRepositoryInterface')->setting( $setting );
+	$value = App::make('Tectonic\Shift\Modules\Configuration\Repositories\SettingRepositoryInterface')->getBySetting($setting);
 
-	if ( !empty( $value ) )
-	{
+	if (!empty($value)) {
 		return $value;
-	}*/
+	}
 
 	return null;
 });
 
 /**
- * Retrieves the application configuration and settings necessary for booting. Some aspects,
- * such as the application user interface language settings, the current account, the logged-in
- * user and more, all need to be available as the application starts up.
+ * Encodes a bootstrap configuration value as a json object and then
  *
  * @return string Base64-encoded string of the configuration required for startup.
  */
-HTML::macro('configuration', function() {
-	$startupService = App::make('Tectonic\Shift\Modules\Startup\StartupService');
-	$configuration = $startupService->configuration();
+HTML::macro('obscure', function($configuration) {
 	$jsonPayload = json_encode($configuration);
 
 	return base64_encode($jsonPayload);

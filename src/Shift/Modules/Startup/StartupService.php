@@ -1,6 +1,7 @@
 <?php
 
 namespace Tectonic\Shift\Modules\Startup;
+use Tectonic\Shift\Modules\Configuration\Repositories\SettingRepositoryInterface;
 
 /**
  * Class StartupService
@@ -13,6 +14,19 @@ namespace Tectonic\Shift\Modules\Startup;
  */
 class StartupService
 {
+    /**
+     * @var SettingRepositoryInterface
+     */
+    private $settingsRepository;
+
+    /**
+     * @param SettingRepositoryInterface $settingsRepository
+     */
+    public function __construct(SettingRepositoryInterface $settingsRepository)
+    {
+        $this->settingsRepository = $settingsRepository;
+    }
+
 	/**
 	 * Application configuration required for bootstrap.
 	 *
@@ -20,6 +34,9 @@ class StartupService
 	 */
 	public function configuration()
 	{
-		return [];
+        $configuration = [];
+        $configuration['settings'] = $this->settingsRepository->getAllAsKeyValue();
+
+		return $configuration;
 	}
 }

@@ -29,7 +29,7 @@ gulp.task('scripts', function() {
         .pipe(concat('shift-dev.js'))
         .pipe(gulp.dest(output + 'js'))
         .pipe(rename('shift.js'))
-        .pipe(uglify())
+        .pipe(uglify({mangle: true}))
         .pipe(gulp.dest(output + 'js'))
         .pipe(notify({ message: 'Javascript files compiled.' }));
 });

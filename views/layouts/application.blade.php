@@ -4,12 +4,10 @@
     @include( 'shift::partials.header.head' )
 </head>
 <body>
-
     @include('shift::partials.misc.browser')
 
     <div ng-view></div>
 
     @include('shift::partials.footer.foot')
-
 </body>
 </html>

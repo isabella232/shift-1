@@ -2,10 +2,12 @@
 
 namespace Tests\Unit\Modules\Startup;
 
+use Mockery as m;
+use Tectonic\Shift\Modules\Configuration\Repositories\SettingRepositoryInterface;
 use Tectonic\Shift\Modules\Startup\StartupService;
-use Tests\TestCase;
+use Tests\UnitTestCase;
 
-class StartupServiceTest extends TestCase
+class StartupServiceTest extends UnitTestCase
 {
 	private $startupService;
 
@@ -13,11 +15,14 @@ class StartupServiceTest extends TestCase
 	{
 		parent::setUp();
 
-		$this->startupService = new StartupService();
+        $this->mockRepository = m::mock(SettingRepositoryInterface::class);
+		$this->startupService = new StartupService($this->mockRepository);
 	}
 
 	public function testConfigurationValueReturned()
 	{
-		$this->assertEquals([], $this->startupService->configuration());
+        $this->mockRepository->shouldReceive('getAllAsKeyValue')->once()->andReturn('settings');
+
+		$this->assertEquals(['settings' => 'settings'], $this->startupService->configuration());
 	}
 }

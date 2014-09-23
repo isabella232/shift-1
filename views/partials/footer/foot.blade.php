@@ -8,9 +8,5 @@
 {{ Asset::container('custom')->scripts() }}
 
 <script type="text/javascript">
-<<<<<<< HEAD:src/views/partials/footer/foot.blade.php
-	angular.value('Configuration', 'HTML::configuration()');
-=======
-	window.language     = {{ $language }};
->>>>>>> master:views/partials/footer/foot.blade.php
+	angular.value('BootstrapConfig', '{{ HTML::obscure($configuration) }}');
 </script>
