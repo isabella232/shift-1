@@ -19,10 +19,10 @@ class Localisation extends Entity
     protected $id;
 
     /** @ORM\Column(type="integer", name="`locale_id`") **/
-    protected $locale_id;
+    protected $localeId;
 
     /** @ORM\Column(type="integer", name="`foreign_id`") **/
-    protected $foreign_id;
+    protected $foreignId;
 
     /** @ORM\Column(type="string", name="`resource`") **/
     protected $resource;

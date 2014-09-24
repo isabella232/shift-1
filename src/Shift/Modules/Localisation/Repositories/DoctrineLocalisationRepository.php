@@ -34,6 +34,8 @@ class DoctrineLocalisationRepository extends Repository implements LocalisationR
         parent::__construct($entityManager);
 
         $this->localeRepo = $localeRepo;
+
+        $this->restrictByAccount = false;
     }
 
     /**
@@ -57,6 +59,37 @@ class DoctrineLocalisationRepository extends Repository implements LocalisationR
         $results = $query->getQuery()->getArrayResult();
 
         return $this->flattenUILocalisations($results);
+    }
+
+    /**
+     * Find a translation/localisation for a given resource field
+     *
+     * @param int    $id
+     * @param string $resource
+     * @param string $field
+     * @param string $locale
+     *
+     * @return array
+     */
+    public function findTranslation($id, $resource, $field, $locale)
+    {
+        $localeId = $this->localeRepo->getLocaleId($locale);
+
+        $query = $this->entityManager()->createQueryBuilder()
+            ->select(['l.value'])
+            ->from($this->entity, 'l')
+            ->where('l.foreignId = :id')
+            ->andWhere('l.resource = :resource')
+            ->andWhere('l.field = :field')
+            ->andWhere('l.localeId = :localeId')
+            ->setParameter('id', $id)
+            ->setParameter('resource', $resource)
+            ->setParameter('field', $field)
+            ->setParameter('localeId', $localeId);
+
+        $result = $query->getQuery()->getOneOrNullResult();
+
+        return $result;
     }
 
     protected function flattenUILocalisations($results)
