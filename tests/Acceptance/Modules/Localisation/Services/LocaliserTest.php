@@ -47,8 +47,8 @@ class DoctrineLocalisationRepositoryTest extends AcceptanceTestCase
         $this->cleanData['localisations'] = [
             ['localeId' => 1, 'foreignId' => 1, 'resource' => 'Tectonic\Shift\CustomField', 'field' => 'label', 'value' => 'Custom field en_GB'],
             ['localeId' => 2, 'foreignId' => 1, 'resource' => 'Tectonic\Shift\CustomField', 'field' => 'label', 'value' => 'Custom field en_AU'],
-            ['localeId' => 3, 'foreignId' => 1, 'resource' => 'Tectonic\Shift\CustomField', 'field' => 'label', 'value' => 'Custom field en_NZ'],
-            ['localeId' => 4, 'foreignId' => 1, 'resource' => 'Tectonic\Shift\Modules\Localisation\Entities\Locale', 'field' => 'locale', 'value' => 'Changed locale name!'],
+            ['localeId' => 4, 'foreignId' => 1, 'resource' => 'Tectonic\Shift\Modules\Localisation\Entities\Locale', 'field' => 'locale', 'value' => 'Changed locale name 1!'],
+            ['localeId' => 4, 'foreignId' => 2, 'resource' => 'Tectonic\Shift\Modules\Localisation\Entities\Locale', 'field' => 'locale', 'value' => 'Changed locale name 2!'],
         ];
 
         $this->localeRepository = App::make(DoctrineLocaleRepository::class);
@@ -65,7 +65,21 @@ class DoctrineLocalisationRepositoryTest extends AcceptanceTestCase
 
         $result = $this->localiser->localise($locale, ['locale'], 'en_US');
 
-        $this->assertEquals($this->cleanData['localisations'][3]['value'], $result->getLocale());
+        $this->assertEquals($this->cleanData['localisations'][2]['value'], $result->getLocale());
+    }
+
+    public function testLocaliseCollectionUpdatesResourceLabels()
+    {
+        $this->createLocales();
+        $this->createLocalisations();
+
+        $collection[] = $this->localeRepository->requireById(1);
+        $collection[] = $this->localeRepository->requireById(2);
+
+        $result = $this->localiser->localiseCollection($collection, ['locale'], 'en_US');
+
+        $this->assertEquals($this->cleanData['localisations'][2]['value'], $result[0]->getLocale());
+        $this->assertEquals($this->cleanData['localisations'][3]['value'], $result[1]->getLocale());
     }
 
     private function createLocales()

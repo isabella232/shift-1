@@ -50,13 +50,19 @@ class Localiser
     /**
      * Localise a collection of resources
      *
-     * @param mixed  $collection
-     * @param array  $fields
-     * @param string $locale
+     * @param  mixed  $collection
+     * @param  array  $fields
+     * @param  string $locale
+     * @return mixed
      */
     public function localiseCollection($collection, $fields, $locale)
     {
+        foreach($collection as $resource)
+        {
+            $this->localise($resource, $fields, $locale);
+        }
 
+        return $collection;
     }
 
     /**
