@@ -32,7 +32,6 @@ class Account extends Entity
 
     /**
      * @ORM\ManyToOne(targetEntity="Tectonic\Shift\Modules\Users\Entities\User")
-     * @ORM\JoinColumn(name="user_id")
      */
     protected $owner;
 
@@ -48,7 +47,6 @@ class Account extends Entity
 
     /**
      * @ORM\ManyToMany(targetEntity="Tectonic\Shift\Modules\Accounts\Entities\Account", inversedBy="accounts")
-     * @ORM\JoinTable(name="account_user")
      */
     protected $users;
 

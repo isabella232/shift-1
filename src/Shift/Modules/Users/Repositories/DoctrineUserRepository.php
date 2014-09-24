@@ -47,7 +47,7 @@ class DoctrineUserRepository extends Repository implements UserRepositoryInterfa
             ->where('users.email = :email')
             ->where('users.accounts.id = :accountId')
             ->setParameter('email', $email)
-            ->setParameter('accountId', $accountId)
+            ->setParameter('accountId', $accountId);
 
         return $query->getSingleResult();
     }

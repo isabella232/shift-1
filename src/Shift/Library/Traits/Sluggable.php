@@ -3,7 +3,7 @@
 use App;
 use Tectonic\Shift\Library\Support\Slug;
 
-trait Slugs
+trait Sluggable
 {
     /**
      * @ORM\Column(type="string", name="`slug`")

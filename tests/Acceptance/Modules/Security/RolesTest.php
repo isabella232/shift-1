@@ -4,6 +4,8 @@ namespace Tests\Api\Security;
 
 use App;
 use Tests\AcceptanceTestCase;
+use Tectonic\Shift\Modules\Security\Repositories\RoleRepositoryInterface;
+use Tectonic\Shift\Modules\Accounts\Repositories\AccountRepositoryInterface;
 
 class RolesTest extends AcceptanceTestCase
 {
@@ -13,8 +15,8 @@ class RolesTest extends AcceptanceTestCase
     {
         parent::setUp();
 
-        $this->roleRepository = App::make('Tectonic\Shift\Modules\Security\Repositories\RoleRepositoryInterface');
-        $this->accountRepository = App::make('Tectonic\Shift\Modules\Accounts\Repositories\AccountRepositoryInterface');
+        $this->roleRepository = App::make(RoleRepositoryInterface::class);
+        $this->accountRepository = App::make(AccountRepositoryInterface::class);
     }
 
     public function testStoreNewRole()

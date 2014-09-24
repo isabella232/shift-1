@@ -41,15 +41,8 @@ class InstallService
     public function freshInstall(array $input = [], InstallationListenerInterface $listener)
     {
         try {
-            $validation = new InstallValidation;
-            $validation->setInput($input);
-            $validation->validate();
-
-            $accountData = ['name' => $input['name']];
-
-            $account = $this->accountsService->create($accountData);
-
-            $this->accountDomainsService->addDomain($account, $input['host']);
+            $this->validate($input);
+            $account = $this->setupAccount($input);
         }
         catch (ValidationException $exception) {
             return $listener->onValidationFailure($exception);
@@ -58,5 +51,38 @@ class InstallService
         Event::fire('Shift: installed', [$account]);
 
         return $listener->onSuccess();
+    }
+
+    /**
+     * Validate the input that was provided from the setup process.
+     *
+     * @param array $input
+     * @return InstallValidation
+     * @throws ValidationException
+     */
+    public function validate(array $input = [])
+    {
+        $validation = new InstallValidation;
+        $validation->setInput($input);
+        $validation->validate();
+
+        return $validation;
+    }
+
+    /**
+     * Setup a new account, with a domain and user as well.
+     *
+     * @param $input
+     * @return mixed
+     */
+    public function setupAccount($input)
+    {
+        $accountData = ['name' => $input['name']];
+
+        $account = $this->accountsService->create($accountData);
+
+        $this->accountDomainsService->addDomain($account, $input['host']);
+
+        return $account;
     }
 }

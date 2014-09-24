@@ -127,7 +127,7 @@ final class Bouncer
 			$action = $this->determineAction($method);
 		}
 
-		Log::info('ACCESS REQUEST: FROM ' . $this->resource . ' WITH ' . $method .' TO ' . $action);
+		Log::debug('ACCESS REQUEST: FROM ' . $this->resource . ' WITH ' . $method .' TO ' . $action);
 
 		// let's see if such an action and resource exists in the matrix
 		if (isset($this->matrix[$method][$action])) {
@@ -165,7 +165,7 @@ final class Bouncer
 			}
 		}
 
-		Log::info('ACCESS REQUEST: DENIED.');
+		Log::debug('ACCESS REQUEST: DENIED.');
 
 		return false;
 	}
@@ -182,7 +182,7 @@ final class Bouncer
 		$access = $function();
 
 		if ($access) {
-			Log::info("ACCESS REQUEST: GRANTED for anonymous function.");
+			Log::debug("ACCESS REQUEST: GRANTED for anonymous function.");
 		}
 
 		return $access;
@@ -202,7 +202,7 @@ final class Bouncer
 		}
 
 		if ($this->can($rule, $resource)) {
-			Log::info('ACCESS REQUEST: GRANTED FROM ' . $resource . ' ON RULE: ' . $rule);
+			Log::debug('ACCESS REQUEST: GRANTED FROM ' . $resource . ' ON RULE: ' . $rule);
 
 			return true;
 		}

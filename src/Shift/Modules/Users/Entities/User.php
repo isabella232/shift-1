@@ -2,9 +2,10 @@
 
 namespace Tectonic\Shift\Modules\Users\Entities;
 
+use Crypt;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Mapping AS ORM;
 use Mitch\LaravelDoctrine\Traits\Authentication;
-use Tectonic\Shift\Library\Authorization\UserInterface;
 use Tectonic\Shift\Library\Support\Database\Doctrine\Entity;
 
 /**
@@ -38,10 +39,15 @@ class User extends Entity
     private $lastName;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Tectonic\Shift\Modules\Accounts\Entities\Account", inversedBy="users")
-     * @ORM\JoinTable(name="account_user")
+     * @ORM\ManyToMany(targetEntity="Tectonic\Shift\Modules\Accounts\Entities\Account", mappedBy="users")
      */
     private $accounts;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Tectonic\Shift\Modules\Accounts\Entities\Account", mappedBy="userId")
+     * @ORM\JoinColumn(name="user_id")
+     */
+    private $ownedAccounts;
 
     /**
      * Construct a new User entity, hydrating the required fields.
@@ -75,5 +81,27 @@ class User extends Entity
     public function getName()
     {
         return $this->firstName.' '.$this->lastName;
+    }
+
+    /**
+     * Whenever a new user is updated, we want to encrypt their password, if it has been assigned.
+     *
+     * @ORM\preUpdate
+     */
+    public function preUpdate(PreUpdateEventArgs $eventArgs)
+    {
+        if ($eventArgs->hasChangedField('password')) {
+            $this->setPassword(Crypt::encrypt($this->getPassword()));
+        }
+    }
+
+    /**
+     * Returns the full list of accounts that the user owns.
+     *
+     * @return mixed
+     */
+    public function getOwnedAccounts()
+    {
+        return $this->ownedAccounts;
     }
 }
