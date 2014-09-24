@@ -16,6 +16,14 @@ class DoctrineUserRepository extends Repository implements UserRepositoryInterfa
     protected $entity = User::class;
 
     /**
+     * Users are technically not restricted by account. A user can have a user account with multiple
+     * accounts on the system. You can check the relationships on the user entity for this information.
+     *
+     * @var bool
+     */
+    protected $restrictByAccount = false;
+
+    /**
      * Retrieve a user based on the email. This is also restricted by the current account. If
      * no user exists by that email address that is also associated with the account,
      *

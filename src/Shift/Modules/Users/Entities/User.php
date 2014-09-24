@@ -6,48 +6,51 @@ use Crypt;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Mapping AS ORM;
 use Mitch\LaravelDoctrine\Traits\Authentication;
+use Mitch\LaravelDoctrine\Traits\Timestamps;
 use Tectonic\Shift\Library\Support\Database\Doctrine\Entity;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Tectonic\Shift\Modules\Users\Repositories\DoctrineUserRepository")
+ * @ORM\HasLifecycleCallbacks()
  * @ORM\Table(name="users")
  */
 class User extends Entity
 {
     use Authentication;
+    use Timestamps;
 
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string")
      */
-    private $email;
+    protected $email;
 
     /**
      * @ORM\Column(type="string")
      */
-    private $firstName;
+    protected $firstName;
 
     /**
      * @ORM\Column(type="string")
      */
-    private $lastName;
+    protected $lastName;
 
     /**
      * @ORM\ManyToMany(targetEntity="Tectonic\Shift\Modules\Accounts\Entities\Account", mappedBy="users")
      */
-    private $accounts;
+    protected $accounts;
 
     /**
      * @ORM\OneToMany(targetEntity="Tectonic\Shift\Modules\Accounts\Entities\Account", mappedBy="userId")
      * @ORM\JoinColumn(name="user_id")
      */
-    private $ownedAccounts;
+    protected $ownedAccounts;
 
     /**
      * Construct a new User entity, hydrating the required fields.

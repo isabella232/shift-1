@@ -2,9 +2,9 @@
 
 namespace Tectonic\Shift\Modules\Users\Repositories;
 
-use Tectonic\Shift\Library\Support\BaseRepositoryInterface;
+use Tectonic\Shift\Library\Support\Database\RepositoryInterface;
 
-interface UserRepositoryInterface extends BaseRepositoryInterface
+interface UserRepositoryInterface extends RepositoryInterface
 {
     /**
      * Should return a user object based on the email address.

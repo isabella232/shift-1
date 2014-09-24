@@ -26,12 +26,8 @@ class Account extends Entity
     protected $id;
 
     /**
-     * @ORM\Column(type="integer", name="user_id", options={"unsigned"=true}, nullable=true)
-     */
-    protected $userId;
-
-    /**
      * @ORM\ManyToOne(targetEntity="Tectonic\Shift\Modules\Users\Entities\User")
+     * @ORM\JoinColumn(name="user_id")
      */
     protected $owner;
 
@@ -46,7 +42,7 @@ class Account extends Entity
     protected $domains;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Tectonic\Shift\Modules\Accounts\Entities\Account", inversedBy="accounts")
+     * @ORM\ManyToMany(targetEntity="Tectonic\Shift\Modules\Users\Entities\User", inversedBy="accounts")
      */
     protected $users;
 
@@ -61,26 +57,6 @@ class Account extends Entity
     }
 
     /**
-     * Returns the user that is currently responsible for the account.
-     *
-     * @return User
-     */
-    public function getOwner()
-    {
-        return $this->owner;
-    }
-
-    /**
-     * Set the owner for the account.
-     *
-     * @param User $user
-     */
-    public function setOwner(User $user)
-    {
-        $this->owner = $user->getId();
-    }
-
-    /**
      * Add a new domain to an account.
      *
      * @param Domain $domain
@@ -88,16 +64,6 @@ class Account extends Entity
     public function addDomain(Domain $domain)
     {
         $this->domains[] = $domain;
-    }
-
-    /**
-     * Returns an array of all domains associated with this account.
-     *
-     * @return array Domain
-     */
-    public function getDomains()
-    {
-        return $this->domains;
     }
 
     /**
@@ -111,6 +77,26 @@ class Account extends Entity
     }
 
     /**
+     * Returns an array of all domains associated with this account.
+     *
+     * @return array Domain
+     */
+    public function getDomains()
+    {
+        return $this->domains;
+    }
+
+    /**
+     * Returns the user that is currently responsible for the account.
+     *
+     * @return User
+     */
+    public function getOwner()
+    {
+        return $this->owner;
+    }
+
+    /**
      * Returns an array of all users that are registered with this account.
      *
      * @return array User
@@ -118,5 +104,15 @@ class Account extends Entity
     public function getUsers()
     {
         return $this->users;
+    }
+
+    /**
+     * Set the owner for the account.
+     *
+     * @param User $user
+     */
+    public function setOwner(User $user)
+    {
+        $this->owner = $user;
     }
 }

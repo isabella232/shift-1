@@ -5,7 +5,9 @@ use Tectonic\Shift\Library\Validation\Validation;
 class InstallValidation extends Validation
 {
     protected $rules = [
-        'name' => 'required',
-        'host' => 'required'
+        'name'     => 'required',
+        'host'     => 'required',
+        'email'    => 'required',
+        'password' => 'required'
     ];
 }

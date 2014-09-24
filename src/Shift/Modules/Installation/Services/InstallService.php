@@ -4,30 +4,53 @@ namespace Tectonic\Shift\Modules\Installation\Services;
 
 use Event;
 use Tectonic\Shift\Library\Validation\ValidationException;
+use Tectonic\Shift\Modules\Accounts\Repositories\AccountRepositoryInterface;
 use Tectonic\Shift\Modules\Accounts\Services\AccountDomainsService;
 use Tectonic\Shift\Modules\Accounts\Services\AccountManagementService;
+use Tectonic\Shift\Modules\Accounts\Services\AccountOwnershipService;
 use Tectonic\Shift\Modules\Installation\Contracts\InstallationListenerInterface;
 use Tectonic\Shift\Modules\Installation\Validators\InstallValidation;
+use Tectonic\Shift\Modules\Users\Services\UserManagementService;
 
 class InstallService
 {
-    /**
-     * @var AccountManagementService
-     */
-    private $accountsService;
-
     /**
      * @var AccountDomainsService
      */
     private $accountDomainsService;
 
     /**
-     * @param AccountManagementService $accountsService
+     * @var AccountOwnershipService
      */
-    public function __construct(AccountManagementService $accountsService, AccountDomainsService $accountDomainsService)
+    private $ownershipService;
+
+    /**
+     * @var UserManagementService
+     */
+    private $userManagementService;
+
+    /**
+     * @var AccountRepositoryInterface
+     */
+    private $accountsRepository;
+
+    /**
+     * @param AccountRepositoryInterface $accountsRepository
+     * @param AccountDomainsService $accountDomainsService
+     * @param AccountOwnershipService $ownershipService
+     * @param UserManagementService $userManagementService
+     */
+    public function __construct(
+        AccountRepositoryInterface $accountsRepository,
+        AccountDomainsService $accountDomainsService,
+        AccountOwnershipService $ownershipService,
+        UserManagementService $userManagementService
+    )
     {
-        $this->accountsService = $accountsService;
         $this->accountDomainsService = $accountDomainsService;
+        $this->ownershipService = $ownershipService;
+        $this->userManagementService = $userManagementService;
+        $this->accountsRepository = $accountsRepository;
     }
 
     /**
@@ -77,10 +100,16 @@ class InstallService
      */
     public function setupAccount($input)
     {
-        $accountData = ['name' => $input['name']];
+        $accountData = array_only($input, ['name']);
+        $userData = array_merge(array_only($input, ['email', 'password']), ['firstName' => 'Super', 'lastName' => 'Admin']);
 
-        $account = $this->accountsService->create($accountData);
+        $user = $this->userManagementService->create($userData);
 
+        $account = $this->accountsRepository->getNew($accountData);
+        $account->setOwner($user);
+        $account->addUser($user);
+
+        $this->accountsRepository->save($account);
         $this->accountDomainsService->addDomain($account, $input['host']);
 
         return $account;

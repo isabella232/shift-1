@@ -2,12 +2,22 @@
 
 namespace Tectonic\Shift\Modules\Accounts\Services;
 
+use Event;
+
 use Tectonic\Shift\Modules\Accounts\Repositories\AccountRepositoryInterface;
+use Tectonic\Shift\Modules\Accounts\Entities\Account;
+use Tectonic\Shift\Modules\Users\Entities\User;
 
 class AccountOwnershipService
 {
+    /**
+     * @var AccountRepositoryInterface
+     */
     private $accountRepository;
 
+    /**
+     * @param AccountRepositoryInterface $repository
+     */
     public function __construct(AccountRepositoryInterface $repository)
     {
         $this->accountRepository = $repository;
@@ -22,8 +32,8 @@ class AccountOwnershipService
      */
     public function transfer(Account $account, User $user)
     {
-        $account->userId = $user->getId();
-        $account = $this->repository->update($account);
+        $account->setOwner($user);
+        $account = $this->accountRepository->update($account);
 
         Event::fire(class_basename($account).': ownership transferred', [$account]);
         Event::fire(class_basename($user).': new account owner', [$user]);

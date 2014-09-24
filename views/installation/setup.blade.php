@@ -9,9 +9,9 @@
 
 @if ($errors->count())
     <div class="container">
-        <div class="alert-error sticky island animate-fade">
+        <div class="alert-error sticky island">
             <ul class="validation-errors">
-                @foreach ($errors->default as $field => $error)
+                @foreach ($errors->all() as $field => $error)
                     <li>{{ $error }}</li>
                 @endforeach
             </ul>
