@@ -1,21 +1,21 @@
-<?php namespace Tectonic\Shift\Modules\CustomFields\Entities;
+<?php namespace Tectonic\Shift\Modules\Fields\Entities;
 
 use Doctrine\ORM\Mapping AS ORM;
 use Mitch\LaravelDoctrine\Traits\Timestamps;
 use Tectonic\Shift\Library\Support\Database\Doctrine\Entity;
-use Tectonic\Shift\Library\Traits\Slugs;
+use Tectonic\Shift\Modules\Accounts\Entities\Accountable;
 
 /**
  * Class CustomField
  *
  * @ORM\Entity
- * @ORM\Table(name="`custom_fields`")
+ * @ORM\Table(name="`fields`")
  * @ORM\HasLifecycleCallbacks()
  */
-class CustomField extends Entity
+class Field extends Entity
 {
+    use Accountable;
     use Timestamps;
-    use Slugs;
 
     /**
      * @ORM\Id

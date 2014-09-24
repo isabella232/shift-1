@@ -3,13 +3,13 @@
 use Tectonic\Shift\Library\Support\Controller;
 use Tectonic\Shift\Modules\CustomFields\Validators\CustomFieldValidator;
 use Tectonic\Shift\Modules\CustomFields\Services\CustomFieldManagementService;
-use Tectonic\Shift\Modules\CustomFields\Repositories\CustomFieldRepositoryInterface;
+use Tectonic\Shift\Modules\CustomFields\Repositories\FieldRepositoryInterface;
 
 class FieldController extends Controller
 {
 
     public function __construct(
-        CustomFieldRepositoryInterface $repository,
+        FieldRepositoryInterface $repository,
         CustomFieldValidator $validator,
         CustomFieldManagementService $service
     ) {

@@ -20,12 +20,14 @@
 @endif
 
 <div class="container pad-on-handheld">
-    {{ Form::open(['action' => 'Tectonic\Shift\Controllers\InstallationController@postInstall']) }}
+    {{ Form::open(['action' => 'Tectonic\Shift\Controllers\InstallationController@postInstall', 'autocomplete' => 'off']) }}
         <div class="row">
             <div class="column-half vertical">
-                <div class="control island">
+                <h3 class="first">Application details</h3>
+
+                <div class="control">
                     <div class="control-label forty">
-                        {{ Form::label('name', 'Name') }}
+                        {{ Form::label('name', 'Account name') }}
                     </div>
                     <div class="control-field sixty">
                         {{ Form::text('name', 'Shift 2.0', ['autofocus', 'required']) }}
@@ -33,13 +35,35 @@
                     </div>
                 </div>
 
-                <div class="control island">
+                <div class="control">
                     <div class="control-label forty">
                         {{ Form::label('host', 'Host \ Domain') }}
                     </div>
                     <div class="control-field sixty">
-                        {{ Form::text('host', $host, ['autofocus', 'required']) }}
+                        {{ Form::text('host', $host) }}
                         <div class="help-text">Enter the domain or host information for this account (eg. somedomain.com or 192.168.1.1:8000.</div>
+                    </div>
+                </div>
+
+                <h3>Administrator</h3>
+
+                <div class="control">
+                    <div class="control-label forty">
+                        {{ Form::label('email', 'Email address') }}
+                    </div>
+                    <div class="control-field sixty">
+                        {{ Form::text('email') }}
+                        <div class="help-text">Enter the email address of the administrator's account.</div>
+                    </div>
+                </div>
+
+                <div class="control">
+                    <div class="control-label forty">
+                        {{ Form::label('password', 'Password') }}
+                    </div>
+                    <div class="control-field sixty">
+                        {{ Form::password('password') }}
+                        <div class="help-text">Every administrator needs a good a password.</div>
                     </div>
                 </div>
             </div>

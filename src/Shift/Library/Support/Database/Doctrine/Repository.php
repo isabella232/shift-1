@@ -204,13 +204,8 @@ abstract class Repository extends EntityRepository implements RepositoryInterfac
      */
     public function delete($resource, $permanent = false)
     {
-        if ($permanent) {
-            $this->entityManager()->remove($resource);
-        }
-        else {
-            $this->decorate($resource, ['deletedAt' => new DateTime()]);
-            $this->entityManager()->persist($resource);
-        }
+        // Permanent means nothing to Doctrine repositories, but keeping to satisfy interface
+        $this->entityManager()->remove($resource);
 
         // In order to hard-delete or soft-delete we need to invoke flush.
         $this->entityManager()->flush();

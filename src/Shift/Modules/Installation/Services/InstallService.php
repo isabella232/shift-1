@@ -2,6 +2,7 @@
 
 namespace Tectonic\Shift\Modules\Installation\Services;
 
+use Event;
 use Tectonic\Shift\Library\Validation\ValidationException;
 use Tectonic\Shift\Modules\Accounts\Services\AccountDomainsService;
 use Tectonic\Shift\Modules\Accounts\Services\AccountManagementService;
@@ -32,6 +33,7 @@ class InstallService
     /**
      * Called on a new installation of Shift. Validates the input provided
      *
+     * @fires Shift: installed
      * @param array $input
      * @param InstallationListenerInterface $listener
      * @return mixed
@@ -44,7 +46,6 @@ class InstallService
             $validation->validate();
 
             $accountData = ['name' => $input['name']];
-            $domainData = ['domain' => $input['host']];
 
             $account = $this->accountsService->create($accountData);
 
@@ -53,6 +54,8 @@ class InstallService
         catch (ValidationException $exception) {
             return $listener->onValidationFailure($exception);
         }
+
+        Event::fire('Shift: installed', [$account]);
 
         return $listener->onSuccess();
     }
