@@ -1,8 +1,9 @@
 <?php namespace Tectonic\Shift\Modules\Localisation\Services;
 
 use Tectonic\Shift\Modules\Localisation\Contracts\LocalisationRepositoryInterface;
+use Tectonic\Shift\Modules\Localisation\Contracts\LocaliserInterface;
 
-class Localiser
+class Localiser implements LocaliserInterface
 {
     /**
      * @var LocalisationRepositoryInterface

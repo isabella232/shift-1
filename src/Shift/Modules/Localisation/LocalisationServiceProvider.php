@@ -37,6 +37,7 @@ class LocalisationServiceProvider extends ServiceProvider
         $this->registerLangSingleton();
         $this->registerLocaleRepository();
         $this->registerLocalisationRepository();
+        $this->registerLocaliserInterface();
     }
 
     public function boot()
@@ -124,11 +125,24 @@ class LocalisationServiceProvider extends ServiceProvider
     }
 
     /**
+     * Register the localiser and bind and implementation to interface
+     *
+     * @return void
+     */
+    protected function registerLocaliserInterface()
+    {
+        $this->app->bindShared('Tectonic\Shift\Modules\Localisation\Contracts\LocaliserInterface', function()
+        {
+            return $this->app->make('Tectonic\Shift\Modules\Localisation\Services\Localiser');
+        });
+    }
+
+    /**
      * Register custom validation rules
      *
      * @return void
      */
-    private function registerCustomValidationRules()
+    protected function registerCustomValidationRules()
     {
         // Add validation rule to validating ISO language codes (en-GB)
         $this->app['Illuminate\Validation\Factory']

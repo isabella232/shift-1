@@ -2,7 +2,7 @@
 
 use App;
 use Tests\AcceptanceTestCase;
-use Tectonic\Shift\Modules\Localisation\Services\Localiser;
+use Tectonic\Shift\Modules\Localisation\Contracts\LocaliserInterface;
 use Tectonic\Shift\Modules\Localisation\Repositories\DoctrineLocaleRepository;
 use Tectonic\Shift\Modules\Localisation\Repositories\DoctrineLocalisationRepository;
 
@@ -53,7 +53,7 @@ class DoctrineLocalisationRepositoryTest extends AcceptanceTestCase
 
         $this->localeRepository = App::make(DoctrineLocaleRepository::class);
         $this->localisationRepository = App::make(DoctrineLocalisationRepository::class);
-        $this->localiser = new Localiser(App::make(DoctrineLocalisationRepository::class));
+        $this->localiser = App::make(LocaliserInterface::class);
     }
 
     public function testLocaliseResourceUpdatesResourceLabel()
