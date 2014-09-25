@@ -6,7 +6,27 @@
 <body>
     @include('shift::partials.misc.browser')
 
-    <div ng-view></div>
+    <header id="header">
+            <div class="container">
+                <a href="" class="logo"></a>
+            </div>
+        </header>
+
+        <nav id="navigation">
+            <div class="container pad-on-handheld">
+                <ul class="horizontal menu" top-menu></ul>
+            </div>
+        </nav>
+
+        <section id="content">
+            <div ng-view></div>
+        </section>
+
+        <div id="footer-links">
+            <div class="container">
+                <footer-links input="footerLinks"></footer-links>
+            </div>
+        </div>
 
     @include('shift::partials.footer.foot')
 </body>

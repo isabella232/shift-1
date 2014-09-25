@@ -7,7 +7,17 @@ class AssetFactory extends Factory
     public function containers($excludes = [])
     {
         $containers = $this->containers;
-        
-        return array_diff_key($containers, $excludes);
+
+        if (!$excludes) {
+            return $containers;
+        }
+
+        foreach ($excludes as $exclude) {
+            if (isset($containers[$exclude])) {
+                unset($containers[$exclude]);
+            }
+        }
+
+        return $containers;
     }
 }

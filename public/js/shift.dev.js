@@ -14978,22 +14978,21 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 (function() {
     'use strict';
 
-    var module = angular.module('Shift.Home.Setup', ['ngRoute']); // 'Shift.Library.Router'
+    angular
+	    .module('Shift.Home', ['ngRoute', 'Shift.Home.Controllers'])
+	    .config(['$routeProvider', function($routeProvider) {
 
-    module.config(['$routeProvider', function($routeProvider) {
+	        // The Shift Router isn't working yet. As a test user ngRoute
+	        /*ShiftRoute('/', {
+	            templateUrl: '/packages/tectonic/shift/views/home.html',
+	            controller: 'Shift.Home'
+	        });*/
 
-        // The Shift Router isn't working yet. As a test user ngRoute
-        /*ShiftRoute('/', {
-            templateUrl: '/packages/tectonic/shift/views/home.html',
-            controller: 'Shift.Home'
-        });*/
-
-        $routeProvider.when('/', {
-            templateUrl: '/packages/tectonic/shift/views/home.html',
-            controller: 'Shift.Home'
-        });
-    }]);
-
+	        $routeProvider.when('/', {
+	            templateUrl: '/packages/tectonic/shift/views/home.html',
+	            controller: 'Shift.Home'
+	        });
+	    }]);
 })();
 // Required for underscore string module
 _.mixin(_.str.exports());
@@ -15001,40 +15000,44 @@ _.mixin(_.str.exports());
 (function() {
 	'use strict';
 
-	var module = angular.module('shift', [
-        'Shift.Home.Setup',
-        'Shift.Home.Controllers',
-        'Shift.Library.Core.Services'
-    ]);
+	var dependencies = [
+		'Shift.Home',
+		'Shift.Library.Core.Services'
+	];
 
-	module.config(['$locationProvider', function($location) {
-        $location.html5Mode(true);
-    }]);
+	angular
+		.module('Shift', dependencies)
+		.config(Configuration)
+	    .run(Runner);
 
-    module.run(['$rootScope', 'Language', function($rootScope, Language) {
-        $rootScope.language = window.language;
+	Configuration.$inject = ['$locationProvider'];
+	function Configuration($locationProvider) {
+		$locationProvider.html5Mode(true);
+	}
 
-        // These config setting will be set dynamically either based upon
-        // user or installation settings.
-        $rootScope.config = {};
-        $rootScope.config.localeCode = 'en_GB';
+	Runner.$inject = ['$rootScope', 'Language'];
+	function Runner($rootScope, Language) {
+		$rootScope.language = window.language;
 
-        /**
-         * Return a localised string for a specific bundle language item.
-         *
-         * @param {string} bundle
-         * @param {string} item
-         * @returns {string}
-         */
-        $rootScope.lang = function(bundle, item) {
-            var locales = [
-                '',                             // User specific locale code
-                $rootScope.config.localeCode,   // Installation specific locale code
-                'en_GB',                        // Base/default locale code
-            ];
-            return Language.find($rootScope.language, locales, bundle, item);
-        };
+		// These config setting will be set dynamically either based upon
+		// user or installation settings.
+		$rootScope.config = {};
+		$rootScope.config.localeCode = 'en_GB';
 
-    }]);
-
+		/**
+		 * Return a localised string for a specific bundle language item.
+		 *
+		 * @param {string} bundle
+		 * @param {string} item
+		 * @returns {string}
+		 */
+		$rootScope.lang = function(bundle, item) {
+			var locales = [
+				'',                             // User specific locale code
+				$rootScope.config.localeCode,   // Installation specific locale code
+				'en_GB',                        // Base/default locale code
+			];
+			return Language.find($rootScope.language, locales, bundle, item);
+		};
+	}
 })();

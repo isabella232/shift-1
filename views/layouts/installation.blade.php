@@ -19,7 +19,7 @@
     </nav>
 
     <section id="content">
-        <div
+        <div>
             @yield('content')
         </div>
     </section>

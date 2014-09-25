@@ -8,5 +8,5 @@
 {{ Asset::container('custom')->scripts() }}
 
 <script type="text/javascript">
-	angular.value('BootstrapConfig', '{{ HTML::obscure($configuration) }}');
+	angular.module('Shift').value('bootstrap', '{{ HTML::obscure($configuration) }}');
 </script>

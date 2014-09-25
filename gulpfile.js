@@ -22,7 +22,7 @@ var scripts = [
     input + 'js/vendor/angular-resource.js',
     input + 'js/vendor/angular-route.js',
     input + 'js/src/**/*.js',
-    input + 'js/shift.js'
+    input + 'js/Shift.js'
 ];
 
 var styles = [
