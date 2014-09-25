@@ -6,7 +6,8 @@ _.mixin(_.str.exports());
 
 	var dependencies = [
 		'Shift.Home',
-		'Shift.Library.Core.Services'
+		'Shift.Library.Core.Services',
+        'Shift.Sessions'
 	];
 
 	angular

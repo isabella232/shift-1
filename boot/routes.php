@@ -10,11 +10,15 @@ Route::filter('shift.account', 'Tectonic\Shift\Library\Filters\AccountFilter');
 
 //Route::whenRegex('/^(?!install)/i', 'shift.account');
 
+Route::get('/', ['before' => 'shift.view'], function()
+{
+
+});
+
 /**
  * Register all /api/ routes. All application requests for data go via the API route
  */
 Route::group(['prefix' => Config::get('shift.api.url'), 'before' => 'shift.view'], function() {
-    Route::get('/', 'Tectonic\Shift\Controllers\DashboardController@index');
 
     Route::collection('users', 'Tectonic\Shift\Controllers\UserController');
     Route::collection('roles', 'Tectonic\Shift\Controllers\RoleController');
