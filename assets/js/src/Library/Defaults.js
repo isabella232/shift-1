@@ -41,7 +41,7 @@
     }]);
 
     /**
-     * The Resource service extends AngularJS's default $ngResource and makes it more susceptable to modern REST
+     * The Resource service extends AngularJS's default $ngResource and makes it more susceptible to modern REST
      * standards and practises. What this means is, $save will call the appropriate method whether the records exists
      * or not (PUT for update and POST for create).
      */
