@@ -37037,7 +37037,12 @@ else
         .controller('Sessions.New', NewSession)
         .controller('Sessions.Forgot', ForgotSession);
 
-    Auth.$inject = ['$scope'];
+    /**
+     * Handle auth form state
+     *
+     * @param $scope
+     * @constructor
+     */
     function Auth($scope) {
         $scope.forgotten = false;
 
@@ -37047,7 +37052,15 @@ else
         }
     }
 
-    NewSession.$inject = ['$scope', 'LoginService'];
+    Auth.$inject = ['$scope'];
+
+    /**
+     * Handles the Login form
+     *
+     * @param $scope
+     * @param LoginService
+     * @constructor
+     */
     function NewSession($scope, LoginService) {
 
         $scope.session = LoginService.getSessionData();
@@ -37070,8 +37083,16 @@ else
         });
     }
 
-    // Handles forgot password section.
-    ForgotSession.$inject = ['$scope', '$http', 'LoginService'];
+    NewSession.$inject = ['$scope', 'LoginService'];
+
+    /**
+     * Handles the forgotten password form.
+     *
+     * @param $scope
+     * @param $http
+     * @param LoginService
+     * @constructor
+     */
     function ForgotSession($scope, $http, LoginService) {
         // Initial value.
         $scope.resetData = {};
@@ -37095,6 +37116,8 @@ else
         });
     }
 
+    ForgotSession.$inject = ['$scope', '$http', 'LoginService'];
+
 })();
 (function () {
     'use strict';
@@ -37103,7 +37126,19 @@ else
         .module('Shift.Sessions.Services', [])
         .service('LoginService', LoginService);
 
-    LoginService.$inject = ['$http', '$rootScope', '$cookies'];
+    /**
+     * A service to handle aspects of User login such as;
+     *   - setting remember me to session,
+     *   - updating username in session,
+     *   - collecting current users session data,
+     *   - ...and logging in of course.
+     *
+     * @param $http
+     * @param $rootScope
+     * @param $cookies
+     * @returns {{login: Function, updateUsername: Function, setRememberMe: Function, getSessionData: Function}}
+     * @constructor
+     */
     function LoginService($http, $rootScope, $cookies) {
 
         this.email = '';
@@ -37172,6 +37207,9 @@ else
 
         return service;
     }
+
+    LoginService.$inject = ['$http', '$rootScope', '$cookies'];
+    
 })();
 (function () {
     'use strict';

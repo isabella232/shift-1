@@ -5,7 +5,19 @@
         .module('Shift.Sessions.Services', [])
         .service('LoginService', LoginService);
 
-    LoginService.$inject = ['$http', '$rootScope', '$cookies'];
+    /**
+     * A service to handle aspects of User login such as;
+     *   - setting remember me to session,
+     *   - updating username in session,
+     *   - collecting current users session data,
+     *   - ...and logging in of course.
+     *
+     * @param $http
+     * @param $rootScope
+     * @param $cookies
+     * @returns {{login: Function, updateUsername: Function, setRememberMe: Function, getSessionData: Function}}
+     * @constructor
+     */
     function LoginService($http, $rootScope, $cookies) {
 
         this.email = '';
@@ -74,4 +86,7 @@
 
         return service;
     }
+
+    LoginService.$inject = ['$http', '$rootScope', '$cookies'];
+    
 })();
