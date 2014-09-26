@@ -1,10 +1,15 @@
 (function() {
     'use strict';
 
-    var module = angular.module('Shift.Home.Controllers', []);
+    var dependencies = [];
 
-    module.controller('Shift.Home', ['$scope', function($scope) {
-        $scope.title = "Shift 2.0";
-    }]);
+    angular
+        .module('Shift.Home.Controllers', dependencies)
+        .controller('Shift.Home', Home);
+
+    Home.$inject = ['$scope'];
+    function Home($scope) {
+        $scope.title = 'Shift 2.0';
+    }
 
 })();

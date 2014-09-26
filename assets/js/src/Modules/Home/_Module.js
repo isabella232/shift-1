@@ -15,5 +15,10 @@
 	            templateUrl: '/packages/tectonic/shift/views/home.html',
 	            controller: 'Shift.Home'
 	        });
+
+            $routeProvider.when('/test', {
+                templateUrl: '/packages/tectonic/shift/views/test.html',
+                controller: 'Shift.Test'
+            })
 	    }]);
 })();

@@ -108,8 +108,8 @@ class InstallService
         $account = $this->accountsRepository->getNew($accountData);
         $account->setOwner($user);
         $account->addUser($user);
-
         $this->accountsRepository->save($account);
+
         $this->accountDomainsService->addDomain($account, $input['host']);
 
         return $account;

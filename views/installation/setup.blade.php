@@ -41,7 +41,7 @@
                     </div>
                     <div class="control-field sixty">
                         {{ Form::text('host', $host) }}
-                        <div class="help-text">Enter the domain or host information for this account (eg. somedomain.com or 192.168.1.1:8000.</div>
+                        <div class="help-text">Enter the domain or host information for this account (eg. somedomain.com or 192.168.1.1:8000).</div>
                     </div>
                 </div>
 
