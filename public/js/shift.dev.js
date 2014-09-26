@@ -14171,15 +14171,23 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 (function(){
     'use strict';
 
-    var module = angular.module('Shift.Library.Defaults', ['$ngResource', 'Shift.Library.Router']);
+    angular
+	    .module('Shift.Library.Defaults', ['$ngResource', 'Shift.Library.Router'])
+	    .provider('DefaultRoute', DefaultRoute)
+	    .provider('DefaultResolver', DefaultResolver)
 
+		DefaultRouter.$inject = ['ShiftRouteProvider'];
+
+	    function DefaultRoute(Router) {
+
+	    }
     /**
      * The DefaultRoutes factory object provides routes for the the most common application requests. These include
      * the index view (list view), create, and update. These routes also point to the most common resource views
      * based on the package they represent. As a result, every time the Router is called, it must also be provided
      * with the package it is currently representing.
      */
-    module.provider('DefaultRoute', ['ShiftRouteProvider', function(Router) {
+    .provider('DefaultRoute', ['ShiftRouteProvider', function(Router) {
         return function(resource, packageName) {
             // Register the main list route
             Router.register(resource, {
@@ -14208,43 +14216,6 @@ function ngViewFillContentFactory($compile, $controller, $route) {
         return {
             $get: []
         }
-    }]);
-
-    /**
-     * The Resource service extends AngularJS's default $ngResource and makes it more susceptable to modern REST
-     * standards and practises. What this means is, $save will call the appropriate method whether the records exists
-     * or not (PUT for update and POST for create).
-     */
-    module.service('Resource', ['$resource', function($resource) {
-        return function(url, params, methods) {
-            var defaults = {
-                update: {method: 'put', isArray: false},
-                create: {method: 'post'}
-            };
-
-            methods = _.extend(defaults, methods);
-
-            var resource = $resource(url, params, methods);
-
-            resource.prototype.$save = function(data, callback) {
-                if (!this.id) {
-                    this.$create(data, callback);
-                }
-                else {
-                    this.$update(data, callback);
-                }
-            };
-
-            resource.lower = function() {
-                return this.name.toLowerCase();
-            };
-
-            resource.lowerPlural = function() {
-                return this.lower().pluralize();
-            };
-
-            return resource;
-        };
     }]);
 })();
 
@@ -15011,11 +14982,13 @@ _.mixin(_.str.exports());
 	    .run(Runner);
 
 	Configuration.$inject = ['$locationProvider'];
+
 	function Configuration($locationProvider) {
 		$locationProvider.html5Mode(true);
 	}
 
 	Runner.$inject = ['$rootScope', 'Language'];
+
 	function Runner($rootScope, Language) {
 		$rootScope.language = window.language;
 

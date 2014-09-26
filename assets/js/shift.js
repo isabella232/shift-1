@@ -15,11 +15,13 @@ _.mixin(_.str.exports());
 	    .run(Runner);
 
 	Configuration.$inject = ['$locationProvider'];
+
 	function Configuration($locationProvider) {
 		$locationProvider.html5Mode(true);
 	}
 
 	Runner.$inject = ['$rootScope', 'Language'];
+
 	function Runner($rootScope, Language) {
 		$rootScope.language = window.language;
 
