@@ -37141,7 +37141,7 @@ else
      */
     function LoginService($http, $rootScope, $cookies) {
 
-        this.email = '';
+        this.username = '';
 
         var service = {
 
@@ -37170,7 +37170,7 @@ else
              */
             updateUsername: function(username) {
                 if ( !angular.isUndefined( username ) ) {
-                    this.email = username;
+                    this.username = username;
                 }
             },
 
@@ -37209,7 +37209,7 @@ else
     }
 
     LoginService.$inject = ['$http', '$rootScope', '$cookies'];
-    
+
 })();
 (function () {
     'use strict';

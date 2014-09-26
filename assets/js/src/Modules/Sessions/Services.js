@@ -20,7 +20,7 @@
      */
     function LoginService($http, $rootScope, $cookies) {
 
-        this.email = '';
+        this.username = '';
 
         var service = {
 
@@ -49,7 +49,7 @@
              */
             updateUsername: function(username) {
                 if ( !angular.isUndefined( username ) ) {
-                    this.email = username;
+                    this.username = username;
                 }
             },
 
@@ -88,5 +88,5 @@
     }
 
     LoginService.$inject = ['$http', '$rootScope', '$cookies'];
-    
+
 })();
