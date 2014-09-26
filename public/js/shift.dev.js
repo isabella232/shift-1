@@ -36940,6 +36940,51 @@ else
 })();
 
 (function() {
+	'use strict';
+
+	//var module = angular.module('Shift.Accounts.Controllers', ['Shift.Library.Defaults']);
+
+	/*module.controller('shift.accounts', [
+		'$rootScope',
+		'$scope',
+		'$filter',
+		'Seeker',
+		'Deletism',
+		'Filter',
+		'Account',
+		DefaultControllers.index
+	]);
+
+	module.controller('shift.accounts.new', [
+		'$rootScope',
+		'$scope',
+		'$filter',
+		'Account',
+		DefaultControllers.create
+	]);
+
+	module.controller('shift.accounts.edit', [
+		'$rootScope',
+		'$scope',
+		'$filter',
+		'install',
+		DefaultControllers.update
+	]);*/
+
+})();
+
+(function() {
+	'use strict';
+
+	var module = angular.module('Shift.Accounts.Setup', ['Shift.Library.Defaults']);
+
+	module.config(['ShiftRouteProvider', function(ShiftRouteProvider) {
+		ShiftRouteProvider('accounts');
+	}]);
+
+})();
+
+(function() {
     'use strict';
 
     var dependencies = [];
@@ -37002,41 +37047,26 @@ else
         }
     }
 
-    // Handles the creation of new session
-    NewSession.$inject = ['$scope', '$rootScope', '$http', '$cookies', 'LoginService'];
-    function NewSession($scope, $rootScope, $http, $cookies, LoginService) {
-        // Set the default values, otherwise the '$watch' below won't listen to the variable as it does not exist yet.
-        $scope.session = {};
-        $scope.session.remember = '';
-        $scope.session.username = '';
+    NewSession.$inject = ['$scope', 'LoginService'];
+    function NewSession($scope, LoginService) {
 
-        if ( $cookies.username ) {
-            $scope.session.remember = '1';
-            $scope.session.username = $cookies.username;
-        }
+        $scope.session = LoginService.getSessionData();
 
+        /**
+         * Handle logging in a user.
+         *
+         * @param data
+         */
         $scope.login = function( data ) {
-            if ( data.remember ) {
-                $cookies.remember = data.remember;
-                $cookies.username = data.username;
-            }
-
-            var req = $http.post( apiUrl('sessions') , data );
-
-            // Set the user object
-            req.success( function( user ) {
-                $rootScope.user = user;
-                $rootScope.$broadcast( 'user.authorised', user );
-                $rootScope.$broadcast( 'menu.refresh' );
-            });
+            LoginService.login(data);
         };
 
-        // Watch for the username, whenever it changes and it's valid, we want
-        // to save the value in the LoginService service.
-        $scope.$watch( 'session.username' , function( newValue ) {
-            if ( !angular.isUndefined( newValue ) ) {
-                LoginService.email = newValue;
-            }
+        /**
+         * Watch for changes to username, and update email property
+         * on the LoginService with new value if it's not undefined.
+         */
+        $scope.$watch( 'session.username' , function(username) {
+            LoginService.updateUsername(username)
         });
     }
 
@@ -37045,9 +37075,13 @@ else
     function ForgotSession($scope, $http, LoginService) {
         // Initial value.
         $scope.resetData = {};
-        $scope.resetData.username = '';
 
+        $scope.resetData.username = '';
         $scope.reset = function( data ) {
+
+            // Watch for the username, whenever it changes and it's valid, we want
+            // to save the value in the LoginService service.
+            // Handles the creation of new session
             $http.put( apiUrl( 'users/reset' ) , $scope.resetData );
         };
 
@@ -37069,8 +37103,72 @@ else
         .module('Shift.Sessions.Services', [])
         .service('LoginService', LoginService);
 
-    function LoginService() {
-        var service = { email: '' };
+    LoginService.$inject = ['$http', '$rootScope', '$cookies'];
+    function LoginService($http, $rootScope, $cookies) {
+
+        this.email = '';
+
+        var service = {
+
+            /**
+             * Handle login
+             *
+             * @param data
+             */
+            login: function(data) {
+                this.setRememberMe(data);
+
+                var req = $http.post( apiUrl('sessions'), data);
+
+                req.success( function( user ) {
+                    // Set the user object
+                    $rootScope.user = user;
+                    $rootScope.$broadcast( 'user.authorised', user );
+                    $rootScope.$broadcast( 'menu.refresh' );
+                });
+            },
+
+            /**
+             * Update email to represent new username
+             *
+             * @param {string} username
+             */
+            updateUsername: function(username) {
+                if ( !angular.isUndefined( username ) ) {
+                    this.email = username;
+                }
+            },
+
+            /**
+             * Save username to cookie "if" remember me is set to true
+             *
+             * @param data
+             */
+            setRememberMe: function(data) {
+                if(data.remember) {
+                    $cookies.remember = data.remember;
+                    $cookies.username = data.username;
+                }
+            },
+
+            /**
+             * Return a users session details if they exist in the cookie
+             *
+             * @returns {{remember: string, username: string}}
+             */
+            getSessionData: function() {
+                var session = { remember: '', username: '' };
+
+                if ( $cookies.username ) {
+                    session.remember = '1';
+                    session.username = $cookies.username;
+                }
+
+                return session;
+            }
+
+
+        };
 
         return service;
     }
@@ -37087,51 +37185,48 @@ else
         .module('Shift.Sessions', dependencies);
 
 })();
-(function() {
-	'use strict';
+(function () {
+    'use strict';
 
-	//var module = angular.module('Shift.Accounts.Controllers', ['Shift.Library.Defaults']);
+    angular
+        .module('Shift.Users.Controllers', [])
+        .controller('Users.Register', RegisterUser)
+        .controller('Users.New', NewUser)
+        .controller('Users.Edit', EditUser);
 
-	/*module.controller('shift.accounts', [
-		'$rootScope',
-		'$scope',
-		'$filter',
-		'Seeker',
-		'Deletism',
-		'Filter',
-		'Account',
-		DefaultControllers.index
-	]);
-
-	module.controller('shift.accounts.new', [
-		'$rootScope',
-		'$scope',
-		'$filter',
-		'Account',
-		DefaultControllers.create
-	]);
-
-	module.controller('shift.accounts.edit', [
-		'$rootScope',
-		'$scope',
-		'$filter',
-		'install',
-		DefaultControllers.update
-	]);*/
+    function RegisterUser(){}
+    function Users(){}
+    function NewUser(){}
+    function EditUser(){}
 
 })();
+(function () {
+    'use strict';
 
-(function() {
-	'use strict';
+    var dependencies = [];
 
-	var module = angular.module('Shift.Accounts.Setup', ['Shift.Library.Defaults']);
-
-	module.config(['ShiftRouteProvider', function(ShiftRouteProvider) {
-		ShiftRouteProvider('accounts');
-	}]);
+    angular
+        .module('Shift.Users.Services', []);
 
 })();
+(function () {
+    'use strict';
 
+    var dependencies = [
+        'Shift.Users.Services',
+        'Shift.Users.Controllers'
+    ];
+
+    angular
+        .module('Shift.Users', dependencies)
+        .config(Configuration)
+        .run(Runner);
+
+    function Configuration(){}
+
+    function Runner(){}
+
+})();
 // Required for underscore string module
 _.mixin(_.str.exports());
 
@@ -37141,7 +37236,8 @@ _.mixin(_.str.exports());
 	var dependencies = [
 		'Shift.Home',
 		'Shift.Library.Core.Services',
-        'Shift.Sessions'
+        'Shift.Sessions',
+        'Shift.Users'
 	];
 
 	angular

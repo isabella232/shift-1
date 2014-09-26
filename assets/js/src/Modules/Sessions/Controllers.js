@@ -21,41 +21,26 @@
         }
     }
 
-    // Handles the creation of new session
-    NewSession.$inject = ['$scope', '$rootScope', '$http', '$cookies', 'LoginService'];
-    function NewSession($scope, $rootScope, $http, $cookies, LoginService) {
-        // Set the default values, otherwise the '$watch' below won't listen to the variable as it does not exist yet.
-        $scope.session = {};
-        $scope.session.remember = '';
-        $scope.session.username = '';
+    NewSession.$inject = ['$scope', 'LoginService'];
+    function NewSession($scope, LoginService) {
 
-        if ( $cookies.username ) {
-            $scope.session.remember = '1';
-            $scope.session.username = $cookies.username;
-        }
+        $scope.session = LoginService.getSessionData();
 
+        /**
+         * Handle logging in a user.
+         *
+         * @param data
+         */
         $scope.login = function( data ) {
-            if ( data.remember ) {
-                $cookies.remember = data.remember;
-                $cookies.username = data.username;
-            }
-
-            var req = $http.post( apiUrl('sessions') , data );
-
-            // Set the user object
-            req.success( function( user ) {
-                $rootScope.user = user;
-                $rootScope.$broadcast( 'user.authorised', user );
-                $rootScope.$broadcast( 'menu.refresh' );
-            });
+            LoginService.login(data);
         };
 
-        // Watch for the username, whenever it changes and it's valid, we want
-        // to save the value in the LoginService service.
-        $scope.$watch( 'session.username' , function( newValue ) {
-            if ( !angular.isUndefined( newValue ) ) {
-                LoginService.email = newValue;
-            }
+        /**
+         * Watch for changes to username, and update email property
+         * on the LoginService with new value if it's not undefined.
+         */
+        $scope.$watch( 'session.username' , function(username) {
+            LoginService.updateUsername(username)
         });
     }
 
@@ -64,9 +49,13 @@
     function ForgotSession($scope, $http, LoginService) {
         // Initial value.
         $scope.resetData = {};
-        $scope.resetData.username = '';
 
+        $scope.resetData.username = '';
         $scope.reset = function( data ) {
+
+            // Watch for the username, whenever it changes and it's valid, we want
+            // to save the value in the LoginService service.
+            // Handles the creation of new session
             $http.put( apiUrl( 'users/reset' ) , $scope.resetData );
         };
 
