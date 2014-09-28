@@ -3,7 +3,8 @@
 
     var dependencies = [
         'Shift.Users.Services',
-        'Shift.Users.Controllers'
+        'Shift.Users.Controllers',
+        'Shift.Users.Filters'
     ];
 
     angular
