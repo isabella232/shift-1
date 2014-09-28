@@ -11,6 +11,8 @@
         .controller('Sessions.New', NewSession)
         .controller('Sessions.Forgot', ForgotSession);
 
+    Auth.$inject = ['$scope'];
+
     /**
      * Handle auth form state
      *
@@ -26,7 +28,7 @@
         }
     }
 
-    Auth.$inject = ['$scope'];
+    NewSession.$inject = ['$scope', 'LoginService'];
 
     /**
      * Handles the Login form
@@ -57,7 +59,7 @@
         });
     }
 
-    NewSession.$inject = ['$scope', 'LoginService'];
+    ForgotSession.$inject = ['$scope', '$http', 'LoginService'];
 
     /**
      * Handles the forgotten password form.
@@ -68,9 +70,9 @@
      * @constructor
      */
     function ForgotSession($scope, $http, LoginService) {
+
         // Initial value.
         $scope.resetData = {};
-
         $scope.resetData.username = '';
         $scope.reset = function( data ) {
 
@@ -90,6 +92,5 @@
         });
     }
 
-    ForgotSession.$inject = ['$scope', '$http', 'LoginService'];
 
 })();

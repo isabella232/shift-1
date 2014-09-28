@@ -18,7 +18,9 @@
      * @returns {{login: Function, updateUsername: Function, setRememberMe: Function, getSessionData: Function}}
      * @constructor
      */
+    LoginService.$inject = ['$http', '$rootScope', '$cookies'];
     function LoginService($http, $rootScope, $cookies) {
+
 
         this.username = '';
 
@@ -83,10 +85,8 @@
 
 
         };
-
         return service;
     }
 
-    LoginService.$inject = ['$http', '$rootScope', '$cookies'];
 
 })();
