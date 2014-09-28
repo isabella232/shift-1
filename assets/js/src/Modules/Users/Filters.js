@@ -10,12 +10,12 @@
     /**
      * Determine a users current status
      *
-     * @returns {String}
+     * @returns {Function}
      * @constructor
      */
     function UserStatus(){
 
-        return function( user ) {
+        return function(user) {
             if ( user.confirmation_token && !user.confirmed_at ) {
                 return 'Awaiting confirmation';
             }

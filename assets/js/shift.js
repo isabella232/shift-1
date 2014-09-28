@@ -48,15 +48,5 @@ _.mixin(_.str.exports());
 			];
 			return Language.find($rootScope.language, locales, bundle, item);
 		};
-
-        /**
-         * Return a URL prepended with the API URL.
-         *
-         * @param {string} str
-         * @returns {string}
-         */
-        $rootScope.apiUrl = function(str) {
-            return '/api/' + str;
-        };
 	}
 })();
