@@ -36983,6 +36983,10 @@ else
 
     angular
 	    .module('Shift.Home', ['ngRoute', 'Shift.Home.Controllers'])
+	    .config(Configuration);
+
+
+	function Configuration(ShiftRouteProvider)
 	    .config(['$routeProvider', function($routeProvider) {
 
 	        // The Shift Router isn't working yet. As a test user ngRoute
