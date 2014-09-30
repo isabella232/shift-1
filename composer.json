@@ -32,6 +32,7 @@
         "illuminate/support": "4.2.x",
         "illuminate/routing": "4.2.x",
 	    "orchestra/testbench": "2.2.*",
+	    "phpunit/php-code-coverage": "3.0.*",
         "phpunit/phpunit": "3.7.*"
     },
     "autoload": {
