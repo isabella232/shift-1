@@ -2,7 +2,7 @@
     <h1>{{ title }}</h1>
 
     <div class="row">
-        <div class="column-half">
+        <div class="column-third">
             <div ng-controller="Sessions.Auth">
                 <div ng-hide="forgotten" ng-controller="Sessions.New">
                     <div ng-include src="'packages/tectonic/shift/views/sessions/new.html'"></div>
@@ -12,8 +12,20 @@
                 </div>
             </div>
         </div>
-
-        <div class="column-half">
+        <div class="column-third">
+            <h1>&nbsp;</h1>
+            <div class="info-box island alert-info">
+                <h3 class="heading">3 easy steps <br>to submit your entry</h3>
+                <div class="content">
+                    <ol>
+                        <li>Create your very own user login account</li>
+                        <li>Choose your award category</li>
+                        <li>Submit your entry</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <div class="column-third">
             <div ng-controller="Users.Register">
                 <div ng-include src="'packages/tectonic/shift/views/users/register.html'"></div>
             </div>

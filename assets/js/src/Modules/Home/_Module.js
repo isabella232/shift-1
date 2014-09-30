@@ -8,9 +8,9 @@
 	/**
 	 * Sets up the required routes and configuration for the Home module.
 	 */
-	Configuration.$inject = ['ShiftRouteProvider'];
-	function Configuration(ShiftRouteProvider) {
-        ShiftRouteProvider('/', {
+	Configuration.$inject = ['$routeProvider'];
+	function Configuration($routeProvider) {
+        $routeProvider.when('/', {
             templateUrl: '/packages/tectonic/shift/views/home.html',
             controller: 'Shift.Home'
         });

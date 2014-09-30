@@ -1,13 +1,13 @@
 <h1>Register</h1>
 
 <!-- Registration form -->
-<form name="userRegister" ng-submit="save()" novalidate>
+<form name="userRegister" ng-submit="save()" class="vertical bordered-form" novalidate>
 
     <div class="control">
-        <div class="control-label forty">
+        <div class="control-label">
             <label for="firstName" mandatory>First name</label>
         </div>
-        <div class="control-field sixty">
+        <div class="control-field">
             <input type="text" id="firstName" name="firstName" ng-model="user.first_name" required ng-minlength="2">
             <span class="error" ng-show="userRegister.firstName.$dirty && userRegister.firstName.$error.required">The first name field is required.</span>
             <span class="error" ng-show="userRegister.firstName.$error.minlength">The first name must be at least 2 characters.</span>
@@ -15,10 +15,10 @@
     </div>
 
     <div class="control">
-        <div class="control-label forty">
+        <div class="control-label">
             <label for="lastName" mandatory>Surname</label>
         </div>
-        <div class="control-field sixty">
+        <div class="control-field">
             <input type="text" id="lastName" name="lastName" ng-model="user.last_name" required ng-minlength="2">
             <span class="error" ng-show="userRegister.lastName.$dirty && userRegister.lastName.$error.required">The last name field is required.</span>
             <span class="error" ng-show="userRegister.lastName.$error.minlength">The last name must be at least 2 characters.</span>
@@ -26,10 +26,10 @@
     </div>
 
     <div class="control">
-        <div class="control-label forty">
+        <div class="control-label">
             <label for="email" mandatory>Email</label>
         </div>
-        <div class="control-field sixty">
+        <div class="control-field">
             <input type="email" id="email" name="email" ng-model="user.email" ie-email-validation required>
             <span class="error" ng-show="userRegister.email.$dirty && userRegister.email.$error.required">The email field is required.</span>
             <span class="error" ng-show="userRegister.email.$dirty && userRegister.email.$error.ie_email">Please enter a valid email.</span>
@@ -38,10 +38,10 @@
     </div>
 
     <div class="control">
-        <div class="control-label forty">
+        <div class="control-label">
             <label for="password" mandatory>Password</label>
         </div>
-        <div class="control-field sixty">
+        <div class="control-field">
             <input type="password" id="password" name="password" ng-model="user.password" ng-required="!user.id" ng-minlength="6">
             <span class="error" ng-show="userRegister.password.$dirty && userRegister.password.$error.required">The password field is required.</span>
             <span class="error" ng-show="userRegister.password.$error.minlength">The password must be at least 6 characters.</span>
@@ -49,10 +49,10 @@
     </div>
 
     <div class="control">
-        <div class="control-label forty">
+        <div class="control-label">
             <label for="passwordConfirmation" mandatory>Confirm password</label>
         </div>
-        <div class="control-field sixty">
+        <div class="control-field">
             <input type="password" id="passwordConfirmation" name="passwordConfirmation" ng-model="user.password_confirmation" equal="user.password" equal-field-name="password" ng-required="!user.id" ng-minlength="6">
             <span class="error" ng-show="userRegister.passwordConfirmation.$dirty && userRegister.passwordConfirmation.$error.required">The confirm password field is required.</span>
             <span class="error" ng-show="userRegister.passwordConfirmation.$dirty && !userRegister.passwordConfirmation.$error.required && userRegister.passwordConfirmation.$error.equal">The confirm password must match the password field.</span>
@@ -63,10 +63,10 @@
     <div class="control" custom-fields="customFields" ng-show="customFields"></div>
 
     <div class="control">
-        <div class="control-label forty">
+        <div class="control-label">
             <label for="recaptcha_response_field" mandatory>Authorisation</label>
         </div>
-        <div class="control-field sixty">
+        <div class="control-field">
             <div id="captcha-box" captcha model="user"></div>
         </div>
     </div>

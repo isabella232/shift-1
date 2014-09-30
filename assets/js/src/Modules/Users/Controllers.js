@@ -19,19 +19,17 @@
         vm.customfields = Fields.getUserRegistrationFields();
         vm.user = new User;
 
-        vm.save = function(){};
+        vm.save = function() {
+            vm.user = Fields.save('user', vm.user);
 
-        $scope.save = function() {
-            $scope.user = CustomFields.save('user', $scope.user);
-
-            var req = $http.post(routeUrl('users/register'), $scope.user);
+            var req = $http.post(routeUrl('users/register'), vm.user);
 
             // When the request is successful, log the user in and send them to the dashboard
             req.success( function( user ) {
                 $rootScope.user = user;
 
                 $rootScope.$broadcast( 'menu.refresh' );
-                $scope.go( 'dashboard' );
+                vm.go( 'dashboard' );
             });
 
         };
@@ -43,7 +41,7 @@
          *
          * @return {boolean}
          */
-        $scope.registrationsEnabled = function() {
+        vm.registrationsEnabled = function() {
             var registration = settings['app.site.registrations'];
 
             return registration ? true : false;

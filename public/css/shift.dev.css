@@ -1,5 +1,4 @@
 @charset "UTF-8";
-@import url(//fonts.googleapis.com/css?family=Open+Sans:400,600,700);
 /*
 |--------------------------------------------------------------------------
 | Main stylesheet file
@@ -9,6 +8,7 @@
 | styles defined here.
 | 
 */
+@import url(//fonts.googleapis.com/css?family=Open+Sans:400,600,700);
 * {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -980,7 +980,8 @@ select {
   background: #fff;
   border: 1px solid #d5d5d5;
   padding: 8px;
-  width: 100%; }
+  width: 100%;
+  margin: 1px 0; }
   input.ng-invalid,
   textarea.ng-invalid,
   select.ng-invalid {
@@ -1319,6 +1320,11 @@ label.disabled {
     top: 10px;
     left: 10px;
     color: #999999; }
+
+.bordered-form {
+  background-color: #EDEFF2;
+  padding: 25px;
+  border-radius: 4px; }
 
 table {
   width: 100%; }

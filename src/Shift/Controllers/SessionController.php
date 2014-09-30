@@ -1,6 +1,8 @@
 <?php namespace Tectonic\Shift\Controllers;
 
+use Auth;
 use Tectonic\Shift\Library\Support\Controller;
+use Tectonic\Shift\Modules\Sessions\Validators\SessionValidator;
 
 class SessionController extends Controller
 {
@@ -17,7 +19,9 @@ class SessionController extends Controller
      */
     public function getIndex()
     {
-        
+        if(Auth::check()) return Auth::user();
+
+        return $this->response( 401 );
     }
 
     /**
@@ -33,12 +37,16 @@ class SessionController extends Controller
     /**
      * Handle the deletion of session management for a given user session
      *
-     * @param int|null $id
      * @returns \Response
      */
-    public function deleteIndex($id = null)
+    public function deleteIndex()
     {
-        
+        $user = Auth::user();
+        Auth::logout();
+
+        //Event::fire( 'session.logout', [ $user ] );
+
+        return $this->respond( 200 );
     }
 
 }

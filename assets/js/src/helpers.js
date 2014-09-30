@@ -49,9 +49,9 @@ var viewPath = function( path, bundle ) {
  The relative correct URL to the given route
  */
 var routeUrl = function( url, baseUrl ) {
-    baseUrl = ( !baseUrl ) ? config.app.base : config.app.url;
+    /*baseUrl = ( !baseUrl ) ? config.app.base : config.app.url;
     if ( url.substr( -1, 1 ) == '/' ) url = url.substr( 0, url.length - 1 );
-    url = [ config.app.base, url ].join( '/' );
+    url = [ config.app.base, url ].join( '/' );*/
 
     return url;
 };
@@ -72,10 +72,10 @@ var routeUrl = function( url, baseUrl ) {
  The updated, valid API url.
  */
 var apiUrl = function( url, baseUrl ) {
-    baseUrl = ( !baseUrl ) ? config.app.base : config.app.url;
+    /*baseUrl = ( !baseUrl ) ? config.app.base : config.app.url;
 
     if ( url.substr( -1, 1 ) == '/' ) url = url.substr( 0, url.length - 1 );
-    url = [ config.app.base, url ].join( '/' );
+    url = [ config.app.base, url ].join( '/' );*/
 
     return baseUrl + url;
 };

@@ -5,8 +5,10 @@ _.mixin(_.str.exports());
 	'use strict';
 
 	var dependencies = [
+        'ngResource',
 		'Shift.Home',
 		'Shift.Library.Core.Services',
+		'Shift.Library.Core.Router',
         'Shift.Sessions',
         'Shift.Users',
         'Shift.Fields'
