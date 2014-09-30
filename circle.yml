@@ -10,8 +10,8 @@ dependencies:
 
 test:
   override:
-    - phpunit tests --coverage-clover=coverage.clover
+    - phpunit tests --coverage-clover=${CIRCLE_ARTIFACTS}/coverage.clover
     - ./node_modules/karma/bin/karma start ./shift.conf.js --single-run
   post:
     - wget https://scrutinizer-ci.com/ocular.phar
-    - php ocular.phar code-coverage:upload --access-token="cac94d22b2ab0b623e2429d0479074b1602e769bb0118b0d0e0bc58217ae7fdc" --format=php-clover coverage.clover
+    - php ocular.phar code-coverage:upload --access-token="cac94d22b2ab0b623e2429d0479074b1602e769bb0118b0d0e0bc58217ae7fdc" --format=php-clover ${CIRCLE_ARTIFACTS}/coverage.clover
