@@ -12,4 +12,7 @@ test:
   override:
     - phpunit tests
     - ./node_modules/karma/bin/karma start ./shift.conf.js --single-run
-
+  post:
+    - phpunit tests --coverage-clover=coverage.clover
+    - wget https://scrutinizer-ci.com/ocular.phar
+    - php ocular.phar code-coverage:upload --access-token="cac94d22b2ab0b623e2429d0479074b1602e769bb0118b0d0e0bc58217ae7fdc" --format=php-clover coverage.clover
