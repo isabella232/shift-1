@@ -1,12 +1,13 @@
 <?php namespace Tectonic\Shift\Controllers;
 
 use Auth;
+use Input;
 use Tectonic\Shift\Library\Support\Controller;
-use Tectonic\Shift\Modules\Sessions\Validators\SessionValidator;
+use Tectonic\Shift\Modules\Sessions\Validators\SessionValidation;
 
 class SessionController extends Controller
 {
-    public function __construct(SessionValidator $validator)
+    public function __construct(SessionValidation $validator)
     {
         $this->validator = $validator;
     }
@@ -21,7 +22,7 @@ class SessionController extends Controller
     {
         if(Auth::check()) return Auth::user();
 
-        return $this->response( 401 );
+        return $this->response(401);
     }
 
     /**
@@ -29,9 +30,18 @@ class SessionController extends Controller
      *
      * @return \Response
      */
-    public function postIndex()
+    public function postStore()
     {
-        
+        $username = Input::get('username');
+        $password = Input::get('password');
+        $remember = Input::get('remember');
+
+        if(Auth::attempt(['username' => $username, 'password' => $password], $remember))
+        {
+            return $this->response(200);
+        }
+
+        return $this->response(401);
     }
 
     /**

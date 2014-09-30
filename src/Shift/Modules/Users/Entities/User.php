@@ -2,11 +2,12 @@
 
 namespace Tectonic\Shift\Modules\Users\Entities;
 
+use Hash;
 use Crypt;
-use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Mapping AS ORM;
-use Mitch\LaravelDoctrine\Traits\Authentication;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Mitch\LaravelDoctrine\Traits\Timestamps;
+use Mitch\LaravelDoctrine\Traits\Authentication;
 use Tectonic\Shift\Library\Support\Database\Doctrine\Entity;
 
 /**
@@ -106,5 +107,15 @@ class User extends Entity
     public function getOwnedAccounts()
     {
         return $this->ownedAccounts;
+    }
+
+    /**
+     * Setter to has password.
+     *
+     * @param string $str
+     */
+    public function setPassword($str)
+    {
+        $this->password = Hash::make($str);
     }
 }

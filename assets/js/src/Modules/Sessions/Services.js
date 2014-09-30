@@ -32,7 +32,7 @@
             login: function(data) {
                 this.setRememberMe(data);
 
-                var req = $http.post( apiUrl('sessions'), data);
+                var req = $http.post( apiUrl('sessions', true), data);
 
                 req.success( function( user ) {
                     // Set the user object

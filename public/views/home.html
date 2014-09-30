@@ -4,7 +4,7 @@
     <div class="row">
         <div class="column-third">
             <div ng-controller="Sessions.Auth">
-                <div ng-hide="forgotten" ng-controller="Sessions.New">
+                <div ng-hide="forgotten" ng-controller="Sessions.New as vm">
                     <div ng-include src="'packages/tectonic/shift/views/sessions/new.html'"></div>
                 </div>
                 <div ng-show="forgotten" ng-controller="Sessions.Forgot">

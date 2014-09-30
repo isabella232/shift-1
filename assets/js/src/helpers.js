@@ -72,10 +72,13 @@ var routeUrl = function( url, baseUrl ) {
  The updated, valid API url.
  */
 var apiUrl = function( url, baseUrl ) {
-    /*baseUrl = ( !baseUrl ) ? config.app.base : config.app.url;
+    if(baseUrl){
+        baseUrl = '/api/';
+    } else {
+        baseUrl = '';
+    }
 
     if ( url.substr( -1, 1 ) == '/' ) url = url.substr( 0, url.length - 1 );
-    url = [ config.app.base, url ].join( '/' );*/
 
     return baseUrl + url;
 };

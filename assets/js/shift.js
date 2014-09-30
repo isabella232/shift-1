@@ -28,6 +28,8 @@ _.mixin(_.str.exports());
 	Runner.$inject = ['$rootScope', '$window', 'Language'];
 
 	function Runner($rootScope, $window, Language) {
+        $window.app = { baseUrl: '/', url: '/' };
+
 		$rootScope.language = $window.language;
 
 		// These config setting will be set dynamically either based upon

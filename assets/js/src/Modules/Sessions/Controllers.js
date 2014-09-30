@@ -39,16 +39,18 @@
      */
     function NewSession($scope, LoginService) {
 
-        $scope.session = LoginService.getSessionData();
+        var vm = this;
+        vm.session = LoginService.getSessionData();
+        vm.login = login;
 
         /**
          * Handle logging in a user.
          *
          * @param data
          */
-        $scope.login = function( data ) {
-            LoginService.login(data);
-        };
+        function login() {
+            LoginService.login(vm.session);
+        }
 
         /**
          * Watch for changes to username, and update email property
@@ -71,23 +73,23 @@
      */
     function ForgotSession($scope, $http, LoginService) {
 
-        // Initial value.
-        $scope.resetData = {};
-        $scope.resetData.username = '';
-        $scope.reset = function( data ) {
+        var vm = this;
+        vm.resetData = { username: ''};
+        vm.reset = reset;
 
+        function reset() {
             // Watch for the username, whenever it changes and it's valid, we want
             // to save the value in the LoginService service.
             // Handles the creation of new session
-            $http.put( apiUrl( 'users/reset' ) , $scope.resetData );
-        };
+            $http.put( apiUrl( 'users/reset' ) , vm.resetData );
+        }
 
         // Watch whenever the forgotten attribute is changed, then check that the
         // value of it is 'true', indicating that we're on the password reset form
-        // then we will apply the value of the email to what was saved in the sevice.
+        // then we will apply the value of the email to what was saved in the service.
         $scope.$watch( 'forgotten' , function( newValue ) {
             if ( newValue === true ) {
-                $scope.resetData.username = LoginService.email;
+                vm.resetData.username = LoginService.email;
             }
         });
     }

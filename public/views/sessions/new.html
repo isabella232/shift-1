@@ -1,12 +1,12 @@
 <h1>Log in</h1>
-<form name="sessionNew" ng-submit="login(session)" class="vertical bordered-form" novalidate>
+<form name="sessionNew" ng-submit="vm.login()" class="vertical bordered-form" novalidate>
 
     <div class="control">
         <div class="control-label">
             <label for="username">Email</label>
         </div>
         <div class="control-field">
-            <input type="text" id="username" name="username" ng-model="session.username" autofocus required autocomplete="off">
+            <input type="text" id="username" name="username" ng-model="vm.session.username" autofocus required autocomplete="off">
             <span class="error" ng-show="sessionNew.username.$dirty && sessionNew.username.$error.required">The email field is required.</span>
         </div>
     </div>
@@ -16,7 +16,7 @@
             <label for="password">Password</label>
         </div>
         <div class="control-field">
-            <input type="password" id="password" name="password" ng-model="session.password" required autocomplete="off">
+            <input type="password" id="password" name="password" ng-model="vm.session.password" required autocomplete="off">
             <span class="error" ng-show="sessionNew.password.$dirty && sessionNew.password.$error.required">The password field is required.</span>
         </div>
     </div>
@@ -25,7 +25,7 @@
         <div class="control-field">
             <ul class="horizontal">
                 <li>
-                    <input type="checkbox" name="remember" id="remember" ng-model="session.remember" ng-true-value="1" ng-false-value="0">
+                    <input type="checkbox" name="remember" id="remember" ng-model="vm.session.remember" ng-true-value="1" ng-false-value="0">
                     <label for="remember">Remember me</label>
                 </li>
             </ul>

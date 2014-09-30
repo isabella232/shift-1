@@ -25,6 +25,7 @@ Route::group(['prefix' => Config::get('shift.api.url'), 'before' => 'shift.view'
     Route::collection('locales', 'Tectonic\Shift\Controllers\LocaleController');
     Route::collection('fields', 'Tectonic\Shift\Controllers\FieldController');
     Route::collection('localisations', 'Tectonic\Shift\Controllers\LocalisationController');
+    Route::collection('sessions', 'Tectonic\Shift\Controllers\SessionController');
 });
 
 Route::group(['before' => 'shift.noAccount'], function() {

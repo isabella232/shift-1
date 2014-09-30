@@ -36181,10 +36181,13 @@ var routeUrl = function( url, baseUrl ) {
  The updated, valid API url.
  */
 var apiUrl = function( url, baseUrl ) {
-    /*baseUrl = ( !baseUrl ) ? config.app.base : config.app.url;
+    if(baseUrl){
+        baseUrl = '/api/';
+    } else {
+        baseUrl = '';
+    }
 
     if ( url.substr( -1, 1 ) == '/' ) url = url.substr( 0, url.length - 1 );
-    url = [ config.app.base, url ].join( '/' );*/
 
     return baseUrl + url;
 };
@@ -37252,16 +37255,18 @@ var ucFirst = function( str ) {
      */
     function NewSession($scope, LoginService) {
 
-        $scope.session = LoginService.getSessionData();
+        var vm = this;
+        vm.session = LoginService.getSessionData();
+        vm.login = login;
 
         /**
          * Handle logging in a user.
          *
          * @param data
          */
-        $scope.login = function( data ) {
-            LoginService.login(data);
-        };
+        function login() {
+            LoginService.login(vm.session);
+        }
 
         /**
          * Watch for changes to username, and update email property
@@ -37284,23 +37289,23 @@ var ucFirst = function( str ) {
      */
     function ForgotSession($scope, $http, LoginService) {
 
-        // Initial value.
-        $scope.resetData = {};
-        $scope.resetData.username = '';
-        $scope.reset = function( data ) {
+        var vm = this;
+        vm.resetData = { username: ''};
+        vm.reset = reset;
 
+        function reset() {
             // Watch for the username, whenever it changes and it's valid, we want
             // to save the value in the LoginService service.
             // Handles the creation of new session
-            $http.put( apiUrl( 'users/reset' ) , $scope.resetData );
-        };
+            $http.put( apiUrl( 'users/reset' ) , vm.resetData );
+        }
 
         // Watch whenever the forgotten attribute is changed, then check that the
         // value of it is 'true', indicating that we're on the password reset form
-        // then we will apply the value of the email to what was saved in the sevice.
+        // then we will apply the value of the email to what was saved in the service.
         $scope.$watch( 'forgotten' , function( newValue ) {
             if ( newValue === true ) {
-                $scope.resetData.username = LoginService.email;
+                vm.resetData.username = LoginService.email;
             }
         });
     }
@@ -37341,7 +37346,7 @@ var ucFirst = function( str ) {
             login: function(data) {
                 this.setRememberMe(data);
 
-                var req = $http.post( apiUrl('sessions'), data);
+                var req = $http.post( apiUrl('sessions', true), data);
 
                 req.success( function( user ) {
                     // Set the user object
@@ -37559,6 +37564,8 @@ _.mixin(_.str.exports());
 	Runner.$inject = ['$rootScope', '$window', 'Language'];
 
 	function Runner($rootScope, $window, Language) {
+        $window.app = { baseUrl: '/', url: '/' };
+
 		$rootScope.language = $window.language;
 
 		// These config setting will be set dynamically either based upon
