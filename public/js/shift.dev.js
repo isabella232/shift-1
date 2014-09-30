@@ -37068,46 +37068,6 @@ var ucFirst = function( str ) {
 })();
 
 (function() {
-    'use strict';
-
-    var dependencies = [];
-
-    angular
-        .module('Shift.Home.Controllers', dependencies)
-        .controller('Shift.Home', Home);
-
-    Home.$inject = ['$scope'];
-    function Home($scope) {
-        $scope.title = 'Shift 2.0';
-    }
-
-})();
-
-(function() {
-    'use strict';
-
-    angular
-	    .module('Shift.Home', ['ngRoute', 'Shift.Home.Controllers'])
-	    .config(['$routeProvider', function($routeProvider) {
-
-	        // The Shift Router isn't working yet. As a test user ngRoute
-	        /*ShiftRoute('/', {
-	            templateUrl: '/packages/tectonic/shift/views/home.html',
-	            controller: 'Shift.Home'
-	        });*/
-
-	        $routeProvider.when('/', {
-	            templateUrl: '/packages/tectonic/shift/views/home.html',
-	            controller: 'Shift.Home'
-	        });
-
-            $routeProvider.when('/test', {
-                templateUrl: '/packages/tectonic/shift/views/test.html',
-                controller: 'Shift.Test'
-            })
-	    }]);
-})();
-(function() {
 	'use strict';
 
 	//var module = angular.module('Shift.Accounts.Controllers', ['Shift.Library.Defaults']);
@@ -37152,7 +37112,6 @@ var ucFirst = function( str ) {
 
 })();
 
-<<<<<<< HEAD
 (function() {
     'use strict';
 
@@ -37176,29 +37135,82 @@ var ucFirst = function( str ) {
 	    .module('Shift.Home', ['ngRoute', 'Shift.Home.Controllers'])
 	    .config(Configuration);
 
-
-	function Configuration(ShiftRouteProvider)
-	    .config(['$routeProvider', function($routeProvider) {
-
-	        // The Shift Router isn't working yet. As a test user ngRoute
-	        /*ShiftRoute('/', {
-	            templateUrl: '/packages/tectonic/shift/views/home.html',
-	            controller: 'Shift.Home'
-	        });*/
-
-	        $routeProvider.when('/', {
-	            templateUrl: '/packages/tectonic/shift/views/home.html',
-	            controller: 'Shift.Home'
-	        });
-
-            $routeProvider.when('/test', {
-                templateUrl: '/packages/tectonic/shift/views/test.html',
-                controller: 'Shift.Test'
-            })
-	    }]);
+	/**
+	 * Sets up the required routes and configuration for the Home module.
+	 */
+	Configuration.$inject = ['ShiftRouteProvider'];
+	function Configuration(ShiftRouteProvider) {
+        ShiftRouteProvider('/', {
+            templateUrl: '/packages/tectonic/shift/views/home.html',
+            controller: 'Shift.Home'
+        });
+    };
 })();
-=======
->>>>>>> 89cdc97554df2fb721d1d574c15a1e696b2a60b5
+
+(function () {
+    'use strict';
+
+    var dependencies = [];
+
+    angular
+        .module('Shift.Fields.Services', dependencies)
+        .service('Fields', FieldsService);
+
+    FieldsService.$inject = ['$http'];
+    function FieldsService($http){
+
+        var service = {
+            getFieldsByResource: getFieldsByResource,
+            getUserRegistrationFields: getUserRegistrationFields
+        };
+
+        return service;
+
+        //////////
+
+        /**
+         * Return a collection of Fields based on resource type.
+         *
+         * @param resource
+         * @returns {*}
+         */
+        function getFieldsByResource(resource){
+            return $http.get(apiUrl('fields'), { resource: resource }).then(function(data) { return data; });
+        }
+
+        /**
+         * Get an array of custom fields required for user registration.
+         *
+         * @returns {Array}
+         */
+        function getUserRegistrationFields(){
+            var fields = this.getFieldsByResource('User');
+            var userFields = [];
+
+            for ( var i = 0, j = fields.length; i < j; i++ ) {
+                if ( fields[i].registration == '1' ) {
+                    // Clear out the value of the custom field if the user has just logged out.
+                    if ( !$rootScope.user ) fields[i].value = null;
+                    userFields.push( fields[i] );
+                }
+            }
+
+            return userFields;
+        };
+    }
+
+})();
+(function () {
+    'use strict';
+
+    var dependencies = [
+        'Shift.Fields.Services'
+    ];
+
+    angular
+        .module('Shift.Fields', dependencies);
+
+})();
 (function () {
     'use strict';
 
@@ -37317,8 +37329,6 @@ var ucFirst = function( str ) {
      */
     LoginService.$inject = ['$http', '$rootScope', '$cookies'];
     function LoginService($http, $rootScope, $cookies) {
-
-
         this.username = '';
 
         var service = {
@@ -37422,11 +37432,10 @@ var ucFirst = function( str ) {
 
         vm.save = function(){};
 
-
         $scope.save = function() {
-            $scope.user = CustomFields.save( 'user', $scope.user );
+            $scope.user = CustomFields.save('user', $scope.user);
 
-            var req = $http.post( routeUrl( 'users/register' ), $scope.user );
+            var req = $http.post(routeUrl('users/register'), $scope.user);
 
             // When the request is successful, log the user in and send them to the dashboard
             req.success( function( user ) {
@@ -37469,12 +37478,12 @@ var ucFirst = function( str ) {
     /**
      * Determine a users current status
      *
-     * @returns {String}
+     * @returns {Function}
      * @constructor
      */
     function UserStatus(){
 
-        return function( user ) {
+        return function(user) {
             if ( user.confirmation_token && !user.confirmed_at ) {
                 return 'Awaiting confirmation';
             }
@@ -37514,70 +37523,6 @@ var ucFirst = function( str ) {
     function Configuration(){}
 
     function Runner(){}
-
-})();
-(function () {
-    'use strict';
-
-    var dependencies = [];
-
-    angular
-        .module('Shift.Fields.Services', dependencies)
-        .service('Fields', FieldsService);
-
-    FieldsService.$inject = ['$http'];
-    function FieldsService($http){
-
-        var service = {
-            getFieldsByResource: getFieldsByResource,
-            getUserRegistrationFields: getUserRegistrationFields
-        };
-
-        return service;
-
-        //////////
-
-        /**
-         * Return a collection of Fields based on resource type.
-         *
-         * @param resource
-         * @returns {*}
-         */
-        function getFieldsByResource(resource){
-            return $http.get(apiUrl('fields'), { resource: resource }).then(function(data) { return data; });
-        }
-
-        /**
-         * Get an array of custom fields required for user registration.
-         *
-         * @returns {Array}
-         */
-        function getUserRegistrationFields(){
-            var fields = this.getFieldsByResource('User');
-            var userFields = [];
-
-            for ( var i = 0, j = fields.length; i < j; i++ ) {
-                if ( fields[i].registration == '1' ) {
-                    // Clear out the value of the custom field if the user has just logged out.
-                    if ( !$rootScope.user ) fields[i].value = null;
-                    userFields.push( fields[i] );
-                }
-            }
-
-            return userFields;
-        };
-    }
-
-})();
-(function () {
-    'use strict';
-
-    var dependencies = [
-        'Shift.Fields.Services'
-    ];
-
-    angular
-        .module('Shift.Fields', dependencies);
 
 })();
 // Required for underscore string module
@@ -37630,15 +37575,5 @@ _.mixin(_.str.exports());
 			];
 			return Language.find($rootScope.language, locales, bundle, item);
 		};
-
-        /**
-         * Return a URL prepended with the API URL.
-         *
-         * @param {string} str
-         * @returns {string}
-         */
-        $rootScope.apiUrl = function(str) {
-            return '/api/' + str;
-        };
 	}
 })();
