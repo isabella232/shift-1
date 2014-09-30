@@ -5,9 +5,6 @@ use Tectonic\Shift\Library\Search\Filters\KeywordFilter;
 
 class KeywordFilterTest extends \Tests\UnitTestCase
 {
-	/**
-	 * @covers KeywordFilter::applyToDoctrine
-	 */
 	public function testExpectationsWhenKeywordsAreProvided()
 	{
 		$mockBuilder = m::mock('querybuilder');
@@ -19,9 +16,6 @@ class KeywordFilterTest extends \Tests\UnitTestCase
 		$filter->applyToDoctrine($mockBuilder);
 	}
 
-	/**
-	 * @covers KeywordFilter::applyToDoctrine
-	 */
 	public function testExpectationsWhenNoKeywordsAreProvided()
 	{
 		$mockBuilder = m::mock('querybuilder');
