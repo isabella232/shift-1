@@ -8,7 +8,8 @@ _.mixin(_.str.exports());
 		'Shift.Home',
 		'Shift.Library.Core.Services',
         'Shift.Sessions',
-        'Shift.Users'
+        'Shift.Users',
+        'Shift.Fields'
 	];
 
 	angular
@@ -22,10 +23,10 @@ _.mixin(_.str.exports());
 		$locationProvider.html5Mode(true);
 	}
 
-	Runner.$inject = ['$rootScope', 'Language'];
+	Runner.$inject = ['$rootScope', '$window', 'Language'];
 
-	function Runner($rootScope, Language) {
-		$rootScope.language = window.language;
+	function Runner($rootScope, $window, Language) {
+		$rootScope.language = $window.language;
 
 		// These config setting will be set dynamically either based upon
 		// user or installation settings.

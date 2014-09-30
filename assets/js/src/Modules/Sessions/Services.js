@@ -20,7 +20,6 @@
      */
     LoginService.$inject = ['$http', '$rootScope', '$cookies'];
     function LoginService($http, $rootScope, $cookies) {
-
         this.username = '';
 
         var service = {
@@ -84,7 +83,6 @@
 
 
         };
-
         return service;
     }
 

@@ -36107,6 +36107,156 @@ else
 
 
 })(window, window.angular);
+/*
+ Function: viewPath
+
+ When dealing with views and skins, it is possible that the path could be very different to the default. For example, the default bundle's path
+ is located at /bundles/bootstrap/views/tectonic/, whereas custom skins will reside at /views/skinname/. In addition, the viewPath helper locates
+ any custom templates that may have been added that aren't considered part of any skin. These are loaded from /views/custom/.
+
+ Parameters:
+
+ path - The main path to the view. This should not include the views directory. Eg. users/form.html
+
+ Returns:
+
+ The full path to where the view is located, based on the skin configuration.
+ */
+var viewPath = function( path, bundle ) {
+    var chunks = [ 'views' ];
+
+    if ( customViews.indexOf( path ) != -1 ) {
+        chunks.push( 'custom' );
+    }
+    else {
+        if ( bundle ) {
+            chunks = [ 'bundles', bundle, 'views' ];
+        }
+    }
+
+    chunks.push( config.app.skin );
+    chunks.push( path );
+
+    path = '/' + chunks.join('/');
+
+    return path;
+};
+
+/*
+ Function: routeUrl
+
+ Helps determine where requests should be routed to, depending on what the config.app.base
+ value has been set to.
+
+ Parameters:
+
+ url - The relative URL (from root) you'd like to route to
+ baseUrl - If true, uses the base url configuration variable, otherwise it will use the base PATH
+
+ Returns:
+
+ The relative correct URL to the given route
+ */
+var routeUrl = function( url, baseUrl ) {
+    baseUrl = ( !baseUrl ) ? config.app.base : config.app.url;
+    if ( url.substr( -1, 1 ) == '/' ) url = url.substr( 0, url.length - 1 );
+    url = [ config.app.base, url ].join( '/' );
+
+    return url;
+};
+
+/*
+ Function: apiUrl
+
+ Helps to associate the API's URL locations. This is necessary if the API resides in a different location to where the app
+ is stored (different domain) or if the application's base URL (aka, it has a prefix) is provided.
+
+ Parameters:
+
+ url - The relative URL for the API request.
+ baseUrl - If you would like a different base URL to do the request from, supply it here. This is to help with for example, if the API domain is different to the app's location.
+
+ Returns:
+
+ The updated, valid API url.
+ */
+var apiUrl = function( url, baseUrl ) {
+    baseUrl = ( !baseUrl ) ? config.app.base : config.app.url;
+
+    if ( url.substr( -1, 1 ) == '/' ) url = url.substr( 0, url.length - 1 );
+    url = [ config.app.base, url ].join( '/' );
+
+    return baseUrl + url;
+};
+
+
+/**
+ * Splits an array into multiple chunks.
+ *
+ * @param  array  array The array to split up into chunks
+ * @param  number chunk Chunk size.
+ *
+ * @return array
+ */
+var arrayChunk = function( array , chunk ) {
+    var i, j, temp = [];
+
+    for ( i = 0 , j = array.length; i < j; i += chunk ) {
+        temp.push( array.slice( i , i + chunk ) );
+    }
+
+    return temp;
+};
+
+
+/**
+ * Tests if a variable is available and returns it. It returns a
+ * default otherwise. The default can be set as the second parameter,
+ * otherwise the function will return null.
+ *
+ * @param  mixed input The variable to perform the check upon.
+ * @param  mixed def   The default to be returned if above is undefined.
+ *
+ * @return mixed
+ */
+var get = function( input , def ) {
+    if ( def == undefined ) def = null;
+
+    return typeof input == 'undefined' ? def : input;
+};
+
+/**
+ * Removes an item from an array if it's there.
+ *
+ * @param  array array The array to remove the item from.
+ * @param  mixed value The item to remove from the array.
+ *
+ * @return mixed
+ */
+function arrayRemove(array, value) {
+    var index = array.indexOf( value );
+
+    if ( index >= 0 ) {
+        array.splice( index , 1 );
+    }
+
+    return value;
+};
+
+/**
+ * Makes the first character of the string an uppercase version.
+ *
+ * @param string str
+ * @return string
+ */
+var ucFirst = function( str ) {
+    if ( str && typeof str == 'string' ) {
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
+    return '';
+};
+
 (function(){
 	var module = angular.module('Shift.Library.DefaultControllers', []);
 
@@ -36918,6 +37068,46 @@ else
 })();
 
 (function() {
+    'use strict';
+
+    var dependencies = [];
+
+    angular
+        .module('Shift.Home.Controllers', dependencies)
+        .controller('Shift.Home', Home);
+
+    Home.$inject = ['$scope'];
+    function Home($scope) {
+        $scope.title = 'Shift 2.0';
+    }
+
+})();
+
+(function() {
+    'use strict';
+
+    angular
+	    .module('Shift.Home', ['ngRoute', 'Shift.Home.Controllers'])
+	    .config(['$routeProvider', function($routeProvider) {
+
+	        // The Shift Router isn't working yet. As a test user ngRoute
+	        /*ShiftRoute('/', {
+	            templateUrl: '/packages/tectonic/shift/views/home.html',
+	            controller: 'Shift.Home'
+	        });*/
+
+	        $routeProvider.when('/', {
+	            templateUrl: '/packages/tectonic/shift/views/home.html',
+	            controller: 'Shift.Home'
+	        });
+
+            $routeProvider.when('/test', {
+                templateUrl: '/packages/tectonic/shift/views/test.html',
+                controller: 'Shift.Test'
+            })
+	    }]);
+})();
+(function() {
 	'use strict';
 
 	//var module = angular.module('Shift.Accounts.Controllers', ['Shift.Library.Defaults']);
@@ -36962,6 +37152,7 @@ else
 
 })();
 
+<<<<<<< HEAD
 (function() {
     'use strict';
 
@@ -37006,6 +37197,8 @@ else
             })
 	    }]);
 })();
+=======
+>>>>>>> 89cdc97554df2fb721d1d574c15a1e696b2a60b5
 (function () {
     'use strict';
 
@@ -37018,6 +37211,8 @@ else
         .controller('Sessions.Auth', Auth)
         .controller('Sessions.New', NewSession)
         .controller('Sessions.Forgot', ForgotSession);
+
+    Auth.$inject = ['$scope'];
 
     /**
      * Handle auth form state
@@ -37034,7 +37229,7 @@ else
         }
     }
 
-    Auth.$inject = ['$scope'];
+    NewSession.$inject = ['$scope', 'LoginService'];
 
     /**
      * Handles the Login form
@@ -37065,7 +37260,7 @@ else
         });
     }
 
-    NewSession.$inject = ['$scope', 'LoginService'];
+    ForgotSession.$inject = ['$scope', '$http', 'LoginService'];
 
     /**
      * Handles the forgotten password form.
@@ -37076,9 +37271,9 @@ else
      * @constructor
      */
     function ForgotSession($scope, $http, LoginService) {
+
         // Initial value.
         $scope.resetData = {};
-
         $scope.resetData.username = '';
         $scope.reset = function( data ) {
 
@@ -37098,7 +37293,6 @@ else
         });
     }
 
-    ForgotSession.$inject = ['$scope', '$http', 'LoginService'];
 
 })();
 (function () {
@@ -37121,7 +37315,9 @@ else
      * @returns {{login: Function, updateUsername: Function, setRememberMe: Function, getSessionData: Function}}
      * @constructor
      */
+    LoginService.$inject = ['$http', '$rootScope', '$cookies'];
     function LoginService($http, $rootScope, $cookies) {
+
 
         this.username = '';
 
@@ -37186,11 +37382,9 @@ else
 
 
         };
-
         return service;
     }
 
-    LoginService.$inject = ['$http', '$rootScope', '$cookies'];
 
 })();
 (function () {
@@ -37208,18 +37402,92 @@ else
 (function () {
     'use strict';
 
+    var dependencies = [
+        'Shift.Fields.Services'
+    ];
+
     angular
-        .module('Shift.Users.Controllers', [])
+        .module('Shift.Users.Controllers', dependencies)
         .controller('Users.Register', RegisterUser)
         .controller('Users.New', NewUser)
         .controller('Users.Edit', EditUser);
 
-    function RegisterUser(){}
+    RegisterUser.$inject = ['User', 'Fields'];
+    function RegisterUser(User, Fields){
+        var vm = this;
+
+        vm.form = 'registerUser';
+        vm.customfields = Fields.getUserRegistrationFields();
+        vm.user = new User;
+
+        vm.save = function(){};
+
+
+        $scope.save = function() {
+            $scope.user = CustomFields.save( 'user', $scope.user );
+
+            var req = $http.post( routeUrl( 'users/register' ), $scope.user );
+
+            // When the request is successful, log the user in and send them to the dashboard
+            req.success( function( user ) {
+                $rootScope.user = user;
+
+                $rootScope.$broadcast( 'menu.refresh' );
+                $scope.go( 'dashboard' );
+            });
+
+        };
+
+        /**
+         * Based on the registration being enabled and the the user being
+         * within the opening/closing dates, we determine whether or not
+         * to display the registration form.
+         *
+         * @return {boolean}
+         */
+        $scope.registrationsEnabled = function() {
+            var registration = settings['app.site.registrations'];
+
+            return registration ? true : false;
+        }
+    }
+
     function Users(){}
     function NewUser(){}
     function EditUser(){}
 
 })();
+(function() {
+    'use strict';
+
+    var dependencies = [];
+
+    angular
+        .module( 'Shift.Users.Filters', dependencies )
+        .filter('userStatus', UserStatus);
+
+    /**
+     * Determine a users current status
+     *
+     * @returns {String}
+     * @constructor
+     */
+    function UserStatus(){
+
+        return function( user ) {
+            if ( user.confirmation_token && !user.confirmed_at ) {
+                return 'Awaiting confirmation';
+            }
+            if ( !user.confirmation_token && user.confirmed_at ) {
+                return 'Active';
+            }
+
+            return 'ACTIVATION ERROR';
+        };
+    };
+
+})();
+
 (function () {
     'use strict';
 
@@ -37234,7 +37502,8 @@ else
 
     var dependencies = [
         'Shift.Users.Services',
-        'Shift.Users.Controllers'
+        'Shift.Users.Controllers',
+        'Shift.Users.Filters'
     ];
 
     angular
@@ -37247,6 +37516,70 @@ else
     function Runner(){}
 
 })();
+(function () {
+    'use strict';
+
+    var dependencies = [];
+
+    angular
+        .module('Shift.Fields.Services', dependencies)
+        .service('Fields', FieldsService);
+
+    FieldsService.$inject = ['$http'];
+    function FieldsService($http){
+
+        var service = {
+            getFieldsByResource: getFieldsByResource,
+            getUserRegistrationFields: getUserRegistrationFields
+        };
+
+        return service;
+
+        //////////
+
+        /**
+         * Return a collection of Fields based on resource type.
+         *
+         * @param resource
+         * @returns {*}
+         */
+        function getFieldsByResource(resource){
+            return $http.get(apiUrl('fields'), { resource: resource }).then(function(data) { return data; });
+        }
+
+        /**
+         * Get an array of custom fields required for user registration.
+         *
+         * @returns {Array}
+         */
+        function getUserRegistrationFields(){
+            var fields = this.getFieldsByResource('User');
+            var userFields = [];
+
+            for ( var i = 0, j = fields.length; i < j; i++ ) {
+                if ( fields[i].registration == '1' ) {
+                    // Clear out the value of the custom field if the user has just logged out.
+                    if ( !$rootScope.user ) fields[i].value = null;
+                    userFields.push( fields[i] );
+                }
+            }
+
+            return userFields;
+        };
+    }
+
+})();
+(function () {
+    'use strict';
+
+    var dependencies = [
+        'Shift.Fields.Services'
+    ];
+
+    angular
+        .module('Shift.Fields', dependencies);
+
+})();
 // Required for underscore string module
 _.mixin(_.str.exports());
 
@@ -37257,7 +37590,8 @@ _.mixin(_.str.exports());
 		'Shift.Home',
 		'Shift.Library.Core.Services',
         'Shift.Sessions',
-        'Shift.Users'
+        'Shift.Users',
+        'Shift.Fields'
 	];
 
 	angular
@@ -37271,10 +37605,10 @@ _.mixin(_.str.exports());
 		$locationProvider.html5Mode(true);
 	}
 
-	Runner.$inject = ['$rootScope', 'Language'];
+	Runner.$inject = ['$rootScope', '$window', 'Language'];
 
-	function Runner($rootScope, Language) {
-		$rootScope.language = window.language;
+	function Runner($rootScope, $window, Language) {
+		$rootScope.language = $window.language;
 
 		// These config setting will be set dynamically either based upon
 		// user or installation settings.
@@ -37296,5 +37630,15 @@ _.mixin(_.str.exports());
 			];
 			return Language.find($rootScope.language, locales, bundle, item);
 		};
+
+        /**
+         * Return a URL prepended with the API URL.
+         *
+         * @param {string} str
+         * @returns {string}
+         */
+        $rootScope.apiUrl = function(str) {
+            return '/api/' + str;
+        };
 	}
 })();
