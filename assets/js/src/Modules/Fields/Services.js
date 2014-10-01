@@ -26,7 +26,8 @@
          * @returns {*}
          */
         function getFieldsByResource(resource){
-            return $http.get(apiUrl('fields', true), { resource: resource }).then(function(data) { return data; });
+            return $http.get(apiUrl('fields', true), { resource: resource })
+                    .then(function(data) { return data; });
         }
 
         /**

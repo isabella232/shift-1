@@ -11,30 +11,18 @@
         .controller('Users.New', NewUser)
         .controller('Users.Edit', EditUser);
 
-    RegisterUser.$inject = ['User', 'Fields'];
-    function RegisterUser(User, Fields){
+    RegisterUser.$inject = ['User', 'RegistrationService', 'Fields'];
+    function RegisterUser(User, RegistrationService, Fields){
         var vm = this;
 
         vm.form = 'registerUser';
-        vm.customfields = Fields.getUserRegistrationFields();
+        //vm.customfields = Fields.getUserRegistrationFields();
         vm.registrationsEnabled = registrationsEnabled;
         vm.user = new User;
+        vm.register = register;
 
-        vm.save = save;
-
-        function save() {
-            vm.user = Fields.save('user', vm.user);
-
-            var req = $http.post(apiUrl('users/register', true), vm.user);
-
-            // When the request is successful, log the user in and send them to the dashboard
-            req.success( function( user ) {
-                $rootScope.user = user;
-
-                $rootScope.$broadcast( 'menu.refresh' );
-                vm.go('dashboard');
-            });
-
+        function register() {
+            RegistrationService.register(vm.user);
         }
 
         /**

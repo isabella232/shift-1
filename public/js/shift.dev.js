@@ -37139,7 +37139,8 @@ var ucFirst = function( str ) {
          * @returns {*}
          */
         function getFieldsByResource(resource){
-            return $http.get(apiUrl('fields', true), { resource: resource }).then(function(data) { return data; });
+            return $http.get(apiUrl('fields', true), { resource: resource })
+                    .then(function(data) { return data; });
         }
 
         /**
@@ -37175,41 +37176,6 @@ var ucFirst = function( str ) {
         .module('Shift.Fields', dependencies);
 
 })();
-(function() {
-    'use strict';
-
-    var dependencies = [];
-
-    angular
-        .module('Shift.Home.Controllers', dependencies)
-        .controller('Shift.Home', Home);
-
-    Home.$inject = ['$scope'];
-    function Home($scope) {
-        $scope.title = 'Shift 2.0';
-    }
-
-})();
-
-(function() {
-    'use strict';
-
-    angular
-	    .module('Shift.Home', ['ngRoute', 'Shift.Home.Controllers'])
-	    .config(Configuration);
-
-	/**
-	 * Sets up the required routes and configuration for the Home module.
-	 */
-	Configuration.$inject = ['$routeProvider'];
-	function Configuration($routeProvider) {
-        $routeProvider.when('/', {
-            templateUrl: '/packages/tectonic/shift/views/home.html',
-            controller: 'Shift.Home'
-        });
-    };
-})();
-
 (function () {
     'use strict';
 
@@ -37423,30 +37389,18 @@ var ucFirst = function( str ) {
         .controller('Users.New', NewUser)
         .controller('Users.Edit', EditUser);
 
-    RegisterUser.$inject = ['User', 'Fields'];
-    function RegisterUser(User, Fields){
+    RegisterUser.$inject = ['User', 'RegistrationService', 'Fields'];
+    function RegisterUser(User, RegistrationService, Fields){
         var vm = this;
 
         vm.form = 'registerUser';
-        vm.customfields = Fields.getUserRegistrationFields();
+        //vm.customfields = Fields.getUserRegistrationFields();
         vm.registrationsEnabled = registrationsEnabled;
         vm.user = new User;
+        vm.register = register;
 
-        vm.save = save;
-
-        function save() {
-            vm.user = Fields.save('user', vm.user);
-
-            var req = $http.post(apiUrl('users/register', true), vm.user);
-
-            // When the request is successful, log the user in and send them to the dashboard
-            req.success( function( user ) {
-                $rootScope.user = user;
-
-                $rootScope.$broadcast( 'menu.refresh' );
-                vm.go('dashboard');
-            });
-
+        function register() {
+            RegistrationService.register(vm.user);
         }
 
         /**
@@ -37506,13 +37460,52 @@ var ucFirst = function( str ) {
 
     angular
         .module('Shift.Users.Services', dependencies)
-        .factory('User', User);
+        .factory('User', User)
+        .service('RegistrationService', RegistrationService);
 
+    /**
+     * @type {string[]}
+     */
     User.$inject = ['$resource'];
 
+    /**
+     * User service for getting a user.
+     *
+     * @param $resource
+     * @returns {Object}
+     * @constructor
+     */
     function User($resource) {
         return $resource( apiUrl( 'users/:id', true ), { id: '@id' } );
-    };
+    }
+
+    /**
+     * @type {string[]}
+     */
+    RegistrationService.$inject = ['$rootScope', '$http'];
+
+    /**
+     * Registration service
+     *
+     * @param $rootScope
+     * @param $http
+     * @returns {{register: register}}
+     * @constructor
+     */
+    function RegistrationService($rootScope, $http) {
+        var service = {
+            register: register
+        };
+
+        function register(user) {
+            return $http.post(apiUrl('users'), user).success(function(response) {
+                $rootScope.user = response.data;
+                $rootScope.$broadcast('menu.refresh');
+            });
+        }
+
+        return service;
+    }
 
 })();
 (function () {
@@ -37534,6 +37527,41 @@ var ucFirst = function( str ) {
     function Runner(){}
 
 })();
+(function() {
+    'use strict';
+
+    var dependencies = [];
+
+    angular
+        .module('Shift.Home.Controllers', dependencies)
+        .controller('Shift.Home', Home);
+
+    Home.$inject = ['$scope'];
+    function Home($scope) {
+        $scope.title = 'Shift 2.0';
+    }
+
+})();
+
+(function() {
+    'use strict';
+
+    angular
+	    .module('Shift.Home', ['ngRoute', 'Shift.Home.Controllers'])
+	    .config(Configuration);
+
+	/**
+	 * Sets up the required routes and configuration for the Home module.
+	 */
+	Configuration.$inject = ['$routeProvider'];
+	function Configuration($routeProvider) {
+        $routeProvider.when('/', {
+            templateUrl: '/packages/tectonic/shift/views/home.html',
+            controller: 'Shift.Home'
+        });
+    };
+})();
+
 // Required for underscore string module
 _.mixin(_.str.exports());
 
