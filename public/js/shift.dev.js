@@ -36181,11 +36181,7 @@ var routeUrl = function( url, baseUrl ) {
  The updated, valid API url.
  */
 var apiUrl = function( url, baseUrl ) {
-    if(baseUrl){
-        baseUrl = '/api/';
-    } else {
-        baseUrl = '';
-    }
+    baseUrl = '/api/';
 
     if ( url.substr( -1, 1 ) == '/' ) url = url.substr( 0, url.length - 1 );
 
@@ -37143,7 +37139,7 @@ var ucFirst = function( str ) {
          * @returns {*}
          */
         function getFieldsByResource(resource){
-            return $http.get(apiUrl('fields'), { resource: resource }).then(function(data) { return data; });
+            return $http.get(apiUrl('fields', true), { resource: resource }).then(function(data) { return data; });
         }
 
         /**
@@ -37433,31 +37429,34 @@ var ucFirst = function( str ) {
 
         vm.form = 'registerUser';
         vm.customfields = Fields.getUserRegistrationFields();
+        vm.registrationsEnabled = registrationsEnabled;
         vm.user = new User;
 
-        vm.save = function() {
+        vm.save = save;
+
+        function save() {
             vm.user = Fields.save('user', vm.user);
 
-            var req = $http.post(routeUrl('users/register'), vm.user);
+            var req = $http.post(apiUrl('users/register', true), vm.user);
 
             // When the request is successful, log the user in and send them to the dashboard
             req.success( function( user ) {
                 $rootScope.user = user;
 
                 $rootScope.$broadcast( 'menu.refresh' );
-                vm.go( 'dashboard' );
+                vm.go('dashboard');
             });
 
-        };
+        }
 
         /**
          * Based on the registration being enabled and the the user being
          * within the opening/closing dates, we determine whether or not
          * to display the registration form.
          *
-         * @return {boolean}
+         * @return {Boolean}
          */
-        vm.registrationsEnabled = function() {
+        function registrationsEnabled() {
             var registration = settings['app.site.registrations'];
 
             return registration ? true : false;
@@ -37510,8 +37509,9 @@ var ucFirst = function( str ) {
         .factory('User', User);
 
     User.$inject = ['$resource'];
+
     function User($resource) {
-        return $resource( routeUrl( 'users/:id', true ), { id: '@id' } );
+        return $resource( apiUrl( 'users/:id', true ), { id: '@id' } );
     };
 
 })();

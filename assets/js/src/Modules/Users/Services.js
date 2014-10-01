@@ -8,8 +8,9 @@
         .factory('User', User);
 
     User.$inject = ['$resource'];
+
     function User($resource) {
-        return $resource( routeUrl( 'users/:id', true ), { id: '@id' } );
+        return $resource( apiUrl( 'users/:id', true ), { id: '@id' } );
     };
 
 })();

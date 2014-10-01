@@ -72,11 +72,7 @@ var routeUrl = function( url, baseUrl ) {
  The updated, valid API url.
  */
 var apiUrl = function( url, baseUrl ) {
-    if(baseUrl){
-        baseUrl = '/api/';
-    } else {
-        baseUrl = '';
-    }
+    baseUrl = '/api/';
 
     if ( url.substr( -1, 1 ) == '/' ) url = url.substr( 0, url.length - 1 );
 
