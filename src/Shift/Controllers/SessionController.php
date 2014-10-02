@@ -34,11 +34,15 @@ class SessionController extends Controller
     {
         $username = Input::get('username');
         $password = Input::get('password');
-        $remember = Input::get('remember');
+        $remember = Input::get('remember', false);
 
-        if(Auth::attempt(['username' => $username, 'password' => $password], $remember))
-        {
-            return $this->response(200);
+        try{
+            if(Auth::attempt(['username' => $username, 'password' => $password], $remember))
+            {
+                return $this->response(200);
+            }
+        } catch(\Symfony\Component\Debug\Exception\FatalErrorException $e) {
+            return "Error occurred";
         }
 
         return $this->response(401);
