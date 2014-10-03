@@ -115,6 +115,7 @@ class RolesTest extends AcceptanceTestCase
     private function createNewRole($data = [])
     {
         $defaultData = [
+            'account' => $this->account,
             'default' => false,
             'name' => 'Existing role'
         ];

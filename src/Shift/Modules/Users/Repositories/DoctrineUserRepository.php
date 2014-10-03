@@ -21,7 +21,7 @@ class DoctrineUserRepository extends Repository implements UserRepositoryInterfa
      *
      * @var bool
      */
-    protected $restrictByAccount = false;
+    public $restrictByAccount = false;
 
     /**
      * Retrieve a user based on the email. This is also restricted by the current account. If

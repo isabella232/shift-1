@@ -8,7 +8,7 @@ class DoctrineLocaleRepository extends Repository implements LocaleRepositoryInt
 {
     protected $entity = Locale::class;
 
-    protected $restrictByAccount = false;
+    public $restrictByAccount = false;
 
     /**
      * Get the ID's of passed in locales codes

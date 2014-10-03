@@ -35,7 +35,7 @@ abstract class Repository extends EntityRepository implements RepositoryInterfac
 	 *
 	 * @var bool
 	 */
-	protected $restrictByAccount = true;
+	public $restrictByAccount = true;
 
     /**
      * Some simple validation on the class implementation.

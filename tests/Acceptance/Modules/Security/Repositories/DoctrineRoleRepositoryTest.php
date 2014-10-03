@@ -18,7 +18,7 @@ class DoctrineRoleRepositoryTest extends AcceptanceTestCase
 
     public function testGetDefault()
     {
-        $role = new Role($this->account, 'role');
+        $role = $this->roleRepository->getNew(['account' => $this->account, 'name' => 'role']);
         $role->setDefault(true);
 
         $this->roleRepository->save($role);
@@ -26,5 +26,14 @@ class DoctrineRoleRepositoryTest extends AcceptanceTestCase
         $defaultRole = $this->roleRepository->getByDefault();
 
         $this->assertEquals($role, $defaultRole);
+    }
+
+    public function testRetrievalViaPermission()
+    {
+        $role = new Role($this->account, 'Role', false);
+
+        $this->roleRepository->save($role);
+
+
     }
 }

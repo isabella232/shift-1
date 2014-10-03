@@ -57,10 +57,11 @@ class Role extends Entity
 	/**
 	 * @param $name
 	 */
-	public function __construct(Account $account, $name)
+	public function __construct(Account $account, $name, $default = false)
 	{
         $this->setAccount($account);
 		$this->name = $name;
+        $this->default = $default;
 	}
 }
 
