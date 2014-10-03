@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Mitch\LaravelDoctrine\Traits\SoftDeletes;
 use Mitch\LaravelDoctrine\Traits\Timestamps;
 use Tectonic\Shift\Library\Support\Database\Doctrine\Entity;
+use Tectonic\Shift\Modules\Accounts\Entities\Account;
 use Tectonic\Shift\Modules\Accounts\Entities\Accountable;
 
 /**
@@ -56,8 +57,9 @@ class Role extends Entity
 	/**
 	 * @param $name
 	 */
-	public function __construct($name)
+	public function __construct(Account $account, $name)
 	{
+        $this->setAccount($account);
 		$this->name = $name;
 	}
 }
