@@ -8,5 +8,5 @@ interface LocalisationRepositoryInterface
      * @param  array $locales
      * @return array
      */
-    public function getUILocalisations($locales);
+    public function getUILocalisations(array $locales);
 }

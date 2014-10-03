@@ -36965,7 +36965,9 @@ var ucFirst = function( str ) {
             // For each locale preference, starting with the users, followed by the
             // installations, then finally the base/default - find required translation.
             for(var i = 0; i < locales.length; i++) {
-                var object = dictionary[bundle].lang[locales[i]];
+                if(locales[i] == '') continue;
+
+                var object = dictionary[bundle]['lang'][locales[i]]; // E.g: dictionary['shift']['lang']['en_GB']
                 var result = this.getPropertyByString(object, item);
 
                 // If a translation if found, break this loop and return result.
@@ -36991,8 +36993,7 @@ var ucFirst = function( str ) {
          * @returns {string}
          */
         this.getPropertyByString = function(obj, propertyString) {
-            if (!propertyString)
-                return obj;
+            if (!propertyString) return obj;
 
             var prop, props = propertyString.split('.');
 
@@ -37176,6 +37177,41 @@ var ucFirst = function( str ) {
         .module('Shift.Fields', dependencies);
 
 })();
+(function() {
+    'use strict';
+
+    var dependencies = [];
+
+    angular
+        .module('Shift.Home.Controllers', dependencies)
+        .controller('Shift.Home', Home);
+
+    Home.$inject = ['$scope'];
+    function Home($scope) {
+        $scope.title = 'Shift 2.0';
+    }
+
+})();
+
+(function() {
+    'use strict';
+
+    angular
+	    .module('Shift.Home', ['ngRoute', 'Shift.Home.Controllers'])
+	    .config(Configuration);
+
+	/**
+	 * Sets up the required routes and configuration for the Home module.
+	 */
+	Configuration.$inject = ['$routeProvider'];
+	function Configuration($routeProvider) {
+        $routeProvider.when('/', {
+            templateUrl: '/packages/tectonic/shift/views/home.html',
+            controller: 'Shift.Home'
+        });
+    };
+})();
+
 (function () {
     'use strict';
 
@@ -37527,41 +37563,6 @@ var ucFirst = function( str ) {
     function Runner(){}
 
 })();
-(function() {
-    'use strict';
-
-    var dependencies = [];
-
-    angular
-        .module('Shift.Home.Controllers', dependencies)
-        .controller('Shift.Home', Home);
-
-    Home.$inject = ['$scope'];
-    function Home($scope) {
-        $scope.title = 'Shift 2.0';
-    }
-
-})();
-
-(function() {
-    'use strict';
-
-    angular
-	    .module('Shift.Home', ['ngRoute', 'Shift.Home.Controllers'])
-	    .config(Configuration);
-
-	/**
-	 * Sets up the required routes and configuration for the Home module.
-	 */
-	Configuration.$inject = ['$routeProvider'];
-	function Configuration($routeProvider) {
-        $routeProvider.when('/', {
-            templateUrl: '/packages/tectonic/shift/views/home.html',
-            controller: 'Shift.Home'
-        });
-    };
-})();
-
 // Required for underscore string module
 _.mixin(_.str.exports());
 

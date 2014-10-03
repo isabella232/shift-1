@@ -58,7 +58,8 @@ class ShiftServiceProvider extends ServiceProvider
      */
     protected $filesToRegister = [
         'routes',
-        'commands'
+        'commands',
+        'composers'
     ];
 
     /**

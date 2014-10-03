@@ -213,7 +213,9 @@
             // For each locale preference, starting with the users, followed by the
             // installations, then finally the base/default - find required translation.
             for(var i = 0; i < locales.length; i++) {
-                var object = dictionary[bundle].lang[locales[i]];
+                if(locales[i] == '') continue;
+
+                var object = dictionary[bundle]['lang'][locales[i]]; // E.g: dictionary['shift']['lang']['en_GB']
                 var result = this.getPropertyByString(object, item);
 
                 // If a translation if found, break this loop and return result.
@@ -239,8 +241,7 @@
          * @returns {string}
          */
         this.getPropertyByString = function(obj, propertyString) {
-            if (!propertyString)
-                return obj;
+            if (!propertyString) return obj;
 
             var prop, props = propertyString.split('.');
 

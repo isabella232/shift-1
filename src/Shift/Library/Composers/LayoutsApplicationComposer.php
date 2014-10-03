@@ -1,6 +1,4 @@
-<?php 
-
-namespace Tectonic\Shift\Library\Composers;
+<?php namespace Tectonic\Shift\Library\Composers;
 
 use App;
 use Config;
@@ -26,5 +24,11 @@ class LayoutsApplicationComposer
         $configuration = $this->startupService->configuration();
 
 		$view->with('configuration', $configuration);
+
+        $languageDictionary = App::make('shift.translator')
+            ->setUICustomisations(Config::get('shift::language.locales'))
+            ->allToJson();
+
+        $view->with('language', $languageDictionary);
 	}
 }

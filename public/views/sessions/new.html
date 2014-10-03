@@ -3,21 +3,21 @@
 
     <div class="control">
         <div class="control-label">
-            <label for="username">Email</label>
+            <label for="username">{{ lang('shift', 'label.email') }}</label>
         </div>
         <div class="control-field">
             <input type="text" id="username" name="username" ng-model="vm.session.username" autofocus required autocomplete="off">
-            <span class="error" ng-show="sessionNew.username.$dirty && sessionNew.username.$error.required">The email field is required.</span>
+            <span class="error" ng-show="sessionNew.username.$dirty && sessionNew.username.$error.required">{{ lang('shift', 'validation.email.required') }}</span>
         </div>
     </div>
 
     <div class="control">
         <div class="control-label">
-            <label for="password">Password</label>
+            <label for="password">{{ lang('shift', 'label.password') }}</label>
         </div>
         <div class="control-field">
             <input type="password" id="password" name="password" ng-model="vm.session.password" required autocomplete="off">
-            <span class="error" ng-show="sessionNew.password.$dirty && sessionNew.password.$error.required">The password field is required.</span>
+            <span class="error" ng-show="sessionNew.password.$dirty && sessionNew.password.$error.required">{{ lang('shift', 'validation.password.required') }}</span>
         </div>
     </div>
 
@@ -26,7 +26,7 @@
             <ul class="horizontal">
                 <li>
                     <input type="checkbox" name="remember" id="remember" ng-model="vm.session.remember" ng-true-value="1" ng-false-value="0">
-                    <label for="remember">Remember me</label>
+                    <label for="remember">{{ lang('shift', 'label.remember_me')}}</label>
                 </li>
             </ul>
         </div>
@@ -34,13 +34,13 @@
 
     <div class="control">
         <div class="control-field">
-            <a href="" ng-click="toggle()">Have you forgotten your password?</a>
+            <a href="" ng-click="toggle()">{{ lang('shift', 'link.forgot_password') }}</a>
         </div>
     </div>
 
     <div class="control">
         <div class="control-field">
-            <input type="submit" value="Login">
+            <input type="submit" value="{{ lang('shift', 'button.login') }}">
         </div>
     </div>
 

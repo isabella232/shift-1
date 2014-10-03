@@ -44,7 +44,7 @@ class DoctrineLocalisationRepository extends Repository implements LocalisationR
      * @param  array $locales
      * @return array
      */
-    public function getUILocalisations($locales)
+    public function getUILocalisations(array $locales)
     {
         $localeIds = $this->localeRepo->getLocaleIds($locales);
 
@@ -52,7 +52,7 @@ class DoctrineLocalisationRepository extends Repository implements LocalisationR
             ->select(['l.field', 'l.value'])
             ->from($this->entity, 'l')
             ->where('l.resource = :resource')
-            ->andWhere('l.locale_id IN (:locale_ids)')
+            ->andWhere('l.localeId IN (:locale_ids)')
             ->setParameter('resource', 'UI')
             ->setParameter('locale_ids', $localeIds);
 
