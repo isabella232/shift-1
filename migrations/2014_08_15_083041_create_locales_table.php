@@ -18,6 +18,8 @@ class CreateLocalesTable extends Migration {
             $table->string('locale');           // English (Great Britain)
             $table->string('code')->index();    // en_GB
         });
+
+        DB::table('locales')->insert(array('locale' => 'English (Great Britain)', 'code' => 'en_GB'));
 	}
 
 	/**
