@@ -58,7 +58,7 @@ class LocalisationServiceProvider extends ServiceProvider
      */
     public function registerAssetContainer()
     {
-        $this->app->bindShared('shift.asset', function($app) {
+        $this->app->singleton('shift.asset', function($app) {
             return new \Tectonic\Shift\Library\Support\AssetFactory($app['orchestra.asset.dispatcher']);
         });
     }
@@ -70,7 +70,7 @@ class LocalisationServiceProvider extends ServiceProvider
      */
     protected function registerTranslator()
     {
-        $this->app->bindShared('shift.translator', function($app)
+        $this->app->singleton('shift.translator', function($app)
         {
             return new \Tectonic\Shift\Library\Translation\Translator(
                 $app['translation.loader'],
@@ -105,7 +105,7 @@ class LocalisationServiceProvider extends ServiceProvider
      */
     protected function registerLocaleRepository()
     {
-        $this->app->bindShared('Tectonic\Shift\Modules\Localisation\Contracts\LocaleRepositoryInterface', function()
+        $this->app->singleton('Tectonic\Shift\Modules\Localisation\Contracts\LocaleRepositoryInterface', function()
         {
             return $this->app->make('Tectonic\Shift\Modules\Localisation\Repositories\DoctrineLocaleRepository');
         });
@@ -118,7 +118,7 @@ class LocalisationServiceProvider extends ServiceProvider
      */
     protected function registerLocalisationRepository()
     {
-        $this->app->bindShared('Tectonic\Shift\Modules\Localisation\Contracts\LocalisationRepositoryInterface', function()
+        $this->app->singleton('Tectonic\Shift\Modules\Localisation\Contracts\LocalisationRepositoryInterface', function()
         {
             return $this->app->make('Tectonic\Shift\Modules\Localisation\Repositories\DoctrineLocalisationRepository');
         });
@@ -131,7 +131,7 @@ class LocalisationServiceProvider extends ServiceProvider
      */
     protected function registerLocaliserInterface()
     {
-        $this->app->bindShared('Tectonic\Shift\Modules\Localisation\Contracts\LocaliserInterface', function()
+        $this->app->singleton('Tectonic\Shift\Modules\Localisation\Contracts\LocaliserInterface', function()
         {
             return $this->app->make('Tectonic\Shift\Modules\Localisation\Services\Localiser');
         });

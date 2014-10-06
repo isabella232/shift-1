@@ -1,4 +1,5 @@
 @charset "UTF-8";
+@import url(//fonts.googleapis.com/css?family=Open+Sans:400,600,700);
 /*
 |--------------------------------------------------------------------------
 | Main stylesheet file
@@ -8,7 +9,6 @@
 | styles defined here.
 | 
 */
-@import url(//fonts.googleapis.com/css?family=Open+Sans:400,600,700);
 * {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
