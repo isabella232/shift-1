@@ -76,8 +76,8 @@ class LocalisationServiceProvider extends ServiceProvider
                 $app['translation.loader'],
                 $app['Tectonic\Shift\Modules\Localisation\Contracts\LocalisationRepositoryInterface'],
                 $app['config']['app.locale'],
-                $app['config']['shift.language.autoloads'], // @TODO: change to $app['config']['shift::language.autoloads']
-                $app['config']['shift.language.supported_locales']   // @TODO: change to $app['config']['shift::language.supported_locales']
+                $app['config']['shift::language.autoloads'],
+                $app['config']['shift::language.locales']
             );
         });
 
