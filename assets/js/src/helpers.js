@@ -71,10 +71,10 @@ var routeUrl = function( url, baseUrl ) {
 
  The updated, valid API url.
  */
-var apiUrl = function( url, baseUrl ) {
-    baseUrl = '/api/';
+var apiUrl = function(url, baseUrl) {
+    baseUrl = '/';
 
-    if ( url.substr( -1, 1 ) == '/' ) url = url.substr( 0, url.length - 1 );
+    if (url.substr(-1, 1) == '/') url = url.substr(0, url.length - 1);
 
     return baseUrl + url;
 };
@@ -88,16 +88,15 @@ var apiUrl = function( url, baseUrl ) {
  *
  * @return array
  */
-var arrayChunk = function( array , chunk ) {
+var arrayChunk = function(array, chunk) {
     var i, j, temp = [];
 
-    for ( i = 0 , j = array.length; i < j; i += chunk ) {
-        temp.push( array.slice( i , i + chunk ) );
+    for (i = 0, j = array.length; i < j; i += chunk) {
+        temp.push(array.slice(i , i + chunk));
     }
 
     return temp;
 };
-
 
 /**
  * Tests if a variable is available and returns it. It returns a
@@ -109,8 +108,8 @@ var arrayChunk = function( array , chunk ) {
  *
  * @return mixed
  */
-var get = function( input , def ) {
-    if ( def == undefined ) def = null;
+var get = function(input , def) {
+    if (def == undefined) def = null;
 
     return typeof input == 'undefined' ? def : input;
 };
@@ -124,10 +123,10 @@ var get = function( input , def ) {
  * @return mixed
  */
 function arrayRemove(array, value) {
-    var index = array.indexOf( value );
+    var index = array.indexOf(value);
 
-    if ( index >= 0 ) {
-        array.splice( index , 1 );
+    if (index >= 0) {
+        array.splice(index, 1);
     }
 
     return value;
@@ -139,8 +138,8 @@ function arrayRemove(array, value) {
  * @param string str
  * @return string
  */
-var ucFirst = function( str ) {
-    if ( str && typeof str == 'string' ) {
+var ucFirst = function(str) {
+    if (str && typeof str == 'string') {
         return str.charAt(0).toUpperCase() + str.slice(1);
     }
 

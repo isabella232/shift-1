@@ -36180,10 +36180,10 @@ var routeUrl = function( url, baseUrl ) {
 
  The updated, valid API url.
  */
-var apiUrl = function( url, baseUrl ) {
-    baseUrl = '/api/';
+var apiUrl = function(url, baseUrl) {
+    baseUrl = '/';
 
-    if ( url.substr( -1, 1 ) == '/' ) url = url.substr( 0, url.length - 1 );
+    if (url.substr(-1, 1) == '/') url = url.substr(0, url.length - 1);
 
     return baseUrl + url;
 };
@@ -36197,16 +36197,15 @@ var apiUrl = function( url, baseUrl ) {
  *
  * @return array
  */
-var arrayChunk = function( array , chunk ) {
+var arrayChunk = function(array, chunk) {
     var i, j, temp = [];
 
-    for ( i = 0 , j = array.length; i < j; i += chunk ) {
-        temp.push( array.slice( i , i + chunk ) );
+    for (i = 0, j = array.length; i < j; i += chunk) {
+        temp.push(array.slice(i , i + chunk));
     }
 
     return temp;
 };
-
 
 /**
  * Tests if a variable is available and returns it. It returns a
@@ -36218,8 +36217,8 @@ var arrayChunk = function( array , chunk ) {
  *
  * @return mixed
  */
-var get = function( input , def ) {
-    if ( def == undefined ) def = null;
+var get = function(input , def) {
+    if (def == undefined) def = null;
 
     return typeof input == 'undefined' ? def : input;
 };
@@ -36233,10 +36232,10 @@ var get = function( input , def ) {
  * @return mixed
  */
 function arrayRemove(array, value) {
-    var index = array.indexOf( value );
+    var index = array.indexOf(value);
 
-    if ( index >= 0 ) {
-        array.splice( index , 1 );
+    if (index >= 0) {
+        array.splice(index, 1);
     }
 
     return value;
@@ -36248,8 +36247,8 @@ function arrayRemove(array, value) {
  * @param string str
  * @return string
  */
-var ucFirst = function( str ) {
-    if ( str && typeof str == 'string' ) {
+var ucFirst = function(str) {
+    if (str && typeof str == 'string') {
         return str.charAt(0).toUpperCase() + str.slice(1);
     }
 
@@ -37225,14 +37224,13 @@ var ucFirst = function( str ) {
         .controller('Sessions.New', NewSession)
         .controller('Sessions.Forgot', ForgotSession);
 
-    Auth.$inject = ['$scope'];
-
     /**
      * Handle auth form state
      *
      * @param $scope
      * @constructor
      */
+    Auth.$inject = ['$scope'];
     function Auth($scope) {
         $scope.forgotten = false;
 
@@ -37242,8 +37240,6 @@ var ucFirst = function( str ) {
         }
     }
 
-    NewSession.$inject = ['$scope', 'LoginService'];
-
     /**
      * Handles the Login form
      *
@@ -37251,31 +37247,21 @@ var ucFirst = function( str ) {
      * @param LoginService
      * @constructor
      */
+    NewSession.$inject = ['$scope', 'LoginService'];
     function NewSession($scope, LoginService) {
-
         var vm = this;
-        vm.session = LoginService.getSessionData();
-        vm.login = login;
 
-        /**
-         * Handle logging in a user.
-         *
-         * @param data
-         */
-        function login() {
-            LoginService.login(vm.session);
-        }
+        vm.session = LoginService.getSessionData();
+        vm.login = LoginService.login;
 
         /**
          * Watch for changes to username, and update email property
          * on the LoginService with new value if it's not undefined.
          */
-        $scope.$watch( 'session.username' , function(username) {
+        $scope.$watch('session.username' , function(username) {
             LoginService.updateUsername(username)
         });
     }
-
-    ForgotSession.$inject = ['$scope', '$http', 'LoginService'];
 
     /**
      * Handles the forgotten password form.
@@ -37285,30 +37271,29 @@ var ucFirst = function( str ) {
      * @param LoginService
      * @constructor
      */
+    ForgotSession.$inject = ['$scope', '$http', 'LoginService'];
     function ForgotSession($scope, $http, LoginService) {
-
         var vm = this;
-        vm.resetData = { username: ''};
+
+        vm.resetData = {username: ''};
         vm.reset = reset;
 
         function reset() {
             // Watch for the username, whenever it changes and it's valid, we want
             // to save the value in the LoginService service.
             // Handles the creation of new session
-            $http.put( apiUrl( 'users/reset' ) , vm.resetData );
+            $http.put(apiUrl('users/reset') , vm.resetData);
         }
 
         // Watch whenever the forgotten attribute is changed, then check that the
         // value of it is 'true', indicating that we're on the password reset form
         // then we will apply the value of the email to what was saved in the service.
-        $scope.$watch( 'forgotten' , function( newValue ) {
-            if ( newValue === true ) {
+        $scope.$watch('forgotten' , function(newValue) {
+            if (newValue === true) {
                 vm.resetData.username = LoginService.email;
             }
         });
     }
-
-
 })();
 (function () {
     'use strict';
@@ -37334,71 +37319,63 @@ var ucFirst = function( str ) {
     function LoginService($http, $rootScope, $cookies) {
         this.username = '';
 
-        var service = {
+        /**
+         * Handle login
+         *
+         * @param data
+         */
+        this.login = function(data) {
+            this.setRememberMe(data);
 
-            /**
-             * Handle login
-             *
-             * @param data
-             */
-            login: function(data) {
-                this.setRememberMe(data);
+            var req = $http.post(apiUrl('sessions', true), data);
 
-                var req = $http.post( apiUrl('sessions', true), data);
+            req.success(function(user) {
+                // Set the user object
+                $rootScope.user = user;
+                $rootScope.$broadcast('user.authorised', user);
+                $rootScope.$broadcast('menu.refresh');
+            });
+        },
 
-                req.success( function( user ) {
-                    // Set the user object
-                    $rootScope.user = user;
-                    $rootScope.$broadcast( 'user.authorised', user );
-                    $rootScope.$broadcast( 'menu.refresh' );
-                });
-            },
+        /**
+         * Update email to represent new username
+         *
+         * @param {string} username
+         */
+        this.updateUsername = function(username) {
+            if (!angular.isUndefined(username)) {
+                this.username = username;
+            }
+        };
 
-            /**
-             * Update email to represent new username
-             *
-             * @param {string} username
-             */
-            updateUsername: function(username) {
-                if ( !angular.isUndefined( username ) ) {
-                    this.username = username;
-                }
-            },
+        /**
+         * Save username to cookie "if" remember me is set to true
+         *
+         * @param data
+         */
+        this.setRememberMe = function(data) {
+            if(data.remember) {
+                $cookies.remember = data.remember;
+                $cookies.username = data.username;
+            }
+        };
 
-            /**
-             * Save username to cookie "if" remember me is set to true
-             *
-             * @param data
-             */
-            setRememberMe: function(data) {
-                if(data.remember) {
-                    $cookies.remember = data.remember;
-                    $cookies.username = data.username;
-                }
-            },
+        /**
+         * Return a users session details if they exist in the cookie
+         *
+         * @returns {{remember: string, username: string}}
+         */
+        this.getSessionData = function() {
+            var session = { remember: '', username: '' };
 
-            /**
-             * Return a users session details if they exist in the cookie
-             *
-             * @returns {{remember: string, username: string}}
-             */
-            getSessionData: function() {
-                var session = { remember: '', username: '' };
-
-                if ( $cookies.username ) {
-                    session.remember = '1';
-                    session.username = $cookies.username;
-                }
-
-                return session;
+            if ( $cookies.username ) {
+                session.remember = '1';
+                session.username = $cookies.username;
             }
 
-
+            return session;
         };
-        return service;
     }
-
-
 })();
 (function () {
     'use strict';

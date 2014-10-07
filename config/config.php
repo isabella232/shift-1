@@ -1,6 +1,8 @@
 <?php
 
 return [
+    // Url settings. If you want Shift located at something like /admin/, for example, put 'admin'
+    'url' => '',
 
     // Language / localisation configuration settings
     'language' => [
