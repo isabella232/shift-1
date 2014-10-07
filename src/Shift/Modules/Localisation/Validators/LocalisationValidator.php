@@ -1,8 +1,8 @@
 <?php namespace Tectonic\Shift\Modules\Localisation\Validators;
 
-use Tectonic\Shift\Library\Validation\Validator;
+use Tectonic\Shift\Library\Validation\Validation;
 
-class LocalisationValidator extends Validator
+class LocalisationValidator extends Validation
 {
     protected $rules = [
         'locale_id'  => 'required',

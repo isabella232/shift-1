@@ -21,6 +21,8 @@ Route::group(['prefix' => Config::get('shift::url', '')], function() {
         Route::collection('fields', 'Tectonic\Shift\Controllers\FieldController');
         Route::collection('localisations', 'Tectonic\Shift\Controllers\LocalisationController');
         Route::collection('sessions', 'Tectonic\Shift\Controllers\SessionController');
+        Route::get('languages', 'Tectonic\Shift\Controllers\LanguageController@getLanguages');
+        Route::get('languages/supported', 'Tectonic\Shift\Controllers\LanguageController@getSupportedLanguages');
     });
 
     Route::group(['before' => 'shift.install'], function() {

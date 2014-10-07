@@ -11,7 +11,8 @@ _.mixin(_.str.exports());
 		'Shift.Library.Core.Router',
         'Shift.Sessions',
         'Shift.Users',
-        'Shift.Fields'
+        'Shift.Fields',
+        'Shift.Settings'
 	];
 
 	angular

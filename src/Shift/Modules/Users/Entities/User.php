@@ -2,11 +2,11 @@
 
 namespace Tectonic\Shift\Modules\Users\Entities;
 
-use Hash;
 use Crypt;
 use Doctrine\ORM\Mapping AS ORM;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Illuminate\Auth\UserInterface;
+use Illuminate\Support\Facades\Hash;
 use Mitch\LaravelDoctrine\Traits\Timestamps;
 use Mitch\LaravelDoctrine\Traits\Authentication;
 use Tectonic\Shift\Library\Support\Database\Doctrine\Entity;
@@ -67,7 +67,7 @@ class User extends Entity implements UserInterface
         $this->email = $email;
         $this->firstName = $first_name;
         $this->lastName = $last_name;
-        $this->password = \Illuminate\Support\Facades\Hash::make($password);
+        $this->password = Hash::make($password);
     }
 
     /**

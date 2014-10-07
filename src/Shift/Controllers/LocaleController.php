@@ -1,11 +1,13 @@
 <?php namespace Tectonic\Shift\Controllers;
 
-use Tectonic\Shift\Library\Support\BaseController;
+use JMS\Serializer\SerializerBuilder;
+use Response;
+use Tectonic\Shift\Library\Support\Controller;
 use Tectonic\Shift\Modules\Localisation\Validators\LocaleValidator;
 use Tectonic\Shift\Modules\Localisation\Services\LocaleManagementService;
-use Tectonic\Shift\Modules\Localisation\Repositories\LocaleRepositoryInterface;
+use Tectonic\Shift\Modules\Localisation\Contracts\LocaleRepositoryInterface;
 
-class LocaleController extends BaseController
+class LocaleController extends Controller
 {
 
     public function __construct(
@@ -16,6 +18,15 @@ class LocaleController extends BaseController
         $this->validator   = $validator;
         $this->repository  = $repository;
         $this->crudService = $service;
+    }
+
+    public function getIndex()
+    {
+        $resources = $this->crudService->getAll();
+
+        $serializer = \JMS\Serializer\SerializerBuilder::create()->build();
+        $jsonContent = $serializer->serialize($resources, 'json');
+        return $jsonContent;
     }
 
 }

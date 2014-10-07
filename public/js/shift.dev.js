@@ -37066,6 +37066,51 @@ var ucFirst = function(str) {
 	});
 })();
 
+(function() {
+	'use strict';
+
+	//var module = angular.module('Shift.Accounts.Controllers', ['Shift.Library.Defaults']);
+
+	/*module.controller('shift.accounts', [
+		'$rootScope',
+		'$scope',
+		'$filter',
+		'Seeker',
+		'Deletism',
+		'Filter',
+		'Account',
+		DefaultControllers.index
+	]);
+
+	module.controller('shift.accounts.new', [
+		'$rootScope',
+		'$scope',
+		'$filter',
+		'Account',
+		DefaultControllers.create
+	]);
+
+	module.controller('shift.accounts.edit', [
+		'$rootScope',
+		'$scope',
+		'$filter',
+		'install',
+		DefaultControllers.update
+	]);*/
+
+})();
+
+(function() {
+	'use strict';
+
+	var module = angular.module('Shift.Accounts.Setup', ['Shift.Library.Defaults']);
+
+	module.config(['ShiftRouteProvider', function(ShiftRouteProvider) {
+		ShiftRouteProvider('accounts');
+	}]);
+
+})();
+
 (function () {
     'use strict';
 
@@ -37354,6 +37399,95 @@ var ucFirst = function(str) {
 (function () {
     'use strict';
 
+    var dependencies = [];
+
+    angular
+        .module('Shift.Settings.Controllers', dependencies)
+        .controller('Settings.General', General)
+        .controller('Settings.Language', Language);
+
+    function General() {
+
+    }
+
+    Language.$inject = ['LanguageService'];
+    function Language(LanguageService) {
+        var vm = this;
+
+        LanguageService.getAllLanguages().then(function(response) {
+            vm.languages = response.data;
+        });
+
+        LanguageService.getSupportedLanguages().then(function(response) {
+            vm.supportedLanguages = response.data;
+        });
+
+        vm.removeSupportedLanguage = remove;
+
+        function remove(id) {
+            console.log(id);
+        }
+    }
+
+})();
+(function () {
+    'use strict';
+
+    var dependencies = [];
+
+    angular
+        .module('Shift.Settings.Services', dependencies)
+        .service('LanguageService', LanguageService);
+
+    LanguageService.$inject = ['$http'];
+    function LanguageService($http) {
+
+        var service = {
+            getAllLanguages: getAllLanguages,
+            getSupportedLanguages: getSupportedLanguages
+        };
+
+        function getAllLanguages() {
+            return $http.get('/locales');
+        }
+
+        function getSupportedLanguages() {
+            return $http.get('/languages/supported');
+        }
+
+        return service;
+    }
+
+})();
+(function () {
+    'use strict';
+
+    var dependencies = [
+        'Shift.Settings.Controllers',
+        'Shift.Settings.Services'
+    ];
+
+    angular
+        .module('Shift.Settings', dependencies)
+        .config(Configuration);
+
+    Configuration.$inject = ['$routeProvider'];
+    function Configuration($routeProvider) {
+        $routeProvider
+            .when('/settings/general', {
+                templateUrl: '/packages/tectonic/shift/views/settings/general/general.html',
+                controller: 'Settings.General'
+            })
+            .when('/settings/language', {
+                templateUrl: '/packages/tectonic/shift/views/settings/language/language.html',
+                controller: 'Settings.Language'
+            });
+    }
+
+})();
+(function () {
+    'use strict';
+
     var dependencies = [
         'Shift.Fields.Services'
     ];
@@ -37502,51 +37636,6 @@ var ucFirst = function(str) {
     function Runner(){}
 
 })();
-(function() {
-	'use strict';
-
-	//var module = angular.module('Shift.Accounts.Controllers', ['Shift.Library.Defaults']);
-
-	/*module.controller('shift.accounts', [
-		'$rootScope',
-		'$scope',
-		'$filter',
-		'Seeker',
-		'Deletism',
-		'Filter',
-		'Account',
-		DefaultControllers.index
-	]);
-
-	module.controller('shift.accounts.new', [
-		'$rootScope',
-		'$scope',
-		'$filter',
-		'Account',
-		DefaultControllers.create
-	]);
-
-	module.controller('shift.accounts.edit', [
-		'$rootScope',
-		'$scope',
-		'$filter',
-		'install',
-		DefaultControllers.update
-	]);*/
-
-})();
-
-(function() {
-	'use strict';
-
-	var module = angular.module('Shift.Accounts.Setup', ['Shift.Library.Defaults']);
-
-	module.config(['ShiftRouteProvider', function(ShiftRouteProvider) {
-		ShiftRouteProvider('accounts');
-	}]);
-
-})();
-
 // Required for underscore string module
 _.mixin(_.str.exports());
 
@@ -37560,7 +37649,8 @@ _.mixin(_.str.exports());
 		'Shift.Library.Core.Router',
         'Shift.Sessions',
         'Shift.Users',
-        'Shift.Fields'
+        'Shift.Fields',
+        'Shift.Settings'
 	];
 
 	angular

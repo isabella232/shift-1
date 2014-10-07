@@ -61,4 +61,15 @@ class DoctrineLocaleRepository extends Repository implements LocaleRepositoryInt
 
         return $result->getCode();
     }
+
+    /**
+     * Get all locales
+     *
+     * @return mixed
+     */
+    public function getLocales()
+    {
+        $query = $this->createQuery();
+        return $query->getQuery()->getResult();
+    }
 }

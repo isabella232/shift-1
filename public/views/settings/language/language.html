@@ -1,0 +1,25 @@
+<div class="container" ng-controller="Settings.Language as vm">
+    <div class="row">
+        <h1>Language</h1>
+        <h2>{{ vm.title }}</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Language</th>
+                    <th>Code</th>
+                    <th>Shortcode</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="sl in vm.supportedLanguages">
+                    <td>{{ sl.locale }}</td>
+                    <td>{{ sl.code }}</td>
+                    <td></td>
+                    <td><button ng-click="vm.removeSupportedLanguage(sl.id)">X</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

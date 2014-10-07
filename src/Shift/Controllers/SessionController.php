@@ -1,7 +1,11 @@
 <?php namespace Tectonic\Shift\Controllers;
 
 use Auth;
+use Doctrine\ORM\EntityManager;
+use Illuminate\Log\Writer;
+use Illuminate\Support\Facades\Log;
 use Input;
+use Monolog\Logger;
 use Tectonic\Shift\Library\Support\Controller;
 use Tectonic\Shift\Modules\Sessions\Validators\SessionValidation;
 
@@ -32,16 +36,17 @@ class SessionController extends Controller
      */
     public function postStore()
     {
+        Log::info(get_class(\App::make(EntityManager::class)));
         $username = Input::get('username');
         $password = Input::get('password');
         $remember = Input::get('remember', false);
 
-        try{
+        try {
             if(Auth::attempt(['username' => $username, 'password' => $password], $remember))
             {
                 return $this->response(200);
             }
-        } catch(\Symfony\Component\Debug\Exception\FatalErrorException $e) {
+        } catch(\Exception $e) {
             return "Error occurred";
         }
 
