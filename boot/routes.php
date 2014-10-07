@@ -11,7 +11,7 @@ Route::filter('shift.account', 'Tectonic\Shift\Library\Filters\AccountFilter');
 /**
  * Register all /api/ routes. All application requests for data go via the API route
  */
-Route::group(['prefix' => Config::get('shift::sdfsdf', '')], function() {
+Route::group(['prefix' => Config::get('shift::url', '')], function() {
     Route::group(['before' => 'shift.view'], function() {
         Route::get('/', function() {});
 

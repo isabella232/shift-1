@@ -39,7 +39,14 @@
         var vm = this;
 
         vm.session = LoginService.getSessionData();
-        vm.login = LoginService.login;
+        vm.login = login;
+
+        /**
+         * Attempt authentication
+         */
+        function login() {
+            LoginService.login(vm.session);
+        }
 
         /**
          * Watch for changes to username, and update email property

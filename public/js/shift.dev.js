@@ -37066,51 +37066,6 @@ var ucFirst = function(str) {
 	});
 })();
 
-(function() {
-	'use strict';
-
-	//var module = angular.module('Shift.Accounts.Controllers', ['Shift.Library.Defaults']);
-
-	/*module.controller('shift.accounts', [
-		'$rootScope',
-		'$scope',
-		'$filter',
-		'Seeker',
-		'Deletism',
-		'Filter',
-		'Account',
-		DefaultControllers.index
-	]);
-
-	module.controller('shift.accounts.new', [
-		'$rootScope',
-		'$scope',
-		'$filter',
-		'Account',
-		DefaultControllers.create
-	]);
-
-	module.controller('shift.accounts.edit', [
-		'$rootScope',
-		'$scope',
-		'$filter',
-		'install',
-		DefaultControllers.update
-	]);*/
-
-})();
-
-(function() {
-	'use strict';
-
-	var module = angular.module('Shift.Accounts.Setup', ['Shift.Library.Defaults']);
-
-	module.config(['ShiftRouteProvider', function(ShiftRouteProvider) {
-		ShiftRouteProvider('accounts');
-	}]);
-
-})();
-
 (function () {
     'use strict';
 
@@ -37252,7 +37207,14 @@ var ucFirst = function(str) {
         var vm = this;
 
         vm.session = LoginService.getSessionData();
-        vm.login = LoginService.login;
+        vm.login = login;
+
+        /**
+         * Attempt authentication
+         */
+        function login() {
+            LoginService.login(vm.session);
+        }
 
         /**
          * Watch for changes to username, and update email property
@@ -37540,6 +37502,51 @@ var ucFirst = function(str) {
     function Runner(){}
 
 })();
+(function() {
+	'use strict';
+
+	//var module = angular.module('Shift.Accounts.Controllers', ['Shift.Library.Defaults']);
+
+	/*module.controller('shift.accounts', [
+		'$rootScope',
+		'$scope',
+		'$filter',
+		'Seeker',
+		'Deletism',
+		'Filter',
+		'Account',
+		DefaultControllers.index
+	]);
+
+	module.controller('shift.accounts.new', [
+		'$rootScope',
+		'$scope',
+		'$filter',
+		'Account',
+		DefaultControllers.create
+	]);
+
+	module.controller('shift.accounts.edit', [
+		'$rootScope',
+		'$scope',
+		'$filter',
+		'install',
+		DefaultControllers.update
+	]);*/
+
+})();
+
+(function() {
+	'use strict';
+
+	var module = angular.module('Shift.Accounts.Setup', ['Shift.Library.Defaults']);
+
+	module.config(['ShiftRouteProvider', function(ShiftRouteProvider) {
+		ShiftRouteProvider('accounts');
+	}]);
+
+})();
+
 // Required for underscore string module
 _.mixin(_.str.exports());
 
