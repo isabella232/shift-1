@@ -29,4 +29,9 @@ Route::group(['prefix' => Config::get('shift::url', '')], function() {
         Route::get('install', 'Tectonic\Shift\Controllers\InstallationController@getInstall');
         Route::post('install', 'Tectonic\Shift\Controllers\InstallationController@postInstall');
     });
+
+    Route::get('test', function() {
+        $repo = \Illuminate\Support\Facades\App::make('Tectonic\Shift\Modules\Accounts\Repositories\AccountRepositoryInterface');
+        return $repo->getById(1);
+    });
 });

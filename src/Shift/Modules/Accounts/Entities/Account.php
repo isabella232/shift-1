@@ -4,6 +4,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Mitch\LaravelDoctrine\Traits\SoftDeletes;
 use Mitch\LaravelDoctrine\Traits\Timestamps;
 use Tectonic\Shift\Library\Support\Database\Doctrine\Entity;
+use Tectonic\Shift\Modules\Localisation\Entities\Locale;
 use Tectonic\Shift\Modules\Users\Entities\User;
 
 /**
@@ -45,6 +46,12 @@ class Account extends Entity
      * @ORM\ManyToMany(targetEntity="Tectonic\Shift\Modules\Users\Entities\User", inversedBy="accounts")
      */
     protected $users;
+
+    /**
+     *
+     * @ORM\ManyToMany(targetEntity="Tectonic\Shift\Modules\Localisation\Entities\Locale")
+     */
+    protected $locales;
 
     /**
      * Required variables for account creation and hydration.
@@ -114,5 +121,15 @@ class Account extends Entity
     public function setOwner(User $user)
     {
         $this->owner = $user;
+    }
+
+    public function getLocales()
+    {
+        return $this->locales;
+    }
+
+    public function addLocale(Locale $locale)
+    {
+        $this->locales[] = $locale;
     }
 }

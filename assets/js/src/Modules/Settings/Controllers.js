@@ -24,10 +24,25 @@
             vm.supportedLanguages = response.data;
         });
 
-        vm.removeSupportedLanguage = remove;
+        vm.removeSupportedLanguage = removeSupportedLanguage;
+        vm.addSupportedLanguage = addSupportedLanguage;
 
-        function remove(id) {
-            console.log(id);
+        function removeSupportedLanguage(language) {
+            vm.supportedLanguages.splice(vm.supportedLanguages.indexOf(language), 1);
+        }
+
+        function addSupportedLanguage() {
+            setUnsupportedLanguages();
+        }
+
+        function setUnsupportedLanguages() {
+            var arr = vm.languages.slice(0);
+
+            _.each(vm.supportedLanguages, function(obj) {
+                arr = _.without(arr, _.findWhere(arr, {id: obj.id}));
+            });
+
+            vm.unsupportedLocales = arr;
         }
     }
 
