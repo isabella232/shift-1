@@ -22,6 +22,7 @@ Route::group(['prefix' => Config::get('shift::url', '')], function() {
         Route::collection('localisations', 'Tectonic\Shift\Controllers\LocalisationController');
         Route::collection('sessions', 'Tectonic\Shift\Controllers\SessionController');
         Route::get('languages', 'Tectonic\Shift\Controllers\LanguageController@getLanguages');
+        Route::post('languages', 'Tectonic\Shift\Controllers\LanguageController@postLanguages');
         Route::get('languages/supported', 'Tectonic\Shift\Controllers\LanguageController@getSupportedLanguages');
     });
 
@@ -31,7 +32,14 @@ Route::group(['prefix' => Config::get('shift::url', '')], function() {
     });
 
     Route::get('test', function() {
-        $repo = \Illuminate\Support\Facades\App::make('Tectonic\Shift\Modules\Accounts\Repositories\AccountRepositoryInterface');
-        return $repo->getById(1);
+        $repoAccount = \Illuminate\Support\Facades\App::make('Tectonic\Shift\Modules\Accounts\Repositories\AccountRepositoryInterface');
+        $repoLocale = \Illuminate\Support\Facades\App::make('Tectonic\Shift\Modules\Localisation\Contracts\LocaleRepositoryInterface');
+
+        $dataOne = $repoAccount->getById(1);
+        $dataTwo = $repoLocale->getById(2);
+
+        $dataOne->addLocale($dataTwo);
+        $repoAccount->save($dataOne);
+        return $dataOne->getLocales()[1];
     });
 });

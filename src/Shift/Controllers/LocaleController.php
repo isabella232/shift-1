@@ -25,8 +25,8 @@ class LocaleController extends Controller
         $resources = $this->crudService->getAll();
 
         $serializer = \JMS\Serializer\SerializerBuilder::create()->build();
-        $jsonContent = $serializer->serialize($resources, 'json');
-        return $jsonContent;
+        return json_encode($resources);
+        return $serializer->serialize($resources, 'json');
     }
 
 }

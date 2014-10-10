@@ -12,8 +12,8 @@
 
     }
 
-    Language.$inject = ['LanguageService'];
-    function Language(LanguageService) {
+    Language.$inject = ['LanguageService', 'Modalize'];
+    function Language(LanguageService, Modalize) {
         var vm = this;
 
         LanguageService.getAllLanguages().then(function(response) {
@@ -33,6 +33,7 @@
 
         function addSupportedLanguage() {
             setUnsupportedLanguages();
+            Modalize.open( '/packages/tectonic/shift/views/settings/language/add.html', '600x420' );
         }
 
         function setUnsupportedLanguages() {

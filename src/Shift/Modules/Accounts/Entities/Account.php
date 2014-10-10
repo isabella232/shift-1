@@ -49,7 +49,7 @@ class Account extends Entity
 
     /**
      *
-     * @ORM\ManyToMany(targetEntity="Tectonic\Shift\Modules\Localisation\Entities\Locale")
+     * @ORM\ManyToMany(targetEntity="Tectonic\Shift\Modules\Localisation\Entities\Locale", inversedBy="accounts")
      */
     protected $locales;
 
@@ -123,11 +123,21 @@ class Account extends Entity
         $this->owner = $user;
     }
 
+    /**
+     * Get a list of supported locales
+     *
+     * @return array Locale
+     */
     public function getLocales()
     {
         return $this->locales;
     }
 
+    /**
+     * Add a locale
+     *
+     * @param Locale $locale
+     */
     public function addLocale(Locale $locale)
     {
         $this->locales[] = $locale;
