@@ -18,7 +18,7 @@ Route::group(['prefix' => Config::get('shift.url')], function() {
         Route::get('languages/supported', 'Tectonic\Shift\Controllers\LanguageController@getSupportedLanguages');
     });
 
-    Route::group(['before' => 'shift.noAccount'], function() {
+    Route::group(['before' => 'shift.install'], function() {
         Route::get('install', 'Tectonic\Shift\Controllers\InstallationController@getInstall');
         Route::post('install', 'Tectonic\Shift\Controllers\InstallationController@postInstall');
     });
@@ -26,6 +26,6 @@ Route::group(['prefix' => Config::get('shift.url')], function() {
 
 Route::filter('shift.view', 'Tectonic\Shift\Library\Filters\ViewFilter');
 Route::filter('shift.account', 'Tectonic\Shift\Library\Filters\AccountFilter');
-Route::filter('shift.noAccount', 'Tectonic\Shift\Library\Filters\NoAccountFilter');
+Route::filter('shift.install', 'Tectonic\Shift\Library\Filters\InstallationFilter');
 
 Route::whenRegex('/^(?!install)/i', 'shift.account');
