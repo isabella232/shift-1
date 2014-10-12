@@ -8,7 +8,7 @@ class DoctrineLocaleRepository extends Repository implements LocaleRepositoryInt
 {
     protected $entity = Locale::class;
 
-    protected $restrictByAccount = false;
+    public $restrictByAccount = false;
 
     /**
      * Get the ID's of passed in locales codes
@@ -60,5 +60,16 @@ class DoctrineLocaleRepository extends Repository implements LocaleRepositoryInt
         $result = $query->getQuery()->getSingleResult();
 
         return $result->getCode();
+    }
+
+    /**
+     * Get all locales
+     *
+     * @return mixed
+     */
+    public function getLocales()
+    {
+        $query = $this->createQuery();
+        return $query->getQuery()->getResult();
     }
 }

@@ -27,7 +27,8 @@ class ShiftServiceProvider extends ServiceProvider
     protected $filesToBoot = [
         'errors',
         'macros',
-        'composers'
+        'composers',
+        'routes',
     ];
 
     /**
@@ -55,8 +56,8 @@ class ShiftServiceProvider extends ServiceProvider
      * @var array
      */
     protected $filesToRegister = [
-        'routes',
-        'commands'
+        'commands',
+        'composers',
     ];
 
     /**
@@ -88,9 +89,9 @@ class ShiftServiceProvider extends ServiceProvider
 	 */
 	public function boot()
 	{
-		$this->requireFiles($this->filesToBoot);
-
 		$this->package('tectonic/shift');
+
+		$this->requireFiles($this->filesToBoot);
 	}
 
 	/**
@@ -126,8 +127,7 @@ class ShiftServiceProvider extends ServiceProvider
 	 */
 	public function requireFiles(array $files)
 	{
-        foreach($files as $file)
-        {
+        foreach($files as $file) {
             require __DIR__.'/../../boot/'.$file.'.php';
         }
 	}

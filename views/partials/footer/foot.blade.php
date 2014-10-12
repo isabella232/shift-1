@@ -9,4 +9,5 @@
 
 <script type="text/javascript">
 	angular.module('Shift').value('bootstrap', '{{ HTML::obscure($configuration) }}');
+	window.language = {{ $language }};
 </script>

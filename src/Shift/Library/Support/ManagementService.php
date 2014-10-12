@@ -4,6 +4,7 @@ namespace Tectonic\Shift\Library\Support;
 
 use App;
 use Event;
+use Tectonic\Shift\Modules\Accounts\Services\CurrentAccountService;
 
 /**
  * Class BaseManagementService
@@ -46,6 +47,10 @@ abstract class ManagementService
     public function create($input)
     {
         $this->createValidator->setInput($input)->validate();
+
+        if ($this->repository->restrictByAccount) {
+            $input['account'] = App::make(CurrentAccountService::class)->getCurrentAccount();
+        }
 
         $resource = $this->repository->getNew($input);
 

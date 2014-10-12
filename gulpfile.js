@@ -21,6 +21,7 @@ var scripts = [
     input + 'js/vendor/restangular.js',
     input + 'js/vendor/angular-resource.js',
     input + 'js/vendor/angular-route.js',
+    input + 'js/vendor/angular-cookies.js',
     input + 'js/src/**/*.js',
     input + 'js/Shift.js'
 ];
@@ -31,10 +32,10 @@ var styles = [
 
 gulp.task('styles', function() {
 	return gulp.src(styles)
-		.pipe(sass())
+		.pipe(sass({quiet: true}))
 		.pipe(rename('shift.dev.css'))
 		.pipe(gulp.dest(output + '/css'))
-		.pipe(sass({style: 'compressed'}))
+		.pipe(sass({style: 'compressed', quiet: true}))
 		.pipe(rename('shift.min.css'))
 		.pipe(gulp.dest(output + '/css'))
 		.pipe(notify({ message: 'SCSS files compiled.' }));

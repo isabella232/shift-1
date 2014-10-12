@@ -1,48 +1,47 @@
 <h1>Log in</h1>
+<form name="sessionNew" ng-submit="vm.login()" class="vertical bordered-form" novalidate>
 
-<form name="sessionNew" shift-submit="login(session)" class="vertical" novalidate>
-	
-	<div class="control">
-		<div class="control-label">
-			<label for="username">Email</label>
-		</div>
-		<div class="control-field">
-			<input type="text" id="username" name="username" ng-model="session.username" autofocus required autocomplete="off">
-			<span class="error" ng-show="sessionNew.username.$dirty && sessionNew.username.$error.required">The email field is required.</span>
-		</div>
-	</div>
-	
-	<div class="control">
-		<div class="control-label">
-			<label for="password">Password</label>
-		</div>
-		<div class="control-field">
-			<input type="password" id="password" name="password" ng-model="session.password" required autocomplete="off">
-			<span class="error" ng-show="sessionNew.password.$dirty && sessionNew.password.$error.required">The password field is required.</span>
-		</div>
-	</div>
-	
-	<div class="control">
-		<div class="control-field">
-			<ul class="horizontal">
-				<li>
-					<input type="checkbox" name="remember" id="remember" ng-model="session.remember" ng-true-value="1" ng-false-value="0">
-					<label for="remember">Remember me</label>
-				</li>
-			</ul>
-		</div>
-	</div>
-	
-	<div class="control">
-		<div class="control-field">
-			<a href="" ng-click="toggle()">Have you forgotten your password?</a>
-		</div>
-	</div>
-	
-	<div class="control">
-		<div class="control-field">
-			<input type="submit" value="Login">
-		</div>
-	</div>
-	
+    <div class="control">
+        <div class="control-label">
+            <label for="username">{{ lang('shift', 'label.email') }}</label>
+        </div>
+        <div class="control-field">
+            <input type="text" id="username" name="username" ng-model="vm.session.username" autofocus required autocomplete="off">
+            <span class="error" ng-show="sessionNew.username.$dirty && sessionNew.username.$error.required">{{ lang('shift', 'validation.email.required') }}</span>
+        </div>
+    </div>
+
+    <div class="control">
+        <div class="control-label">
+            <label for="password">{{ lang('shift', 'label.password') }}</label>
+        </div>
+        <div class="control-field">
+            <input type="password" id="password" name="password" ng-model="vm.session.password" required autocomplete="off">
+            <span class="error" ng-show="sessionNew.password.$dirty && sessionNew.password.$error.required">{{ lang('shift', 'validation.password.required') }}</span>
+        </div>
+    </div>
+
+    <div class="control">
+        <div class="control-field">
+            <ul class="horizontal">
+                <li>
+                    <input type="checkbox" name="remember" id="remember" ng-model="vm.session.remember" ng-true-value="1" ng-false-value="0">
+                    <label for="remember">{{ lang('shift', 'label.remember_me')}}</label>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="control">
+        <div class="control-field">
+            <a href="" ng-click="toggle()">{{ lang('shift', 'link.forgot_password') }}</a>
+        </div>
+    </div>
+
+    <div class="control">
+        <div class="control-field">
+            <input type="submit" value="{{ lang('shift', 'button.login') }}">
+        </div>
+    </div>
+
 </form>

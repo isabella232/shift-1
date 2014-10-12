@@ -25,4 +25,11 @@ interface LocaleRepositoryInterface
      * @return string
      */
     public function getLocaleCode($localeId);
+
+    /**
+     * Get all locales
+     *
+     * @return mixed
+     */
+    public function getLocales();
 }

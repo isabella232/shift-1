@@ -1,10 +1,10 @@
 <?php namespace Tectonic\Shift\Modules\Localisation\Services;
 
-use Tectonic\Shift\Library\Support\BaseManagementService;
+use Tectonic\Shift\Library\Support\ManagementService;
 use Tectonic\Shift\Modules\Localisation\Validators\LocaleValidator;
-use Tectonic\Shift\Modules\Localisation\Repositories\LocaleRepositoryInterface;
+use Tectonic\Shift\Modules\Localisation\Contracts\LocaleRepositoryInterface;
 
-class LocaleManagementService extends BaseManagementService
+class LocaleManagementService extends ManagementService
 {
     /**
      * @param LocaleRepositoryInterface $repository
@@ -14,5 +14,17 @@ class LocaleManagementService extends BaseManagementService
     {
         $this->repository = $repository;
         $this->validator = $validator;
+    }
+
+    /**
+     * Get all resources
+     *
+     * @return mixed
+     */
+    public function getAll()
+    {
+        $resource = $this->repository->getLocales();
+
+        return $resource;
     }
 }

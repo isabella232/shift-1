@@ -35,7 +35,7 @@ abstract class Repository extends EntityRepository implements RepositoryInterfac
 	 *
 	 * @var bool
 	 */
-	protected $restrictByAccount = true;
+	public $restrictByAccount = true;
 
     /**
      * Some simple validation on the class implementation.
@@ -256,7 +256,7 @@ abstract class Repository extends EntityRepository implements RepositoryInterfac
      * @return mixed|void
      * @TODO: Utilise PHP 5.6
      */
-    public function saveAll()
+    public function saveAll($resources)
     {
 	    $resources = func_get_args();
 
@@ -328,13 +328,14 @@ abstract class Repository extends EntityRepository implements RepositoryInterfac
         return $resource;
     }
 
-	/**
-	 * Constructs a new entity by first figuring out the constructor arguments and then calling them correctly. It cannot do this
-	 * for all arguments, only primitive types. If you need specific requirements for your entity, overload the getNew method
-	 * and create your own entities in child repositories.
-	 *
-	 * @param array $data
-	 */
+    /**
+     * Constructs a new entity by first figuring out the constructor arguments and then calling them correctly. It cannot do this
+     * for all arguments, only primitive types. If you need specific requirements for your entity, overload the getNew method
+     * and create your own entities in child repositories.
+     *
+     * @param array $data
+     * @return object
+     */
 	private function newEntity(array $data = [])
 	{
 		$reflector = new \ReflectionClass($this->entity);

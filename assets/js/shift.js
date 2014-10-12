@@ -5,8 +5,15 @@ _.mixin(_.str.exports());
 	'use strict';
 
 	var dependencies = [
+        'ngResource',
 		'Shift.Home',
-		'Shift.Library.Core.Services'
+		'Shift.Library.Core.Services',
+		'Shift.Library.Core.Router',
+        'Shift.Sessions',
+        'Shift.Users',
+        'Shift.Fields',
+        'Shift.Settings',
+        'Shift.Library.Core.Modalize'
 	];
 
 	angular
@@ -15,13 +22,17 @@ _.mixin(_.str.exports());
 	    .run(Runner);
 
 	Configuration.$inject = ['$locationProvider'];
+
 	function Configuration($locationProvider) {
 		$locationProvider.html5Mode(true);
 	}
 
-	Runner.$inject = ['$rootScope', 'Language'];
-	function Runner($rootScope, Language) {
-		$rootScope.language = window.language;
+	Runner.$inject = ['$rootScope', '$window', 'Language'];
+
+	function Runner($rootScope, $window, Language) {
+        $window.app = { baseUrl: '/', url: '/' };
+
+		$rootScope.language = $window.language;
 
 		// These config setting will be set dynamically either based upon
 		// user or installation settings.

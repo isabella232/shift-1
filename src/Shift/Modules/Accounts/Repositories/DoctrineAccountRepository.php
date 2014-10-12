@@ -23,7 +23,7 @@ class DoctrineAccountRepository extends Repository implements AccountRepositoryI
 	 *
 	 * @var bool
 	 */
-	protected $restrictByAccount = false;
+	public $restrictByAccount = false;
 
 	/**
 	 * Require an account based on the domain that has been provided. If no account is found,

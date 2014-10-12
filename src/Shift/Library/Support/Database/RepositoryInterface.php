@@ -80,8 +80,8 @@ interface RepositoryInterface
      * Save 1-n resources.
      *
      * @param $resources
-     * @return mixed
      * @TODO: Utilise PHP 5.6
+     * @return mixed
      */
-    public function saveAll();
+    public function saveAll($resources);
 }

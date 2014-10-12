@@ -3,17 +3,16 @@
 
     angular
 	    .module('Shift.Home', ['ngRoute', 'Shift.Home.Controllers'])
-	    .config(['$routeProvider', function($routeProvider) {
+	    .config(Configuration);
 
-	        // The Shift Router isn't working yet. As a test user ngRoute
-	        /*ShiftRoute('/', {
-	            templateUrl: '/packages/tectonic/shift/views/home.html',
-	            controller: 'Shift.Home'
-	        });*/
-
-	        $routeProvider.when('/', {
-	            templateUrl: '/packages/tectonic/shift/views/home.html',
-	            controller: 'Shift.Home'
-	        });
-	    }]);
+	/**
+	 * Sets up the required routes and configuration for the Home module.
+	 */
+	Configuration.$inject = ['$routeProvider'];
+	function Configuration($routeProvider) {
+        $routeProvider.when('/', {
+            templateUrl: '/packages/tectonic/shift/views/home.html',
+            controller: 'Shift.Home'
+        });
+    };
 })();

@@ -2,7 +2,9 @@
 
 namespace Tectonic\Shift\Modules\Security\Repositories;
 
+use App;
 use Tectonic\Shift\Library\Support\Database\Doctrine\Repository;
+use Tectonic\Shift\Modules\Accounts\Services\CurrentAccountService;
 use Tectonic\Shift\Modules\Security\Entities\Role;
 
 class DoctrineRoleRepository extends Repository implements RoleRepositoryInterface

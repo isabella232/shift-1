@@ -3,10 +3,12 @@
 namespace Tectonic\Shift\Modules\Users\Entities;
 
 use Crypt;
-use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Mapping AS ORM;
-use Mitch\LaravelDoctrine\Traits\Authentication;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
+use Illuminate\Auth\UserInterface;
+use Illuminate\Support\Facades\Hash;
 use Mitch\LaravelDoctrine\Traits\Timestamps;
+use Mitch\LaravelDoctrine\Traits\Authentication;
 use Tectonic\Shift\Library\Support\Database\Doctrine\Entity;
 
 /**
@@ -14,7 +16,7 @@ use Tectonic\Shift\Library\Support\Database\Doctrine\Entity;
  * @ORM\HasLifecycleCallbacks()
  * @ORM\Table(name="users")
  */
-class User extends Entity
+class User extends Entity implements UserInterface
 {
     use Authentication;
     use Timestamps;
@@ -56,14 +58,16 @@ class User extends Entity
      * Construct a new User entity, hydrating the required fields.
      *
      * @param string $email
-     * @param string $firstName
-     * @param string $lastName
+     * @param $first_name
+     * @param $last_name
+     * @param $password
      */
-    public function __construct($email, $firstName, $lastName)
+    public function __construct($email, $first_name, $last_name, $password)
     {
         $this->email = $email;
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
+        $this->firstName = $first_name;
+        $this->lastName = $last_name;
+        $this->password = Hash::make($password);
     }
 
     /**
@@ -106,5 +110,15 @@ class User extends Entity
     public function getOwnedAccounts()
     {
         return $this->ownedAccounts;
+    }
+
+    /**
+     * Setter to has password.
+     *
+     * @param string $str
+     */
+    public function setPassword($str)
+    {
+        $this->password = Hash::make($str);
     }
 }

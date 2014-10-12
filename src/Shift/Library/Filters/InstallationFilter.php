@@ -5,7 +5,7 @@ namespace Tectonic\Shift\Library\Filters;
 use App;
 use Tectonic\Shift\Modules\Accounts\Services\AccountManagementService;
 
-class NoAccountFilter
+class InstallationFilter
 {
 	/**
 	 * @var \Tectonic\Shift\Modules\Accounts\Services\AccountManagementService

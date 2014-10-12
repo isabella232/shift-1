@@ -1,5 +1,7 @@
 # Tectonic Shift
 
+_**Note: Shift is still very much a work in progress, and its APIs and documentation are volatile. Use at your own risk until a stable release is ready. Tectonic Digital assumes no responsibility for any consequences of using this package.**_
+
 ## Work approach - repositories, entities, service layers and more.
 
 * Tectonic Shift has been refactored to now utilise Doctrine as the main ORM for persisting and retrieving data from the database.
