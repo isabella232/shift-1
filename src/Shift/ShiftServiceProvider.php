@@ -1,10 +1,8 @@
 <?php namespace Tectonic\Shift;
 
 use App;
-use Illuminate\Validation\Validator;
 use Tectonic\Shift\Library\Router;
 use Tectonic\Shift\Library\ServiceProvider;
-use Tectonic\Shift\Library\Support\AssetFactory;
 use Tectonic\Shift\Library\Validation\DoctrinePresenceVerifier;
 
 class ShiftServiceProvider extends ServiceProvider

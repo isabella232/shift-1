@@ -52,7 +52,7 @@ gulp.task('scripts', function() {
 
 gulp.task('publish' , function() {
     gulp.src('.')
-        .pipe(exec('php ../../../artisan asset:publish --bench=tectonic/shift'))
+        .pipe(exec('php ../../../artisan asset:publish tectonic/shift'))
         .pipe(notify('Bundle assets published.'));
 });
 

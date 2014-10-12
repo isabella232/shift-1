@@ -27,7 +27,7 @@ class NoAccountFilter
 	public function filter()
 	{
 		if ($this->accountManagementService->totalNumberOfAccounts()) {
-            App::abort(404);
+            App::abort(501, 'Domain account not configured or setup correctly. Check the account host name.');
         }
 	}
 }

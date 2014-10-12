@@ -1,6 +1,8 @@
 <?php
 
 return [
+    // URL that shift is located at
+    'url' => '',
 
     // Language / localisation configuration settings
     'language' => [
