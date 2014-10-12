@@ -11,8 +11,8 @@
     <div class="container">
         <div class="alert-error sticky island">
             <ul class="validation-errors">
-                @foreach ($errors->all() as $field => $error)
-                    <li>{{ $error }}</li>
+                @foreach ($errors->all() as $key => $message)
+                    <li>{{ $message }}</li>
                 @endforeach
             </ul>
         </div>
@@ -20,7 +20,7 @@
 @endif
 
 <div class="container pad-on-handheld">
-    {{ Form::open(['action' => 'Tectonic\Shift\Controllers\InstallationController@postInstall', 'autocomplete' => 'off']) }}
+    {{ Form::open(['url' => '/install', 'method' => 'post']) }}
         <div class="row">
             <div class="column-half vertical">
                 <h3 class="first">Application details</h3>
@@ -59,10 +59,40 @@
 
                 <div class="control">
                     <div class="control-label forty">
+                        {{ Form::label('firstName', 'First name') }}
+                    </div>
+                    <div class="control-field sixty">
+                        {{ Form::text('firstName') }}
+                        <div class="help-text">Enter your first name.</div>
+                    </div>
+                </div>
+
+                <div class="control">
+                    <div class="control-label forty">
+                        {{ Form::label('lastName', 'Last name') }}
+                    </div>
+                    <div class="control-field sixty">
+                        {{ Form::text('lastName') }}
+                        <div class="help-text">Enter your last name.</div>
+                    </div>
+                </div>
+
+                <div class="control">
+                    <div class="control-label forty">
                         {{ Form::label('password', 'Password') }}
                     </div>
                     <div class="control-field sixty">
                         {{ Form::password('password') }}
+                        <div class="help-text">Every administrator needs a good a password.</div>
+                    </div>
+                </div>
+
+                <div class="control">
+                    <div class="control-label forty">
+                        {{ Form::label('passwordConfirmation', 'Password') }}
+                    </div>
+                    <div class="control-field sixty">
+                        {{ Form::password('passwordConfirmation') }}
                         <div class="help-text">Every administrator needs a good a password.</div>
                     </div>
                 </div>

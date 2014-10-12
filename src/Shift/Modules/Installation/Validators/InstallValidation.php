@@ -8,6 +8,10 @@ class InstallValidation extends Validation
         'name'     => 'required',
         'host'     => 'required',
         'email'    => 'required',
-        'password' => 'required'
+        'firstName' => 'required',
+        'lastName' => 'required',
+        'password' => 'required',
+        'passwordConfirmation' => 'required|same:password'
     ];
+
 }

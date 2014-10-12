@@ -6,10 +6,10 @@ use Event;
 use Tectonic\Shift\Library\Validation\ValidationException;
 use Tectonic\Shift\Modules\Accounts\Repositories\AccountRepositoryInterface;
 use Tectonic\Shift\Modules\Accounts\Services\AccountDomainsService;
-use Tectonic\Shift\Modules\Accounts\Services\AccountManagementService;
 use Tectonic\Shift\Modules\Accounts\Services\AccountOwnershipService;
 use Tectonic\Shift\Modules\Installation\Contracts\InstallationListenerInterface;
 use Tectonic\Shift\Modules\Installation\Validators\InstallValidation;
+use Tectonic\Shift\Modules\Localisation\Services\LocaleManagementService;
 use Tectonic\Shift\Modules\Users\Services\UserManagementService;
 
 class InstallService
@@ -35,22 +35,30 @@ class InstallService
     private $accountsRepository;
 
     /**
+     * @var LocaleManagementService
+     */
+    private $localeManagementService;
+
+    /**
      * @param AccountRepositoryInterface $accountsRepository
      * @param AccountDomainsService $accountDomainsService
      * @param AccountOwnershipService $ownershipService
      * @param UserManagementService $userManagementService
+     * @param LocaleManagementService $localeManagementService
      */
     public function __construct(
         AccountRepositoryInterface $accountsRepository,
         AccountDomainsService $accountDomainsService,
         AccountOwnershipService $ownershipService,
-        UserManagementService $userManagementService
+        UserManagementService $userManagementService,
+        LocaleManagementService $localeManagementService
     )
     {
         $this->accountDomainsService = $accountDomainsService;
         $this->ownershipService = $ownershipService;
         $this->userManagementService = $userManagementService;
         $this->accountsRepository = $accountsRepository;
+        $this->localeManagementService = $localeManagementService;
     }
 
     /**
@@ -102,16 +110,31 @@ class InstallService
     {
         $accountData = array_only($input, ['name']);
         $userData = array_merge(array_only($input, ['email', 'password']), ['firstName' => 'Super', 'lastName' => 'Admin']);
+        $locale = $this->setupLocale();
 
         $user = $this->userManagementService->create($userData);
 
         $account = $this->accountsRepository->getNew($accountData);
         $account->setOwner($user);
         $account->addUser($user);
+        $account->addLocale($locale);
         $this->accountsRepository->save($account);
 
         $this->accountDomainsService->addDomain($account, $input['host']);
 
         return $account;
+    }
+
+    /**
+     * Setup default locale
+     *
+     * @return mixed
+     * */
+    public function setupLocale()
+    {
+        $data = ['locale' => 'English (Great Britain)', 'code' => 'en_GB'];
+        $locale = $this->localeManagementService->create($data);
+
+        return $locale;
     }
 }

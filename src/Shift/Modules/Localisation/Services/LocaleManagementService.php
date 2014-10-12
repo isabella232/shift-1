@@ -13,7 +13,8 @@ class LocaleManagementService extends ManagementService
     public function __construct(LocaleRepositoryInterface $repository, LocaleValidator $validator)
     {
         $this->repository = $repository;
-        $this->validator = $validator;
+        $this->createValidator = $validator;
+        $this->updateValidator = $validator;
     }
 
     /**
