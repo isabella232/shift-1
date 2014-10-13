@@ -37,8 +37,8 @@ gulp.task('styles', function() {
 		.pipe(gulp.dest(output + '/css'))
 		.pipe(sass({style: 'compressed', quiet: true}))
 		.pipe(rename('shift.min.css'))
-		.pipe(gulp.dest(output + '/css'))
-		.pipe(notify({ message: 'SCSS files compiled.' }));
+		.pipe(gulp.dest(output + '/css'));
+		//.pipe(notify({ message: 'SCSS files compiled.' }));
 });
 
 gulp.task('scripts', function() {
@@ -47,51 +47,30 @@ gulp.task('scripts', function() {
         .pipe(gulp.dest(output + 'js'))
         .pipe(rename('shift.min.js'))
         .pipe(uglify({mangle: true}))
-        .pipe(gulp.dest(output + 'js'))
-        .pipe(notify({ message: 'Javascript files compiled.' }));
+        .pipe(gulp.dest(output + 'js'));
+        //.pipe(notify({ message: 'Javascript files compiled.' }));
 });
 
 gulp.task('publish' , function() {
-    gulp.src('.')
-        .pipe(exec('php ../../../artisan asset:publish tectonic/shift'))
-        .pipe(notify('Bundle assets published.'));
+    return gulp.src('.')
+        .pipe(exec('php ../../../artisan asset:publish --bench=tectonic/shift'));
+        //.pipe(notify('Bundle assets published.'));
 });
 
 // Helper task for watching the scripts directories, and only the script directories
 gulp.task('scripts-watch' , function() {
-	gulp.run('scripts');
-
-	gulp.watch(input + 'js/**', function() {
-		gulp.run('scripts');
-	});
+	return gulp.watch(input + 'js/**', ['scripts']);
 });
 
 gulp.task('styles-watch' , function() {
-	gulp.run('styles');
+	return gulp.watch(input + 'sass/**', ['styles']);
+});
 
-	gulp.watch(input + 'sass/**', function() {
-		gulp.run('styles');
-	});
+gulp.task('public-watch', function() {
+    return gulp.watch(output + '**' , ['publish']);
 });
 
 // When running gulp without any tasks, it'll watch the scripts, styles, and do artisan publishing.etc.
-gulp.task('default' , function() {
-	gulp.run('scripts' , 'styles', 'publish', 'scripts-watch', 'styles-watch');
-
-	// Watch the JS directory.
-	gulp.watch(input + 'js/src/**' , function() {
-		gulp.run('scripts');
-	});
-
-	// Watch the sass directory.
-	gulp.watch(input + 'sass/**' , function() {
-		gulp.run('styles');
-	});
-
-	// When any changes happen to the 'public' directory, publish the changes.
-	gulp.watch(output + '**/*' , function() {
-		gulp.run('publish');
-	});
-});
+gulp.task('default' , ['scripts' , 'styles', 'publish', 'scripts-watch', 'styles-watch', 'public-watch']);
 
 

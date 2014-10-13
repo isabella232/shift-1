@@ -1,5 +1,14 @@
 <div class="container">
+
     <div class="row">
         <h1>General</h1>
+
+        <!-- Tabs setup and management -->
+        <div ng-controller="tabs.view">
+            <div tabs></div>
+            <div ng-repeat="tab in tabs" ng-include="tab.templateUrl" ng-show="activeTab == tab.name"></div>
+        </div>
+        <!-- End tabs -->
     </div>
+
 </div>

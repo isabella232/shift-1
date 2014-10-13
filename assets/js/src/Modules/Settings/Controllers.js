@@ -8,8 +8,25 @@
         .controller('Settings.General', General)
         .controller('Settings.Language', Language);
 
-    function General() {
+    General.$inject = ['$scope', 'Tabs'];
+    function General($scope) {
+        $scope.tabsResource = 'setting';
 
+        // Set up the Settings tabulation
+        var tabs = new Tabs( 'setting' );
+
+        for( var tabName in $scope.settings ) {
+            var tabOptions = {
+                name: tabName.titleize(),
+                templateUrl: viewPath( 'settings/tab.html', 'shift' ),
+                settings: $scope.settings[ tabName ],
+                enabled: true
+            };
+
+            tabs.register( tabOptions );
+        }
+
+        tabs.finalize();
     }
 
     Language.$inject = ['LanguageService', 'Modalize'];

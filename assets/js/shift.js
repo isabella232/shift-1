@@ -13,7 +13,9 @@ _.mixin(_.str.exports());
         'Shift.Users',
         'Shift.Fields',
         'Shift.Settings',
-        'Shift.Library.Core.Modalize'
+        'Shift.Library.Core.Modalize',
+        'Shift.Library.Core.Tabular'
+        //'Shift.Library.Core.Analytics'
 	];
 
 	angular

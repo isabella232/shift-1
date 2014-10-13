@@ -14,23 +14,16 @@
  The full path to where the view is located, based on the skin configuration.
  */
 var viewPath = function( path, bundle ) {
-    var chunks = [ 'views' ];
+    //var chunks = [ 'packages', 'tectonic'];
+    //
+    //if ( bundle ) { chunks.push(bundle); }
+    //
+    //chunks.push('views');
+    //chunks.push(path);
 
-    if ( customViews.indexOf( path ) != -1 ) {
-        chunks.push( 'custom' );
-    }
-    else {
-        if ( bundle ) {
-            chunks = [ 'bundles', bundle, 'views' ];
-        }
-    }
+    var url = '/packages/tectonic/' + bundle + '/' + path;
 
-    chunks.push( config.app.skin );
-    chunks.push( path );
-
-    path = '/' + chunks.join('/');
-
-    return path;
+    return url;
 };
 
 /*
