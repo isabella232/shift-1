@@ -32,7 +32,7 @@ class Translator extends IlluminateTranslator
      *
      * @var UILocalisationService
      */
-    protected $service;
+    protected $UILocalisationService;
 
     /**
      * A list of supported locales.
@@ -45,20 +45,20 @@ class Translator extends IlluminateTranslator
      * Construct class and autoload any specified package/module language files.
      *
      * @param LoaderInterface $loaderInterface
-     * @param UILocalisationService $service
+     * @param UILocalisationService $UILocalisationService
      * @param string $locale
      * @param array $autoloads Modules/packages to autoload language files
      * @param array $locales
      */
     public function __construct(
         LoaderInterface $loaderInterface,
-        UILocalisationService $service,
+        UILocalisationService $UILocalisationService,
         $locale,
         array $autoloads = [],
         array $locales = []
     )
     {
-        $this->service = $service;
+        $this->UILocalisationService = $UILocalisationService;
         $this->supportedLocales = $locales;
 
         parent::__construct($loaderInterface, $locale);
@@ -179,7 +179,7 @@ class Translator extends IlluminateTranslator
     public function setUICustomisations($locales = [])
     {
         if(empty($locales)) $locales = $this->supportedLocales;
-        $keys = $this->service->getUILocalisations($locales);
+        $keys = $this->UILocalisationService->getUILocalisations($locales);
         $this->setKeys($keys);
 
         return $this;
