@@ -74,7 +74,7 @@ class LocalisationServiceProvider extends ServiceProvider
         {
             return new \Tectonic\Shift\Library\Translation\Translator(
                 $app['translation.loader'],
-                $app['Tectonic\Shift\Modules\Localisation\Contracts\LocalisationRepositoryInterface'],
+                $app['Tectonic\Shift\Modules\Localisation\Services\UILocalisationService'],
                 $app['config']['app.locale'],
                 $app['config']['shift::language.autoloads'],
                 $app['config']['shift::language.locales']
