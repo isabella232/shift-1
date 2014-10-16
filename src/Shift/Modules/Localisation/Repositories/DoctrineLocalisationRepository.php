@@ -33,6 +33,8 @@ class DoctrineLocalisationRepository extends Repository implements LocalisationR
     {
         parent::__construct($entityManager);
 
+        $this->localeRepo = $localeRepo;
+
         $this->restrictByAccount = false;
     }
 
