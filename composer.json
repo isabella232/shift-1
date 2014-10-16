@@ -17,21 +17,18 @@
     ],
     "require": {
         "php": ">=5.5.0",
-	    "machuga/authority-l4" : "dev-master",
-        "orchestra/asset": "2.2.*",
-	    "laravel/framework": "~4.2",
-        "jasonlewis/basset": "dev-master",
-	    "machuga/authority-l4": "dev-master",
-        "orchestra/asset": "2.2.*",
+	    "laravel/framework": "5.0.*",
+        "orchestra/asset": "3.0.*",
         "hashids/hashids": "1.0.*@dev",
 	    "mitchellvanw/laravel-doctrine": "dev-master",
-        "jms/serializer": "dev-master"
+        "jms/serializer": "dev-master",
+        "illuminate/html": "5.*"
     },
     "require-dev": {
         "mockery/mockery": "dev-master@dev",
-        "illuminate/support": "4.2.x",
-        "illuminate/routing": "4.2.x",
-	    "orchestra/testbench": "2.2.*",
+        "illuminate/support": "5.0.*",
+        "illuminate/routing": "5.0.*",
+	    "orchestra/testbench": "3.0.*",
 	    "phpunit/php-code-coverage": "3.0.*",
         "phpunit/phpunit": "3.7.*"
     },

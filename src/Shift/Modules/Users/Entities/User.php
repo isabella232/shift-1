@@ -5,7 +5,7 @@ namespace Tectonic\Shift\Modules\Users\Entities;
 use Crypt;
 use Doctrine\ORM\Mapping AS ORM;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
-use Illuminate\Auth\UserInterface;
+use Illuminate\Auth\UserProviderInterface;
 use Illuminate\Support\Facades\Hash;
 use Mitch\LaravelDoctrine\Traits\Timestamps;
 use Mitch\LaravelDoctrine\Traits\Authentication;
@@ -16,7 +16,7 @@ use Tectonic\Shift\Library\Support\Database\Doctrine\Entity;
  * @ORM\HasLifecycleCallbacks()
  * @ORM\Table(name="users")
  */
-class User extends Entity implements UserInterface
+class User extends Entity
 {
     use Authentication;
     use Timestamps;

@@ -14,7 +14,7 @@ class ShiftServiceProvider extends ServiceProvider
      */
     protected $aliases = [
         'Asset'         => 'Orchestra\Support\Facades\Asset',
-        'Authority'     => 'Authority\AuthorityL4\Facades\Authority',
+        //'Authority'     => 'Authority\AuthorityL4\Facades\Authority',
 	    'EntityManager' => 'Mitch\LaravelDoctrine\EntityManagerFacade',
         'Utility'       => 'Tectonic\Shift\Library\Facades\Utility',
     ];
@@ -37,10 +37,10 @@ class ShiftServiceProvider extends ServiceProvider
      * @var array
      */
     protected $serviceProviders = [
-        'Authority\AuthorityL4\AuthorityL4ServiceProvider',
+        //'Authority\AuthorityL4\AuthorityL4ServiceProvider',
         'Mitch\LaravelDoctrine\LaravelDoctrineServiceProvider',
         'Orchestra\Asset\AssetServiceProvider',
-        'Tectonic\Shift\Library\Authorization\AuthorizationServiceProvider',
+        //'Tectonic\Shift\Library\Authorization\AuthorizationServiceProvider',
         'Tectonic\Shift\Library\LibraryServiceProvider',
         'Tectonic\Shift\Modules\Accounts\AccountsServiceProvider',
         'Tectonic\Shift\Modules\Configuration\ConfigurationServiceProvider',
@@ -113,9 +113,9 @@ class ShiftServiceProvider extends ServiceProvider
 	 */
 	public function registerAuthorityConfiguration()
 	{
-		$this->app['config']->set('authority-l4::initialize', function($authority) {
-			$user = $authority->getCurrentUser();
-		});
+		// $this->app['config']->set('authority-l4::initialize', function($authority) {
+		// 	$user = $authority->getCurrentUser();
+		// });
 	}
 
 	/**

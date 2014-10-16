@@ -1,10 +1,8 @@
-<?php
-
-namespace Tectonic\Shift\Library\Support\Database\Doctrine;
+<?php namespace Tectonic\Shift\Library\Support\Database\Doctrine;
 
 use BadMethodCallException;
 use Doctrine\ORM\Mapping as ORM;
-use Illuminate\Support\Contracts\JsonableInterface;
+use Illuminate\Contracts\Support\Jsonable;
 
 /**
  * Class Entity
@@ -13,7 +11,7 @@ use Illuminate\Support\Contracts\JsonableInterface;
  * @ORM\MappedSuperclass
  * @package Tectonic\Shift\Library\Support\Database\Doctrine
  */
-class Entity implements JsonableInterface
+class Entity implements Jsonable
 {
     /**
      * If a given property exists, then let's support a getter for that property.
