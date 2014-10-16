@@ -29,3 +29,4 @@ Route::filter('shift.account', 'Tectonic\Shift\Library\Filters\AccountFilter');
 Route::filter('shift.install', 'Tectonic\Shift\Library\Filters\InstallationFilter');
 
 Route::whenRegex('/^(?!install)/i', 'shift.account');
+

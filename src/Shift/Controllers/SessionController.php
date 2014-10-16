@@ -1,69 +1,70 @@
 <?php namespace Tectonic\Shift\Controllers;
 
 use Auth;
-use Doctrine\ORM\EntityManager;
-use Illuminate\Log\Writer;
-use Illuminate\Support\Facades\Log;
 use Input;
-use Monolog\Logger;
 use Tectonic\Shift\Library\Support\Controller;
+use Tectonic\Shift\Modules\Sessions\Services\AuthenticationService;
 use Tectonic\Shift\Modules\Sessions\Validators\SessionValidation;
 
 class SessionController extends Controller
 {
-    public function __construct(SessionValidation $validator)
+    /**
+     * @var AuthenticationService
+     */
+    protected $authenticationService;
+
+    /**
+     * @param SessionValidation $validator
+     * @param AuthenticationService $authenticationService
+     */
+    public function __construct(SessionValidation $validator, AuthenticationService $authenticationService)
     {
         $this->validator = $validator;
+        $this->authenticationService = $authenticationService;
     }
 
     /**
-     * Simple check to see whether or not the user has logged in, and returns
-     * details back as a response.
+     * Simple check to see whether or not a session is currently open.
      *
      * @return \Response
      */
     public function getIndex()
     {
-        if(Auth::check()) return Auth::user();
-
-        return $this->response(401);
-    }
-
-    /**
-     * Handles the input posted from the form for user login and returns with an appropriate response
-     *
-     * @return \Response
-     */
-    public function postStore()
-    {
-        Log::info(get_class(\App::make(EntityManager::class)));
-        $username = Input::get('username');
-        $password = Input::get('password');
-        $remember = Input::get('remember', false);
-
-        try {
-            if(Auth::attempt(['username' => $username, 'password' => $password], $remember))
-            {
-                return $this->response(200);
-            }
-        } catch(\Exception $e) {
-            return "Error occurred";
+        if($this->authenticationService->hasOpenSession())
+        {
+            return $this->authenticationService->user();
         }
 
         return $this->response(401);
     }
 
     /**
-     * Handle the deletion of session management for a given user session
+     * Handle authentication and creation of a new session
+     *
+     * @return \Response
+     */
+    public function postStore()
+    {
+        $username = Input::get('username');
+        $password = Input::get('password');
+        $remember = Input::get('remember', false);
+
+        if($this->authenticationService->login($username, $password, $remember))
+        {
+            return $this->response(200);
+        }
+
+        return $this->response(401);
+    }
+
+    /**
+     * Handle the deletion of the current session
      *
      * @returns \Response
      */
     public function deleteIndex()
     {
-        $user = Auth::user();
-        Auth::logout();
-
-        //Event::fire( 'session.logout', [ $user ] );
+        $this->authenticationService->logout();
 
         return $this->respond( 200 );
     }

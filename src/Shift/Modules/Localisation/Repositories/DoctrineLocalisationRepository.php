@@ -33,21 +33,17 @@ class DoctrineLocalisationRepository extends Repository implements LocalisationR
     {
         parent::__construct($entityManager);
 
-        $this->localeRepo = $localeRepo;
-
         $this->restrictByAccount = false;
     }
 
     /**
      * Return a key/value paired array of UI localisations/customisations
      *
-     * @param  array $locales
+     * @param  array $localeIds
      * @return array
      */
-    public function getUILocalisations(array $locales)
+    public function getUILocalisations(array $localeIds)
     {
-        $localeIds = $this->localeRepo->getLocaleIds($locales);
-
         $query = $this->entityManager()->createQueryBuilder()
             ->select(['l.field', 'l.value'])
             ->from($this->entity, 'l')
