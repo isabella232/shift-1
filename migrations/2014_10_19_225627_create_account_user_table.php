@@ -12,7 +12,12 @@ class CreateAccountUserTable extends Migration {
 	 */
 	public function up()
 	{
-		//
+        Schema::create('account_user', function(Blueprint $table)
+        {
+            $table->increments('id');
+            $table->bigInteger('account_id');
+            $table->bigInteger('user_id');
+        });
 	}
 
 	/**
@@ -22,7 +27,7 @@ class CreateAccountUserTable extends Migration {
 	 */
 	public function down()
 	{
-		//
+		Schema::drop('account_user')
 	}
 
 }
