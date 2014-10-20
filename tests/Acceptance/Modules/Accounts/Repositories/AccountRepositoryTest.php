@@ -1,12 +1,12 @@
-<?php namespace Tests\Acceptance\Modules\Fields\Repositories;
+<?php namespace Tests\Acceptance\Modules\Accounts\Repositories;
 
 use App;
 use Doctrine\ORM\EntityManager;
 use Mockery;
+use Tectonic\Shift\Modules\Accounts\Repositories\EloquentAccountRepository;
 use Tests\AcceptanceTestCase;
-use Tectonic\Shift\Modules\Accounts\Repositories\DoctrineAccountRepository;
 
-class AccountRepositoryTest extends AcceptanceTestCase
+class EloquentAccountRepositoryTest extends AcceptanceTestCase
 {
     /**
      * Data array complete with all required field to make a new CustomField
@@ -26,7 +26,7 @@ class AccountRepositoryTest extends AcceptanceTestCase
             'name' => 'Test account'
         ];
 
-        $this->repository = new DoctrineAccountRepository(App::make(EntityManager::class));
+        $this->repository = App::make(EloquentAccountRepository::class);
     }
 
     /**
@@ -37,8 +37,9 @@ class AccountRepositoryTest extends AcceptanceTestCase
     public function testRepositoryPerformsCreateAndReadOperations()
     {
         $account = $this->create();
+        $storedAccount = $this->repository->getById($account->id);
 
-        $this->assertSame($account, $this->repository->getById($account->getId()));
+        $this->assertEquals($account->id, $storedAccount->id);
     }
 
     /**
@@ -49,15 +50,13 @@ class AccountRepositoryTest extends AcceptanceTestCase
     public function testRepositoryPerformsUpdateOperation()
     {
         $account = $this->create();
-
-        $account->setName('Updated test account');
+        $account->name ='Updated test account';
 
         $this->repository->update($account);
 
-        $updatedAccount = $this->repository->getById($account->getId());
+        $updatedAccount = $this->repository->getById($account->id);
 
-        $this->assertSame($account, $updatedAccount);
-        $this->assertEquals('Updated test account', $updatedAccount->getName());
+        $this->assertEquals('Updated test account', $updatedAccount->name);
     }
 
     /**
@@ -69,11 +68,9 @@ class AccountRepositoryTest extends AcceptanceTestCase
     {
         $account = $this->create();
 
-        $this->assertSame($account, $this->repository->getById($account->getId()));
-
         $this->repository->delete($account);
 
-        $this->assertNull($this->repository->getById($account->getId()));
+        $this->assertNull($this->repository->getById($account->id));
     }
 
     /**

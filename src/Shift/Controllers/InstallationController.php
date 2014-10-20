@@ -69,7 +69,7 @@ class InstallationController extends Controller implements InstallationListenerI
      */
     public function onValidationFailure(ValidationException $exception)
     {
-        return Redirect::back()->withInput()->withErrors($exception->getValidator());
+        return Redirect::back()->withInput()->withErrors($exception->getValidationErrors());
     }
 
     /**

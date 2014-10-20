@@ -6,7 +6,7 @@ use Tectonic\Shift\Library\Search\SearchFilterCollection;
 use Tectonic\Shift\Library\Search\Filters\KeywordFilter;
 use Tectonic\Shift\Library\Search\Filters\OrderFilter;
 use Tectonic\Shift\Library\Search\SearchInterface;
-use Tectonic\Shift\Modules\Security\Repositories\RoleRepositoryInterface;
+use Tectonic\Shift\Modules\Security\Contracts\RoleRepositoryInterface;
 
 class RoleSearch implements SearchInterface
 {

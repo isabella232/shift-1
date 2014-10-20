@@ -1,5 +1,4 @@
 <?php
-
 namespace Tectonic\Shift\Modules\Startup;
 
 use Event;
@@ -40,7 +39,7 @@ class StartupService
         $configuration = [];
         $configuration['settings'] = $this->settingsRepository->getAllAsKeyValue();
 
-        Event::fire('Startup.Configuration.Started', [&$configuration]);
+        Event::fire('shift.configuration', [&$configuration]);
 
 		return $configuration;
 	}

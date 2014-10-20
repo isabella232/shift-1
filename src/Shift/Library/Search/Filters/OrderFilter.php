@@ -61,8 +61,20 @@ class OrderFilter implements SearchFilterInterface
 	{
 		$queryBuilder->orderBy($this->sortField($queryBuilder), $this->sortDirection());
 	}
-	
-	/**
+
+    /**
+     * Apply the given search filter to an Eloquent query.
+     *
+     * @param $query
+     * @return mixed
+     */
+    public function applyToEloquent($query)
+    {
+        $query->orderBy($this->field, $this->sortDirection());
+    }
+
+
+    /**
 	 * Provides a default sort field if the order key is not present in the search params.
 	 * 
 	 * @return string 

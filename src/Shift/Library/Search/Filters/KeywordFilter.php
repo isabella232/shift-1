@@ -20,13 +20,19 @@ class KeywordFilter implements SearchFilterInterface
 	 */
 	private $keywords;
 
-	/**
+    /**
+     * @var
+     */
+    private $field;
+
+    /**
 	 * @param $keywords
 	 */
-	private function __construct($keywords)
+	private function __construct($keywords, $field)
 	{
 		$this->keywords = $keywords;
-	}
+        $this->field = is_null($field) ? $this->defaultField : $field;
+    }
 
 	/**
 	 * Creates a new KeywordFilter from the keywords provided.
@@ -34,9 +40,9 @@ class KeywordFilter implements SearchFilterInterface
 	 * @param $keywords
 	 * @return static
 	 */
-	public static function fromKeywords($keywords)
+	public static function fromKeywords($keywords, $field = null)
 	{
-		return new static($keywords);
+		return new static($keywords, $field);
 	}
 
 	/**
@@ -52,7 +58,20 @@ class KeywordFilter implements SearchFilterInterface
 		}
 	}
 
-	/**
+    /**
+     * Apply the given search filter to an Eloquent query.
+     *
+     * @param $query
+     * @return mixed
+     */
+    public function applyToEloquent($query)
+    {
+        if ($this->keywords) {
+            $query->where($this->field, 'LIKE', '%'.$this->keywords.'%');
+        }
+    }
+
+    /**
 	 * Returns the field name to match against the keywords.
 	 *
 	 * @param $queryBuilder
@@ -62,6 +81,6 @@ class KeywordFilter implements SearchFilterInterface
 	{
 		$rootAliases = $queryBuilder->getRootAliases();
 
-		return $rootAliases[0].'.'.$this->defaultField;
+		return $rootAliases[0].'.'.$this->field;
 	}
 }

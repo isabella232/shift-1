@@ -7,8 +7,10 @@ use Tectonic\Shift\Library\Validation\Validation;
 class UserValidation extends Validation
 {
     protected $rules = [
-        'email' => ['required', 'email'],
-        'firstName' => ['required'],
-        'lastName' => ['required'],
+        'email'      => 'required|email|unique:users,email',
+        'firstName' => 'required',
+        'lastName'  => 'required',
+        'password'   => 'required|min:6',
+        'passwordConfirmation' => 'required|same:password'
     ];
 }

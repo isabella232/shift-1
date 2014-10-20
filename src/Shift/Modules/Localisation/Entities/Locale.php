@@ -28,4 +28,18 @@ class Locale extends Entity
      **/
     protected $code;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Tectonic\Shift\Modules\Accounts\Entities\Account", mappedBy="locales")
+     */
+    protected $accounts;
+
+    /**
+     * @param string $locale
+     * @param string $code
+     */
+    public function __construct($locale, $code)
+    {
+        $this->locale = $locale;
+        $this->code = $code;
+    }
 }

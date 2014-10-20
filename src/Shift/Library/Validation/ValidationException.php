@@ -62,6 +62,6 @@ class ValidationException extends \Exception implements JsonableInterface
      */
     public function toJson($options = 0)
     {
-        return json_encode($this->errors);
+        return $this->validator->messages()->toJson();
     }
 }

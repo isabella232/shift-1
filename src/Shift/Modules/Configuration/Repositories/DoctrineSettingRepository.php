@@ -23,6 +23,17 @@ class DoctrineSettingRepository extends Repository implements SettingRepositoryI
     private $settings;
 
     /**
+     * Creates a new Setting instance.
+     *
+     * @param array $data
+     * @return Setting
+     */
+    public function getNew(array $data = [])
+    {
+        return new Setting($data['key'], $data['value']);
+    }
+
+    /**
      * Retrieves a system setting by the setting name and returns its value. This method also provides a caching
      * mechanism, in that if a setting has previously been retrieved, it can be called for again and it will not
      * hit the database a second time.

@@ -1,18 +1,22 @@
 <?php
-
 namespace Tectonic\Shift\Modules\Security\Models;
 
-use Tectonic\Shift\Library\Support\Database\Eloquent\Model;
-
-class Permission extends Model
+class Permission
 {
     /**
-     * Each permission is assigned to a given role.
+     * Fillable attributes for role permissions.
+     *
+     * @var array
+     */
+    public $fillable = ['action', 'resource', 'allow'];
+
+    /**
+     * Each permission belongs to exactly one role.
      *
      * @return mixed
      */
     public function role()
     {
-        return $this->hasMany('Tectonic\Shift\Modules\Security\Models\Role');
+        return $this->belongsTo(Role::class);
     }
 }

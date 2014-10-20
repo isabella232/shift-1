@@ -4,51 +4,47 @@ namespace Tectonic\Shift\Modules\Accounts;
 
 use App;
 use Tectonic\Shift\Library\ServiceProvider;
-use Tectonic\Shift\Modules\Accounts\Services\CurrentAccountService;
-use Tectonic\Shift\Modules\Accounts\Repositories\AccountRepositoryInterface;
-use Tectonic\Shift\Modules\Accounts\Repositories\DoctrineAccountRepository;
+use Tectonic\Shift\Modules\Accounts\Contracts\AccountRepositoryInterface;
+use Tectonic\Shift\Modules\Accounts\Repositories\EloquentAccountRepository;
 use Tectonic\Shift\Modules\Accounts\Repositories\DomainRepositoryInterface;
-use Tectonic\Shift\Modules\Accounts\Repositories\DoctrineDomainRepository;
+use Tectonic\Shift\Modules\Accounts\Repositories\EloquentDomainRepository;
+use Tectonic\Shift\Modules\Accounts\Services\CurrentAccountService;
 
 class AccountsServiceProvider extends ServiceProvider
 {
     /**
-     * Indicates if loading of the provider is deferred.
+     * The repository bindings for the Accounts module.
      *
-     * @var bool
+     * @var array
      */
-    protected $defer = false;
+    protected $repositories = [
+        AccountRepositoryInterface::class => EloquentAccountRepository::class,
+        DomainRepositoryInterface::class => EloquentDomainRepository::class
+    ];
 
     /**
-     * Register the service provider.
+     * A list of listeners that are setup as subscribers within Laravel.
      *
-     * @return void
+     * @var array
+     */
+    protected $listeners = [
+
+    ];
+
+    /**
+     * Register any required bindings.
      */
     public function register()
     {
-	    parent::register();
+        parent::register();
 
-        $this->registerRepositories();
         $this->registerCurrentAccountService();
     }
 
     /**
-     * Register Account repository bindings
-     *
-     * @return void
+     * Register the current account service as a singleton.
      */
-    protected function registerRepositories()
-    {
-        $this->app->singleton(AccountRepositoryInterface::class, DoctrineAccountRepository::class);
-        $this->app->singleton(DomainRepositoryInterface::class, DoctrineDomainRepository::class);
-    }
-
-    /**
-     * Register current account service
-     *
-     * @return void
-     */
-    protected function registerCurrentAccountService()
+    public function registerCurrentAccountService()
     {
         $this->app->singleton(CurrentAccountService::class);
     }

@@ -15,7 +15,7 @@ interface LocaliserInterface
      *
      * @return mixed
      */
-    public function localise($resource, $fields, $locale);
+    public function localise($resource, array $fields, $locale);
 
     /**
      * Localise a collection of resources
@@ -29,5 +29,5 @@ interface LocaliserInterface
      * @param  string $locale
      * @return mixed
      */
-    public function localiseCollection($collection, $fields, $locale);
+    public function localiseCollection($collection, array $fields, $locale);
 }

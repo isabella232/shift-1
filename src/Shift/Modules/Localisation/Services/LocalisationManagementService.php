@@ -1,10 +1,10 @@
 <?php namespace Tectonic\Shift\Modules\Localisation\Services;
 
-use Tectonic\Shift\Library\Support\BaseManagementService;
+use Tectonic\Shift\Library\Support\ManagementService;
 use Tectonic\Shift\Modules\Localisation\Validators\LocalisationValidator;
-use Tectonic\Shift\Modules\Localisation\Repositories\LocalisationRepositoryInterface;
+use Tectonic\Shift\Modules\Localisation\Contracts\LocalisationRepositoryInterface;
 
-class LocalisationManagementService extends BaseManagementService
+class LocalisationManagementService extends ManagementService
 {
     /**
      * @param LocalisationRepositoryInterface $repository

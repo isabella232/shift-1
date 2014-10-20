@@ -4,8 +4,8 @@ namespace Tests\Api\Security;
 
 use App;
 use Tests\AcceptanceTestCase;
-use Tectonic\Shift\Modules\Security\Repositories\RoleRepositoryInterface;
-use Tectonic\Shift\Modules\Accounts\Repositories\AccountRepositoryInterface;
+use Tectonic\Shift\Modules\Security\Contracts\RoleRepositoryInterface;
+use Tectonic\Shift\Modules\Accounts\Contracts\AccountRepositoryInterface;
 
 class RolesTest extends AcceptanceTestCase
 {
@@ -30,11 +30,11 @@ class RolesTest extends AcceptanceTestCase
         // Act
         $this->call('POST', 'roles', $data);
 
-        $newRole = $this->roleRepository->getBy('name', $data['name']);
+        $newRole = $this->roleRepository->getOneBy('name', $data['name']);
 
         // Assert
         $this->assertResponseOk();
-        $this->assertSame($data['name'], $newRole[0]->getName());
+        $this->assertSame($data['name'], $newRole->name);
     }
 
     public function testSetDefaultRole()
@@ -50,17 +50,17 @@ class RolesTest extends AcceptanceTestCase
         $this->call('POST', 'roles', $newRoleData);
 
         // Assert
-        $newDefaultRole = $this->roleRepository->getBy('default', true);
-        $otherRoles = $this->roleRepository->getBy('default', false);
+        $newDefaultRole = $this->roleRepository->getOneBy('default', true);
+        $otherRole = $this->roleRepository->getOneBy('default', false);
 
         $this->assertResponseOk();
-        $this->assertCount(1, $newDefaultRole);
-        $this->assertCount(1, $otherRoles);
+        $this->assertEquals('New default role', $newDefaultRole->name);
+        $this->assertEquals('Existing role', $otherRole->name);
     }
 
     public function testGetAllRoles()
     {
-	    $role = $this->createNewRole();
+	    $this->createNewRole();
 
         // Act
         $this->response = $this->call('GET', 'roles');
@@ -74,9 +74,9 @@ class RolesTest extends AcceptanceTestCase
     {
         $role = $this->createNewRole();
 
-        $this->call('DELETE', 'roles', [$role->getId()]);
+        $this->call('DELETE', 'roles', [$role->id]);
 
-        $deletedRole = $this->roleRepository->getById($role->getId());
+        $deletedRole = $this->roleRepository->getById($role->id);
 
         // Assert
         $this->assertResponseOk();
@@ -87,23 +87,23 @@ class RolesTest extends AcceptanceTestCase
     {
         $existingRole = $this->createNewRole();
 
-        $this->response = $this->call('PUT', 'roles/'.$existingRole->getId(), ['name' => 'Updated role name']);
+        $this->response = $this->call('PUT', 'roles/'.$existingRole->id, ['name' => 'Updated role name']);
 
-        $updatedRole = $this->roleRepository->getById($existingRole->getId());
+        $updatedRole = $this->roleRepository->getById($existingRole->id);
 
-        $this->assertEquals('Updated role name', $updatedRole->getName());
+        $this->assertEquals('Updated role name', $updatedRole->name);
     }
 
     public function testGetSpecificRole()
     {
         $existingRole = $this->createNewRole();
 
-        $this->response = $this->call('GET', 'roles/'.$existingRole->getId());
+        $this->response = $this->call('GET', 'roles/'.$existingRole->id);
         $parsedRole = $this->parseResponse();
 
-        $this->assertEquals($existingRole->getId(), $parsedRole->id);
-        $this->assertEquals($existingRole->getName(), $parsedRole->name);
-        $this->assertEquals((int) $existingRole->getDefault(), $parsedRole->default);
+        $this->assertEquals($existingRole->id, $parsedRole->id);
+        $this->assertEquals($existingRole->name, $parsedRole->name);
+        $this->assertEquals((int) $existingRole->default, $parsedRole->default);
     }
 
     /**
@@ -122,9 +122,8 @@ class RolesTest extends AcceptanceTestCase
         $roleData = array_merge($defaultData, $data);
 
 	    $role = $this->roleRepository->getNew($roleData);
-	    $role->setAccount($this->account);
 
-	    $role = $this->roleRepository->save($role);
+        $this->roleRepository->save($role);
 
         return $role;
     }

@@ -24,23 +24,14 @@ class Field extends Entity
      */
     protected $id;
 
-    /** @ORM\Column(type="string", options={"default": "custom"}, name="`group`") **/
-    protected $group;
-
     /** @ORM\Column(type="string", name="`resource`") **/
     protected $resource;
 
     /** @ORM\Column(type="string", name="`type`") **/
     protected $type;
 
-    /** @ORM\Column(type="string", name="`field_title`") **/
-    protected $fieldTitle;
-
     /** @ORM\Column(type="string", name="`field_code`") **/
-    protected $fieldCode;
-
-    /** @ORM\Column(type="string", name="`label`") **/
-    protected $label;
+    protected $code;
 
     /** @ORM\Column(type="text", name="`options`") **/
     protected $options;
@@ -60,4 +51,13 @@ class Field extends Entity
     /** @ORM\Column(type="integer", name="`order`") **/
     protected $order;
 
+    /**
+     * @param $resource
+     * @param $type
+     */
+    public function __construct($resource, $type)
+    {
+        $this->resource = $resource;
+        $this->type = $type;
+    }
 }

@@ -22,7 +22,9 @@ class Localiser implements LocaliserInterface
      * Localise a resource
      *
      * This method accepts a resource, an array of fields that need localising,
-     * and the locale code for required translations.
+     * and the locale code for required translations. It will look at each field, and try and find a translation
+     * for that field for that resource. This results in the resoruce having the translated values, rather
+     * than the original values that were saved.
      *
      * @param mixed $resource
      * @param array $fields
@@ -30,18 +32,16 @@ class Localiser implements LocaliserInterface
      *
      * @return mixed
      */
-    public function localise($resource, $fields, $locale)
+    public function localise($resource, array $fields, $locale)
     {
-        $id   = $this->getResourceId($resource);
+        $id   = $resource->id;
         $name = $this->getResourceName($resource);
 
-        foreach($fields as $field)
-        {
+        foreach ($fields as $field) {
             $translation = $this->repository->findTranslation($id, $name, $field, $locale);
 
-            if(!is_null($translation))
-            {
-                $resource->{'set'.$field}($translation['value']);
+            if (!is_null($translation)) {
+                $resource->$field = $translation['value'];
             }
         }
 
@@ -56,10 +56,9 @@ class Localiser implements LocaliserInterface
      * @param  string $locale
      * @return mixed
      */
-    public function localiseCollection($collection, $fields, $locale)
+    public function localiseCollection($collection, array $fields, $locale)
     {
-        foreach($collection as $resource)
-        {
+        foreach ($collection as $resource) {
             $this->localise($resource, $fields, $locale);
         }
 
@@ -75,16 +74,5 @@ class Localiser implements LocaliserInterface
     private function getResourceName($resource)
     {
         return get_class($resource);
-    }
-
-    /**
-     * Get the resource ID (primary key)
-     *
-     * @param  mixed $resource
-     * @return int
-     */
-    private function getResourceId($resource)
-    {
-        return $resource->getId();
     }
 }

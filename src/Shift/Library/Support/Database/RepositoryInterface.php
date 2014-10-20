@@ -1,6 +1,7 @@
 <?php
 
 namespace Tectonic\Shift\Library\Support\Database;
+
 use Tectonic\Shift\Library\Search\SearchFilterCollection;
 
 /**
@@ -12,14 +13,6 @@ use Tectonic\Shift\Library\Search\SearchFilterCollection;
 interface RepositoryInterface
 {
 	/**
-	 * Create a resource based on the data provided.
-	 *
-     * @param array $data Optional
-	 * @return Resource
-	 */
-	public function getNew(array $data = []);
-
-	/**
 	 * Delete a specific resource. Returns the resource that was deleted.
 	 *
 	 * @param object $resource
@@ -28,13 +21,20 @@ interface RepositoryInterface
 	 */
 	public function delete($resource, $permanent = false);
 
+    /**
+     * Returns a collection of all records for this repository and the models or entities it respresents.
+     *
+     * @return array
+     */
+    public function getAll();
+
 	/**
-	 * Get a specific resource.
+	 * Create a resource based on the data provided.
 	 *
-	 * @param integer $id
+     * @param array $data Optional
 	 * @return Resource
 	 */
-	public function getById($id);
+	public function getNew(array $data = []);
 
 	/**
 	 * Acts as a generic method for retrieving a record by a given field/value pair.
@@ -45,13 +45,23 @@ interface RepositoryInterface
 	 */
 	public function getBy($field, $value);
 
-	/**
-	 * Similar to getById, but should raise an EntityNotFoundException.
-	 *
-	 * @param $id
-	 * @return mixed
-	 */
-	public function requireById($id);
+    /**
+     * Similar to getBy, but returns only a single record, rather than a collection of fields.
+     *
+     * @param $field
+     * @param $value
+     * @return mixed
+     */
+    public function getOneBy($field, $value);
+
+    /**
+     * Acts as a generic method for requiring a record by a given field/value pair.
+     *
+     * @param $field
+     * @param $value
+     * @return mixed
+     */
+    public function requireBy($field, $value);
 
 	/**
 	 * @param $resource
@@ -80,8 +90,8 @@ interface RepositoryInterface
      * Save 1-n resources.
      *
      * @param $resources
+     * @TODO: Utilise PHP 5.6 (make $resources an argument via variadic function argument syntax)
      * @return mixed
-     * @TODO: Utilise PHP 5.6
      */
     public function saveAll();
 }

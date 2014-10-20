@@ -2,8 +2,8 @@
 
 namespace Tectonic\Shift\Library;
 
+use Event;
 use File;
-use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider as Provider;
 
@@ -30,6 +30,13 @@ abstract class ServiceProvider extends Provider
      */
     protected $listeners = [];
 
+    /**
+     * Register the repositories you wish to register with Shift.
+     *
+     * @var array
+     */
+    protected $repositories = [];
+
 	/**
 	 * Base register method. Simply registers the aliases and service providers defined
 	 * by the service provider child class.
@@ -38,6 +45,8 @@ abstract class ServiceProvider extends Provider
 	{
 		$this->registerServiceProviders();
 		$this->registerAliases();
+		$this->registerListeners();
+		$this->registerRepositories();
 	}
 
 	/**
@@ -68,11 +77,8 @@ abstract class ServiceProvider extends Provider
 	 */
 	protected function registerAliases()
 	{
-		$aliasLoader = AliasLoader::getInstance();
-
-		foreach($this->aliases as $key => $value)
-		{
-			$aliasLoader->alias($key, $value);
+		foreach ($this->aliases as $key => $value) {
+			$this->app->alias($key, $value);
 		}
 	}
 
@@ -83,11 +89,22 @@ abstract class ServiceProvider extends Provider
 	 */
 	protected function registerServiceProviders()
 	{
-		foreach($this->serviceProviders as $provider)
-		{
+		foreach ($this->serviceProviders as $provider) {
 			$this->app->register($provider);
 		}
 	}
+
+    /**
+     * Registers the defined repository interfaces and binds them to an implementation.
+     *
+     * @return void
+     */
+    protected function registerRepositories()
+    {
+        foreach ($this->repositories as $interface => $repository) {
+            $this->app->singleton($interface, $repository);
+        }
+    }
 
 	/**
 	 * Method to automatically inject entity paths for doctrine usage. This is particularly

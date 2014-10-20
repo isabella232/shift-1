@@ -1,10 +1,9 @@
 <?php namespace Tectonic\Shift\Modules\Localisation\Models;
 
-use Tectonic\Shift\Library\Support\BaseModel;
+use Tectonic\Shift\Library\Support\Database\Eloquent\Model;
 
-class Locale extends BaseModel
+class Locale extends Model
 {
-
     /**
      * @var bool
      */
@@ -19,4 +18,9 @@ class Locale extends BaseModel
      * @var array
      */
     protected $fillable = ['locale', 'code'];
+
+    public function localisations()
+    {
+        return $this->hasMany(Localisation::class);
+    }
 }

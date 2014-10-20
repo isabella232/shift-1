@@ -1,15 +1,16 @@
 <?php namespace Tectonic\Shift\Library\Support\Database\Doctrine;
 
 use App;
-use DateTime;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Str;
 use Tectonic\Shift\Library\Search\SearchFilterCollection;
 use Tectonic\Shift\Library\Search\SearchRepositoryInterface;
 use Tectonic\Shift\Library\Support\Database\RecordNotFoundException;
 use Tectonic\Shift\Library\Support\Database\RepositoryInterface;
+use Tectonic\Shift\Library\Support\Exceptions\MethodNotFoundException;
 use Tectonic\Shift\Modules\Accounts\Services\CurrentAccountService;
 
 abstract class Repository extends EntityRepository implements RepositoryInterface, SearchRepositoryInterface
@@ -35,7 +36,7 @@ abstract class Repository extends EntityRepository implements RepositoryInterfac
 	 *
 	 * @var bool
 	 */
-	protected $restrictByAccount = true;
+	public $restrictByAccount = true;
 
     /**
      * Some simple validation on the class implementation.
@@ -80,17 +81,6 @@ abstract class Repository extends EntityRepository implements RepositoryInterfac
     }
 
     /**
-     * Get a specific resource identified by slug.
-     *
-     * @param string $slug
-     * @return Resource
-     */
-    public function getBySlug($slug)
-    {
-        return $this->getBy('slug', $slug);
-    }
-
-    /**
      * Get a resource.
      *
      * @param $fieldName
@@ -106,6 +96,13 @@ abstract class Repository extends EntityRepository implements RepositoryInterfac
         $query = $queryBuilder->getQuery();
 
         return $query->getResult();
+    }
+
+    public function requireBy($field, $value)
+    {
+        $entity = $this->getBy($field, $value);
+
+        return $entity;
     }
 
 	/**
@@ -183,16 +180,7 @@ abstract class Repository extends EntityRepository implements RepositoryInterfac
      * @param array $data
      * @return Resource
      */
-    public function getNew(array $data = [])
-    {
-	    $entity = $this->newEntity($data);
-
-        if ($data) {
-            $this->decorate($entity, $data);
-        }
-
-        return $entity;
-    }
+    abstract public function getNew(array $data = []);
 
     /**
      * Delete a specific resource. Returns the resource that was deleted.
@@ -256,7 +244,7 @@ abstract class Repository extends EntityRepository implements RepositoryInterfac
      * @return mixed|void
      * @TODO: Utilise PHP 5.6
      */
-    public function saveAll()
+    public function saveAll($resources)
     {
 	    $resources = func_get_args();
 
@@ -328,35 +316,27 @@ abstract class Repository extends EntityRepository implements RepositoryInterfac
         return $resource;
     }
 
-	/**
-	 * Constructs a new entity by first figuring out the constructor arguments and then calling them correctly. It cannot do this
-	 * for all arguments, only primitive types. If you need specific requirements for your entity, overload the getNew method
-	 * and create your own entities in child repositories.
-	 *
-	 * @param array $data
-	 */
-	private function newEntity(array $data = [])
-	{
-		$reflector = new \ReflectionClass($this->entity);
-		$constructor = $reflector->getConstructor();
+    /**
+     * The repository supports magic method calls to getBy* where the * equates to a valid
+     * field name on the entity. Eg:
+     *
+     * $repository->getByFieldName('value') would create a new query and try and find records
+     * based on the field 'fieldName'
+     *
+     * @param string $method
+     * @param array $arguments
+     * @return Resource
+     * @throws MethodNotFoundException
+     */
+    public function __call($method, $arguments)
+    {
+        if (strstr($method, 'getBy')) {
+            $field = Str::camel(str_replace('getBy', '', $method));
+            $value = $arguments[0];
 
-		if (null !== $constructor) {
-			$constructorArguments = [];
+            return $this->getBy($field, $value);
+        }
 
-			$method = $reflector->getMethod('__construct');
-			$params = $method->getParameters();
-
-			foreach ($params as $param) {
-				$parameter = $param->getName();
-
-				if (isset($data[$parameter])) {
-					$constructorArguments[] = $data[$parameter];
-				}
-			}
-
-			return $reflector->newInstanceArgs($constructorArguments);
-		}
-
-		return (new $this->entity);
-	}
+        throw new MethodNotFoundException($this, $method);
+    }
 }

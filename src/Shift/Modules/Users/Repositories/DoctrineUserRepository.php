@@ -21,7 +21,18 @@ class DoctrineUserRepository extends Repository implements UserRepositoryInterfa
      *
      * @var bool
      */
-    protected $restrictByAccount = false;
+    public $restrictByAccount = false;
+
+    /**
+     * Creates a new User instance based on the array of data provided.
+     *
+     * @param array $data
+     * @return User
+     */
+    public function getNew(array $data = [])
+    {
+        return new User($data['firstName'], $data['lastName'], $data['email'], $data['password']);;
+    }
 
     /**
      * Retrieve a user based on the email. This is also restricted by the current account. If

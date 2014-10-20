@@ -14,10 +14,10 @@ class CreatePermissionsTable extends Migration
 	{
 		Schema::create('permissions', function(Blueprint $table)
 		{
-			$table->bigInteger('role_id')->unsigned()->index();
-			$table->string('action');
+			$table->integer('role_id')->unsigned()->index();
 			$table->string('resource');
-			$table->string('type'); // allow or deny
+			$table->string('action');
+			$table->boolean('allow')->nullable();
 		});
 	}
 
@@ -30,5 +30,4 @@ class CreatePermissionsTable extends Migration
 	{
 		Schema::drop('permissions');
 	}
-
 }

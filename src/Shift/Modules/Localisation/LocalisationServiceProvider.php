@@ -4,6 +4,10 @@ use App;
 use Event;
 use Tectonic\Shift\Library\ServiceProvider;
 use Tectonic\Shift\Modules\Localisation\Listeners\StartupListener;
+use Tectonic\Shift\Modules\Localisation\Contracts\LocaleRepositoryInterface;
+use Tectonic\Shift\Modules\Localisation\Contracts\LocalisationRepositoryInterface;
+use Tectonic\Shift\Modules\Localisation\Repositories\EloquentLocaleRepository;
+use Tectonic\Shift\Modules\Localisation\Repositories\EloquentLocalisationRepository;
 
 class LocalisationServiceProvider extends ServiceProvider
 {
@@ -24,6 +28,16 @@ class LocalisationServiceProvider extends ServiceProvider
     ];
 
     /**
+     * Registers the repositories assigned to the localisation module.
+     *
+     * @var array
+     */
+    protected $repositories = [
+        LocaleRepositoryInterface::class => EloquentLocaleRepository::class,
+        LocalisationRepositoryInterface::class => EloquentLocalisationRepository::class
+    ];
+
+    /**
      * Register the service provider.
      *
      * @return void
@@ -35,8 +49,6 @@ class LocalisationServiceProvider extends ServiceProvider
         $this->registerAssetContainer();
         $this->registerTranslator();
         $this->registerLangSingleton();
-        $this->registerLocaleRepository();
-        $this->registerLocalisationRepository();
         $this->registerLocaliserInterface();
     }
 
@@ -58,7 +70,7 @@ class LocalisationServiceProvider extends ServiceProvider
      */
     public function registerAssetContainer()
     {
-        $this->app->bindShared('shift.asset', function($app) {
+        $this->app->singleton('shift.asset', function($app) {
             return new \Tectonic\Shift\Library\Support\AssetFactory($app['orchestra.asset.dispatcher']);
         });
     }
@@ -70,14 +82,14 @@ class LocalisationServiceProvider extends ServiceProvider
      */
     protected function registerTranslator()
     {
-        $this->app->bindShared('shift.translator', function($app)
+        $this->app->singleton('shift.translator', function($app)
         {
             return new \Tectonic\Shift\Library\Translation\Translator(
                 $app['translation.loader'],
-                $app['Tectonic\Shift\Modules\Localisation\Contracts\LocalisationRepositoryInterface'],
+                $app['Tectonic\Shift\Modules\Localisation\Services\UILocalisationService'],
                 $app['config']['app.locale'],
-                $app['config']['shift.language.autoloads'], // @TODO: change to $app['config']['shift::language.autoloads']
-                $app['config']['shift.language.supported_locales']   // @TODO: change to $app['config']['shift::language.supported_locales']
+                $app['config']['shift::language.autoloads'],
+                $app['config']['shift::language.locales']
             );
         });
 
@@ -99,39 +111,13 @@ class LocalisationServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register locale repository
-     *
-     * @return void
-     */
-    protected function registerLocaleRepository()
-    {
-        $this->app->bindShared('Tectonic\Shift\Modules\Localisation\Contracts\LocaleRepositoryInterface', function()
-        {
-            return $this->app->make('Tectonic\Shift\Modules\Localisation\Repositories\DoctrineLocaleRepository');
-        });
-    }
-
-    /**
-     * Register localisation repository
-     *
-     * @return void
-     */
-    protected function registerLocalisationRepository()
-    {
-        $this->app->bindShared('Tectonic\Shift\Modules\Localisation\Contracts\LocalisationRepositoryInterface', function()
-        {
-            return $this->app->make('Tectonic\Shift\Modules\Localisation\Repositories\DoctrineLocalisationRepository');
-        });
-    }
-
-    /**
      * Register the localiser and bind and implementation to interface
      *
      * @return void
      */
     protected function registerLocaliserInterface()
     {
-        $this->app->bindShared('Tectonic\Shift\Modules\Localisation\Contracts\LocaliserInterface', function()
+        $this->app->singleton('Tectonic\Shift\Modules\Localisation\Contracts\LocaliserInterface', function()
         {
             return $this->app->make('Tectonic\Shift\Modules\Localisation\Services\Localiser');
         });

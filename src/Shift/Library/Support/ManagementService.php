@@ -4,6 +4,7 @@ namespace Tectonic\Shift\Library\Support;
 
 use App;
 use Event;
+use Tectonic\Shift\Modules\Accounts\Services\CurrentAccountService;
 
 /**
  * Class BaseManagementService

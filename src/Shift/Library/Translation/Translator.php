@@ -2,7 +2,7 @@
 
 use Illuminate\Translation\LoaderInterface;
 use Illuminate\Translation\Translator as IlluminateTranslator;
-use Tectonic\Shift\Modules\Localisation\Contracts\LocalisationRepositoryInterface;
+use Tectonic\Shift\Modules\Localisation\Services\UILocalisationService;
 
 /**
  * Class Translator
@@ -28,11 +28,11 @@ use Tectonic\Shift\Modules\Localisation\Contracts\LocalisationRepositoryInterfac
 class Translator extends IlluminateTranslator
 {
     /**
-     * Locale repository
+     * UI Localisation Service
      *
-     * @var LocalisationRepositoryInterface
+     * @var UILocalisationService
      */
-    protected $repo;
+    protected $UILocalisationService;
 
     /**
      * A list of supported locales.
@@ -45,20 +45,20 @@ class Translator extends IlluminateTranslator
      * Construct class and autoload any specified package/module language files.
      *
      * @param LoaderInterface $loaderInterface
-     * @param LocalisationRepositoryInterface $repo
+     * @param UILocalisationService $UILocalisationService
      * @param string $locale
      * @param array $autoloads Modules/packages to autoload language files
      * @param array $locales
      */
     public function __construct(
         LoaderInterface $loaderInterface,
-        LocalisationRepositoryInterface $repo,
+        UILocalisationService $UILocalisationService,
         $locale,
         array $autoloads = [],
         array $locales = []
     )
     {
-        $this->repo = $repo;
+        $this->UILocalisationService = $UILocalisationService;
         $this->supportedLocales = $locales;
 
         parent::__construct($loaderInterface, $locale);
@@ -179,8 +179,8 @@ class Translator extends IlluminateTranslator
     public function setUICustomisations($locales = [])
     {
         if(empty($locales)) $locales = $this->supportedLocales;
-
-        $this->setKeys($this->repo->getUILocalisations($locales));
+        $keys = $this->UILocalisationService->getUILocalisations($locales);
+        $this->setKeys($keys);
 
         return $this;
     }

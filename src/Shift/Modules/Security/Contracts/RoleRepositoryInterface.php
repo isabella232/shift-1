@@ -1,6 +1,5 @@
 <?php
-
-namespace Tectonic\Shift\Modules\Security\Repositories;
+namespace Tectonic\Shift\Modules\Security\Contracts;
 
 use Tectonic\Shift\Library\Support\Database\RepositoryInterface;
 
@@ -11,7 +10,7 @@ interface RoleRepositoryInterface extends RepositoryInterface
      *
      * @return mixed
      */
-    public function getByDefault();
+    public function getDefault();
 
     /**
      * Set the default role to the role provided.

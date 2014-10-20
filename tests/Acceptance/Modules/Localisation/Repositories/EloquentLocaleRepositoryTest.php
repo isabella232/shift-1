@@ -3,9 +3,9 @@
 use App;
 use Mockery;
 use Tests\AcceptanceTestCase;
-use Tectonic\Shift\Modules\Localisation\Repositories\DoctrineLocaleRepository;
+use Tectonic\Shift\Modules\Localisation\Repositories\EloquentLocaleRepository;
 
-class DoctrineLocaleRepositoryTest extends AcceptanceTestCase
+class EloquentLocaleRepositoryTest extends AcceptanceTestCase
 {
 
     /**
@@ -36,7 +36,7 @@ class DoctrineLocaleRepositoryTest extends AcceptanceTestCase
             ['locale'  => 'English (United States)', 'code'     => 'en_US'],
         ];
 
-        $this->repository = App::make(DoctrineLocaleRepository::class);
+        $this->repository = App::make(EloquentLocaleRepository::class);
     }
 
     public function testGetCodeByIdReturnsCorrectCode()
@@ -45,7 +45,7 @@ class DoctrineLocaleRepositoryTest extends AcceptanceTestCase
 
 	    $this->repository->save($locale);
 
-        $this->assertSame($locale->getCode(), $this->repository->getLocaleCode($locale->getId()));
+        $this->assertSame($locale->code, $this->repository->getLocaleCode($locale->id));
     }
 
     public function testGetIdByCodeReturnsCorrectId()
@@ -54,17 +54,19 @@ class DoctrineLocaleRepositoryTest extends AcceptanceTestCase
 
 	    $this->repository->save($locale);
 
-        $this->assertSame($locale->getId(), (int) $this->repository->getLocaleId($locale->getCode()));
+        $this->assertSame($locale->id, (int) $this->repository->getLocaleId($locale->code));
     }
 
     public function testGetLocaleIdsReturnsArrayOfIds()
     {
+        $ids = [];
+
         // Arrange
         foreach($this->cleanData as $data)
         {
             $locale = $this->repository->getNew(['locale' => $data['locale'], 'code' => $data['code']]);
 
-	        $this->repository->save($locale);
+	        $ids[] = $this->repository->save($locale);
         }
 
         // Act
@@ -73,10 +75,10 @@ class DoctrineLocaleRepositoryTest extends AcceptanceTestCase
 
         // Assert
         $this->assertCount(3, $result);
-        $this->assertContains('1', $result);
-        $this->assertContains('2', $result);
-        $this->assertContains('3', $result);
-        $this->assertNotContains('4', $result);
+
+        foreach ($ids as $id) {
+            $this->assertContains($id, $result);
+        }
     }
 
 

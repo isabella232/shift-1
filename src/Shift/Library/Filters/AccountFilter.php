@@ -2,8 +2,10 @@
 
 namespace Tectonic\Shift\Library\Filters;
 
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Redirect;
 use Tectonic\Shift\Controllers\InstallationController;
+use Tectonic\Shift\Modules\Accounts\AccountNotFoundException;
 use Tectonic\Shift\Modules\Accounts\Services\AccountManagementService;
 use Tectonic\Shift\Modules\Accounts\Services\CurrentAccountService;
 
@@ -48,10 +50,12 @@ class AccountFilter
      *    for new installations.
      * 3. If an account does exist but does not match the domain, then we throw an account
      *    not found exception and deal with that later.
+     *
+     * @throws AccountNotFoundException
 	 */
 	public function filter()
 	{
-		$account = $this->currentAccountService->determineCurrentAccount();
+		$account = $this->currentAccountService->determine(Request::getHttpHost());
 
 		if (!$account) {
             $count = $this->accountManagementService->totalNumberOfAccounts();
@@ -59,8 +63,10 @@ class AccountFilter
             if ($count === 0) {
                 return Redirect::action(InstallationController::class.'@getInstall');
             }
+
+            throw new AccountNotFoundException;
 		}
 
-		$this->currentAccountService->setCurrentAccount($account);
+		$this->currentAccountService->set($account);
 	}
 }

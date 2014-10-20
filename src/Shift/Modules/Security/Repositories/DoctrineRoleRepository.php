@@ -1,8 +1,10 @@
 <?php
 
-namespace Tectonic\Shift\Modules\Security\Repositories;
+namespace Tectonic\Shift\Modules\Security\Contracts;
 
+use App;
 use Tectonic\Shift\Library\Support\Database\Doctrine\Repository;
+use Tectonic\Shift\Modules\Accounts\Services\CurrentAccountService;
 use Tectonic\Shift\Modules\Security\Entities\Role;
 
 class DoctrineRoleRepository extends Repository implements RoleRepositoryInterface
@@ -13,6 +15,19 @@ class DoctrineRoleRepository extends Repository implements RoleRepositoryInterfa
      * @var string
      */
     protected $entity = Role::class;
+
+    /**
+     * Construct a new role entity, along with the required account.
+     *
+     * @param array $data
+     * @return Role
+     */
+    public function getNew(array $data = [])
+    {
+        $account = App::make(CurrentAccountService::class)->getCurrentAccount();
+
+        return new Role($account, $data['name'], $data['default']);
+    }
 
     /**
      * Returns the default role for an account.

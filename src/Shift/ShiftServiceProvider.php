@@ -15,7 +15,6 @@ class ShiftServiceProvider extends ServiceProvider
     protected $aliases = [
         'Asset'         => 'Orchestra\Support\Facades\Asset',
         'Authority'     => 'Authority\AuthorityL4\Facades\Authority',
-	    'EntityManager' => 'Mitch\LaravelDoctrine\EntityManagerFacade',
         'Utility'       => 'Tectonic\Shift\Library\Facades\Utility',
     ];
 
@@ -27,7 +26,8 @@ class ShiftServiceProvider extends ServiceProvider
     protected $filesToBoot = [
         'errors',
         'macros',
-        'composers'
+        'composers',
+        'routes',
     ];
 
     /**
@@ -37,8 +37,8 @@ class ShiftServiceProvider extends ServiceProvider
      */
     protected $serviceProviders = [
         'Authority\AuthorityL4\AuthorityL4ServiceProvider',
-        'Mitch\LaravelDoctrine\LaravelDoctrineServiceProvider',
         'Orchestra\Asset\AssetServiceProvider',
+        'Eloquence\EloquenceServiceProvider',
         'Tectonic\Shift\Library\Authorization\AuthorizationServiceProvider',
         'Tectonic\Shift\Library\LibraryServiceProvider',
         'Tectonic\Shift\Modules\Accounts\AccountsServiceProvider',
@@ -55,8 +55,8 @@ class ShiftServiceProvider extends ServiceProvider
      * @var array
      */
     protected $filesToRegister = [
-        'routes',
-        'commands'
+        'commands',
+        'composers',
     ];
 
     /**
@@ -77,7 +77,6 @@ class ShiftServiceProvider extends ServiceProvider
 
         $this->registerRouter();
         $this->registerAuthorityConfiguration();
-        $this->registerValidationVerifier();
 		$this->requireFiles($this->filesToRegister);
     }
 
@@ -88,21 +87,9 @@ class ShiftServiceProvider extends ServiceProvider
 	 */
 	public function boot()
 	{
-		$this->requireFiles($this->filesToBoot);
-
 		$this->package('tectonic/shift');
-	}
 
-	/**
-	 * Registers a new presence verifier for Laravel 4 validation. Specifically, this
-	 * is for the use of the Doctrine ORM.
-	 */
-	public function registerValidationVerifier()
-	{
-		$this->app->bindShared('validation.presence', function()
-		{
-			return new DoctrinePresenceVerifier;
-		});
+		$this->requireFiles($this->filesToBoot);
 	}
 
 	/**
@@ -126,8 +113,7 @@ class ShiftServiceProvider extends ServiceProvider
 	 */
 	public function requireFiles(array $files)
 	{
-        foreach($files as $file)
-        {
+        foreach($files as $file) {
             require __DIR__.'/../../boot/'.$file.'.php';
         }
 	}

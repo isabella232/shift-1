@@ -1,7 +1,7 @@
 <?php
-
 namespace Tests\Unit\Modules\Startup;
 
+use Event;
 use Mockery as m;
 use Tectonic\Shift\Modules\Configuration\Repositories\SettingRepositoryInterface;
 use Tectonic\Shift\Modules\Startup\StartupService;
@@ -22,6 +22,8 @@ class StartupServiceTest extends UnitTestCase
 	public function testConfigurationValueReturned()
 	{
         $this->mockRepository->shouldReceive('getAllAsKeyValue')->once()->andReturn('settings');
+
+        Event::shouldReceive('fire')->once();
 
 		$this->assertEquals(['settings' => 'settings'], $this->startupService->configuration());
 	}

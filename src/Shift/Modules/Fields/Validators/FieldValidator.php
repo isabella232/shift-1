@@ -1,8 +1,8 @@
-<?php namespace Tectonic\Shift\Modules\CustomFields\Validators;
+<?php namespace Tectonic\Shift\Modules\Fields\Validators;
 
-use Tectonic\Shift\Library\Validation\Validator;
+use Tectonic\Shift\Library\Validation\Validation;
 
-class CustomFieldValidator extends Validator
+class FieldValidator extends Validation
 {
 
     protected $rules = [

@@ -3,8 +3,9 @@
 namespace Tectonic\Shift\Modules\Accounts\Services;
 
 use Request;
+use Tectonic\Shift\Modules\Accounts\Contracts\AccountInterface;
 use Tectonic\Shift\Modules\Accounts\Entities\Account;
-use Tectonic\Shift\Modules\Accounts\Repositories\AccountRepositoryInterface;
+use Tectonic\Shift\Modules\Accounts\Contracts\AccountRepositoryInterface;
 
 /**
  * Class CurrentAccountService
@@ -22,7 +23,7 @@ use Tectonic\Shift\Modules\Accounts\Repositories\AccountRepositoryInterface;
 class CurrentAccountService
 {
     /**
-     * @var \Tectonic\Shift\Modules\Accounts\Repositories\AccountRepositoryInterface
+     * @var \Tectonic\Shift\Modules\Accounts\Contracts\AccountRepositoryInterface
      */
     private $accountRepository;
 
@@ -32,7 +33,7 @@ class CurrentAccountService
     private $account;
 
 	/**
-	 * @param AccountRepositoryInterface $accountRepository
+	 * @param \Tectonic\Shift\Modules\Accounts\Contracts\AccountRepositoryInterface $accountRepository
 	 */
 	public function __construct(AccountRepositoryInterface $accountRepository)
     {
@@ -42,9 +43,9 @@ class CurrentAccountService
     /**
      * Returns the currently active account for this request.
      *
-     * @return Account
+     * @return AccountInterface
      */
-    public function getCurrentAccount()
+    public function get()
     {
         return $this->account;
     }
@@ -52,9 +53,9 @@ class CurrentAccountService
     /**
      * Set the account that is currently being used for this request.
      *
-     * @param Account $account
+     * @param $account
      */
-    public function setCurrentAccount(Account $account)
+    public function set(AccountInterface $account)
     {
         $this->account = $account;
     }
@@ -64,10 +65,8 @@ class CurrentAccountService
      *
      * @return Account
      */
-    public function determineCurrentAccount()
+    public function determine($domain)
     {
-        $domain = Request::getHttpHost();
-
         return $this->accountRepository->requireByDomain($domain);
     }
 } 

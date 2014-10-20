@@ -1,6 +1,9 @@
-<?php namespace Tectonic\Shift\Modules\Security;
+<?php
+namespace Tectonic\Shift\Modules\Security;
 
 use Tectonic\Shift\Library\ServiceProvider;
+use Tectonic\Shift\Modules\Security\Contracts\RoleRepositoryInterface;
+use Tectonic\Shift\Modules\Security\Repositories\EloquentRoleRepository;
 use Tectonic\Shift\Modules\Security\Search\RoleSearch;
 
 class SecurityServiceProvider extends ServiceProvider
@@ -21,7 +24,7 @@ class SecurityServiceProvider extends ServiceProvider
      */
     protected function registerRoleRepository()
     {
-        $this->app->bind('Tectonic\Shift\Modules\Security\Repositories\RoleRepositoryInterface', 'Tectonic\Shift\Modules\Security\Repositories\DoctrineRoleRepository');
+        $this->app->bind(RoleRepositoryInterface::class, EloquentRoleRepository::class);
     }
 
 	private function registerRoleSearch()

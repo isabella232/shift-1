@@ -4,7 +4,7 @@ namespace Tests;
 
 use App;
 use Route;
-use Tectonic\Shift\Modules\Accounts\Repositories\AccountRepositoryInterface;
+use Tectonic\Shift\Modules\Accounts\Contracts\AccountRepositoryInterface;
 use Tectonic\Shift\Modules\Accounts\Services\CurrentAccountService;
 
 class AcceptanceTestCase extends TestCase
@@ -64,18 +64,31 @@ class AcceptanceTestCase extends TestCase
 
         Route::disableFilters();
 
-        $artisan = $this->app->make('artisan');
-        $artisan->call('doctrine:schema:drop');
-        $artisan->call('doctrine:schema:create');
+        // reset base path to point to our package's src directory
+        $app['path.base'] = __DIR__ . '/../../';
 
+        $artisan = $this->app->make('artisan');
+        $artisan->call('migrate', [
+            '--database' => $this->database,
+            '--path'     => 'migrations'
+        ]);
+
+        $this->setupAccount();
+    }
+
+    /**
+     * Configures the databas for the default account.
+     */
+    public function setupAccount()
+    {
         $accountRepository = App::make(AccountRepositoryInterface::class);
 
         $this->account = $accountRepository->getNew(['name' => 'Test account']);
 
         $accountRepository->save($this->account);
 
-        $accountService = App::make(CurrentAccountService::class);
-        $accountService->setCurrentAccount($this->account);
+        $currentAccount = App::make(CurrentAccountService::class);
+        $currentAccount->set($this->account);
     }
 
     /**

@@ -5,7 +5,7 @@ namespace Tectonic\Shift\Library\Filters;
 use App;
 use Tectonic\Shift\Modules\Accounts\Services\AccountManagementService;
 
-class NoAccountFilter
+class InstallationFilter
 {
 	/**
 	 * @var \Tectonic\Shift\Modules\Accounts\Services\AccountManagementService
@@ -27,7 +27,7 @@ class NoAccountFilter
 	public function filter()
 	{
 		if ($this->accountManagementService->totalNumberOfAccounts()) {
-            App::abort(501, 'Domain account not configured or setup correctly. Check the account host name.');
+            App::abort(404);
         }
 	}
 }

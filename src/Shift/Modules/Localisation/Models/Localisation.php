@@ -1,10 +1,10 @@
-<?php namespace Tectonic\Shift\Modules\Localisation\Models;
+<?php
+namespace Tectonic\Shift\Modules\Localisation\Models;
 
-use Tectonic\Shift\Library\Support\BaseModel;
+use Tectonic\Shift\Library\Support\Database\Eloquent\Model;
 
-class Localisation extends BaseModel
+class Localisation extends Model
 {
-
     /**
      * @var bool
      */
@@ -18,5 +18,5 @@ class Localisation extends BaseModel
     /**
      * @var array
      */
-    protected $fillable = ['locale_id', 'foreign_id', 'resource', 'field', 'value'];
+    protected $fillable = ['localeId', 'foreignId', 'resource', 'field', 'value'];
 }

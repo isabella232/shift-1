@@ -1,13 +1,11 @@
 <?php
-
 namespace Tectonic\Shift\Modules\Accounts\Services;
 
 use Event;
 use Tectonic\Shift\Library\Support\ManagementService;
 use Tectonic\Shift\Modules\Accounts\Entities\Account;
-use Tectonic\Shift\Modules\Accounts\Repositories\AccountRepositoryInterface;
+use Tectonic\Shift\Modules\Accounts\Contracts\AccountRepositoryInterface;
 use Tectonic\Shift\Modules\Accounts\Validators\AccountValidation;
-use Tectonic\Shift\Modules\Users\Entities\User;
 
 /**
  * Class AccountsService
@@ -17,7 +15,6 @@ use Tectonic\Shift\Modules\Users\Entities\User;
  *
  * @package Tectonic\Shift\Modules\Accounts\Services
  */
-
 class AccountManagementService extends ManagementService
 {
 	/**

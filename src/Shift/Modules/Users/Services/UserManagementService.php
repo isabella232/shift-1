@@ -21,4 +21,25 @@ class UserManagementService extends ManagementService
         $this->createValidator = $validator;
         $this->updateValidator = $validator;
     }
+
+    /**
+     * Create a new resource
+     *
+     * @param array $input
+     * @return mixed
+     */
+    public function create($input)
+    {
+        $this->createValidator->setInput($input)->validate();
+
+        // Remove 'password_confirmation'
+        unset($input['passwordConfirmation']);
+
+        $resource = $this->repository->getNew($input);
+
+        $this->repository->save($resource);
+        $this->notify('created', $resource);
+
+        return $resource;
+    }
 }

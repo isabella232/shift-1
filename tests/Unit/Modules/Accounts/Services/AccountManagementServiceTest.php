@@ -1,9 +1,10 @@
 <?php
-
 namespace Tests\Unit\Modules\Accounts\Services;
 
 use Mockery as m;
+use Tectonic\Shift\Modules\Accounts\Contracts\AccountRepositoryInterface;
 use Tectonic\Shift\Modules\Accounts\Services\AccountManagementService;
+use Tectonic\Shift\Modules\Accounts\Validators\AccountValidation;
 use Tests\TestCase;
 
 class AccountManagementServiceTest  extends TestCase
@@ -15,18 +16,14 @@ class AccountManagementServiceTest  extends TestCase
 	{
 		parent::setUp();
 
-		$this->mockRepository = m::mock('Tectonic\Shift\Modules\Accounts\Repositories\AccountRepositoryInterface');
-
-		$this->service = new AccountManagementService($this->mockRepository);
+		$this->mockRepository = m::spy(AccountRepositoryInterface::class);
+		$this->service = new AccountManagementService($this->mockRepository, new AccountValidation);
 	}
 
 	public function testRequestedDomain()
 	{
-		$this->mockRepository
-            ->shouldReceive('requireByDomain')
-            ->with('whatever')->once()
-            ->andReturn('account');
+        $this->service->getAccountForDomain('whatever');
 
-		$this->assertEquals('account', $this->service->getAccountForDomain('whatever'));
+        $this->mockRepository->shouldHaveReceived('requireByDomain')->once();
 	}
 }

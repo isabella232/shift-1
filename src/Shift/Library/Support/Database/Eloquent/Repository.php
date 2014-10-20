@@ -2,8 +2,13 @@
 
 namespace Tectonic\Shift\Library\Support\Database\Eloquent;
 
+use App;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Str;
+use Tectonic\Shift\Library\Search\SearchFilterCollection;
 use Tectonic\Shift\Library\Support\Database\RepositoryInterface;
+use Tectonic\Shift\Library\Support\Exceptions\MethodNotFoundException;
+use Tectonic\Shift\Modules\Accounts\Services\CurrentAccountService;
 
 abstract class Repository implements RepositoryInterface
 {
@@ -23,35 +28,116 @@ abstract class Repository implements RepositoryInterface
     protected $model;
 
     /**
-     * Get a specific resource.
+     * Returns a collection of all records for this repository and the models or entities it respresents.
      *
-     * @param integer $id
-     *
-     * @return Resource
+     * @return array
      */
-    public function getById($id)
+    public function getAll()
     {
-        return $this->model->find($id);
+        return $this->getQuery()->all();
     }
 
     /**
-     * Searches for a resource with the id provided. If no resource is found that matches
-     * the $id value, then it will throw a ModelNotFoundException.
+     * Acts as a generic method for retrieving a record by a given field/value pair.
+     *
+     * @param $field
+     * @param $value
+     * @return mixed
+     */
+    public function getBy($field, $value)
+    {
+        return $this->getQuery()->where($field, '=', $value)->get();
+    }
+
+    /**
+     * Retrieves a single record based on the field and value provided.
+     *
+     * @param $field
+     * @param $value
+     * @return null
+     */
+    public function getOneBy($field, $value)
+    {
+        $result = $this->getBy($field, $value);
+
+        if ($result->isEmpty()) {
+            return null;
+        }
+
+        return $result->first();
+    }
+
+    /**
+     * Returns a single record based on id.
      *
      * @param $id
+     * @return null
+     */
+    public function getById($id)
+    {
+        $model = $this->getBy('id', $id);
+
+        if (!$model->isEmpty()) {
+            return $model[0];
+        }
+
+        return null;
+    }
+
+    /**
+     * Retrieve a collection of results based on the search filters provided.
      *
-     * @return Resource
+     * @param SearchFilterCollection $filterCollection
+     * @return mixed
+     */
+    public function getByCriteria(SearchFilterCollection $filterCollection)
+    {
+        $query = $this->getQuery();
+
+        foreach ($filterCollection as $filter) {
+            $filter->applyToEloquent($query);
+        }
+
+        return $query->get();
+    }
+
+    /**
+     * Save 1-n resources.
+     *
+     * @param $resources
+     * @return mixed
+     */
+    public function saveAll()
+    {
+        $resources = func_get_args();
+
+        if (count($resources) == 0) {
+            throw new Exception('You must provide at least one $resource argument.');
+        }
+
+        foreach ($resources as $resource) {
+            $this->save($resource);
+        }
+    }
+
+    /**
+     * Searches for a resource with the field and value provided. If no resource is found that matches
+     * the value, then it will throw a ModelNotFoundException.
+     *
+     * @param string $field
+     * @param string $value
+     * @return Eloquent
      * @throws ModelNotFoundException
      */
-    public function requireById($id)
+    public function requireBy($field, $value)
     {
-        $model = $this->getById($id);
+        $result = $this->getBy($field, $value);
 
-        if (!$model) {
+        if (!$result) {
             throw with(new ModelNotFoundException)->setModel(get_class($this->model));
         }
 
-        return $model;
+        return $result[0];
     }
 
     /**
@@ -65,16 +151,6 @@ abstract class Repository implements RepositoryInterface
     }
 
     /**
-     * Sets the model to be used by the repository.
-     *
-     * @param $model
-     */
-    public function setModel($model)
-    {
-        $this->model = $model;
-    }
-
-    /**
      * Create a resource based on the data provided.
      *
      * @param array $data
@@ -83,7 +159,39 @@ abstract class Repository implements RepositoryInterface
      */
     public function getNew(array $data = [])
     {
-        return $this->model->newInstance($data);
+        $model = $this->model->newInstance($data);
+
+        if ($this->restrictByAccount) {
+            $model->accountId = $this->currentAccountId();
+        }
+
+        return $model;
+    }
+
+    /**
+     * Returns a new query object that can be used.
+     *
+     * @return mixed
+     */
+    protected function getQuery()
+    {
+        $query = $this->model->newInstance();
+
+        if ($this->restrictByAccount) {
+            $query->whereAccountId($this->currentAccountId());
+        }
+
+        return $query;
+    }
+
+    /**
+     * Sets the model to be used by the repository.
+     *
+     * @param $model
+     */
+    public function setModel($model)
+    {
+        $this->model = $model;
     }
 
     /**
@@ -137,10 +245,47 @@ abstract class Repository implements RepositoryInterface
         $attributes = $resource->getDirty();
 
         if (!empty($attributes)) {
-            $resource->save();
+            return $resource->save();
         }
-        else {
-            $resource->touch();
+
+        return $resource->touch();
+    }
+
+    /**
+     * The repository supports magic method calls to getBy* where the * equates to a valid
+     * field name on the entity. Eg:
+     *
+     * $repository->getByFieldName('value') would create a new query and try and find records
+     * based on the field 'fieldName'
+     *
+     * @param string $method
+     * @param array $arguments
+     * @return Resource
+     * @throws MethodNotFoundException
+     */
+    public function __call($method, $arguments)
+    {
+        // Handles method calls for basic queries like getById or requireById
+        foreach (['getBy', 'requireBy'] as $queryType) {
+            if (strstr($method, $queryType)) {
+                $field = Str::camel(str_replace($queryType, '', $method));
+                $value = $arguments[0];
+
+                return $this->$queryType($field, $value);
+            }
         }
+
+        throw new MethodNotFoundException($this, $method);
+    }
+
+    /**
+     * A single method to return the currentAccountId. This is the account id that represents
+     * the current request's account, domain.etc.
+     *
+     * @return integer
+     */
+    protected function currentAccountId()
+    {
+        return App::make(CurrentAccountService::class)->get()->id;
     }
 }

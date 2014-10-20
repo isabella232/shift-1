@@ -11,4 +11,12 @@ interface SearchFilterInterface
 	 * @return mixed
 	 */
 	public function applyToDoctrine($queryBuilder);
+
+    /**
+     * Apply the given search filter to an Eloquent query.
+     *
+     * @param $query
+     * @return mixed
+     */
+    public function applyToEloquent($query);
 }

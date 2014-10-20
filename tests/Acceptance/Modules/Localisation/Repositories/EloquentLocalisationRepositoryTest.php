@@ -3,12 +3,11 @@
 use App;
 use Mockery;
 use Tests\AcceptanceTestCase;
-use Tectonic\Shift\Modules\Localisation\Repositories\DoctrineLocaleRepository;
-use Tectonic\Shift\Modules\Localisation\Repositories\DoctrineLocalisationRepository;
+use Tectonic\Shift\Modules\Localisation\Repositories\EloquentLocaleRepository;
+use Tectonic\Shift\Modules\Localisation\Repositories\EloquentLocalisationRepository;
 
-class DoctrineLocalisationRepositoryTest extends AcceptanceTestCase
+class EloquentLocalisationRepositoryTest extends AcceptanceTestCase
 {
-
     /**
      * @var DoctrineLocaleRepository
      */
@@ -33,30 +32,27 @@ class DoctrineLocalisationRepositoryTest extends AcceptanceTestCase
     {
         parent::setUp();
 
-        Mockery::close(); // Destroy any existing mocks before creating new ones
-
         $this->cleanData['locales'] = [
             ['locale'  => 'English (Great Britain)', 'code' => 'en_GB'],
-            ['locale'  => 'English (Australian)', 'code'    => 'en_AU'],
-            ['locale'  => 'English (New Zealand)', 'code'   => 'en_NZ'],
-            ['locale'  => 'English (United States)', 'code' => 'en_US'],
+            ['locale'  => 'English (Australian)',    'code' => 'en_AU'],
+            ['locale'  => 'English (New Zealand)',   'code' => 'en_NZ'],
+            ['locale'  => 'English (United States)', 'code' => 'en_US']
         ];
 
         $this->cleanData['localisations'] = [
             ['localeId' => 1, 'foreignId' => 1, 'resource' => 'Tectonic\Shift\CustomField', 'field' => 'label', 'value' => 'Custom field en_GB'],
             ['localeId' => 2, 'foreignId' => 1, 'resource' => 'Tectonic\Shift\CustomField', 'field' => 'label', 'value' => 'Custom field en_AU'],
             ['localeId' => 3, 'foreignId' => 1, 'resource' => 'Tectonic\Shift\CustomField', 'field' => 'label', 'value' => 'Custom field en_NZ'],
-            ['localeId' => 4, 'foreignId' => 1, 'resource' => 'Tectonic\Shift\CustomField', 'field' => 'label', 'value' => 'Custom field en_US'],
+            ['localeId' => 4, 'foreignId' => 1, 'resource' => 'Tectonic\Shift\CustomField', 'field' => 'label', 'value' => 'Custom field en_US']
         ];
 
-        $this->localeRepository = App::make(DoctrineLocaleRepository::class);
-        $this->localisationRepository = App::make(DoctrineLocalisationRepository::class);
+        $this->localeRepository = App::make(EloquentLocaleRepository::class);
+        $this->localisationRepository = App::make(EloquentLocalisationRepository::class);
     }
 
     public function testFindTranslationFetchesTranslation()
     {
         $this->createLocales();
-        $this->createLocalisations();
 
         $result = $this->localisationRepository->findTranslation(1, 'Tectonic\Shift\CustomField', 'label', 'en_NZ');
 
@@ -65,21 +61,12 @@ class DoctrineLocalisationRepositoryTest extends AcceptanceTestCase
 
     private function createLocales()
     {
-        foreach($this->cleanData['locales'] as $locale)
-        {
+        foreach($this->cleanData['locales'] as $key => $locale) {
             $resource = $this->localeRepository->getNew($locale);
             $this->localeRepository->save($resource);
+
+            $localisation = $this->localisationRepository->getNew($this->cleanData['localisations'][$key]);
+            $resource->localisations()->save($localisation);
         }
     }
-
-    private function createLocalisations()
-    {
-        foreach($this->cleanData['localisations'] as $localisation)
-        {
-            $resource = $this->localisationRepository->getNew($localisation);
-            $this->localisationRepository->save($resource);
-        }
-    }
-
-
 }

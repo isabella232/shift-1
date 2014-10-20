@@ -27,7 +27,7 @@ class CreateAccountUserTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('account_user')
+		Schema::drop('account_user');
 	}
 
 }
