@@ -70,7 +70,7 @@ class AcceptanceTestCase extends TestCase
         $artisan = $this->app->make('artisan');
         $artisan->call('migrate', [
             '--database' => $this->database,
-            '--path'     => 'migrations'
+            '--path'     => 'src/migrations'
         ]);
 
         $this->setupAccount();
