@@ -1,11 +1,11 @@
 <?php
-
 namespace Tectonic\Shift\Library;
 
 use Event;
 use File;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider as Provider;
+use Illuminate\Foundation\AliasLoader;
 
 abstract class ServiceProvider extends Provider
 {
@@ -43,10 +43,10 @@ abstract class ServiceProvider extends Provider
 	 */
 	public function register()
 	{
-		$this->registerServiceProviders();
 		$this->registerAliases();
 		$this->registerListeners();
 		$this->registerRepositories();
+		$this->registerServiceProviders();
 	}
 
 	/**
@@ -77,8 +77,8 @@ abstract class ServiceProvider extends Provider
 	 */
 	protected function registerAliases()
 	{
-		foreach ($this->aliases as $key => $value) {
-			$this->app->alias($key, $value);
+		foreach ($this->aliases as $alias => $abstract) {
+            AliasLoader::getInstance()->alias($alias, $abstract);
 		}
 	}
 

@@ -1,4 +1,5 @@
-<?php namespace Tests\Unit\Library\Composers;
+<?php
+namespace Tests\Unit\Library\Composers;
 
 use Mockery as m;
 use Tectonic\Shift\Library\Composers\LayoutsApplicationComposer;
