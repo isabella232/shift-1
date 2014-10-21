@@ -1,4 +1,5 @@
-<?php namespace Tectonic\Shift\Modules\Localisation\Repositories;
+<?php
+namespace Tectonic\Shift\Modules\Localisation\Repositories;
 
 use Tectonic\Shift\Modules\Localisation\Models\Locale;
 use Tectonic\Shift\Library\Support\Database\Eloquent\Repository;
@@ -16,8 +17,19 @@ class EloquentLocaleRepository extends Repository implements LocaleRepositoryInt
     /**
      * @param Locale $locale
      */
-    public function __construct(Locale $locale) {
+    public function __construct(Locale $locale)
+    {
         $this->model = $locale;
+    }
+
+    /**
+     * Creates a new locale instance.
+     *
+     * @param array $input
+     */
+    public function getNew(array $input = [])
+    {
+        return Locale::add($input['locale'], $input['code']);
     }
 
     /**

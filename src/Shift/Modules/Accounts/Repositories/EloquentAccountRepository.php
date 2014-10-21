@@ -1,11 +1,12 @@
 <?php
-
 namespace Tectonic\Shift\Modules\Accounts\Repositories;
 
 use Tectonic\Shift\Modules\Accounts\AccountNotFoundException;
+use Tectonic\Shift\Modules\Accounts\Contracts\AccountInterface;
 use Tectonic\Shift\Modules\Accounts\Contracts\AccountRepositoryInterface;
 use Tectonic\Shift\Modules\Accounts\Models\Account;
 use Tectonic\Shift\Library\Support\Database\Eloquent\Repository;
+use Tectonic\Shift\Modules\Users\Contracts\UserInterface;
 
 class EloquentAccountRepository extends Repository implements AccountRepositoryInterface
 {
@@ -25,6 +26,17 @@ class EloquentAccountRepository extends Repository implements AccountRepositoryI
     public function __construct(Account $model)
     {
         $this->model = $model;
+    }
+
+    /**
+     * Creates and returns a new account instance.
+     *
+     * @param array $data
+     * @return Account
+     */
+    public function getNew(array $data = [])
+    {
+        return Account::add($data['name']);
     }
 
 	/**
@@ -67,5 +79,15 @@ class EloquentAccountRepository extends Repository implements AccountRepositoryI
     public function getCount()
     {
         return $this->getQuery()->withTrashed()->count();
+    }
+
+    /**
+     * @param AccountInterface $account
+     * @param UserInterface $user
+     * @return mixed
+     */
+    public function addUser(AccountInterface $account, UserInterface $user)
+    {
+        return $account->users()->attach($user->getId());
     }
 }

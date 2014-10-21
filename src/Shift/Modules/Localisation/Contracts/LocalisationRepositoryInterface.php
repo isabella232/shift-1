@@ -1,4 +1,5 @@
-<?php namespace Tectonic\Shift\Modules\Localisation\Contracts;
+<?php
+namespace Tectonic\Shift\Modules\Localisation\Contracts;
 
 interface LocalisationRepositoryInterface
 {

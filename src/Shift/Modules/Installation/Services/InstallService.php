@@ -6,7 +6,7 @@ use Event;
 use Tectonic\Shift\Library\Validation\ValidationException;
 use Tectonic\Shift\Modules\Accounts\Contracts\AccountRepositoryInterface;
 use Tectonic\Shift\Modules\Accounts\Services\AccountDomainsService;
-use Tectonic\Shift\Modules\Accounts\Services\AccountOwnershipService;
+use Tectonic\Shift\Modules\Accounts\Services\AccountUsersService;
 use Tectonic\Shift\Modules\Installation\Contracts\InstallationListenerInterface;
 use Tectonic\Shift\Modules\Installation\Validators\InstallValidation;
 use Tectonic\Shift\Modules\Localisation\Services\LocaleManagementService;
@@ -20,7 +20,7 @@ class InstallService
     private $accountDomainsService;
 
     /**
-     * @var AccountOwnershipService
+     * @var AccountUsersService
      */
     private $ownershipService;
 
@@ -42,14 +42,14 @@ class InstallService
     /**
      * @param AccountRepositoryInterface $accountsRepository
      * @param AccountDomainsService $accountDomainsService
-     * @param AccountOwnershipService $ownershipService
+     * @param AccountUsersService $ownershipService
      * @param UserManagementService $userManagementService
      * @param LocaleManagementService $localeManagementService
      */
     public function __construct(
         AccountRepositoryInterface $accountsRepository,
         AccountDomainsService $accountDomainsService,
-        AccountOwnershipService $ownershipService,
+        AccountUsersService $ownershipService,
         UserManagementService $userManagementService,
         LocaleManagementService $localeManagementService
     )
@@ -109,8 +109,10 @@ class InstallService
      */
     public function installShift(array $input = [])
     {
-        Event::fire('shift.installing', [$input]);
-        Event::fire('shift.installed', [$input]);
+        $user = $this->setupUser($input);
+
+        Event::fire('shift.installing', [$user, $input]);
+        Event::fire('shift.installed', [$user, $input]);
     }
 
     /**
@@ -121,7 +123,6 @@ class InstallService
      */
     public function setupAccount($input)
     {
-        $accountData = array_only($input, ['name']);
         $locale = $this->setupLocale();
         $user = $this->setupUser($input);
 
@@ -129,7 +130,7 @@ class InstallService
 
         $account->setOwner($user);
         $account->addUser($user);
-        $account->addLocale($locale);
+
 
         $this->accountsRepository->save($account);
 

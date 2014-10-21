@@ -3,6 +3,7 @@
 namespace Tectonic\Shift\Modules\Accounts\Contracts;
 
 use Tectonic\Shift\Library\Support\Database\RepositoryInterface;
+use Tectonic\Shift\Modules\Users\Contracts\UserInterface;
 
 interface AccountRepositoryInterface extends RepositoryInterface
 {
@@ -28,4 +29,13 @@ interface AccountRepositoryInterface extends RepositoryInterface
      * @return mixed
      */
     public function getCount();
+
+    /**
+     * Add a new user to the account.
+     *
+     * @param AccountInterface $account
+     * @param UserInterface $user
+     * @return mixed
+     */
+    public function addUser(AccountInterface $account, UserInterface $user);
 }

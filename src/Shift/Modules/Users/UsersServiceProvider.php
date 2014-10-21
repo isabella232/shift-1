@@ -2,8 +2,8 @@
 
 use App;
 use Tectonic\Shift\Library\ServiceProvider;
-use Tectonic\Shift\Modules\Users\Repositories\UserRepositoryInterface;
-use Tectonic\Shift\Modules\Users\Repositories\DoctrineUserRepository;
+use Tectonic\Shift\Modules\Users\Contracts\UserRepositoryInterface;
+use Tectonic\Shift\Modules\Users\Contracts\EloquentUserRepository;
 
 class UsersServiceProvider extends ServiceProvider
 {
@@ -16,6 +16,6 @@ class UsersServiceProvider extends ServiceProvider
     {
         parent::register();
 
-        $this->app->singleton(UserRepositoryInterface::class, DoctrineUserRepository::class);
+        $this->app->singleton(UserRepositoryInterface::class, EloquentUserRepository::class);
     }
 }

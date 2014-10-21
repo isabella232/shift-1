@@ -3,6 +3,7 @@ namespace Tectonic\Shift\Modules\Localisation\Repositories;
 
 use Doctrine\ORM\EntityManager;
 use Tectonic\Shift\Library\Support\Database\Eloquent\Repository;
+use Tectonic\Shift\Modules\Localisation\Contracts\LocaleInterface;
 use Tectonic\Shift\Modules\Localisation\Contracts\LocaleRepositoryInterface;
 use Tectonic\Shift\Modules\Localisation\Contracts\LocalisationRepositoryInterface;
 use Tectonic\Shift\Modules\Localisation\Models\Localisation;

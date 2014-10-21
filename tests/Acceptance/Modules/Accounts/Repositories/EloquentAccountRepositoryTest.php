@@ -1,13 +1,16 @@
-<?php namespace Tests\Acceptance\Modules\Accounts\Repositories;
+<?php
+namespace Tests\Acceptance\Modules\Accounts\Repositories;
 
 use App;
-use Doctrine\ORM\EntityManager;
 use Mockery;
 use Tectonic\Shift\Modules\Accounts\Repositories\EloquentAccountRepository;
+use Tectonic\Shift\Modules\Users\Repositories\EloquentUserRepository;
 use Tests\AcceptanceTestCase;
 
 class EloquentAccountRepositoryTest extends AcceptanceTestCase
 {
+    private $accountRepository;
+
     /**
      * Data array complete with all required field to make a new CustomField
      *
@@ -26,7 +29,8 @@ class EloquentAccountRepositoryTest extends AcceptanceTestCase
             'name' => 'Test account'
         ];
 
-        $this->repository = App::make(EloquentAccountRepository::class);
+        $this->accountRepository = App::make(EloquentAccountRepository::class);
+        $this->userRepository = App::make(EloquentUserRepository::class);
     }
 
     /**
@@ -37,7 +41,7 @@ class EloquentAccountRepositoryTest extends AcceptanceTestCase
     public function testRepositoryPerformsCreateAndReadOperations()
     {
         $account = $this->create();
-        $storedAccount = $this->repository->getById($account->id);
+        $storedAccount = $this->accountRepository->getById($account->id);
 
         $this->assertEquals($account->id, $storedAccount->id);
     }
@@ -52,9 +56,9 @@ class EloquentAccountRepositoryTest extends AcceptanceTestCase
         $account = $this->create();
         $account->name ='Updated test account';
 
-        $this->repository->update($account);
+        $this->accountRepository->update($account);
 
-        $updatedAccount = $this->repository->getById($account->id);
+        $updatedAccount = $this->accountRepository->getById($account->id);
 
         $this->assertEquals('Updated test account', $updatedAccount->name);
     }
@@ -68,9 +72,9 @@ class EloquentAccountRepositoryTest extends AcceptanceTestCase
     {
         $account = $this->create();
 
-        $this->repository->delete($account);
+        $this->accountRepository->delete($account);
 
-        $this->assertNull($this->repository->getById($account->id));
+        $this->assertNull($this->accountRepository->getById($account->id));
     }
 
     /**
@@ -79,12 +83,25 @@ class EloquentAccountRepositoryTest extends AcceptanceTestCase
     protected function create(array $data = [])
     {
         $data = array_merge($this->cleanData, $data);
-        $account = $this->repository->getNew($data);
+        $account = $this->accountRepository->getNew($data);
 
-        $this->repository->save($account);
+        $this->accountRepository->save($account);
 
         return $account;
     }
 
+    public function testOwnerAssignment()
+    {
+        $user = $this->userRepository->getNew(['firstName' => 'Kirk', 'lastName' => 'Bushell', 'email' => 'someemail@gmail.com', 'password' => '1234']);
+        $this->userRepository->save($user);
 
+        $account = $this->create();
+        $account->setOwner($user);
+
+        $this->accountRepository->save($account);
+
+        $account = $this->accountRepository->getById($account->getId());
+
+        $this->assertEquals($account->getOwner()->getId(), $user->getId());
+    }
 }

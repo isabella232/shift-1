@@ -3,7 +3,7 @@
 namespace Tectonic\Shift\Modules\Users\Services;
 
 use Tectonic\Shift\Library\Support\ManagementService;
-use Tectonic\Shift\Modules\Users\Repositories\UserRepositoryInterface;
+use Tectonic\Shift\Modules\Users\Contracts\UserRepositoryInterface;
 use Tectonic\Shift\Modules\Users\Validation\UserValidation;
 
 /**
