@@ -78,7 +78,7 @@ class EloquentAccountRepository extends Repository implements AccountRepositoryI
      */
     public function getCount()
     {
-        return $this->getQuery()->withTrashed()->count();
+        return Account::withTrashed()->count();
     }
 
     /**

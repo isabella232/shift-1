@@ -1,6 +1,7 @@
 <?php
 namespace Tectonic\Shift\Modules\Accounts\Models;
 
+use Illuminate\Database\Eloquent\SoftDeletingTrait;
 use Tectonic\Shift\Library\Support\Database\Eloquent\Model;
 use Tectonic\Shift\Modules\Accounts\Contracts\AccountInterface;
 use Tectonic\Shift\Modules\Users\Contracts\UserInterface;
@@ -8,6 +9,8 @@ use Tectonic\Shift\Modules\Users\Models\User;
 
 class Account extends Model implements AccountInterface
 {
+    use SoftDeletingTrait;
+
     /**
      * Fillable fields via mass assignment.
      *
