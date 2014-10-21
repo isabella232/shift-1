@@ -40,8 +40,7 @@
             "Tests\\": "tests/Tests"
         },
         "classmap": [
-            "migrations",
-            "src"
+            "src/migrations"
         ]
     },
     "minimum-stability": "dev",
