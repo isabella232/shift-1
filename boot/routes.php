@@ -10,7 +10,7 @@ Route::group(['prefix' => Config::get('shift.url')], function() {
         Route::collection('locales', 'Tectonic\Shift\Controllers\LocaleController');
         Route::collection('localisations', 'Tectonic\Shift\Controllers\LocalisationController');
         Route::collection('roles', 'Tectonic\Shift\Controllers\RoleController');
-        Route::collection('sessions', 'Tectonic\Shift\Controllers\SessionController');
+        Route::collection('sessions', 'Tectonic\Shift\Controllers\AuthenticationController');
         Route::collection('users', 'Tectonic\Shift\Controllers\UserController');
 
         Route::get('languages', 'Tectonic\Shift\Controllers\LanguageController@getLanguages');

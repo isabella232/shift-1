@@ -1,9 +1,9 @@
 <?php
-namespace Tectonic\Shift\Modules\Sessions\Services;
+namespace Tectonic\Shift\Modules\Authentication\Services;
 
 use Illuminate\Auth\Guard;
 
-class AuthService
+class AuthenticationService
 {
     /**
      * @var Guard

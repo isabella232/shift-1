@@ -1,25 +1,22 @@
-<?php
-namespace Tectonic\Shift\Controllers;
+<?php namespace Tectonic\Shift\Controllers;
 
 use Auth;
-use Illuminate\Routing\Controller;
 use Input;
 use Response;
-use Tectonic\Shift\Modules\Sessions\Services\AuthService;
-use Tectonic\Shift\Modules\Sessions\Validators\SessionValidation;
+use Illuminate\Routing\Controller;
+use Tectonic\Shift\Modules\Authentication\Services\AuthenticationService;
 
 class SessionController extends Controller
 {
     /**
-     * @var AuthService
+     * @var AuthenticationService
      */
     protected $authenticationService;
 
     /**
-     * @param SessionValidation $validator
-     * @param AuthService $authenticationService
+     * @param AuthenticationService $authenticationService
      */
-    public function __construct(AuthService $authenticationService)
+    public function __construct(AuthenticationService $authenticationService)
     {
         $this->authenticationService = $authenticationService;
     }

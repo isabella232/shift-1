@@ -1,8 +1,8 @@
-<?php namespace Tectonic\Shift\Modules\Sessions;
+<?php namespace Tectonic\Shift\Modules\Authentication;
 
 use Tectonic\Shift\Library\ServiceProvider;
 
-class SessionServiceProvider extends ServiceProvider
+class AuthenticationServiceProvider extends ServiceProvider
 {
     /**
      * Register the service provider.

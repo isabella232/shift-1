@@ -1,8 +1,8 @@
-<?php namespace Tectonic\Shift\Modules\Sessions\Validators;
+<?php namespace Tectonic\Shift\Modules\Authentication\Validators;
 
 use Tectonic\Shift\Library\Validation\Validation;
 
-class SessionValidation extends Validation
+class AuthenticationValidation extends Validation
 {
     protected $rules = [
         'email' => 'required|email',
