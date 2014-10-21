@@ -1,5 +1,4 @@
-<?php
-namespace Tectonic\Shift;
+<?php namespace Tectonic\Shift;
 
 use App;
 use Tectonic\Shift\Library\Router;
@@ -47,6 +46,7 @@ class ShiftServiceProvider extends ServiceProvider
         'Tectonic\Shift\Modules\Localisation\LocalisationServiceProvider',
         'Tectonic\Shift\Modules\Security\SecurityServiceProvider',
         'Tectonic\Shift\Modules\Users\UsersServiceProvider',
+        'Tectonic\Shift\Modules\Authentication\AuthenticationServiceProvider',
     ];
 
     /**
