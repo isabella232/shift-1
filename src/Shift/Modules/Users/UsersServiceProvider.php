@@ -3,7 +3,7 @@ namespace Tectonic\Shift\Modules\Users;
 
 use Tectonic\Shift\Library\ServiceProvider;
 use Tectonic\Shift\Modules\Users\Contracts\UserRepositoryInterface;
-use Tectonic\Shift\Modules\Users\Contracts\EloquentUserRepository;
+use Tectonic\Shift\Modules\Users\Repositories\EloquentUserRepository;
 
 class UsersServiceProvider extends ServiceProvider
 {
