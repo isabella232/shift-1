@@ -33,7 +33,7 @@ class Account extends Model implements AccountInterface
      */
     public function owner()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'userId');
     }
 
     /**

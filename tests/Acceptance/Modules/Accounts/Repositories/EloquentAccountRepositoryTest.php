@@ -101,7 +101,8 @@ class EloquentAccountRepositoryTest extends AcceptanceTestCase
         $this->accountRepository->save($account);
 
         $account = $this->accountRepository->getById($account->getId());
-
+        $account->owner;
+        
         $this->assertEquals($account->getOwner()->getId(), $user->getId());
     }
 }
