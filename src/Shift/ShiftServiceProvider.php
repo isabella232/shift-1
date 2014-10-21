@@ -1,9 +1,9 @@
-<?php namespace Tectonic\Shift;
+<?php
+namespace Tectonic\Shift;
 
 use App;
 use Tectonic\Shift\Library\Router;
 use Tectonic\Shift\Library\ServiceProvider;
-use Tectonic\Shift\Library\Validation\DoctrinePresenceVerifier;
 
 class ShiftServiceProvider extends ServiceProvider
 {

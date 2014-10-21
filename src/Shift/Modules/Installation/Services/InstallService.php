@@ -109,10 +109,10 @@ class InstallService
      */
     public function installShift(array $input = [])
     {
-        $user = $this->setupUser($input);
+        $admin = $this->setupUser($input);
 
-        Event::fire('shift.installing', [$user, $input]);
-        Event::fire('shift.installed', [$user, $input]);
+        Event::fire('shift.installing', [$admin, $input]);
+        Event::fire('shift.installed', [$admin, $input]);
     }
 
     /**
@@ -124,7 +124,7 @@ class InstallService
     public function setupAccount($input)
     {
         $locale = $this->setupLocale();
-        $user = $this->setupUser($input);
+        $admin = $this->setupUser($input);
 
         $account = $this->accountsRepository->getNew($accountData);
 
