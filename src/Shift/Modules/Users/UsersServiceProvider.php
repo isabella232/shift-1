@@ -1,6 +1,6 @@
-<?php namespace Tectonic\Shift\Modules\Users;
+<?php
+namespace Tectonic\Shift\Modules\Users;
 
-use App;
 use Tectonic\Shift\Library\ServiceProvider;
 use Tectonic\Shift\Modules\Users\Contracts\UserRepositoryInterface;
 use Tectonic\Shift\Modules\Users\Contracts\EloquentUserRepository;
@@ -8,14 +8,11 @@ use Tectonic\Shift\Modules\Users\Contracts\EloquentUserRepository;
 class UsersServiceProvider extends ServiceProvider
 {
     /**
-     * Register the service provider.
+     * Repositories defined by the users module.
      *
-     * @return void
+     * @var array
      */
-    public function register()
-    {
-        parent::register();
-
-        $this->app->singleton(UserRepositoryInterface::class, EloquentUserRepository::class);
-    }
+    protected $repositories = [
+        UserRepositoryInterface::class => EloquentUserRepository::class
+    ];
 }

@@ -2,7 +2,7 @@
 namespace Tectonic\Shift\Modules\Startup;
 
 use Event;
-use Tectonic\Shift\Modules\Configuration\Repositories\SettingRepositoryInterface;
+use Tectonic\Shift\Modules\Configuration\Contracts\SettingRepositoryInterface;
 
 /**
  * Class StartupService

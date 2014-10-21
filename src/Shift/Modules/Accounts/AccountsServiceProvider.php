@@ -6,7 +6,7 @@ use App;
 use Tectonic\Shift\Library\ServiceProvider;
 use Tectonic\Shift\Modules\Accounts\Contracts\AccountRepositoryInterface;
 use Tectonic\Shift\Modules\Accounts\Repositories\EloquentAccountRepository;
-use Tectonic\Shift\Modules\Accounts\Repositories\DomainRepositoryInterface;
+use Tectonic\Shift\Modules\Accounts\Contracts\DomainRepositoryInterface;
 use Tectonic\Shift\Modules\Accounts\Repositories\EloquentDomainRepository;
 use Tectonic\Shift\Modules\Accounts\Services\CurrentAccountService;
 

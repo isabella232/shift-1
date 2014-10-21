@@ -7,16 +7,6 @@ use Tectonic\Shift\Modules\Localisation\Services\LocaleManagementService;
 class AccountInstalled extends Listener
 {
     /**
-     * @var LocaleManagementService
-     */
-    private $localeService;
-
-    public function __construct(LocaleManagementService $localeService)
-    {
-        $this->localeService = $localeService;
-    }
-
-    /**
      * @return array
      */
     public function hooks()

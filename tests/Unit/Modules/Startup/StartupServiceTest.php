@@ -3,7 +3,7 @@ namespace Tests\Unit\Modules\Startup;
 
 use Event;
 use Mockery as m;
-use Tectonic\Shift\Modules\Configuration\Repositories\SettingRepositoryInterface;
+use Tectonic\Shift\Modules\Configuration\Contracts\SettingRepositoryInterface;
 use Tectonic\Shift\Modules\Startup\StartupService;
 use Tests\UnitTestCase;
 

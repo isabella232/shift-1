@@ -1,4 +1,5 @@
-<?php namespace Tectonic\Shift\Modules\Fields;
+<?php
+namespace Tectonic\Shift\Modules\Fields;
 
 use App;
 use Tectonic\Shift\Library\ServiceProvider;

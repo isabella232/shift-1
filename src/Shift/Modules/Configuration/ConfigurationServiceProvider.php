@@ -2,8 +2,8 @@
 
 use App;
 use Tectonic\Shift\Library\ServiceProvider;
-use Tectonic\Shift\Modules\Configuration\Repositories\SettingRepositoryInterface;
-use Tectonic\Shift\Modules\Configuration\Repositories\DoctrineSettingRepository;
+use Tectonic\Shift\Modules\Configuration\Contracts\SettingRepositoryInterface;
+use Tectonic\Shift\Modules\Configuration\Repositories\EloquentSettingRepository;
 
 class ConfigurationServiceProvider extends ServiceProvider
 {
@@ -16,6 +16,6 @@ class ConfigurationServiceProvider extends ServiceProvider
 
     private function registerSettingRepository()
     {
-        $this->app->singleton(SettingRepositoryInterface::class, DoctrineSettingRepository::class);
+        $this->app->singleton(SettingRepositoryInterface::class, EloquentSettingRepository::class);
     }
 }

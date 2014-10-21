@@ -2,6 +2,7 @@
 
 namespace Tectonic\Shift\Modules\Accounts\Repositories;
 
+use Tectonic\Shift\Modules\Accounts\Contracts\DomainRepositoryInterface;
 use Tectonic\Shift\Modules\Accounts\Models\Domain;
 use Tectonic\Shift\Library\Support\Database\Eloquent\Repository;
 
