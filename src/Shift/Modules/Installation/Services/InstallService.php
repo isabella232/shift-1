@@ -1,5 +1,4 @@
 <?php
-
 namespace Tectonic\Shift\Modules\Installation\Services;
 
 use Event;
@@ -10,55 +9,23 @@ use Tectonic\Shift\Modules\Accounts\Services\AccountUsersService;
 use Tectonic\Shift\Modules\Installation\Contracts\InstallationListenerInterface;
 use Tectonic\Shift\Modules\Installation\Validators\InstallValidation;
 use Tectonic\Shift\Modules\Localisation\Services\LocaleManagementService;
+use Tectonic\Shift\Modules\Users\Contracts\UserRepositoryInterface;
+use Tectonic\Shift\Modules\Users\Repositories\EloquentUserRepository;
 use Tectonic\Shift\Modules\Users\Services\UserManagementService;
 
 class InstallService
 {
     /**
-     * @var AccountDomainsService
+     * @var UserRepositoryInterface
      */
-    private $accountDomainsService;
+    private $userRepository;
 
     /**
-     * @var AccountUsersService
+     * @param UserRepositoryInterface $userRepository
      */
-    private $ownershipService;
-
-    /**
-     * @var UserManagementService
-     */
-    private $userManagementService;
-
-    /**
-     * @var AccountRepositoryInterface
-     */
-    private $accountsRepository;
-
-    /**
-     * @var LocaleManagementService
-     */
-    private $localeManagementService;
-
-    /**
-     * @param AccountRepositoryInterface $accountsRepository
-     * @param AccountDomainsService $accountDomainsService
-     * @param AccountUsersService $ownershipService
-     * @param UserManagementService $userManagementService
-     * @param LocaleManagementService $localeManagementService
-     */
-    public function __construct(
-        AccountRepositoryInterface $accountsRepository,
-        AccountDomainsService $accountDomainsService,
-        AccountUsersService $ownershipService,
-        UserManagementService $userManagementService,
-        LocaleManagementService $localeManagementService
-    )
+    public function __construct(UserRepositoryInterface $userRepository)
     {
-        $this->accountDomainsService = $accountDomainsService;
-        $this->ownershipService = $ownershipService;
-        $this->userManagementService = $userManagementService;
-        $this->accountsRepository = $accountsRepository;
-        $this->localeManagementService = $localeManagementService;
+        $this->userRepository = $userRepository;
     }
 
     /**
@@ -116,30 +83,6 @@ class InstallService
     }
 
     /**
-     * Setup a new account, with a domain and user as well.
-     *
-     * @param $input
-     * @return mixed
-     */
-    public function setupAccount($input)
-    {
-        $locale = $this->setupLocale();
-        $admin = $this->setupUser($input);
-
-        $account = $this->accountsRepository->getNew($accountData);
-
-        $account->setOwner($user);
-        $account->addUser($user);
-
-
-        $this->accountsRepository->save($account);
-
-        $this->accountDomainsService->addDomain($account, $input['host']);
-
-        return $account;
-    }
-
-    /**
      * Setup default locale
      *
      * @return mixed
@@ -160,8 +103,12 @@ class InstallService
      */
     public function setupUser(array $input)
     {
-        $userData = array_merge(array_only($input, ['email', 'password', 'passwordConfirmation']), ['firstName' => 'Super', 'lastName' => 'Admin']);
+        $userData = array_merge($input, ['firstName' => 'Super', 'lastName' => 'Admin']);
 
-        return $this->userManagementService->create($userData);
+        $user = $this->userRepository->getNew($userData);
+
+        $this->userRepository->save($user);
+
+        return $user;
     }
 }
