@@ -2,6 +2,7 @@
 namespace Tectonic\Shift\Modules\Accounts\Models;
 
 use Tectonic\Shift\Library\Support\Database\Eloquent\Model;
+use Tectonic\Shift\Modules\Accounts\Contracts\AccountInterface;
 use Tectonic\Shift\Modules\Accounts\Contracts\DomainInterface;
 
 class Domain extends Model implements DomainInterface
@@ -52,5 +53,15 @@ class Domain extends Model implements DomainInterface
     public function setDomain($domain)
     {
         $this->domain = $domain;
+    }
+
+    /**
+     * Set the account relationship for this particular domain.
+     *
+     * @param Account $account
+     */
+    public function setAccount(AccountInterface $account)
+    {
+        $this->accountId = $account->getId();
     }
 }

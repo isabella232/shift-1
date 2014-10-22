@@ -40,6 +40,16 @@ class Account extends Model implements AccountInterface
     }
 
     /**
+     * Each account is has many users.
+     *
+     * @return mixed
+     */
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
+
+    /**
      * @return string
      */
     public function getName()

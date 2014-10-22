@@ -22,5 +22,13 @@ interface DomainInterface
      * @return void
      */
     public function setDomain($domain);
+
+    /**
+     * Set the account that this domain is affiliated with.
+     *
+     * @param AccountInterface $account
+     * @return mixed
+     */
+    public function setAccount(AccountInterface $account);
 }
  

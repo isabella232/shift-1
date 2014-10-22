@@ -12,7 +12,7 @@ class ShiftInstalling extends Listener
     /**
      * @var AccountDomainsService
      */
-    private $domainsService;
+    private $accountDomainsService;
 
     /**
      * @var AccountManagementService
@@ -30,7 +30,7 @@ class ShiftInstalling extends Listener
      */
     public function __construct(AccountManagementService $accountsService, AccountUsersService $accountUsersService, AccountDomainsService $domainsService)
     {
-        $this->domainsService = $domainsService;
+        $this->accountDomainsService = $domainsService;
         $this->accountsService = $accountsService;
         $this->accountUsersService = $accountUsersService;
     }

@@ -1,10 +1,10 @@
 <?php
-
 namespace Tectonic\Shift\Modules\Accounts\Services;
 
 use Tectonic\Shift\Library\Authorization\Consumer;
-use Tectonic\Shift\Modules\Accounts\Entities\Account;
+use Tectonic\Shift\Modules\Accounts\Contracts\AccountInterface;
 use Tectonic\Shift\Modules\Accounts\Contracts\AccountRepositoryInterface;
+use Tectonic\Shift\Modules\Accounts\Contracts\DomainInterface;
 use Tectonic\Shift\Modules\Accounts\Contracts\DomainRepositoryInterface;
 use Tectonic\Shift\Modules\Accounts\Validators\DomainValidation;
 
@@ -33,16 +33,16 @@ class AccountDomainsService
      * @param string $domain
      * @return mixed
      */
-    public function addDomain(Account $account, $domain)
+    public function addDomain(AccountInterface $account, $domain)
     {
         $domainData = [
-            'account' => $account,
             'domain' => $domain
         ];
 
         (new DomainValidation)->setInput($domainData)->validate();
 
         $domain = $this->domainRepository->getNew($domainData);
+        $domain->setAccount($account);
 
         return $this->domainRepository->save($domain);
     }

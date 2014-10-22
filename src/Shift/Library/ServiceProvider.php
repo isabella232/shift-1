@@ -43,9 +43,9 @@ abstract class ServiceProvider extends Provider
 	 */
 	public function register()
 	{
+		$this->registerRepositories();
 		$this->registerAliases();
 		$this->registerListeners();
-		$this->registerRepositories();
 		$this->registerServiceProviders();
 	}
 
@@ -66,7 +66,7 @@ abstract class ServiceProvider extends Provider
     protected function registerListeners()
     {
         foreach ($this->listeners as $listener) {
-            Event::subscribe(new $listener);
+            Event::subscribe($this->app->make($listener));
         }
     }
 
