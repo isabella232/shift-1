@@ -1,6 +1,8 @@
-<?php namespace Tectonic\Shift\Modules\Localisation\Models;
+<?php
+namespace Tectonic\Shift\Modules\Localisation\Models;
 
 use Tectonic\Shift\Library\Support\Database\Eloquent\Model;
+use Tectonic\Shift\Modules\Accounts\Models\Account;
 use Tectonic\Shift\Modules\Localisation\Contracts\LocaleInterface;
 
 class Locale extends Model implements LocaleInterface
@@ -23,6 +25,14 @@ class Locale extends Model implements LocaleInterface
     public function localisations()
     {
         return $this->hasMany(Localisation::class);
+    }
+
+    /**
+     * @return QueryBuilder
+     */
+    public function accounts()
+    {
+        return $this->belongsToMany(Account::class);
     }
 
     /**

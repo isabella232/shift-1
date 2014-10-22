@@ -7,26 +7,20 @@ use Tectonic\Shift\Modules\Accounts\Contracts\AccountRepositoryInterface;
 use Tectonic\Shift\Modules\Accounts\Contracts\DomainRepositoryInterface;
 use Tectonic\Shift\Modules\Installation\Contracts\InstallationListenerInterface;
 use Tectonic\Shift\Modules\Installation\Services\InstallService;
+use Tectonic\Shift\Modules\Localisation\Contracts\LocaleRepositoryInterface;
 use Tectonic\Shift\Modules\Users\Contracts\UserRepositoryInterface;
 use Tests\AcceptanceTestCase;
 use Tests\Stubs\Installation\InstallationListener;
 
 class InstallServiceTest extends AcceptanceTestCase
 {
-	public function testInstallation()
-    {
-        // Setup
-        $this->setupTest();
+    private $input, $accountRepository;
 
-        // Now we make sure that the required data has been added
-        $this->assertUser();
-        $this->assertAccount();
-        $this->assertDomain();
-    }
-
-    private function setupTest()
+    public function setUp()
     {
-        $input = [
+        parent::setUp();
+
+        $this->input = [
             'name' => 'Install service test',
             'host' => 'somehost.com',
             'email' => 'installer@tectonic.com.au',
@@ -34,10 +28,17 @@ class InstallServiceTest extends AcceptanceTestCase
         ];
 
         $installService = App::make(InstallService::class);
-        $installService->freshInstall($input, new InstallationListener);
+        $installService->freshInstall($this->input, new InstallationListener);
+
+        $this->accountRepository = App::make(AccountRepositoryInterface::class);
+
+        $newAccount = $this->accountRepository->getByName('Install service test')[0];
+
+        // set the new current account
+        $this->currentAccountService->set($newAccount);
     }
 
-    private function assertUser()
+	public function testUserCreation()
     {
         // Setup the repository
         $users = App::make(UserRepositoryInterface::class);
@@ -48,23 +49,32 @@ class InstallServiceTest extends AcceptanceTestCase
         $this->assertEquals('Admin', $user->getLastName());
     }
 
-    private function assertAccount()
+    public function testAccountCreation()
     {
-        // Setup the repository
-        $accounts = App::make(AccountRepositoryInterface::class);
-        $account = $accounts->getByName('Install service test')[0];
+        $account = $this->currentAccountService->get();
 
         // Account based assertions
-        $this->assertEquals('Install service test', $account->getName());
+        $this->assertEquals($this->input['name'], $account->getName());
     }
 
-    private function assertDomain()
+    public function testUserAccountRelationshipCreation()
+    {
+        $account = $this->currentAccountService->get();
+
+        $users = App::make(UserRepositoryInterface::class);
+        $user = $users->getAll()[0];
+
+        $this->assertTrue($user->ownerOf($account));
+    }
+
+    public function testDomainCreation()
     {
         // Setup the repository
         $domains = App::make(DomainRepositoryInterface::class);
         $domain = $domains->getAll()[0];
 
         // Assert
-        $this->assertEquals('somehost.com', $domain->getDomain());
+        $this->assertEquals($this->input['host'], $domain->getDomain());
     }
 }
+

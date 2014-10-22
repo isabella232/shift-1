@@ -1,6 +1,8 @@
 <?php
 namespace Tectonic\Shift\Modules\Users\Contracts;
 
+use Tectonic\Shift\Modules\Accounts\Contracts\AccountInterface;
+
 interface UserInterface
 {
     /**
@@ -27,6 +29,14 @@ interface UserInterface
      * @return void
      */
     public function getPassword();
+
+    /**
+     * Determines whether or not the current user is an owner of the account provided.
+     *
+     * @param AccountInterface $account
+     * @return boolean
+     */
+    public function ownerOf(AccountInterface $account);
 
     /**
      * @param string $firstName

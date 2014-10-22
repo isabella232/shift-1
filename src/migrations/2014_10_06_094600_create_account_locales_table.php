@@ -12,7 +12,7 @@ class CreateAccountLocalesTable extends Migration {
 	 */
 	public function up()
 	{
-        Schema::create('account_locales', function(Blueprint $table)
+        Schema::create('account_locale', function(Blueprint $table)
         {
             $table->increments('id');
             $table->integer('account_id')->unsigned();
@@ -27,7 +27,7 @@ class CreateAccountLocalesTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('account_locales');
+		Schema::drop('account_locale');
 	}
 
 }

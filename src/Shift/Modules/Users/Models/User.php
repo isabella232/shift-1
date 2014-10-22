@@ -2,6 +2,8 @@
 namespace Tectonic\Shift\Modules\Users\Models;
 
 use Illuminate\Auth\UserInterface as AuthUserInterface;
+use Tectonic\Shift\Modules\Accounts\Contracts\AccountInterface;
+use Tectonic\Shift\Modules\Accounts\Models\Account;
 use Tectonic\Shift\Modules\Users\Contracts\UserInterface;
 use Illuminate\Auth\Reminders\RemindableInterface;
 use Tectonic\Shift\Library\Support\Database\Eloquent\Model;
@@ -28,6 +30,16 @@ class User extends Model implements UserInterface, AuthUserInterface, Remindable
      * @var string
      */
     protected $table = 'users';
+
+    /**
+     * Returns the accounts that the user owns.
+     *
+     * @return QueryBuilder
+     */
+    public function ownedAccounts()
+    {
+        return $this->hasMany(Account::class);
+    }
 
     /**
      * Should create a new instance of the entity, with the first name, last name and email provided.
@@ -85,6 +97,18 @@ class User extends Model implements UserInterface, AuthUserInterface, Remindable
     public function getPassword()
     {
         return $this->password;
+    }
+
+    /**
+     * Determine whether or not the user is an owner of the provided account.
+     *
+     * @param AccountInterface $account
+     */
+    public function ownerOf(AccountInterface $account)
+    {
+        $ownedAccountIds = $this->ownedAccounts->lists('id');
+
+        return in_array($account->getId(), $ownedAccountIds);
     }
 
     /**

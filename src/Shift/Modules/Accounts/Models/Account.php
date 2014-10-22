@@ -4,6 +4,7 @@ namespace Tectonic\Shift\Modules\Accounts\Models;
 use Illuminate\Database\Eloquent\SoftDeletingTrait;
 use Tectonic\Shift\Library\Support\Database\Eloquent\Model;
 use Tectonic\Shift\Modules\Accounts\Contracts\AccountInterface;
+use Tectonic\Shift\Modules\Localisation\Models\Locale;
 use Tectonic\Shift\Modules\Users\Contracts\UserInterface;
 use Tectonic\Shift\Modules\Users\Models\User;
 
@@ -26,6 +27,11 @@ class Account extends Model implements AccountInterface
     public function domains()
     {
         return $this->hasMany(Domain::class);
+    }
+
+    public function locales()
+    {
+        return $this->belongsToMany(Locale::class);
     }
 
     /**
