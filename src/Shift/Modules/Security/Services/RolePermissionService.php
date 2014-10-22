@@ -60,7 +60,7 @@ class RolePermissionService
      * @param $action
      * @return mixed|Resource
      */
-    public function pass($role, $resource, $action)
+    public function inherit($role, $resource, $action)
     {
         return $this->updatePermission($role, $resource, $action, null);
     }

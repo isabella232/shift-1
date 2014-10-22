@@ -44,7 +44,7 @@ class ShiftInstalling extends Listener
     public function hooks()
     {
         return [
-            'shift.installing' => 'createAccount'
+            'shift.installing' => 'whenShiftIsInstalling'
         ];
     }
 
@@ -53,8 +53,9 @@ class ShiftInstalling extends Listener
      *
      * @param User $user
      * @param array $input
+     * @listens shift.installing
      */
-    public function createAccount($user, array $input)
+    public function whenShiftIsInstalling($user, array $input)
     {
         $account = $this->accountsService->create($input);
 

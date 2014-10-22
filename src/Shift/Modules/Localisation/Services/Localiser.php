@@ -23,7 +23,7 @@ class Localiser
      *
      * This method accepts a resource, an array of fields that need localising,
      * and the locale code for required translations. It will look at each field, and try and find a translation
-     * for that field for that resource. This results in the resoruce having the translated values, rather
+     * for that field for that resource. This results in the resource having the translated values, rather
      * than the original values that were saved.
      *
      * @param mixed $resource
