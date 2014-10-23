@@ -1,6 +1,8 @@
 <?php
 namespace Tectonic\Shift\Library\Support\Database;
 
+use Tectonic\Shift\Library\Support\Database\Transformers\TransformerInterface;
+
 class EntityTransformer
 {
     /**
@@ -20,37 +22,16 @@ class EntityTransformer
     }
 
     /**
-     * Works through an array of elements and transforms each one.
+     * Transforms a resource. A resource can be an entity, or a collection of entities. Transformers
+     * will then notify the EntityTransformer as to whether or not they're suitable for the job.
      *
-     * @param array $collection
+     * @param $resource
      */
-    public function collection(array $collection)
-    {
-        foreach ($collection as $entity) {
-            $this->transform($entity);
-        }
-    }
-
-    /**
-     * Transforms a single entity based on the transformers available.
-     *
-     * @param $entity
-     */
-    public function entity($entity)
-    {
-        $this->transform($entity);
-    }
-
-    /**
-     * Transforms an entity, if a given transformer is appropriate for the job.
-     *
-     * @param $entity
-     */
-    protected function transform($entity)
+    public function transform($resource)
     {
         foreach ($this->transformers as $transformer) {
-            if ($transformer->isAppropriate($entity)) {
-                $transformer->decorate($entity);
+            if ($transformer->isAppropriate($resource)) {
+                $transformer->decorate($resource);
             }
         }
     }

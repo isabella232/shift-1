@@ -1,6 +1,8 @@
 <?php
 namespace Tectonic\Shift\Modules\Localisation\Contracts;
 
+use Tectonic\Shift\Modules\Localisation\Support\ResourceCriteria;
+
 interface LocalisationRepositoryInterface
 {
     /**
@@ -10,4 +12,12 @@ interface LocalisationRepositoryInterface
      * @return array
      */
     public function getUILocalisations(array $locales);
+
+    /**
+     * Returns a collection of localisations based on the resource criteria.
+     *
+     * @param ResourceCriteria $criteria
+     * @return mixed
+     */
+    public function getByResourceCriteria(ResourceCriteria $criteria);
 }

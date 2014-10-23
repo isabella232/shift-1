@@ -71,8 +71,8 @@ class Localiser
      * @param  mixed  $resource
      * @return string
      */
-    private function getResourceName($resource)
+    public function getResourceName($resource)
     {
-        return get_class($resource);
+        return class_basename($resource);
     }
 }
