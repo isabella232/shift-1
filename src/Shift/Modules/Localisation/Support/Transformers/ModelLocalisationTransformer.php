@@ -7,6 +7,18 @@ use Tectonic\Shift\Modules\Localisation\Contracts\LocalisedEntityInterface;
 use Tectonic\Shift\Modules\Localisation\Services\Localiser;
 use Tectonic\Shift\Modules\Localisation\Support\ResourceCriteria;
 
+/**
+ * Class ModelLocalisationTransformer
+ *
+ * Works on an entity or collection of entities to retrieve the various resources that need
+ * to be localised, and then does a second pass through the entity/collection and attaches these
+ * localised fields and values to the entity.
+ *
+ * @TODO: Currently this is Eloquent-only, and needs to be refactored to support any kind of model
+ * or entity or collection.
+ *
+ * @package Tectonic\Shift\Modules\Localisation\Support\Transformers
+ */
 class ModelLocalisationTransformer
 {
     /**

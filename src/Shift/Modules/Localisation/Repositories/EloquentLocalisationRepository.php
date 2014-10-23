@@ -7,6 +7,7 @@ use Tectonic\Shift\Modules\Localisation\Contracts\LocaleInterface;
 use Tectonic\Shift\Modules\Localisation\Contracts\LocaleRepositoryInterface;
 use Tectonic\Shift\Modules\Localisation\Contracts\LocalisationRepositoryInterface;
 use Tectonic\Shift\Modules\Localisation\Models\Localisation;
+use Tectonic\Shift\Modules\Localisation\Support\ResourceCriteria;
 
 class EloquentLocalisationRepository extends Repository implements LocalisationRepositoryInterface
 {
@@ -86,5 +87,16 @@ class EloquentLocalisationRepository extends Repository implements LocalisationR
         }
 
         return $array;
+    }
+
+    /**
+     * Returns a collection of localisations based on the resource criteria.
+     *
+     * @param ResourceCriteria $criteria
+     * @return mixed
+     */
+    public function getByResourceCriteria(ResourceCriteria $criteria)
+    {
+
     }
 }
