@@ -97,6 +97,16 @@ class EloquentLocalisationRepository extends Repository implements LocalisationR
      */
     public function getByResourceCriteria(ResourceCriteria $criteria)
     {
+        $resources = $criteria->getResources();
+        $query = $this->getQuery();
 
+        foreach ($resources as $resource) {
+            $query ->orWhere(function($query) use ($criteria, $resource) {
+                $query->whereResource($resource);
+                $query->whereIn('foreignId', $criteria->getIds($resource));
+            });
+        }
+
+        return $query->get();
     }
 }
