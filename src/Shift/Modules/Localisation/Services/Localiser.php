@@ -1,7 +1,7 @@
 <?php
 namespace Tectonic\Shift\Modules\Localisation\Services;
 
-use Tectonic\Shift\Modules\Localisation\Contracts\LocalisationRepositoryInterface;
+use Tectonic\Shift\Modules\Localisation\Contracts\TranslationRepositoryInterface;
 
 class Localiser
 {
@@ -13,7 +13,7 @@ class Localiser
     /**
      * @param LocalisationRepositoryInterface $repository
      */
-    public function __construct(LocalisationRepositoryInterface $repository)
+    public function __construct(TranslationRepositoryInterface $repository)
     {
         $this->repository = $repository;
     }

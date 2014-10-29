@@ -4,10 +4,10 @@ use App;
 use Event;
 use Tectonic\Shift\Library\ServiceProvider;
 use Tectonic\Shift\Modules\Localisation\Listeners\StartupListener;
-use Tectonic\Shift\Modules\Localisation\Contracts\LocaleRepositoryInterface;
-use Tectonic\Shift\Modules\Localisation\Contracts\LocalisationRepositoryInterface;
-use Tectonic\Shift\Modules\Localisation\Repositories\EloquentLocaleRepository;
-use Tectonic\Shift\Modules\Localisation\Repositories\EloquentLocalisationRepository;
+use Tectonic\Shift\Modules\Localisation\Contracts\LanguageRepositoryInterface;
+use Tectonic\Shift\Modules\Localisation\Contracts\TranslationRepositoryInterface;
+use Tectonic\Shift\Modules\Localisation\Repositories\EloquentLanguageRepository;
+use Tectonic\Shift\Modules\Localisation\Repositories\EloquentTranslationRepository;
 
 class LocalisationServiceProvider extends ServiceProvider
 {
@@ -33,8 +33,8 @@ class LocalisationServiceProvider extends ServiceProvider
      * @var array
      */
     protected $repositories = [
-        LocaleRepositoryInterface::class => EloquentLocaleRepository::class,
-        LocalisationRepositoryInterface::class => EloquentLocalisationRepository::class
+        LanguageRepositoryInterface::class => EloquentLanguageRepository::class,
+        TranslationRepositoryInterface::class => EloquentTranslationRepository::class
     ];
 
     /**

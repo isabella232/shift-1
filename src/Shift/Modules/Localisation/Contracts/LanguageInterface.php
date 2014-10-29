@@ -1,7 +1,7 @@
 <?php
 namespace Tectonic\Shift\Modules\Localisation\Contracts;
 
-interface LocaleInterface
+interface LanguageInterface
 {
     /**
      * @return string
@@ -16,7 +16,7 @@ interface LocaleInterface
     /**
      * @return string
      */
-    public function getLocale();
+    public function getLanguage();
 
     /**
      * @param string $code
@@ -25,18 +25,18 @@ interface LocaleInterface
     public function setCode($code);
 
     /**
-     * @param string $locale
+     * @param string $language
      * @return void
      */
-    public function setLocale($locale);
+    public function setLanguage($language);
 
     /**
-     * Creates a new LocaleInterface instance.
+     * Creates a new LanguageInterface instance.
      *
-     * @param string $locale
+     * @param string $language
      * @param string $code
      * @return mixed
      */
-    public static function add($locale, $code);
+    public static function add($language, $code);
 }
  

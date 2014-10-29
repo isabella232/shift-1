@@ -2,10 +2,10 @@
 namespace Tectonic\Shift\Modules\Localisation\Models;
 
 use Tectonic\Shift\Library\Support\Database\Eloquent\Model;
-use Tectonic\Shift\Modules\Localisation\Contracts\LocaleInterface;
-use Tectonic\Shift\Modules\Localisation\Contracts\LocalisationInterface;
+use Tectonic\Shift\Modules\Localisation\Contracts\LanguageInterface;
+use Tectonic\Shift\Modules\Localisation\Contracts\TranslationInterface;
 
-class Localisation extends Model implements LocalisationInterface
+class Translation extends Model implements TranslationInterface
 {
     /**
      * @var bool
@@ -22,9 +22,9 @@ class Localisation extends Model implements LocalisationInterface
      *
      * @return query
      */
-    public function locale()
+    public function language()
     {
-        return $this->belongsTo(Locale::class);
+        return $this->belongsTo(Language::class);
     }
 
     /**
@@ -52,11 +52,11 @@ class Localisation extends Model implements LocalisationInterface
     }
 
     /**
-     * @return LocaleInterface
+     * @return LanguageInterface
      */
-    public function getLocale()
+    public function getLanguage()
     {
-        return $this->locale;
+        return $this->language;
     }
 
     /**
@@ -103,27 +103,27 @@ class Localisation extends Model implements LocalisationInterface
     }
 
     /**
-     * @param LocaleInterface $locale
+     * @param LocaleInterface $language
      * @return void
      */
-    public function setLocale(LocaleInterface $locale)
+    public function setLanguage(LanguageInterface $language)
     {
-        $this->localeId = $locale->getId();
+        $this->languageId = $language->getId();
     }
 
     /**
      * Creates a new localisation instance.
      *
-     * @param LocaleInterface $locale
+     * @param LocaleInterface $language
      * @param $resource
      * @param $field
      * @param $value
      * @return mixed
      */
-    public static function add(LocaleInterface $locale, $resource, $field, $value)
+    public static function add(LanguageInterface $language, $resource, $field, $value)
     {
         $localisation = new self;
-        $localisation->setLocale($locale);
+        $localisation->setLocale($language);
         $localisation->setResource($resource);
         $localisation->setField($field);
         $localisation->setValue($value);

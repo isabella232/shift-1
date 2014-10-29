@@ -1,11 +1,11 @@
 <?php
 namespace Tectonic\Shift\Modules\Localisation\Repositories;
 
-use Tectonic\Shift\Modules\Localisation\Models\Locale;
+use Tectonic\Shift\Modules\Localisation\Models\Language;
 use Tectonic\Shift\Library\Support\Database\Eloquent\Repository;
-use Tectonic\Shift\Modules\Localisation\Contracts\LocaleRepositoryInterface;
+use Tectonic\Shift\Modules\Localisation\Contracts\LanguageRepositoryInterface;
 
-class EloquentLocaleRepository extends Repository implements LocaleRepositoryInterface
+class EloquentLanguageRepository extends Repository implements LanguageRepositoryInterface
 {
     /**
      * Locales are not restricted by account. They're an application-wide root data structure.
@@ -17,7 +17,7 @@ class EloquentLocaleRepository extends Repository implements LocaleRepositoryInt
     /**
      * @param Locale $locale
      */
-    public function __construct(Locale $locale)
+    public function __construct(Language $locale)
     {
         $this->model = $locale;
     }
@@ -29,7 +29,7 @@ class EloquentLocaleRepository extends Repository implements LocaleRepositoryInt
      */
     public function getNew(array $input = [])
     {
-        return Locale::add($input['locale'], $input['code']);
+        return Language::add($input['language'], $input['code']);
     }
 
     /**
@@ -38,12 +38,12 @@ class EloquentLocaleRepository extends Repository implements LocaleRepositoryInt
      * @param  array $locales
      * @return array
      */
-    public function getLocaleIds($locales)
+    public function getLanguageIds($locales)
     {
         $localeIds = [];
 
         foreach ($locales as $locale) {
-            $localeIds[] = $this->getLocaleId($locale);
+            $localeIds[] = $this->getLanguageId($locale);
         }
 
         return $localeIds;
@@ -52,33 +52,22 @@ class EloquentLocaleRepository extends Repository implements LocaleRepositoryInt
     /**
      * Get the ID of a locale by it's code ('en_GB')
      *
-     * @param  string $localeCode
+     * @param  string $languageCode
      * @return int
      */
-    public function getLocaleId($localeCode)
+    public function getLanguageId($languageCode)
     {
-        return $this->getQuery()->whereCode($localeCode)->pluck('id');
+        return $this->getQuery()->whereCode($languageCode)->pluck('id');
     }
 
     /**
      * Get the Code of a locale from it's ID
      *
-     * @param int $localeId
+     * @param int $languageId
      * @return string
      */
-    public function getLocaleCode($localeId)
+    public function getLanguageCode($languageId)
     {
-        return $this->getQuery()->whereId($localeId)->pluck('code');
-    }
-
-    /**
-     * Get all locales
-     *
-     * @return mixed
-     */
-    public function getLocales()
-    {
-        $query = $this->createQuery();
-        return $query->getQuery()->getResult();
+        return $this->getQuery()->whereId($languageId)->pluck('code');
     }
 }

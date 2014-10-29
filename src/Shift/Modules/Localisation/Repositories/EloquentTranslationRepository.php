@@ -3,20 +3,19 @@ namespace Tectonic\Shift\Modules\Localisation\Repositories;
 
 use Doctrine\ORM\EntityManager;
 use Tectonic\Shift\Library\Support\Database\Eloquent\Repository;
-use Tectonic\Shift\Modules\Localisation\Contracts\LocaleInterface;
-use Tectonic\Shift\Modules\Localisation\Contracts\LocaleRepositoryInterface;
-use Tectonic\Shift\Modules\Localisation\Contracts\LocalisationRepositoryInterface;
-use Tectonic\Shift\Modules\Localisation\Models\Localisation;
+use Tectonic\Shift\Modules\Localisation\Contracts\LanguageRepositoryInterface;
+use Tectonic\Shift\Modules\Localisation\Contracts\TranslationRepositoryInterface;
+use Tectonic\Shift\Modules\Localisation\Models\Translation;
 use Tectonic\Shift\Modules\Localisation\Support\ResourceCriteria;
 
-class EloquentLocalisationRepository extends Repository implements LocalisationRepositoryInterface
+class EloquentTranslationRepository extends Repository implements TranslationRepositoryInterface
 {
     /**
      * Locale repository
      *
      * @var \Tectonic\Shift\Modules\Localisation\Contracts\LocaleRepositoryInterface
      */
-    protected $localeRepository;
+    protected $languageRepository;
 
     /**
      * Account wide data root. No need to restrict queries by account.
@@ -32,53 +31,53 @@ class EloquentLocalisationRepository extends Repository implements LocalisationR
      * @param LocaleRepositoryInterface $localeRepository
      * @throws \Tectonic\Shift\Library\Support\Database\Doctrine\EntityIsNullException
      */
-    public function __construct(Localisation $localisation, LocaleRepositoryInterface $localeRepository)
+    public function __construct(Translation $translation, LanguageRepositoryInterface $localeRepository)
     {
-        $this->localeRepository = $localeRepository;
-        $this->model = $localisation;
+        $this->languageRepository = $localeRepository;
+        $this->model = $translation;
     }
 
     /**
-     * Return a key/value paired array of UI localisations/customisations
+     * Return a key/value paired array of UI translations.
      *
      * @param  array $locales
      * @return array
      */
-    public function getUILocalisations(array $locales)
+    public function getUITranslations(array $locales)
     {
-        $localeIds = $this->localeRepository->getLocaleIds($locales);
+        $localeIds = $this->languageRepository->getLanguageIds($locales);
 
         $results = $this->getQuery()
             ->whereResource('UI')
             ->whereIn('locale_id', $localeIds)
             ->lists('field', 'value');
 
-        return $this->flattenUILocalisations($results);
+        return $this->flattenUITranslations($results);
     }
 
     /**
-     * Find a translation/localisation for a given resource field
+     * Find a translation for a given resource field
      *
      * @param int    $foreignId
      * @param string $resource
      * @param string $field
-     * @param string $locale
+     * @param string $languageId
      *
      * @return array
      */
-    public function findTranslation($foreignId, $resource, $field, $locale)
+    public function findTranslation($foreignId, $resource, $field, $languageId)
     {
-        $localeId = $this->localeRepository->getLocaleId($locale);
+        $localeId = $this->languageRepository->getLanguageId($languageId);
 
         return $this->getQuery()
             ->whereForeignId($foreignId)
             ->whereResource($resource)
             ->whereField($field)
-            ->whereLocaleId($localeId)
+            ->whereLanguageId($localeId)
             ->first();
     }
 
-    protected function flattenUILocalisations($results)
+    protected function flattenUITranslations($results)
     {
         $array = [];
 
@@ -98,7 +97,7 @@ class EloquentLocalisationRepository extends Repository implements LocalisationR
     public function getByResourceCriteria(ResourceCriteria $criteria)
     {
         $resources = $criteria->getResources();
-        $query = $this->getQuery();
+        $query = $this->getQuery()->with(['locale']);
 
         foreach ($resources as $resource) {
             $query ->orWhere(function($query) use ($criteria, $resource) {

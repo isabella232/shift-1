@@ -5,13 +5,13 @@ use Response;
 use Tectonic\Shift\Library\Support\Controller;
 use Tectonic\Shift\Modules\Localisation\Validators\LocaleValidator;
 use Tectonic\Shift\Modules\Localisation\Services\LocaleManagementService;
-use Tectonic\Shift\Modules\Localisation\Contracts\LocaleRepositoryInterface;
+use Tectonic\Shift\Modules\Localisation\Contracts\LanguageRepositoryInterface;
 
 class LocaleController extends Controller
 {
 
     public function __construct(
-        LocaleRepositoryInterface $repository,
+        LanguageRepositoryInterface $repository,
         LocaleValidator $validator,
         LocaleManagementService $service
     ) {

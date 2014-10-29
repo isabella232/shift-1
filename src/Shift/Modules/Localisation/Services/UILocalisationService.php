@@ -1,7 +1,7 @@
 <?php namespace Tectonic\Shift\Modules\Localisation\Services;
 
-use Tectonic\Shift\Modules\Localisation\Contracts\LocaleRepositoryInterface;
-use Tectonic\Shift\Modules\Localisation\Contracts\LocalisationRepositoryInterface;
+use Tectonic\Shift\Modules\Localisation\Contracts\LanguageRepositoryInterface;
+use Tectonic\Shift\Modules\Localisation\Contracts\TranslationRepositoryInterface;
 
 class UILocalisationService
 {
@@ -19,7 +19,7 @@ class UILocalisationService
      * @param LocaleRepositoryInterface $localeRepo
      * @param LocalisationRepositoryInterface $localisationRepo
      */
-    public function __construct(LocaleRepositoryInterface $localeRepo, LocalisationRepositoryInterface $localisationRepo)
+    public function __construct(LanguageRepositoryInterface $localeRepo, TranslationRepositoryInterface $localisationRepo)
     {
         $this->localeRepo       = $localeRepo;
         $this->localisationRepo = $localisationRepo;
@@ -33,8 +33,8 @@ class UILocalisationService
      */
     public function getUILocalisations(array $locales = [])
     {
-        $localeIds = $this->localeRepo->getLocaleIds($locales);
-        return $this->localisationRepo->getUILocalisations($localeIds);
+        $localeIds = $this->localeRepo->getLanguageIds($locales);
+        return $this->localisationRepo->getUITranslations($localeIds);
     }
 
 }

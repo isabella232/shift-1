@@ -3,9 +3,9 @@ namespace Tectonic\Shift\Modules\Localisation\Models;
 
 use Tectonic\Shift\Library\Support\Database\Eloquent\Model;
 use Tectonic\Shift\Modules\Accounts\Models\Account;
-use Tectonic\Shift\Modules\Localisation\Contracts\LocaleInterface;
+use Tectonic\Shift\Modules\Localisation\Contracts\LanguageInterface;
 
-class Locale extends Model implements LocaleInterface
+class Language extends Model implements LanguageInterface
 {
     /**
      * @var bool
@@ -15,16 +15,16 @@ class Locale extends Model implements LocaleInterface
     /**
      * @var array
      */
-    protected $fillable = ['locale', 'code'];
+    protected $fillable = ['language', 'code'];
 
     /**
-     * A locale has many localisations.
+     * A language has many localisations.
      *
      * @return mixed
      */
-    public function localisations()
+    public function translations()
     {
-        return $this->hasMany(Localisation::class);
+        return $this->hasMany(Translation::class);
     }
 
     /**
@@ -54,9 +54,9 @@ class Locale extends Model implements LocaleInterface
     /**
      * @return string
      */
-    public function getLocale()
+    public function getLanguage()
     {
-        return $this->locale;
+        return $this->language;
     }
 
     /**
@@ -69,25 +69,25 @@ class Locale extends Model implements LocaleInterface
     }
 
     /**
-     * @param string $locale
+     * @param string $language
      * @return void
      */
-    public function setLocale($locale)
+    public function setLanguage($language)
     {
-        $this->locale = $locale;
+        $this->language = $language;
     }
 
     /**
      * Creates a new Locale instance.
      *
-     * @param string $locale
+     * @param string $language
      * @param string $code
-     * @return Locale
+     * @return Language
      */
-    public static function add($locale, $code)
+    public static function add($language, $code)
     {
         $resource = new self;
-        $resource->setLocale($locale);
+        $resource->setLanguage($language);
         $resource->setCode($code);
 
         return $resource;

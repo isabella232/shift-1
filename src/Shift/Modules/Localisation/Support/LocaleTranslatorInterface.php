@@ -1,4 +1,5 @@
-<?php namespace Tectonic\Shift\Modules\Localisation\Support;
+<?php
+namespace Tectonic\Shift\Modules\Localisation\Support;
 
 interface LocaleTranslatorInterface
 {

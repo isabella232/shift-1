@@ -1,5 +1,6 @@
 <?php
 namespace Tectonic\Shift\Modules\Localisation\Support;
+
 /**
  * Class ResourceCriteria
  *
@@ -39,7 +40,10 @@ class ResourceCriteria
     public function addId($resource, $id)
     {
         if (!isset($this->resources[$resource])) {
-            throw new \Exception("Resource [$resource] does not exist. Make sure you've registered it first via ResourceCriteria::addResource('$resource').'");
+            $message = "Resource [$resource] does not exist. Make sure you've
+                registered it first via ResourceCriteria::addResource('$resource').'";
+
+            throw new \Exception($message);
         }
         $this->resources[$resource][] = $id;
     }

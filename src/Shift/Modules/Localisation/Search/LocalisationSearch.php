@@ -3,14 +3,14 @@
 use Tectonic\Shift\Library\Search\Search;
 use Tectonic\Shift\Library\Search\Filters\OrderFilter;
 use Tectonic\Shift\Library\Search\Filters\KeywordFilter;
-use Tectonic\Shift\Modules\Localisation\Models\Localisation;
+use Tectonic\Shift\Modules\Localisation\Models\Translation;
 
 class LocalisationSearch extends Search
 {
 
     private $keywordFilter;
 
-    public function __construct(Localisation $localisation, KeywordFilter $keywordFilter, OrderFilter $orderFilter)
+    public function __construct(Translation $localisation, KeywordFilter $keywordFilter, OrderFilter $orderFilter)
     {
         $this->setQuery($localisation);
         $this->orderFilter = $orderFilter;
