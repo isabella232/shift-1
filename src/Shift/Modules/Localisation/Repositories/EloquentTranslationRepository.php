@@ -97,7 +97,7 @@ class EloquentTranslationRepository extends Repository implements TranslationRep
     public function getByResourceCriteria(ResourceCriteria $criteria)
     {
         $resources = $criteria->getResources();
-        $query = $this->getQuery()->with(['locale']);
+        $query = $this->getQuery()->with(['language']);
 
         foreach ($resources as $resource) {
             $query ->orWhere(function($query) use ($criteria, $resource) {

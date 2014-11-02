@@ -1,7 +1,7 @@
 <?php
 namespace Tectonic\Shift\Modules\Localisation\Support;
 
-interface LocaleTranslatorInterface
+interface LanguageTranslatorInterface
 {
     /**
      * Translate the ID from the locales database table

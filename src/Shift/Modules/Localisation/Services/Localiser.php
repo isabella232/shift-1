@@ -2,20 +2,21 @@
 namespace Tectonic\Shift\Modules\Localisation\Services;
 
 use Tectonic\Shift\Modules\Localisation\Contracts\TranslationRepositoryInterface;
+use Tectonic\Shift\Modules\Localisation\Support\ResourceCriteria;
 
 class Localiser
 {
     /**
      * @var LocalisationRepositoryInterface
      */
-    protected $repository;
+    protected $translationRepository;
 
     /**
      * @param LocalisationRepositoryInterface $repository
      */
     public function __construct(TranslationRepositoryInterface $repository)
     {
-        $this->repository = $repository;
+        $this->translationRepository = $repository;
     }
 
     /**
@@ -38,7 +39,7 @@ class Localiser
         $name = $this->getResourceName($resource);
 
         foreach ($fields as $field) {
-            $translation = $this->repository->findTranslation($id, $name, $field, $locale);
+            $translation = $this->translationRepository->findTranslation($id, $name, $field, $locale);
 
             if (!is_null($translation)) {
                 $resource->$field = $translation['value'];
@@ -74,5 +75,25 @@ class Localiser
     public function getResourceName($resource)
     {
         return class_basename($resource);
+    }
+
+    /**
+     * Gets translations for a given set of resources.
+     *
+     * @param array $resources
+     * @throws \Exception
+     */
+    public function getTranslationsByResources(array $resources) {
+        $resourceCriteria = new ResourceCriteria;
+
+        foreach ($resources as $resource => $ids) {
+            $resourceCriteria->addResource($resource);
+
+            foreach ($ids as $id) {
+                $resourceCriteria->addId($resource, $id);
+            }
+        }
+
+        return $this->translationRepository->getByResourceCriteria($resourceCriteria);
     }
 }

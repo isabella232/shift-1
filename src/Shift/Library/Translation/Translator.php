@@ -2,10 +2,10 @@
 
 use Illuminate\Translation\LoaderInterface;
 use Illuminate\Translation\Translator as IlluminateTranslator;
-use Tectonic\Shift\Modules\Localisation\Services\UILocalisationService;
+use Tectonic\Shift\Modules\Localisation\Services\UITranslationService;
 
 /**
- * Class Translator
+ * Class Engine
  *
  * This class extends Laravel own translator class and adds a few extra helper
  * method for convenience. For example it can autoload module/package language
@@ -52,7 +52,7 @@ class Translator extends IlluminateTranslator
      */
     public function __construct(
         LoaderInterface $loaderInterface,
-        UILocalisationService $UILocalisationService,
+        UITranslationService $UILocalisationService,
         $locale,
         array $autoloads = [],
         array $locales = []

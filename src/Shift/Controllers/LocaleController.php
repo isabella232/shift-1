@@ -4,7 +4,7 @@ use JMS\Serializer\SerializerBuilder;
 use Response;
 use Tectonic\Shift\Library\Support\Controller;
 use Tectonic\Shift\Modules\Localisation\Validators\LocaleValidator;
-use Tectonic\Shift\Modules\Localisation\Services\LocaleManagementService;
+use Tectonic\Shift\Modules\Localisation\Services\LanguageManagementService;
 use Tectonic\Shift\Modules\Localisation\Contracts\LanguageRepositoryInterface;
 
 class LocaleController extends Controller
@@ -13,7 +13,7 @@ class LocaleController extends Controller
     public function __construct(
         LanguageRepositoryInterface $repository,
         LocaleValidator $validator,
-        LocaleManagementService $service
+        LanguageManagementService $service
     ) {
         $this->validator   = $validator;
         $this->repository  = $repository;
