@@ -24,7 +24,7 @@ class UITranslationService
         LanguageRepositoryInterface $languageRepository,
         TranslationRepositoryInterface $translationRepository
     ) {
-        $this->languageRepository       = $languageRepository;
+        $this->languageRepository = $languageRepository;
         $this->translationRepository = $translationRepository;
     }
 
