@@ -2,7 +2,7 @@
 namespace Tectonic\Shift\Modules\Localisation\Listeners;
 
 use Tectonic\Shift\Library\Support\Listener;
-use Tectonic\Shift\Modules\Localisation\Services\LocaleManagementService;
+use Tectonic\Shift\Modules\Localisation\Services\LanguageManagementService;
 
 class AccountInstalled extends Listener
 {

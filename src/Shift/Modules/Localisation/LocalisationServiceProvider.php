@@ -1,13 +1,17 @@
-<?php namespace Tectonic\Shift\Modules\Localisation;
+<?php
+namespace Tectonic\Shift\Modules\Localisation;
 
 use App;
 use Event;
 use Tectonic\Shift\Library\ServiceProvider;
 use Tectonic\Shift\Modules\Localisation\Listeners\StartupListener;
-use Tectonic\Shift\Modules\Localisation\Contracts\LocaleRepositoryInterface;
-use Tectonic\Shift\Modules\Localisation\Contracts\LocalisationRepositoryInterface;
-use Tectonic\Shift\Modules\Localisation\Repositories\EloquentLocaleRepository;
-use Tectonic\Shift\Modules\Localisation\Repositories\EloquentLocalisationRepository;
+use Tectonic\Shift\Modules\Localisation\Contracts\LanguageRepositoryInterface;
+use Tectonic\Shift\Modules\Localisation\Contracts\TranslationRepositoryInterface;
+use Tectonic\Shift\Modules\Localisation\Repositories\EloquentLanguageRepository;
+use Tectonic\Shift\Modules\Localisation\Repositories\EloquentTranslationRepository;
+use Tectonic\Shift\Modules\Localisation\Translator\Engine;
+use Tectonic\Shift\Modules\Localisation\Translator\Transformers\CollectionTransformer;
+use Tectonic\Shift\Modules\Localisation\Translator\Transformers\ModelTransformer;
 
 class LocalisationServiceProvider extends ServiceProvider
 {
@@ -33,8 +37,8 @@ class LocalisationServiceProvider extends ServiceProvider
      * @var array
      */
     protected $repositories = [
-        LocaleRepositoryInterface::class => EloquentLocaleRepository::class,
-        LocalisationRepositoryInterface::class => EloquentLocalisationRepository::class
+        LanguageRepositoryInterface::class => EloquentLanguageRepository::class,
+        TranslationRepositoryInterface::class => EloquentTranslationRepository::class
     ];
 
     /**
@@ -76,7 +80,7 @@ class LocalisationServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register Translator
+     * Register Engine
      *
      * @return void
      */
@@ -95,6 +99,18 @@ class LocalisationServiceProvider extends ServiceProvider
 
         $this->app->bind('Symfony\Component\Translation\TranslatorInterface', function($app) {
             return $app['shift.translator'];
+        });
+
+        // Setup our Translator instance and facade
+        $this->app->singleton('Translator', function($app) {
+            $translatorEngine = new Engine;
+
+            $translatorEngine->registerTransformer(
+                new CollectionTransformer,
+                new ModelTransformer
+            );
+
+            return $translatorEngine;
         });
     }
 

@@ -1,10 +1,8 @@
 <?php
-
 namespace Tectonic\Shift\Library\Filters;
 
 use Request;
 use View;
-use Tectonic\Shift\Library\Utility;
 
 class ViewFilter
 {

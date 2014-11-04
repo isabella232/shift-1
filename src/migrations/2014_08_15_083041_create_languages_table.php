@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLocalesTable extends Migration {
+class CreateLanguagesTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,14 +12,14 @@ class CreateLocalesTable extends Migration {
 	 */
 	public function up()
 	{
-        Schema::create('locales', function(Blueprint $table)
+        Schema::create('languages', function(Blueprint $table)
         {
             $table->increments('id');
-            $table->string('locale');           // English (Great Britain)
+            $table->string('language');           // English (Great Britain)
             $table->string('code')->index();    // en_GB
         });
 
-        DB::table('locales')->insert(array('locale' => 'English (Great Britain)', 'code' => 'en_GB'));
+        DB::table('languages')->insert(array('language' => 'English (Great Britain)', 'code' => 'en_GB'));
 	}
 
 	/**
@@ -29,7 +29,7 @@ class CreateLocalesTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('locales');
+		Schema::drop('languages');
 	}
 
 }

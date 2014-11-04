@@ -8,7 +8,7 @@ use Tectonic\Shift\Modules\Accounts\Services\AccountDomainsService;
 use Tectonic\Shift\Modules\Accounts\Services\AccountUsersService;
 use Tectonic\Shift\Modules\Installation\Contracts\InstallationListenerInterface;
 use Tectonic\Shift\Modules\Installation\Validators\InstallValidation;
-use Tectonic\Shift\Modules\Localisation\Services\LocaleManagementService;
+use Tectonic\Shift\Modules\Localisation\Services\LanguageManagementService;
 use Tectonic\Shift\Modules\Users\Contracts\UserRepositoryInterface;
 use Tectonic\Shift\Modules\Users\Repositories\EloquentUserRepository;
 use Tectonic\Shift\Modules\Users\Services\UserManagementService;
