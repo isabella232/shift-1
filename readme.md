@@ -1,6 +1,8 @@
 # Shift
 
-Shift is a development platform for SAAS applications. It uses the latest and greatest technologies, including Laravel 5 and Angular JS 1.2.x (1.3+ doesn't support IE8), and utilises the best development patterns and methodologies currently in use in the market. As a result, Shift is a robust, secure, feature-rich development platform for anyone wanting to create a product that is designed for SAAS.
+[![Circle CI](https://circleci.com/gh/tectonic/shift.png?style=badge)](https://circleci.com/gh/tectonic/shift)
+
+Shift is a development platform for SAAS applications. It uses the latest and greatest technologies, including Laravel 5 and Angular JS 1.2.x (1.3+ doesn't support IE8), utilises the best development patterns and methodologies currently in use in the market, and has an intense focus on security and performance. As a result Shift is a robust, secure, feature-rich development platform for anyone wanting to create a product as a SaaS delivery platform.
 
 ## Installation
 
