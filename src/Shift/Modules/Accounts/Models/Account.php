@@ -2,6 +2,7 @@
 namespace Tectonic\Shift\Modules\Accounts\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletingTrait;
+use Tectonic\Localisation\Translator\Translatable;
 use Tectonic\Shift\Library\Support\Database\Eloquent\Model;
 use Tectonic\Shift\Modules\Accounts\Contracts\AccountInterface;
 use Tectonic\Shift\Modules\Localisation\Models\Language;
@@ -11,13 +12,7 @@ use Tectonic\Shift\Modules\Users\Models\User;
 class Account extends Model implements AccountInterface
 {
     use SoftDeletingTrait;
-
-    /**
-     * Fillable fields via mass assignment.
-     *
-     * @var array
-     */
-    protected $fillable = ['name'];
+    use Translatable;
 
     /**
      * An account can have one or more domains, and is often queried via this relationship.
@@ -125,5 +120,15 @@ class Account extends Model implements AccountInterface
     public function getOwner()
     {
         return $this->owner;
+    }
+
+    /**
+     * Returns an array of the field names that can be used for translations.
+     *
+     * @return array
+     */
+    public function getTranslatableFields()
+    {
+        return ['name'];
     }
 }
