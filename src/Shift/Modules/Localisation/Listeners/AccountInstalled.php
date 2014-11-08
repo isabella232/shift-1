@@ -2,10 +2,24 @@
 namespace Tectonic\Shift\Modules\Localisation\Listeners;
 
 use Tectonic\Shift\Library\Support\Listener;
-use Tectonic\Shift\Modules\Localisation\Services\LanguageManagementService;
+use Tectonic\Shift\Modules\Accounts\Contracts\AccountInterface;
+use Tectonic\Shift\Modules\Accounts\Services\SupportedLanguagesService;
 
 class AccountInstalled extends Listener
 {
+    /**
+     * @var SupportedLanguagesService
+     */
+    private $supportedLanguages;
+
+    /**
+     * @param SupportedLanguagesService $supportedLanguages
+     */
+    public function __construct(SupportedLanguagesService $supportedLanguages)
+    {
+        $this->supportedLanguages = $supportedLanguages;
+    }
+
     /**
      * @return array
      */
@@ -17,11 +31,13 @@ class AccountInstalled extends Listener
     }
 
     /**
-     * @param $account
+     * Adds the selected language as a supported language for the new account.
+     *
+     * @param AccountInterface $account
+     * @param array $input
      */
-    public function associateLocale($account)
+    public function assignLanguage(AccountInterface $account, array $input)
     {
-        $this->locale
+        $this->supportedLanguages->addToAccount($input['language'], $account->getId());
     }
 }
- 

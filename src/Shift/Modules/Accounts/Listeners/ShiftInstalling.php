@@ -63,7 +63,7 @@ class ShiftInstalling extends Listener
         $this->accountUsersService->addUser($account, $user);
         $this->accountDomainsService->addDomain($account, $input['host']);
 
-        Event::fire('account.installed', [$account]);
+        Event::fire('account.installed', [$account, $input]);
     }
 }
  

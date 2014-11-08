@@ -1,8 +1,10 @@
 <?php
 namespace Tectonic\Shift\Modules\Localisation\Models;
 
+use Tectonic\LaravelLocalisation\Database\Translation;
 use Tectonic\Shift\Library\Support\Database\Eloquent\Model;
 use Tectonic\Shift\Modules\Accounts\Models\Account;
+use Tectonic\Shift\Modules\Accounts\Models\SupportedLanguage;
 use Tectonic\Shift\Modules\Localisation\Contracts\LanguageInterface;
 
 class Language extends Model implements LanguageInterface
@@ -24,7 +26,7 @@ class Language extends Model implements LanguageInterface
      */
     public function translations()
     {
-        return $this->hasMany(Translation::class);
+        return $this->hasMany(Translation::class, 'language', 'code');
     }
 
     /**
@@ -32,7 +34,7 @@ class Language extends Model implements LanguageInterface
      */
     public function accounts()
     {
-        return $this->belongsToMany(Account::class);
+        return $this->hasManyThrough(SupportedLanguage::class);
     }
 
     /**

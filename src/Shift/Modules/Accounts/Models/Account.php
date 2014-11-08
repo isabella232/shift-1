@@ -6,6 +6,7 @@ use Tectonic\Localisation\Translator\Translatable;
 use Tectonic\Shift\Library\Support\Database\Eloquent\Model;
 use Tectonic\Shift\Modules\Accounts\Contracts\AccountInterface;
 use Tectonic\Shift\Modules\Localisation\Models\Language;
+use Tectonic\Shift\Modules\Accounts\Models\SupportedLanguage;
 use Tectonic\Shift\Modules\Users\Contracts\UserInterface;
 use Tectonic\Shift\Modules\Users\Models\User;
 
@@ -24,9 +25,14 @@ class Account extends Model implements AccountInterface
         return $this->hasMany(Domain::class);
     }
 
-    public function locales()
+    /**
+     * Each account has a variety of languages that it supports.
+     *
+     * @return mixed
+     */
+    public function languages()
     {
-        return $this->belongsToMany(Language::class);
+        return $this->hasManyThrough(Language::class, SupportedLanguage::class);
     }
 
     /**
