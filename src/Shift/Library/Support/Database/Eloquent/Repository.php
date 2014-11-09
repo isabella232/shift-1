@@ -161,7 +161,7 @@ abstract class Repository implements RepositoryInterface
     {
         $model = $this->model->newInstance($data);
 
-        if ($this->restrictByAccount) {
+        if ($this->restrictByAccount && !$model->accountId) {
             $model->accountId = $this->currentAccountId();
         }
 

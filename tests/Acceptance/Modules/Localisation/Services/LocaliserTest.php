@@ -3,9 +3,9 @@ namespace Tests\Acceptance\Modules\Localisation\Services;
 
 use App;
 use Mockery as m;
+use Tectonic\Localisation\Contracts\TranslationRepositoryInterface;
 use Tectonic\Shift\Modules\Localisation\Services\Localiser;
 use Tests\Acceptance\Modules\Localisation\LocalisationTestCase;
-use Tectonic\Shift\Modules\Localisation\Repositories\EloquentTranslationRepository;
 use Tests\UnitTestCase;
 
 class LocaliserTest extends UnitTestCase
@@ -23,7 +23,7 @@ class LocaliserTest extends UnitTestCase
     {
         parent::setUp();
 
-        $this->mockRepository = m::spy(EloquentTranslationRepository::class);
+        $this->mockRepository = m::spy(TranslationRepositoryInterface::class);
         $this->localiser = new Localiser($this->mockRepository);
     }
 

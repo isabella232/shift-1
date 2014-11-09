@@ -7,10 +7,7 @@ class AccountValidation extends Validation
     public function getRules()
     {
         return [
-            'name' => [
-                'required',
-                'unique:accounts,name,'.$this->getValue('id')
-            ]
+
         ];
     }
 }

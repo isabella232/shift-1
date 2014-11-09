@@ -28,17 +28,6 @@ class EloquentAccountRepository extends Repository implements AccountRepositoryI
         $this->model = $model;
     }
 
-    /**
-     * Creates and returns a new account instance.
-     *
-     * @param array $data
-     * @return Account
-     */
-    public function getNew(array $data = [])
-    {
-        return Account::add($data['name']);
-    }
-
 	/**
 	 * Require an account based on the domain that has been provided. If no account is found,
 	 * an AccountNotFoundException is thrown.rsi

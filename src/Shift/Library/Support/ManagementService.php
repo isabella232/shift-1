@@ -43,6 +43,7 @@ abstract class ManagementService
      *
      * @param array $input
      * @return mixed
+     * @fires Model.created
      */
     public function create($input)
     {
@@ -61,6 +62,7 @@ abstract class ManagementService
      *
      * @param int $id
      * @return mixed
+     * @fires Model.retrieved
      */
     public function get($id)
     {
@@ -77,6 +79,7 @@ abstract class ManagementService
      * @param int $id
      * @param array $input
      * @return mixed
+     * @fires Model.updated
      */
     public function update($id, $input)
     {
@@ -94,8 +97,8 @@ abstract class ManagementService
      * Delete a specified resource
      *
      * @param int $id
-     *
      * @return mixed
+     * @fires Model.deleted
      */
     public function delete($id)
     {
@@ -115,6 +118,6 @@ abstract class ManagementService
      */
     public function notify($event, $resource)
 	{
-		Event::fire(class_basename($resource).': '.$event, [$resource]);
+		Event::fire(class_basename($resource).'.'.$event, [$resource]);
 	}
 }

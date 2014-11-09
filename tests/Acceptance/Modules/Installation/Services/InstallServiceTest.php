@@ -5,7 +5,6 @@ use App;
 use Mockery as m;
 use Tectonic\Shift\Modules\Accounts\Contracts\AccountRepositoryInterface;
 use Tectonic\Shift\Modules\Accounts\Contracts\DomainRepositoryInterface;
-use Tectonic\Shift\Modules\Installation\Contracts\InstallationListenerInterface;
 use Tectonic\Shift\Modules\Installation\Services\InstallService;
 use Tectonic\Shift\Modules\Localisation\Contracts\LanguageRepositoryInterface;
 use Tectonic\Shift\Modules\Users\Contracts\UserRepositoryInterface;
@@ -20,10 +19,13 @@ class InstallServiceTest extends AcceptanceTestCase
     {
         parent::setUp();
 
+        $languageRepository = App::make(LanguageRepositoryInterface::class);
+
         $this->input = [
             'name' => 'Install service test',
             'host' => 'somehost.com',
             'email' => 'installer@tectonic.com.au',
+            'language' => $languageRepository->getAll()->first()->getId(),
             'password' => '1234'
         ];
 

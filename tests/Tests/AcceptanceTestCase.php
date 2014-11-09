@@ -91,7 +91,7 @@ class AcceptanceTestCase extends TestCase
     {
         $accountRepository = App::make(AccountRepositoryInterface::class);
 
-        $this->account = $accountRepository->getNew(['name' => 'Test account']);
+        $this->account = $accountRepository->getNew();
 
         $accountRepository->save($this->account);
 

@@ -56,14 +56,6 @@ class Account extends Model implements AccountInterface
     }
 
     /**
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
      * Returns the id for the account.
      *
      * @return integer
@@ -84,25 +76,14 @@ class Account extends Model implements AccountInterface
     }
 
     /**
-     * Sets the name attribute.
-     *
-     * @param $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    /**
      * Creates a new account instance.
      *
      * @param string $name
      * @return Account
      */
-    public static function add($name)
+    public static function add()
     {
         $account = new self;
-        $account->setName($name);
 
         return $account;
     }

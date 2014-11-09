@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAccountsTable extends Migration {
+class CreateSupportedLanguagesTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,12 +12,12 @@ class CreateAccountsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('accounts', function(Blueprint $table)
+		Schema::create('supported_languages', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->bigInteger('user_id')->unsigned()->index()->nullable(); // the owner of the account
+            $table->integer('account_id')->index();
+            $table->integer('language_id')->index();
 			$table->timestamps();
-            $table->softDeletes();
 		});
 	}
 
@@ -28,7 +28,7 @@ class CreateAccountsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('accounts');
+		Schema::drop('supported_languages');
 	}
 
 }
