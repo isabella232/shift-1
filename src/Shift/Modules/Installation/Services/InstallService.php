@@ -8,6 +8,7 @@ use Tectonic\Shift\Modules\Accounts\Services\AccountDomainsService;
 use Tectonic\Shift\Modules\Accounts\Services\AccountUsersService;
 use Tectonic\Shift\Modules\Installation\Contracts\InstallationListenerInterface;
 use Tectonic\Shift\Modules\Installation\Validators\InstallValidation;
+use Tectonic\Shift\Modules\Localisation\Contracts\LanguageRepositoryInterface;
 use Tectonic\Shift\Modules\Localisation\Services\LanguageManagementService;
 use Tectonic\Shift\Modules\Users\Contracts\UserRepositoryInterface;
 use Tectonic\Shift\Modules\Users\Repositories\EloquentUserRepository;
@@ -21,11 +22,17 @@ class InstallService
     private $userRepository;
 
     /**
+     * @var LanguageRepositoryInterface
+     */
+    private $languageRepository;
+
+    /**
      * @param UserRepositoryInterface $userRepository
      */
-    public function __construct(UserRepositoryInterface $userRepository)
+    public function __construct(UserRepositoryInterface $userRepository, LanguageRepositoryInterface $languageRepository)
     {
         $this->userRepository = $userRepository;
+        $this->languageRepository = $languageRepository;
     }
 
     /**
@@ -110,5 +117,15 @@ class InstallService
         $this->userRepository->save($user);
 
         return $user;
+    }
+
+    /**
+     * Returns the available languages on the system.
+     *
+     * @return Collection
+     */
+    public function availableLanguages()
+    {
+        return $this->languageRepository->getAll();
     }
 }

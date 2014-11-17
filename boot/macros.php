@@ -19,7 +19,7 @@ HTML::macro('setting', function($setting)
 });
 
 /**
- * Encodes a bootstrap configuration value as a json object and then
+ * Encodes a bootstrap configuration value as a json object.
  *
  * @return string Base64-encoded string of the configuration required for startup.
  */

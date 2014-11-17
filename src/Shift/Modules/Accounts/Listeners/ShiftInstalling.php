@@ -12,27 +12,39 @@ class ShiftInstalling extends Listener
     /**
      * @var AccountDomainsService
      */
-    private $accountDomainsService;
+    private $accountDomains;
 
     /**
      * @var AccountManagementService
      */
-    private $accountsService;
+    private $accounts;
+
     /**
      * @var AccountUsersService
      */
-    private $accountUsersService;
+    private $accountUsers;
+
+    /**
+     * @var SupportedLanguagesService
+     */
+    private $supportedLanguages;
 
     /**
      * @param AccountManagementService $accountsService
      * @param AccountUsersService $accountUsersService
      * @param AccountDomainsService $domainsService
+     * @param SupportedLanguagesService $supportedLanguagesService
      */
-    public function __construct(AccountManagementService $accountsService, AccountUsersService $accountUsersService, AccountDomainsService $domainsService)
-    {
-        $this->accountDomainsService = $domainsService;
-        $this->accountsService = $accountsService;
-        $this->accountUsersService = $accountUsersService;
+    public function __construct(
+        AccountManagementService $accountsService,
+        AccountUsersService $accountUsersService,
+        AccountDomainsService $domainsService,
+        SupportedLanguagesService $supportedLanguagesService
+    ) {
+        $this->accountDomains = $domainsService;
+        $this->accounts = $accountsService;
+        $this->accountUsers = $accountUsersService;
+        $this->supportedLanguages = $supportedLanguagesService;
     }
 
     /**
@@ -57,11 +69,12 @@ class ShiftInstalling extends Listener
      */
     public function whenShiftIsInstalling($user, array $input)
     {
-        $account = $this->accountsService->create($input);
+        $account = $this->accounts->create($input);
 
-        $this->accountUsersService->transferOwnership($account, $user);
-        $this->accountUsersService->addUser($account, $user);
-        $this->accountDomainsService->addDomain($account, $input['host']);
+        $this->accountUsers->add($account, $user);
+        $this->accountUsers->seOwner($account, $user);
+        $this->accountDomains->addDomain($account, $input['host']);
+        $this->supportedLanguages->addLanguage($account, $input['language']);
 
         Event::fire('account.installed', [$account]);
     }

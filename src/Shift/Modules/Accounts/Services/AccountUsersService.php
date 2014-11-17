@@ -43,7 +43,7 @@ class AccountUsersService
      * @param AccountInterface $account
      * @param UserInterface $user
      */
-    public function addUser(AccountInterface $account, UserInterface $user)
+    public function add(AccountInterface $account, UserInterface $user)
     {
         $this->accountRepository->addUser($account, $user);
 
