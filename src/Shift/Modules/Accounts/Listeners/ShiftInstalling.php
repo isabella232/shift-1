@@ -76,7 +76,7 @@ class ShiftInstalling extends Listener
         $this->accountDomains->addDomain($account, $input['host']);
         $this->supportedLanguages->addLanguage($account, $input['language']);
 
-        Event::fire('account.installed', [$account]);
+        Event::fire('account.installed', [$account, $input]);
     }
 }
  
