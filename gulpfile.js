@@ -12,17 +12,9 @@ var input  = 'assets/',
     output = 'public/';
 
 var scripts = [
-    input + 'js/vendor/markdown.converter.js',
-    input + 'js/vendor/moment.min.js',
-    input + 'js/vendor/underscore.min.js',
-    input + 'js/vendor/underscore.string.min.js',
-    input + 'js/vendor/jquery.js',
-    input + 'js/vendor/angular.js',
-    input + 'js/vendor/restangular.js',
-    input + 'js/vendor/angular-resource.js',
-    input + 'js/vendor/angular-route.js',
-    input + 'js/src/**/*.js',
-    input + 'js/Shift.js'
+  input + '_app.js',
+  input + 'js/src/**/*.js',
+  input + 'js/shift.js'
 ];
 
 var styles = [
