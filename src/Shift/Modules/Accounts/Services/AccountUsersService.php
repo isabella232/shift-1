@@ -2,9 +2,9 @@
 namespace Tectonic\Shift\Modules\Accounts\Services;
 
 use Event;
-use Tectonic\Shift\Modules\Accounts\Contracts\AccountInterface;
 use Tectonic\Shift\Modules\Accounts\Contracts\AccountRepositoryInterface;
-use Tectonic\Shift\Modules\Users\Contracts\UserInterface;
+use Tectonic\Shift\Modules\Accounts\Models\Account;
+use Tectonic\Shift\Modules\Users\Models\User;
 
 class AccountUsersService
 {
@@ -24,11 +24,11 @@ class AccountUsersService
     /**
      * Transfers an account's ownership to another user.
      *
-     * @param AccountInterface $account
+     * @param Account $account
      * @param UserInterface $user
      * @returns Account
      */
-    public function transferOwnership(AccountInterface $account, UserInterface $user)
+    public function transferOwnership(Account $account, User $user)
     {
         $account->setOwner($user);
 
@@ -40,10 +40,10 @@ class AccountUsersService
     /**
      * Adds a new user to an account.
      *
-     * @param AccountInterface $account
-     * @param UserInterface $user
+     * @param Account $account
+     * @param User $user
      */
-    public function addUser(AccountInterface $account, UserInterface $user)
+    public function addUser(Account $account, User $user)
     {
         $this->accountRepository->addUser($account, $user);
 

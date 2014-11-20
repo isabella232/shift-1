@@ -24,7 +24,7 @@ class Language extends Model implements LanguageInterface
      */
     public function translations()
     {
-        return $this->hasMany(Translation::class);
+        return $this->hasMany(Translation::class, 'language', 'code');
     }
 
     /**

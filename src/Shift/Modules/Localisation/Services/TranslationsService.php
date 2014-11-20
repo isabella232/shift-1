@@ -2,9 +2,7 @@
 namespace Tectonic\Shift\Modules\Localisation\Services;
 
 use Tectonic\Localisation\Translator\Translatable;
-use Tectonic\Shift\Modules\Accounts\Contracts\AccountInterface;
-use Tectonic\Shift\Modules\Localisation\Contracts\LanguageInterface;
-use Tectonic\Shift\Modules\Localisation\Contracts\TranslationRepositoryInterface;
+use Tectonic\Localisation\Contracts\TranslationRepositoryInterface;
 
 /**
  * Class TranslationsService
@@ -36,28 +34,23 @@ class TranslationsService
     /**
      * Adds a new translation record based on the language, the translatable resource, and the field and value.
      *
-     * @param LanguageInterface $language
      * @param Translatable $resource
-     * @param $field
-     * @param $value
-     * @return mixed
+     * @param string $language
+     * @param string $field
+     * @param mixed $value
+     * @return TranslationInterface
      */
-    public function add(LanguageInterface $language, Translatable $resource, $field, $value)
+    public function add(TranslatableInterface $resource, $language, $field, $value)
     {
         $translation = $this->translationRepository->getNew();
 
-        $translation->language = $language->getCode();
+        $translation->language = $language;
         $translation->foreign_id = $resource->getId();
         $translation->resource = $resource->getResourceName();
         $translation->field = $field;
         $translation->value = $value;
 
         return $this->translationRepository->save($translation);
-    }
-
-    public function find($language, $resource, $foreignId, $field)
-    {
-        return $this->translationRepository
     }
 
     /**

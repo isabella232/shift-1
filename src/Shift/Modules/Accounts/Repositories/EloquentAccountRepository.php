@@ -69,14 +69,4 @@ class EloquentAccountRepository extends Repository implements AccountRepositoryI
     {
         return Account::withTrashed()->count();
     }
-
-    /**
-     * @param AccountInterface $account
-     * @param UserInterface $user
-     * @return mixed
-     */
-    public function addUser(AccountInterface $account, UserInterface $user)
-    {
-        return $account->users()->attach($user->getId());
-    }
 }

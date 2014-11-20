@@ -28,13 +28,4 @@ interface AccountRepositoryInterface extends RepositoryInterface
      * @return mixed
      */
     public function getCount();
-
-    /**
-     * Add a new user to the account.
-     *
-     * @param AccountInterface $account
-     * @param UserInterface $user
-     * @return mixed
-     */
-    public function addUser(AccountInterface $account, UserInterface $user);
 }

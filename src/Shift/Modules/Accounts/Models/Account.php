@@ -2,15 +2,21 @@
 namespace Tectonic\Shift\Modules\Accounts\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletingTrait;
+use Tectonic\Application\Eventing\EventGenerator;
+use Tectonic\LaravelLocalisation\Database\Translation;
+use Tectonic\Localisation\Translator\Translatable;
 use Tectonic\Shift\Library\Support\Database\Eloquent\Model;
-use Tectonic\Shift\Modules\Accounts\Contracts\AccountInterface;
+use Tectonic\Shift\Library\Support\Database\Eloquent\TranslatableModel;
+use Tectonic\Shift\Modules\Accounts\Events\OwnerWasChanged;
 use Tectonic\Shift\Modules\Localisation\Models\Language;
-use Tectonic\Shift\Modules\Users\Contracts\UserInterface;
 use Tectonic\Shift\Modules\Users\Models\User;
 
-class Account extends Model implements AccountInterface
+class Account extends Model
 {
+    use EventGenerator;
     use SoftDeletingTrait;
+    use Translatable;
+    use TranslatableModel;
 
     /**
      * Fillable fields via mass assignment.
@@ -29,7 +35,12 @@ class Account extends Model implements AccountInterface
         return $this->hasMany(Domain::class);
     }
 
-    public function locales()
+    /**
+     * Returns the languages for a given account.
+     *
+     * @return mixed
+     */
+    public function languages()
     {
         return $this->belongsToMany(Language::class);
     }
@@ -56,55 +67,36 @@ class Account extends Model implements AccountInterface
     }
 
     /**
-     * Returns the id for the account.
+     * Sets the owner for the account.
      *
-     * @return integer
+     * @param User $user
      */
-    public function getId()
+    public function setOwner(User $user)
     {
-        return $this->id;
+        $this->owner()->associate($user);
+        $this->raise(new OwnerWasChanged($user));
     }
 
     /**
-     * Return a collection of domains assigned to this account.
+     * Create a new account. This is for the installation use-case.
      *
-     * @return collection
-     */
-    public function getDomains()
-    {
-        return $this->domains;
-    }
-
-    /**
-     * Creates a new account instance.
-     *
-     * @param string $name
      * @return Account
      */
-    public static function add()
+    public static function install()
     {
-        $account = new self;
+        $account = static::create();
+        $account->raise(new AccountInstalled($account));
 
         return $account;
     }
 
     /**
-     * Sets the owner for the account.
+     * The required translatable fields for this model.
      *
-     * @param UserInterface $user
+     * @return array
      */
-    public function setOwner(UserInterface $user)
+    public function getTranslatableFields()
     {
-        $this->userId = $user->getId();
-    }
-
-    /**
-     * Returns the user that is the owner of this account.
-     *
-     * @return UserInterface
-     */
-    public function getOwner()
-    {
-        return $this->owner;
+        return ['name'];
     }
 }

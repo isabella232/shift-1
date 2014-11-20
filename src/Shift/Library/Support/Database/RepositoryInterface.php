@@ -84,7 +84,7 @@ interface RepositoryInterface
      * @param SearchFilterCollection $filterCollection
      * @return mixed
      */
-    public function getByCriteria(SearchFilterCollection $filterCollection);
+    public function getByFilters(SearchFilterCollection $filterCollection);
 
     /**
      * Save 1-n resources.

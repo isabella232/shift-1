@@ -1,10 +1,10 @@
 <?php
-
 namespace Tectonic\Shift\Library\Support\Database\Eloquent;
 
 use App;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Str;
+use Tectonic\Localisation\Translator\Translatable;
 use Tectonic\Shift\Library\Search\SearchFilterCollection;
 use Tectonic\Shift\Library\Support\Database\RepositoryInterface;
 use Tectonic\Shift\Library\Support\Exceptions\MethodNotFoundException;
@@ -46,7 +46,7 @@ abstract class Repository implements RepositoryInterface
      */
     public function getBy($field, $value)
     {
-        return $this->getQuery()->where($field, '=', $value)->get();
+        return $this->getByQuery($field, $value)->get();
     }
 
     /**
@@ -58,13 +58,35 @@ abstract class Repository implements RepositoryInterface
      */
     public function getOneBy($field, $value)
     {
-        $result = $this->getBy($field, $value);
+        return $this->getByQuery($field, $value)->first();
+    }
 
-        if ($result->isEmpty()) {
-            return null;
+    /**
+     * Creates a query object used for getBy and getOneBy methods. This is particularly handy for models
+     * that have translatable fields. In short, it allows the developer to easily query for model objects
+     * that may have fields that reside within the translations table.
+     *
+     * @param $field
+     * @param $value
+     * @return QueryBuilder
+     */
+    protected function getByQuery($field, $value)
+    {
+        $model = $this->model;
+        $translatableFields = $this->getTranslatableFields($this->model);
+
+        // If the model is translatable, and the field exists within the array, as well as the model having a
+        // translations relationship defined on the model, we can do some neat stuff querying for a field value.
+        if (in_array($field, $translatableFields) && method_exists($model, 'translations')) {
+            return $this->getQuery()->whereHas('translations', function($query) use ($field, $value, $model) {
+                $query->where('resource', '', class_basename($model));
+                $query->where('field', '=', $field);
+                $query->where('value', 'like', "%{$value}%");
+            });
         }
-
-        return $result->first();
+        else {
+            return $this->getQuery()->where($field, '=', $value);
+        }
     }
 
     /**
@@ -90,7 +112,7 @@ abstract class Repository implements RepositoryInterface
      * @param SearchFilterCollection $filterCollection
      * @return mixed
      */
-    public function getByCriteria(SearchFilterCollection $filterCollection)
+    public function getByFilters(SearchFilterCollection $filterCollection)
     {
         $query = $this->getQuery();
 
@@ -287,5 +309,16 @@ abstract class Repository implements RepositoryInterface
     protected function currentAccountId()
     {
         return App::make(CurrentAccountService::class)->get()->id;
+    }
+
+    /**
+     * Determines the translatable fields available on the model assigned to the repository.
+     *
+     * @param Model $model
+     * @return bool
+     */
+    protected function getTranslatableFields(Model $model)
+    {
+        return in_array(Translatable::class, class_uses($model)) ? $model->getTranslatableFields() : [];
     }
 }

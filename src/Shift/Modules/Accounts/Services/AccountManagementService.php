@@ -3,8 +3,8 @@ namespace Tectonic\Shift\Modules\Accounts\Services;
 
 use Event;
 use Tectonic\Shift\Library\Support\ManagementService;
-use Tectonic\Shift\Modules\Accounts\Entities\Account;
 use Tectonic\Shift\Modules\Accounts\Contracts\AccountRepositoryInterface;
+use Tectonic\Shift\Modules\Accounts\Models\Account;
 use Tectonic\Shift\Modules\Accounts\Validators\AccountValidation;
 
 /**

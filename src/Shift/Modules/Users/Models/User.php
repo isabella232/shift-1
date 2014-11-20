@@ -2,14 +2,17 @@
 namespace Tectonic\Shift\Modules\Users\Models;
 
 use Illuminate\Auth\UserInterface as AuthUserInterface;
+use Tectonic\Application\Eventing\EventGenerator;
 use Tectonic\Shift\Modules\Accounts\Contracts\AccountInterface;
 use Tectonic\Shift\Modules\Accounts\Models\Account;
 use Tectonic\Shift\Modules\Users\Contracts\UserInterface;
 use Illuminate\Auth\Reminders\RemindableInterface;
 use Tectonic\Shift\Library\Support\Database\Eloquent\Model;
 
-class User extends Model implements UserInterface, AuthUserInterface, RemindableInterface
+class User extends Model implements AuthUserInterface, RemindableInterface
 {
+    use EventGenerator;
+
     /**
      * The attributes excluded from the model's JSON form.
      *
@@ -44,107 +47,52 @@ class User extends Model implements UserInterface, AuthUserInterface, Remindable
     /**
      * Should create a new instance of the entity, with the first name, last name and email provided.
      *
-     * @param $firstName
-     * @param $lastName
-     * @param $email
-     * @return UserInterface
+     * @param string $firstName
+     * @param string $lastName
+     * @param string $email
+     * @param string $password
+     * @return User
      */
-    public static function add($firstName, $lastName, $email)
+    public static function add($firstName, $lastName, $email, $password)
     {
-        $user = new self;
-        $user->setFirstName($firstName);
-        $user->setLastName($lastName);
-        $user->setEmail($email);
+        $user = static::create(compact('firstName', 'lastName', 'email', 'password'));
+
+        $user->raise(new UserWasAdded($user));
 
         return $user;
     }
 
     /**
-     * @return integer
+     * When installing shift, this is a special use-case.
+     *
+     * @param string $email
+     * @param string $password
+     * @return User
      */
-    public function getId()
+    public static function install($email, $password)
     {
-        return $this->id;
-    }
+        $user = new static;
 
-    /**
-     * @return string
-     */
-    public function getFirstName()
-    {
-        return $this->firstName;
-    }
+        $user->firstName = 'Super';
+        $user->lastName = 'Admin';
+        $user->email = $email;
+        $user->lastName = $password;
 
-    /**
-     * @return string
-     */
-    public function getLastName()
-    {
-        return $this->lastName;
-    }
+        $user->raise(new AdminUserWasCreated($user));
 
-    /**
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPassword()
-    {
-        return $this->password;
+        return $user;
     }
 
     /**
      * Determine whether or not the user is an owner of the provided account.
      *
-     * @param AccountInterface $account
+     * @param Account $account
      */
-    public function ownerOf(AccountInterface $account)
+    public function ownerOf(Account $account)
     {
         $ownedAccountIds = $this->ownedAccounts->lists('id');
 
         return in_array($account->getId(), $ownedAccountIds);
-    }
-
-    /**
-     * @param string $firstName
-     * @return void
-     */
-    public function setFirstName($firstName)
-    {
-        $this->firstName = $firstName;
-    }
-
-    /**
-     * @param string $lastName
-     * @return void
-     */
-    public function setLastName($lastName)
-    {
-        $this->lastName = $lastName;
-    }
-
-    /**
-     * @param string $email
-     * @return void
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-    }
-
-    /**
-     * @param string $password
-     * @return void
-     */
-    public function setPassword($password)
-    {
-        $this->password = $password;
     }
 
     /**

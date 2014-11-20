@@ -3,15 +3,13 @@ namespace Tectonic\Shift\Modules\Localisation;
 
 use App;
 use Event;
+use Tectonic\Localisation\Contracts\TranslationRepositoryInterface;
 use Tectonic\Shift\Library\ServiceProvider;
+use Tectonic\Shift\Modules\Localisation\Listeners\AccountInstalled;
 use Tectonic\Shift\Modules\Localisation\Listeners\StartupListener;
 use Tectonic\Shift\Modules\Localisation\Contracts\LanguageRepositoryInterface;
-use Tectonic\Shift\Modules\Localisation\Contracts\TranslationRepositoryInterface;
 use Tectonic\Shift\Modules\Localisation\Repositories\EloquentLanguageRepository;
 use Tectonic\Shift\Modules\Localisation\Repositories\EloquentTranslationRepository;
-use Tectonic\Shift\Modules\Localisation\Translator\Engine;
-use Tectonic\Shift\Modules\Localisation\Translator\Transformers\CollectionTransformer;
-use Tectonic\Shift\Modules\Localisation\Translator\Transformers\ModelTransformer;
 
 class LocalisationServiceProvider extends ServiceProvider
 {
@@ -28,7 +26,8 @@ class LocalisationServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listeners = [
-        StartupListener::class
+        StartupListener::class,
+        AccountInstalled::class
     ];
 
     /**
@@ -61,10 +60,6 @@ class LocalisationServiceProvider extends ServiceProvider
 	    parent::boot();
 
         $this->registerCustomValidationRules();
-
-        \Doctrine\Common\Annotations\AnnotationRegistry::registerAutoloadNamespace(
-            'JMS\Serializer\Annotation', __DIR__.'/../../../../vendor/jms/serializer/src'
-        );
     }
 
     /**

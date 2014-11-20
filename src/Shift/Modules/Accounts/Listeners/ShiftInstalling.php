@@ -26,11 +26,6 @@ class ShiftInstalling extends Listener
     private $accountUsersService;
 
     /**
-     * @var SupportedLanguageManagementService
-     */
-    private $supportedLanguages;
-
-    /**
      * @param AccountManagementService $accountsService
      * @param AccountUsersService $accountUsersService
      * @param AccountDomainsService $domainsService
@@ -38,13 +33,11 @@ class ShiftInstalling extends Listener
     public function __construct(
         AccountManagementService $accountsService,
         AccountUsersService $accountUsersService,
-        AccountDomainsService $domainsService,
-        SupportedLanguageManagementService $supportedLanguages
+        AccountDomainsService $domainsService
     ) {
         $this->accountDomainsService = $domainsService;
         $this->accountsService = $accountsService;
         $this->accountUsersService = $accountUsersService;
-        $this->supportedLanguages = $supportedLanguages;
     }
 
     /**
@@ -75,25 +68,7 @@ class ShiftInstalling extends Listener
         $this->accountUsersService->addUser($account, $user);
         $this->accountDomainsService->addDomain($account, $input['host']);
 
-        $this->assignLanguage($account, $input);
-
         Event::fire('account.installed', [$account, $input]);
-    }
-
-    /**
-     * Adds the selected language as a supported language for the new account.
-     *
-     * @param AccountInterface $account
-     * @param array $input
-     */
-    public function assignLanguage(AccountInterface $account, array $input)
-    {
-        $supportedLanguageInput = [
-            'languageId' => $input['language'],
-            'accountId' => $account->getId()
-        ];
-
-        $this->supportedLanguages->create($supportedLanguageInput);
     }
 }
  

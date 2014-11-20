@@ -1,9 +1,9 @@
 <?php
 namespace Tectonic\Shift\Modules\Accounts\Validators;
 
-use Tectonic\Shift\Library\Validation\Validation;
+use Tectonic\Application\Validation\Validator;
 
-class SupportedLanguageValidation extends Validation
+class SupportedLanguageValidation extends Validator
 {
     public function getRules()
     {

@@ -76,6 +76,12 @@ class AcceptanceTestCase extends TestCase
         $app['path.base'] = __DIR__ . '/../../';
 
         $artisan = $this->app->make('artisan');
+
+        $artisan->call('migrate', [
+            '--database' => $this->database,
+            '--package'  => 'tectonic/laravel-localisation'
+        ]);
+
         $artisan->call('migrate', [
             '--database' => $this->database,
             '--path'     => 'src/migrations'

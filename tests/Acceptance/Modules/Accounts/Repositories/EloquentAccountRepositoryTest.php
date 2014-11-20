@@ -31,22 +31,6 @@ class EloquentAccountRepositoryTest extends AcceptanceTestCase
         $this->userRepository = App::make(EloquentUserRepository::class);
     }
 
-    public function testOwnerAssignment()
-    {
-        $user = $this->userRepository->getNew(['firstName' => 'Kirk', 'lastName' => 'Bushell', 'email' => 'someemail@gmail.com', 'password' => '1234']);
-        $this->userRepository->save($user);
-
-        $account = $this->create();
-        $account->setOwner($user);
-
-        $this->accountRepository->save($account);
-
-        $account = $this->accountRepository->getById($account->getId());
-        $account->owner;
-
-        $this->assertEquals($account->getOwner()->getId(), $user->getId());
-    }
-
     /**
      * @return mixed
      */

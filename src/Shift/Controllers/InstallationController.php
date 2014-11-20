@@ -1,16 +1,15 @@
 <?php
-
 namespace Tectonic\Shift\Controllers;
 
+use Input;
 use Request;
 use Redirect;
 use Tectonic\Shift\Library\Support\Controller;
-use Tectonic\Shift\Library\Validation\ValidationException;
-use Tectonic\Shift\Modules\Installation\Contracts\InstallationListenerInterface;
 use Tectonic\Shift\Modules\Installation\Services\InstallService;
+use Tectonic\Shift\Modules\Installation\Observers\InstallationObserver;
 use View;
 
-class InstallationController extends Controller implements InstallationListenerInterface
+class InstallationController extends Controller
 {
     // Our installation controller uses a different layout to the main app
     public $layout = 'shift::layouts.installation';
@@ -49,34 +48,6 @@ class InstallationController extends Controller implements InstallationListenerI
      */
     public function postInstall()
     {
-        return $this->installService->freshInstall(Request::all(), $this);
-    }
-
-    /**
-     * Handler for when the installation is successful.
-     *
-     * @return mixed
-     */
-    public function onSuccess()
-    {
-        return Redirect::to('/');
-    }
-
-    /**
-     * Handler for when the installation has failed validation.
-     *
-     * @return mixed
-     */
-    public function onValidationFailure(ValidationException $exception)
-    {
-        return Redirect::back()->withInput()->withErrors($exception->getValidationErrors());
-    }
-
-    /**
-     * Handles all other failures.
-     */
-    public function onFailure()
-    {
-        return Redirect::back();
+        return $this->installService->freshInstall(Input::get(), new InstallationObserver);
     }
 }

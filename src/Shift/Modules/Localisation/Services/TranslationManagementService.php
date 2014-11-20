@@ -3,7 +3,7 @@ namespace Tectonic\Shift\Modules\Localisation\Services;
 
 use Tectonic\Shift\Library\Support\ManagementService;
 use Tectonic\Shift\Modules\Localisation\Validators\TranslationValidator;
-use Tectonic\Shift\Modules\Localisation\Contracts\TranslationRepositoryInterface;
+use Tectonic\Localisation\Contracts\TranslationRepositoryInterface;
 
 class TranslationManagementService extends ManagementService
 {

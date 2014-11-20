@@ -2,7 +2,7 @@
 namespace Tectonic\Shift\Modules\Localisation\Services;
 
 use Tectonic\Shift\Modules\Localisation\Contracts\LanguageRepositoryInterface;
-use Tectonic\Shift\Modules\Localisation\Contracts\TranslationRepositoryInterface;
+use Tectonic\Localisation\Contracts\TranslationRepositoryInterface;
 
 class UITranslationService
 {

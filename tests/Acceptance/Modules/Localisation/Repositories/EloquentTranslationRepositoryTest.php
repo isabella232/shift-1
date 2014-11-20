@@ -41,10 +41,10 @@ class EloquentTranslationRepositoryTest extends AcceptanceTestCase
         ];
 
         $this->cleanData['translations'] = [
-            ['languageId' => 1, 'foreignId' => 1, 'resource' => 'Tectonic\Shift\CustomField', 'field' => 'label', 'value' => 'Custom field en_GB'],
-            ['languageId' => 2, 'foreignId' => 1, 'resource' => 'Tectonic\Shift\CustomField', 'field' => 'label', 'value' => 'Custom field en_AU'],
-            ['languageId' => 3, 'foreignId' => 1, 'resource' => 'Tectonic\Shift\CustomField', 'field' => 'label', 'value' => 'Custom field en_NZ'],
-            ['languageId' => 4, 'foreignId' => 1, 'resource' => 'Tectonic\Shift\CustomField', 'field' => 'label', 'value' => 'Custom field en_US']
+            ['language' => 'en_GB', 'foreign_id' => 1, 'resource' => 'Tectonic\Shift\CustomField', 'field' => 'label', 'value' => 'Custom field en_GB'],
+            ['language' => 'en_AU', 'foreign_id' => 1, 'resource' => 'Tectonic\Shift\CustomField', 'field' => 'label', 'value' => 'Custom field en_AU'],
+            ['language' => 'en_NZ', 'foreign_id' => 1, 'resource' => 'Tectonic\Shift\CustomField', 'field' => 'label', 'value' => 'Custom field en_NZ'],
+            ['language' => 'en_US', 'foreign_id' => 1, 'resource' => 'Tectonic\Shift\CustomField', 'field' => 'label', 'value' => 'Custom field en_US']
         ];
 
         $this->languageRepository = App::make(EloquentLanguageRepository::class);
