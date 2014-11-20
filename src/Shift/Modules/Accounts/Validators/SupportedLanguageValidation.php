@@ -3,12 +3,13 @@ namespace Tectonic\Shift\Modules\Accounts\Validators;
 
 use Tectonic\Application\Validation\Validator;
 
-class AccountValidation extends Validator
+class SupportedLanguageValidation extends Validator
 {
     public function getRules()
     {
         return [
-
+            'accountId' => 'required',
+            'languageId' => 'required',
         ];
     }
 }

@@ -3,9 +3,11 @@ namespace Tectonic\Shift\Modules\Accounts\Listeners;
 
 use Event;
 use Tectonic\Shift\Library\Support\Listener;
+use Tectonic\Shift\Modules\Accounts\Contracts\AccountInterface;
 use Tectonic\Shift\Modules\Accounts\Services\AccountDomainsService;
 use Tectonic\Shift\Modules\Accounts\Services\AccountManagementService;
 use Tectonic\Shift\Modules\Accounts\Services\AccountUsersService;
+use Tectonic\Shift\Modules\Accounts\Services\SupportedLanguageManagementService;
 
 class ShiftInstalling extends Listener
 {
@@ -28,8 +30,11 @@ class ShiftInstalling extends Listener
      * @param AccountUsersService $accountUsersService
      * @param AccountDomainsService $domainsService
      */
-    public function __construct(AccountManagementService $accountsService, AccountUsersService $accountUsersService, AccountDomainsService $domainsService)
-    {
+    public function __construct(
+        AccountManagementService $accountsService,
+        AccountUsersService $accountUsersService,
+        AccountDomainsService $domainsService
+    ) {
         $this->accountDomainsService = $domainsService;
         $this->accountsService = $accountsService;
         $this->accountUsersService = $accountUsersService;
@@ -57,7 +62,7 @@ class ShiftInstalling extends Listener
      */
     public function whenShiftIsInstalling($user, array $input)
     {
-        $account = $this->accountsService->create($input);
+        $account = $this->accountsService->create([]);
 
         $this->accountUsersService->transferOwnership($account, $user);
         $this->accountUsersService->addUser($account, $user);

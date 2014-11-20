@@ -28,17 +28,6 @@ class EloquentAccountRepository extends Repository implements AccountRepositoryI
         $this->model = $model;
     }
 
-    /**
-     * Creates and returns a new account instance.
-     *
-     * @param array $data
-     * @return Account
-     */
-    public function getNew(array $data = [])
-    {
-        return Account::add($data['name']);
-    }
-
 	/**
 	 * Require an account based on the domain that has been provided. If no account is found,
 	 * an AccountNotFoundException is thrown.rsi
@@ -79,15 +68,5 @@ class EloquentAccountRepository extends Repository implements AccountRepositoryI
     public function getCount()
     {
         return Account::withTrashed()->count();
-    }
-
-    /**
-     * @param AccountInterface $account
-     * @param UserInterface $user
-     * @return mixed
-     */
-    public function addUser(AccountInterface $account, UserInterface $user)
-    {
-        return $account->users()->attach($user->getId());
     }
 }

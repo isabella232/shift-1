@@ -1,8 +1,9 @@
-<?php namespace Tectonic\Shift\Modules\Installation\Validators;
+<?php
+namespace Tectonic\Shift\Modules\Installation\Commands;
 
-use Tectonic\Shift\Library\Validation\Validation;
+use Tectonic\Application\Validation\Validator;
 
-class InstallValidation extends Validation
+class InstallShiftValidator extends Validator
 {
     protected $rules = [
         'name'     => 'required',
@@ -10,5 +11,4 @@ class InstallValidation extends Validation
         'email'    => 'required',
         'password' => 'required',
     ];
-
 }

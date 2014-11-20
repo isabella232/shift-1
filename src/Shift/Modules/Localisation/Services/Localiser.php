@@ -1,7 +1,7 @@
 <?php
 namespace Tectonic\Shift\Modules\Localisation\Services;
 
-use Tectonic\Shift\Modules\Localisation\Contracts\TranslationRepositoryInterface;
+use Tectonic\Localisation\Contracts\TranslationRepositoryInterface;
 use Tectonic\Shift\Modules\Localisation\Support\ResourceCriteria;
 
 class Localiser

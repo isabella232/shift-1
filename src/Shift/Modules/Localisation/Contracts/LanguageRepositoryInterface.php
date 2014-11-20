@@ -26,4 +26,12 @@ interface LanguageRepositoryInterface
      * @return string
      */
     public function getLanguageCode($languageId);
+
+    /**
+     * Retrieves a language based on its language code.
+     *
+     * @param string $languageCode
+     * @return mixed
+     */
+    public function getOneByLanguageCode($languageCode);
 }

@@ -1,19 +1,21 @@
 <?php
-namespace Tests\Stubs\Installation;
+namespace Tectonic\Shift\Modules\Installation\Observers;
 
-use Tectonic\Shift\Library\Validation\ValidationException;
-use Tectonic\Shift\Modules\Installation\Contracts\InstallationListenerInterface;
+use Exception;
+use Redirect;
+use Tectonic\Application\Validation\ValidationException;
+use Tectonic\Shift\Modules\Installation\Contracts\InstallationObserverInterface;
 
 /**
- * Class InstallationListener
+ * Class InstallationObserver
  *
  * The following listener is just to be able to enforce certain behaviour with the result of installation.
  * For example, when validation fails we want to see the error messages output, and we want to throw
  * generic exceptions when installation failed for any other reason.
  *
- * @package Tests\Stubs\Installation
+ * @package Tectonic\Shift\Modules\Installation\Observers
  */
-class InstallationListener implements InstallationListenerInterface
+class InstallationObserver implements InstallationObserverInterface
 {
     /**
      * Handler for when the installation is successful.
@@ -22,7 +24,7 @@ class InstallationListener implements InstallationListenerInterface
      */
     public function onSuccess()
     {
-        // do nothing
+        return Redirect::to('/');
     }
 
     /**
@@ -32,9 +34,7 @@ class InstallationListener implements InstallationListenerInterface
      */
     public function onValidationFailure(ValidationException $exception)
     {
-        print_r($exception->getFailedFields());
-
-        throw $exception;
+        return Redirect::back()->withInput()->withErrors($exception->getValidationErrors());
     }
 
     /**
@@ -42,10 +42,8 @@ class InstallationListener implements InstallationListenerInterface
      *
      * @return mixed
      */
-    public function onFailure()
+    public function onFailure(Exception $exception)
     {
-        throw new \Exception('Installation failed for some reason.');
+        return Redirect::back();
     }
-
 }
- 

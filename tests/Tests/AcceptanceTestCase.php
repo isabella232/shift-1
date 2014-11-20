@@ -76,6 +76,12 @@ class AcceptanceTestCase extends TestCase
         $app['path.base'] = __DIR__ . '/../../';
 
         $artisan = $this->app->make('artisan');
+
+        $artisan->call('migrate', [
+            '--database' => $this->database,
+            '--package'  => 'tectonic/laravel-localisation'
+        ]);
+
         $artisan->call('migrate', [
             '--database' => $this->database,
             '--path'     => 'src/migrations'
@@ -91,7 +97,7 @@ class AcceptanceTestCase extends TestCase
     {
         $accountRepository = App::make(AccountRepositoryInterface::class);
 
-        $this->account = $accountRepository->getNew(['name' => 'Test account']);
+        $this->account = $accountRepository->getNew();
 
         $accountRepository->save($this->account);
 

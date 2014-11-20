@@ -2,10 +2,11 @@
 namespace Tectonic\Shift\Modules\Accounts\Repositories;
 
 use Tectonic\Shift\Library\Support\Database\Eloquent\Repository;
-use Tectonic\Shift\Modules\Accounts\Models\SupportedLanguage;
 use Tectonic\Shift\Modules\Localisation\Contracts\LanguageInterface;
+use Tectonic\Shift\Modules\Accounts\Contracts\SupportedLanguageRepositoryInterface;
+use Tectonic\Shift\Modules\Accounts\Models\SupportedLanguage;
 
-class EloquentSupportedLanguagesRepository extends Repository implements SupportedLanguagesRepositoryInterface
+class EloquentSupportedLanguagesRepository extends Repository implements SupportedLanguageRepositoryInterface
 {
     /**
      * @param SupportedLanguage $model

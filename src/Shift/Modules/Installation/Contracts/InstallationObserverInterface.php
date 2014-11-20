@@ -1,10 +1,10 @@
 <?php
-
 namespace Tectonic\Shift\Modules\Installation\Contracts;
 
-use Tectonic\Shift\Library\Validation\ValidationException;
+use Exception;
+use Tectonic\Application\Validation\ValidationException;
 
-interface InstallationListenerInterface
+interface InstallationObserverInterface
 {
     /**
      * Handler for when the installation is successful.
@@ -25,5 +25,5 @@ interface InstallationListenerInterface
      *
      * @return mixed
      */
-    public function onFailure();
+    public function onFailure(Exception $exception);
 }

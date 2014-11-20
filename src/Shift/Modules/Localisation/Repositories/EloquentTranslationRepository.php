@@ -1,95 +1,27 @@
 <?php
 namespace Tectonic\Shift\Modules\Localisation\Repositories;
 
-use Doctrine\ORM\EntityManager;
+use Tectonic\LaravelLocalisation\Database\Translation;
+use Tectonic\Localisation\Contracts\TranslationRepositoryInterface;
+use Tectonic\Localisation\Translator\ResourceCriteria;
 use Tectonic\Shift\Library\Support\Database\Eloquent\Repository;
-use Tectonic\Shift\Modules\Localisation\Contracts\LanguageRepositoryInterface;
-use Tectonic\Shift\Modules\Localisation\Contracts\TranslationRepositoryInterface;
-use Tectonic\Shift\Modules\Localisation\Models\Translation;
-use Tectonic\Shift\Modules\Localisation\Support\ResourceCriteria;
 
 class EloquentTranslationRepository extends Repository implements TranslationRepositoryInterface
 {
-    /**
-     * Locale repository
-     *
-     * @var \Tectonic\Shift\Modules\Localisation\Contracts\LocaleRepositoryInterface
-     */
-    protected $languageRepository;
+    protected $restrictByAccount = false;
 
     /**
-     * Account wide data root. No need to restrict queries by account.
-     *
-     * @var bool
+     * @param Translation $model
      */
-    public $restrictByAccount = false;
-
-    /**
-     * Constructor
-     *
-     * @param EntityManager $entityManager
-     * @param LocaleRepositoryInterface $localeRepository
-     * @throws \Tectonic\Shift\Library\Support\Database\Doctrine\EntityIsNullException
-     */
-    public function __construct(Translation $translation, LanguageRepositoryInterface $localeRepository)
+    public function __construct(Translation $model)
     {
-        $this->languageRepository = $localeRepository;
-        $this->model = $translation;
+        $this->model = $model;
     }
 
     /**
-     * Return a key/value paired array of UI translations.
-     *
-     * @param  array $locales
-     * @return array
-     */
-    public function getUITranslations(array $locales)
-    {
-        $localeIds = $this->languageRepository->getLanguageIds($locales);
-
-        $results = $this->getQuery()
-            ->whereResource('UI')
-            ->whereIn('locale_id', $localeIds)
-            ->lists('field', 'value');
-
-        return $this->flattenUITranslations($results);
-    }
-
-    /**
-     * Find a translation for a given resource field
-     *
-     * @param int    $foreignId
-     * @param string $resource
-     * @param string $field
-     * @param string $languageId
-     *
-     * @return array
-     */
-    public function findTranslation($foreignId, $resource, $field, $languageId)
-    {
-        $localeId = $this->languageRepository->getLanguageId($languageId);
-
-        return $this->getQuery()
-            ->whereForeignId($foreignId)
-            ->whereResource($resource)
-            ->whereField($field)
-            ->whereLanguageId($localeId)
-            ->first();
-    }
-
-    protected function flattenUITranslations($results)
-    {
-        $array = [];
-
-        foreach ($results as $result) {
-            $array[$result['field']] = $result['value'];
-        }
-
-        return $array;
-    }
-
-    /**
-     * Returns a collection of localisations based on the resource criteria.
+     * When searching for translations to be applied to an entity, or a collection of entities,
+     * we want to do so in the most manner possible. In this way, any repository you have
+     * that searches for translations, should do so based on the ResourceCriteria object passed.
      *
      * @param ResourceCriteria $criteria
      * @return mixed
@@ -97,15 +29,54 @@ class EloquentTranslationRepository extends Repository implements TranslationRep
     public function getByResourceCriteria(ResourceCriteria $criteria)
     {
         $resources = $criteria->getResources();
-        $query = $this->getQuery()->with(['language']);
+        $query = $this->getQuery();
 
         foreach ($resources as $resource) {
-            $query ->orWhere(function($query) use ($criteria, $resource) {
+            $query->orWhere(function($query) use ($criteria, $resource) {
                 $query->whereResource($resource);
-                $query->whereIn('foreignId', $criteria->getIds($resource));
+                $query->whereIn('foreign_id', $criteria->getIds($resource));
             });
         }
 
         return $query->get();
+    }
+
+    /**
+     * Retrieves all translations that match the required params.
+     *
+     * @param array $params
+     * @return Collection
+     */
+    public function getByCriteria($params)
+    {
+        return $this->getByCriteriaQuery($params)->get();
+    }
+
+    /**
+     * Same as getByCriteria, but only retrieves the first record.
+     *
+     * @param array $params
+     * @return null|Translation
+     */
+    public function getOneByCriteria($params)
+    {
+        return $this->getByCriteriaQuery($params)->first();
+    }
+
+    /**
+     * Generates the query builder object required for the get query requests.
+     *
+     * @param array $params
+     * @return QueryBuilder
+     */
+    private function getByCriteriaQuery(array $params)
+    {
+        $query = $this->model->select(['*']);
+
+        foreach ($params as $key => $value) {
+            $query->where($key, '=', $value);
+        }
+
+        return $query;
     }
 }

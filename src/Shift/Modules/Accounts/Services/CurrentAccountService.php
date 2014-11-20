@@ -4,8 +4,8 @@ namespace Tectonic\Shift\Modules\Accounts\Services;
 
 use Request;
 use Tectonic\Shift\Modules\Accounts\Contracts\AccountInterface;
-use Tectonic\Shift\Modules\Accounts\Entities\Account;
 use Tectonic\Shift\Modules\Accounts\Contracts\AccountRepositoryInterface;
+use Tectonic\Shift\Modules\Accounts\Models\Account;
 
 /**
  * Class CurrentAccountService
@@ -55,7 +55,7 @@ class CurrentAccountService
      *
      * @param $account
      */
-    public function set(AccountInterface $account)
+    public function set(Account $account)
     {
         $this->account = $account;
     }

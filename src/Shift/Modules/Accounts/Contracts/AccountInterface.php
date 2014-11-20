@@ -1,5 +1,6 @@
 <?php
 namespace Tectonic\Shift\Modules\Accounts\Contracts;
+
 use Tectonic\Shift\Modules\Users\Contracts\UserInterface;
 
 /**
@@ -27,26 +28,11 @@ interface AccountInterface
     public function getDomains();
 
     /**
-     * The name of the account.
-     *
-     * @return string
-     */
-    public function getName();
-
-    /**
      * Returns the user that is the owner of this account.
      *
      * @return UserInterface
      */
     public function getOwner();
-
-    /**
-     * Sets the name attribute for the account.
-     *
-     * @param string $name
-     * @return void
-     */
-    public function setName($name);
 
     /**
      * Sets the owner of an account.

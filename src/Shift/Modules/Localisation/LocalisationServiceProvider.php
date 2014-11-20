@@ -3,10 +3,10 @@ namespace Tectonic\Shift\Modules\Localisation;
 
 use App;
 use Event;
+use Tectonic\Localisation\Contracts\TranslationRepositoryInterface;
 use Tectonic\Shift\Library\ServiceProvider;
 use Tectonic\Shift\Modules\Localisation\Listeners\StartupListener;
 use Tectonic\Shift\Modules\Localisation\Contracts\LanguageRepositoryInterface;
-use Tectonic\Shift\Modules\Localisation\Contracts\TranslationRepositoryInterface;
 use Tectonic\Shift\Modules\Localisation\Repositories\EloquentLanguageRepository;
 use Tectonic\Shift\Modules\Localisation\Repositories\EloquentTranslationRepository;
 

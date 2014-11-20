@@ -2,18 +2,29 @@
 namespace Tectonic\Shift\Modules\Accounts\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletingTrait;
+use Tectonic\Application\Eventing\EventGenerator;
 use Tectonic\Localisation\Translator\Translatable;
 use Tectonic\Shift\Library\Support\Database\Eloquent\Model;
-use Tectonic\Shift\Modules\Accounts\Contracts\AccountInterface;
+use Tectonic\Shift\Library\Support\Database\Eloquent\TranslatableModel;
+use Tectonic\Shift\Modules\Accounts\Events\AccountWasInstalled;
+use Tectonic\Shift\Modules\Accounts\Events\OwnerWasChanged;
 use Tectonic\Shift\Modules\Localisation\Models\Language;
 use Tectonic\Shift\Modules\Accounts\Models\SupportedLanguage;
-use Tectonic\Shift\Modules\Users\Contracts\UserInterface;
 use Tectonic\Shift\Modules\Users\Models\User;
 
-class Account extends Model implements AccountInterface
+class Account extends Model
 {
+    use EventGenerator;
     use SoftDeletingTrait;
     use Translatable;
+    use TranslatableModel;
+
+    /**
+     * Fillable fields via mass assignment.
+     *
+     * @var array
+     */
+    protected $fillable = ['name'];
 
     /**
      * An account can have one or more domains, and is often queried via this relationship.
@@ -32,7 +43,7 @@ class Account extends Model implements AccountInterface
      */
     public function languages()
     {
-        return $this->hasManyThrough(Language::class, SupportedLanguage::class);
+        return $this->hasMany(SupportedLanguage::class);
     }
 
     /**
@@ -43,7 +54,7 @@ class Account extends Model implements AccountInterface
      */
     public function owner()
     {
-        return $this->belongsTo(User::class, 'userId');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     /**
@@ -57,79 +68,56 @@ class Account extends Model implements AccountInterface
     }
 
     /**
-     * @return string
+     * Sets the owner for the account.
+     *
+     * @param User $user
      */
-    public function getName()
+    public function setOwner(User $user)
     {
-        return $this->name;
+        $this->owner()->associate($user);
+        $this->raise(new OwnerWasChanged($user));
     }
 
     /**
-     * Returns the id for the account.
+     * Create a new account. This is for the installation use-case.
      *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Return a collection of domains assigned to this account.
-     *
-     * @return collection
-     */
-    public function getDomains()
-    {
-        return $this->domains;
-    }
-
-    /**
-     * Sets the name attribute.
-     *
-     * @param $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * Creates a new account instance.
-     *
-     * @param string $name
      * @return Account
      */
-    public static function add($name)
+    public static function install()
     {
-        $account = new self;
-        $account->setName($name);
+        $account = static::create([]);
+        $account->raise(new AccountWasInstalled($account));
 
         return $account;
     }
 
     /**
-     * Sets the owner for the account.
+     * Add a new supported language to the account.
      *
-     * @param UserInterface $user
+     * @param Language $language
      */
-    public function setOwner(UserInterface $user)
+    public function addLanguage(Language $language)
     {
-        $this->userId = $user->getId();
+        $supportedLanguage = new SupportedLanguage;
+        $supportedLanguage->code = $language->code;
+
+        $this->languages()->save($supportedLanguage);
     }
 
     /**
-     * Returns the user that is the owner of this account.
+     * Add a new domain to the account.
      *
-     * @return UserInterface
+     * @param $domain
      */
-    public function getOwner()
+    public function addDomain($domain)
     {
-        return $this->owner;
+        $newDomain = new Domain(['domain' => $domain]);
+
+        $this->domains()->save($newDomain);
     }
 
     /**
-     * Returns an array of the field names that can be used for translations.
+     * The required translatable fields for this model.
      *
      * @return array
      */
