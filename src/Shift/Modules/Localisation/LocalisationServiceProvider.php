@@ -7,7 +7,7 @@ use Tectonic\Localisation\Contracts\TranslationRepositoryInterface;
 use Tectonic\Shift\Library\ServiceProvider;
 use Tectonic\Shift\Modules\Localisation\Listeners\StartupListener;
 use Tectonic\Shift\Modules\Localisation\Contracts\LanguageRepositoryInterface;
-use Tectonic\Shift\Modules\Localisation\Repositories\EloquentLanguageRepository;
+use Tectonic\Shift\Modules\Localisation\Repositories\ConfigLanguageRepository;
 use Tectonic\Shift\Modules\Localisation\Repositories\EloquentTranslationRepository;
 
 class LocalisationServiceProvider extends ServiceProvider
@@ -34,7 +34,7 @@ class LocalisationServiceProvider extends ServiceProvider
      * @var array
      */
     protected $repositories = [
-        LanguageRepositoryInterface::class => EloquentLanguageRepository::class,
+        LanguageRepositoryInterface::class => ConfigLanguageRepository::class,
         TranslationRepositoryInterface::class => EloquentTranslationRepository::class
     ];
 

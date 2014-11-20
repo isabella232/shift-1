@@ -4,7 +4,7 @@ namespace Tests\Acceptance\Modules\Localisation\Repositories;
 use App;
 use Mockery;
 use Tests\AcceptanceTestCase;
-use Tectonic\Shift\Modules\Localisation\Repositories\EloquentLanguageRepository;
+use Tectonic\Shift\Modules\Localisation\Repositories\ConfigLanguageRepository;
 use Tectonic\Shift\Modules\Localisation\Repositories\EloquentTranslationRepository;
 
 class EloquentTranslationRepositoryTest extends AcceptanceTestCase
@@ -47,7 +47,7 @@ class EloquentTranslationRepositoryTest extends AcceptanceTestCase
             ['language' => 'en_US', 'foreign_id' => 1, 'resource' => 'Tectonic\Shift\CustomField', 'field' => 'label', 'value' => 'Custom field en_US']
         ];
 
-        $this->languageRepository = App::make(EloquentLanguageRepository::class);
+        $this->languageRepository = App::make(ConfigLanguageRepository::class);
         $this->translationRepository = App::make(EloquentTranslationRepository::class);
     }
 

@@ -45,4 +45,14 @@ class InstallService
 
         return $listener->onSuccess();
     }
+
+    /**
+     * Returns the languages that are available to the system.
+     *
+     * @return collection
+     */
+    public function availableLanguages()
+    {
+
+    }
 }

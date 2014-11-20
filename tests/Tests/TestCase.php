@@ -6,6 +6,13 @@ use Mockery as m;
 
 class TestCase extends \Orchestra\Testbench\TestCase
 {
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->init();
+    }
+
     /**
      * Reset the test case to its base level test status, clearing mocks.
      */
@@ -38,5 +45,13 @@ class TestCase extends \Orchestra\Testbench\TestCase
         return [
             'Validator' => 'Illuminate\Support\Facades\Validator'
         ];
+    }
+
+    /**
+     * Called by setUp before every test. Good for setting up dependencies and test conditions.
+     */
+    protected function init()
+    {
+        // Implement in child classes, instead of setUp
     }
 }

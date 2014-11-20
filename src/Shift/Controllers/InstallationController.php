@@ -11,7 +11,9 @@ use View;
 
 class InstallationController extends Controller
 {
-    // Our installation controller uses a different layout to the main app
+    /**
+     * Our installation controller uses a different layout to the main app.
+     */
     public $layout = 'shift::layouts.installation';
 
     /**
