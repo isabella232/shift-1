@@ -1,5 +1,4 @@
 <?php
-
 namespace Tests\Unit\Modules\Accounts\Validation;
 
 use Tectonic\Shift\Modules\Accounts\Validators\DomainValidation;
@@ -7,7 +6,7 @@ use Tectonic\Shift\Modules\Accounts\Validators\DomainValidation;
 class DomainValidationTest extends \Tests\AcceptanceTestCase
 {
     /**
-     * @expectedException Tectonic\Shift\Library\Validation\ValidationException
+     * @expectedException Tectonic\Application\Validation\ValidationException
      */
     public function testValidationForDomainNameFormat()
     {

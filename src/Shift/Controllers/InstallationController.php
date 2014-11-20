@@ -37,8 +37,9 @@ class InstallationController extends Controller
     public function getInstall()
     {
         $host = Request::getHttpHost();
+        $languages = $this->installService->availableLanguages();
 
-        return View::make('shift::installation.setup', compact('host'));
+        return View::make('shift::installation.setup', compact('host', 'languages'));
     }
 
     /**

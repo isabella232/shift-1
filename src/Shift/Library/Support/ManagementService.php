@@ -52,7 +52,9 @@ abstract class ManagementService
         $resource = $this->repository->getNew($input);
 
 	    $this->repository->save($resource);
+
 	    $this->notify('created', $resource);
+	    $this->notify('saved', $resource);
 
         return $resource;
     }
@@ -88,7 +90,9 @@ abstract class ManagementService
 	    $this->updateValidator->setInput($input)->validate();
 
         $this->repository->update($resource, $input);
+
 	    $this->notify('updated', $resource);
+	    $this->notify('saved', $resource);
 
 	    return $resource;
     }

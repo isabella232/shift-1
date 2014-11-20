@@ -2,6 +2,7 @@
 namespace Tectonic\Shift\Modules\Accounts\Services;
 
 use Event;
+use Tectonic\Application\Eventing\EventDispatcher;
 use Tectonic\Shift\Modules\Accounts\Contracts\AccountRepositoryInterface;
 use Tectonic\Shift\Modules\Accounts\Models\Account;
 use Tectonic\Shift\Modules\Users\Models\User;
@@ -14,11 +15,17 @@ class AccountUsersService
     private $accountRepository;
 
     /**
+     * @var EventDispatcher
+     */
+    private $dispatcher;
+
+    /**
      * @param AccountRepositoryInterface $repository
      */
-    public function __construct(AccountRepositoryInterface $repository)
+    public function __construct(EventDispatcher $dispatcher, AccountRepositoryInterface $repository)
     {
         $this->accountRepository = $repository;
+        $this->dispatcher = $dispatcher;
     }
 
     /**
@@ -34,19 +41,6 @@ class AccountUsersService
 
         $this->accountRepository->save($account);
 
-        Event::fire('account.new-owner', [$account, $user]);
-    }
-
-    /**
-     * Adds a new user to an account.
-     *
-     * @param Account $account
-     * @param User $user
-     */
-    public function addUser(Account $account, User $user)
-    {
-        $this->accountRepository->addUser($account, $user);
-
-        Event::fire('account.user-added', [$account, $user]);
+        $this->dispatcher->dispatch($account->releaseEvents());
     }
 }

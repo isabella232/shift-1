@@ -3,7 +3,7 @@ namespace Tectonic\Shift\Modules\Installation\Services;
 
 use Event;
 use Tectonic\Application\Validation\ValidationCommandBus;
-use Tectonic\Shift\Library\Validation\ValidationException;
+use Tectonic\Application\Validation\ValidationException;
 use Tectonic\Shift\Modules\Installation\Commands\InstallShiftCommand;
 use Tectonic\Shift\Modules\Installation\Contracts\InstallationObserverInterface;
 

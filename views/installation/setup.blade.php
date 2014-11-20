@@ -37,6 +37,16 @@
 
                 <div class="control">
                     <div class="control-label forty">
+                        {{ Form::label('language', 'Default language') }}
+                    </div>
+                    <div class="control-field sixty">
+                        {{ Form::select('language', $languages->lists('language', 'code'), ['required']) }}
+                        <div class="help-text">Select the default language for this installation.</div>
+                    </div>
+                </div>
+
+                <div class="control">
+                    <div class="control-label forty">
                         {{ Form::label('host', 'Host \ Domain') }}
                     </div>
                     <div class="control-field sixty">

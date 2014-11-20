@@ -5,7 +5,6 @@ use App;
 use Tectonic\Shift\Library\ServiceProvider;
 use Tectonic\Shift\Modules\Accounts\Contracts\AccountRepositoryInterface;
 use Tectonic\Shift\Modules\Accounts\Contracts\SupportedLanguageRepositoryInterface;
-use Tectonic\Shift\Modules\Accounts\Listeners\ShiftInstalling;
 use Tectonic\Shift\Modules\Accounts\Repositories\EloquentAccountRepository;
 use Tectonic\Shift\Modules\Accounts\Contracts\DomainRepositoryInterface;
 use Tectonic\Shift\Modules\Accounts\Repositories\EloquentDomainRepository;
@@ -30,9 +29,7 @@ class AccountsServiceProvider extends ServiceProvider
      *
      * @var array
      */
-    protected $listeners = [
-        ShiftInstalling::class
-    ];
+    protected $listeners = [];
 
     /**
      * Register any required bindings.
