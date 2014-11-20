@@ -2,7 +2,7 @@
 namespace Tests\Stubs;
 
 use Exception;
-use Tectonic\Shift\Library\Validation\ValidationException;
+use Tectonic\Application\Validation\ValidationException;
 use Tectonic\Shift\Modules\Installation\Contracts\InstallationObserverInterface;
 
 class InstallationObserver implements InstallationObserverInterface

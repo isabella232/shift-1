@@ -31,7 +31,7 @@ trait TranslatableModel
 
         $translation = new Translation(compact('language', 'field', 'value'));
         $translation->resource = class_basename($this);
-        $translation->foreignId = $this->id;
+        $translation->foreign_id = $this->id;
 
         $this->translations()->save($translation);
     }

@@ -70,4 +70,15 @@ class EloquentLanguageRepository extends Repository implements LanguageRepositor
     {
         return $this->getQuery()->whereId($languageId)->pluck('code');
     }
+
+    /**
+     * Retrieves a language based on its language code.
+     *
+     * @param string $languageCode
+     * @return mixed
+     */
+    public function getOneByLanguageCode($languageCode)
+    {
+        return $this->getQuery()->whereCode($languageCode)->first();
+    }
 }

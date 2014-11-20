@@ -27,7 +27,7 @@ class InstallServiceTest extends AcceptanceTestCase
             'name' => 'Install service test',
             'host' => 'somehost.com',
             'email' => 'installer@tectonic.com.au',
-            'language' => $languageRepository->getAll()->first()->getId(),
+            'language' => $languageRepository->getAll()->first()->code,
             'password' => '1234'
         ];
 
@@ -50,14 +50,14 @@ class InstallServiceTest extends AcceptanceTestCase
         $user = $users->getAll()[0];
 
         // User assertions
-        $this->assertEquals('Super', $user->getFirstName());
-        $this->assertEquals('Admin', $user->getLastName());
+        $this->assertEquals('Super', $user->firstName);
+        $this->assertEquals('Admin', $user->lastName);
     }
 
     public function testAccountCreation()
     {
         $account = $this->currentAccountService->get();
-        $languages = $this->supportedLanguageRepository->getByAccountId($account->getId());
+        $languages = $this->supportedLanguageRepository->getByAccountId($account->id);
 
         // Account based assertions
         $this->assertEquals($this->input['name'], $account->getName());

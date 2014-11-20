@@ -31,7 +31,7 @@ class InstallService
      */
     public function freshInstall(array $input = [], InstallationObserverInterface $listener)
     {
-        $command = new InstallShiftCommand($input['name'], $input['host'], $input['email'], $input['password']);
+        $command = new InstallShiftCommand($input['name'], $input['host'], $input['language'], $input['email'], $input['password']);
 
         try {
             $this->commandBus->execute($command);

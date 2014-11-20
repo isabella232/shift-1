@@ -7,6 +7,7 @@ use Tectonic\LaravelLocalisation\Database\Translation;
 use Tectonic\Localisation\Translator\Translatable;
 use Tectonic\Shift\Library\Support\Database\Eloquent\Model;
 use Tectonic\Shift\Library\Support\Database\Eloquent\TranslatableModel;
+use Tectonic\Shift\Modules\Accounts\Events\AccountWasInstalled;
 use Tectonic\Shift\Modules\Accounts\Events\OwnerWasChanged;
 use Tectonic\Shift\Modules\Localisation\Models\Language;
 use Tectonic\Shift\Modules\Users\Models\User;
@@ -42,7 +43,7 @@ class Account extends Model
      */
     public function languages()
     {
-        return $this->belongsToMany(Language::class);
+        return $this->hasMany(SupportedLanguage::class);
     }
 
     /**
@@ -84,10 +85,23 @@ class Account extends Model
      */
     public static function install()
     {
-        $account = static::create();
-        $account->raise(new AccountInstalled($account));
+        $account = static::create([]);
+        $account->raise(new AccountWasInstalled($account));
 
         return $account;
+    }
+
+    /**
+     * Add a new supported language to the account.
+     *
+     * @param Language $language
+     */
+    public function addLanguage(Language $language)
+    {
+        $supportedLanguage = new SupportedLanguage;
+        $supportedLanguage->code = $language->code;
+
+        $this->languages()->save($supportedLanguage);
     }
 
     /**

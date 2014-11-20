@@ -3,7 +3,7 @@ namespace Tectonic\Shift\Modules\Installation\Observers;
 
 use Exception;
 use Redirect;
-use Tectonic\Shift\Library\Validation\ValidationException;
+use Tectonic\Application\Validation\ValidationException;
 use Tectonic\Shift\Modules\Installation\Contracts\InstallationObserverInterface;
 
 /**

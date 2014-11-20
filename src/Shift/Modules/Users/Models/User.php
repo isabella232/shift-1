@@ -8,6 +8,7 @@ use Tectonic\Shift\Modules\Accounts\Models\Account;
 use Tectonic\Shift\Modules\Users\Contracts\UserInterface;
 use Illuminate\Auth\Reminders\RemindableInterface;
 use Tectonic\Shift\Library\Support\Database\Eloquent\Model;
+use Tectonic\Shift\Modules\Users\Events\AdminUserWasCreated;
 
 class User extends Model implements AuthUserInterface, RemindableInterface
 {

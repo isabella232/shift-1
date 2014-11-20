@@ -1,11 +1,9 @@
 <?php
-
 namespace Tectonic\Shift\Modules\Accounts\Validators;
 
 use Illuminate\Support\Facades\Validator;
-use Tectonic\Shift\Library\Validation\Validation;
 
-class DomainValidation extends Validation
+class DomainValidation extends \Tectonic\Application\Validation\Validator
 {
     /**
      * Custom messages for domain validation.

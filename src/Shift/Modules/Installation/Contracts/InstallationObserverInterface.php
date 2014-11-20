@@ -1,9 +1,8 @@
 <?php
-
 namespace Tectonic\Shift\Modules\Installation\Contracts;
 
 use Exception;
-use Tectonic\Shift\Library\Validation\ValidationException;
+use Tectonic\Application\Validation\ValidationException;
 
 interface InstallationObserverInterface
 {
