@@ -274,6 +274,28 @@ abstract class Repository implements RepositoryInterface
     }
 
     /**
+     * A single method to return the currentAccountId. This is the account id that represents
+     * the current request's account, domain.etc.
+     *
+     * @return integer
+     */
+    protected function currentAccountId()
+    {
+        return App::make(CurrentAccountService::class)->get()->id;
+    }
+
+    /**
+     * Determines the translatable fields available on the model assigned to the repository.
+     *
+     * @param Model $model
+     * @return bool
+     */
+    protected function getTranslatableFields(Model $model)
+    {
+        return in_array(Translatable::class, class_uses($model)) ? $model->getTranslatableFields() : [];
+    }
+
+    /**
      * The repository supports magic method calls to getBy* where the * equates to a valid
      * field name on the entity. Eg:
      *
@@ -298,27 +320,5 @@ abstract class Repository implements RepositoryInterface
         }
 
         throw new MethodNotFoundException($this, $method);
-    }
-
-    /**
-     * A single method to return the currentAccountId. This is the account id that represents
-     * the current request's account, domain.etc.
-     *
-     * @return integer
-     */
-    protected function currentAccountId()
-    {
-        return App::make(CurrentAccountService::class)->get()->id;
-    }
-
-    /**
-     * Determines the translatable fields available on the model assigned to the repository.
-     *
-     * @param Model $model
-     * @return bool
-     */
-    protected function getTranslatableFields(Model $model)
-    {
-        return in_array(Translatable::class, class_uses($model)) ? $model->getTranslatableFields() : [];
     }
 }

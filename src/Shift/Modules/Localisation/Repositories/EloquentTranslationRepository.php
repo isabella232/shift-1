@@ -79,4 +79,24 @@ class EloquentTranslationRepository extends Repository implements TranslationRep
 
         return $query;
     }
+
+    /**
+     * Find a translation/localisation for a given resource field
+     *
+     * @param string $language
+     * @param string $resource
+     * @param string $field
+     * @param int    $foreignId
+     *
+     * @return array
+     */
+    public function findTranslation($language, $resource, $field, $foreignId)
+    {
+        return $this->getQuery()
+            ->whereLanguage($language)
+            ->whereResource($resource)
+            ->whereForeignId($foreignId)
+            ->whereField($field)
+            ->first();
+    }
 }

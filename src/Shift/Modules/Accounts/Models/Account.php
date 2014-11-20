@@ -8,8 +8,8 @@ use Tectonic\Shift\Library\Support\Database\Eloquent\Model;
 use Tectonic\Shift\Library\Support\Database\Eloquent\TranslatableModel;
 use Tectonic\Shift\Modules\Accounts\Events\AccountWasInstalled;
 use Tectonic\Shift\Modules\Accounts\Events\OwnerWasChanged;
-use Tectonic\Shift\Modules\Localisation\Models\Language;
 use Tectonic\Shift\Modules\Accounts\Models\SupportedLanguage;
+use Tectonic\Shift\Modules\Localisation\Languages\Language;
 use Tectonic\Shift\Modules\Users\Models\User;
 
 class Account extends Model
@@ -99,7 +99,7 @@ class Account extends Model
     public function addLanguage(Language $language)
     {
         $supportedLanguage = new SupportedLanguage;
-        $supportedLanguage->code = $language->code;
+        $supportedLanguage->code = $language->getCode();
 
         $this->languages()->save($supportedLanguage);
     }

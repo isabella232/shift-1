@@ -27,7 +27,7 @@ class InstallServiceTest extends AcceptanceTestCase
             'name' => 'Install service test',
             'host' => 'somehost.com',
             'email' => 'installer@tectonic.com.au',
-            'language' => $languageRepository->getAll()->first()->code,
+            'language' => $languageRepository->getAll()->first()->getCode(),
             'password' => '1234'
         ];
 

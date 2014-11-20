@@ -29,22 +29,10 @@ class EloquentTranslationRepositoryTest extends AcceptanceTestCase
     /**
      * Setup method to run before each test
      */
-    public function setUp()
+    public function init()
     {
-        parent::setUp();
-
-        $this->cleanData['languages'] = [
-            ['language'  => 'English (Great Britain)', 'code' => 'en_GB'],
-            ['language'  => 'English (Australian)',    'code' => 'en_AU'],
-            ['language'  => 'English (New Zealand)',   'code' => 'en_NZ'],
-            ['language'  => 'English (United States)', 'code' => 'en_US']
-        ];
-
-        $this->cleanData['translations'] = [
-            ['language' => 'en_GB', 'foreign_id' => 1, 'resource' => 'Tectonic\Shift\CustomField', 'field' => 'label', 'value' => 'Custom field en_GB'],
-            ['language' => 'en_AU', 'foreign_id' => 1, 'resource' => 'Tectonic\Shift\CustomField', 'field' => 'label', 'value' => 'Custom field en_AU'],
-            ['language' => 'en_NZ', 'foreign_id' => 1, 'resource' => 'Tectonic\Shift\CustomField', 'field' => 'label', 'value' => 'Custom field en_NZ'],
-            ['language' => 'en_US', 'foreign_id' => 1, 'resource' => 'Tectonic\Shift\CustomField', 'field' => 'label', 'value' => 'Custom field en_US']
+        $this->cleanData = [
+            ['language' => 'en_GB', 'foreign_id' => 1, 'resource' => 'Tectonic\Shift\CustomField', 'field' => 'label', 'value' => 'Custom field en_GB']
         ];
 
         $this->languageRepository = App::make(ConfigLanguageRepository::class);
@@ -55,19 +43,15 @@ class EloquentTranslationRepositoryTest extends AcceptanceTestCase
     {
         $this->createLanguages();
 
-        $result = $this->translationRepository->findTranslation(1, 'Tectonic\Shift\CustomField', 'label', 'en_NZ');
+        $result = $this->translationRepository->findTranslation('en_GB', 'Tectonic\Shift\CustomField', 'label', 1);
 
-        $this->assertEquals($this->cleanData['translations'][2]['value'], $result['value']);
+        $this->assertEquals($this->cleanData[0]['value'], $result->value);
     }
 
     private function createLanguages()
     {
-        foreach($this->cleanData['languages'] as $key => $language) {
-            $resource = $this->languageRepository->getNew($language);
-            $this->languageRepository->save($resource);
+        $translation = $this->translationRepository->getNew($this->cleanData[0]);
 
-            $localisation = $this->translationRepository->getNew($this->cleanData['translations'][$key]);
-            $resource->translations()->save($localisation);
-        }
+        $this->translationRepository->save($translation);
     }
 }

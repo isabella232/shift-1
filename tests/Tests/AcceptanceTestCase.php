@@ -88,6 +88,7 @@ class AcceptanceTestCase extends TestCase
         ]);
 
         $this->setupAccount();
+        $this->init();
     }
 
     /**

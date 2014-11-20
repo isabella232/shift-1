@@ -13,6 +13,6 @@ class MethodNotFoundException extends \Exception
 {
 	public function __construct($class, $method)
     {
-        $this->message = 'Method ['.$method.'] does not exist on class ['.$class.']';
+        $this->message = 'Method ['.$method.'] does not exist on class ['.get_class($class).']';
     }
 } 
