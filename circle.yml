@@ -10,5 +10,4 @@ dependencies:
 test:
   override:
     - phpunit tests
-    - ./node_modules/karma/bin/karma start ./shift.conf.js --single-run
 
