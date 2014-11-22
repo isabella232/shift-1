@@ -1,5 +1,4 @@
 <?php
-
 namespace Tectonic\Shift\Library\Support;
 
 use App;
@@ -26,6 +25,15 @@ abstract class Controller extends Ctrl
      * @var CRUDService
      */
     public $crudService;
+
+    /**
+     * In our controllers we want to do some response manipulation, based on the request type, so... forward
+     * said response and filter off to the shift.view filter we registered in our routes.php file.
+     */
+    public function __construct()
+    {
+        $this->afterFilter('shift.view');
+    }
 
 	/**
 	 * Display a listing of the resource.

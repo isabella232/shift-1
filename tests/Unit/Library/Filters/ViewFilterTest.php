@@ -1,26 +1,52 @@
-<?php namespace Tests\Unit\Library\Filters;
+<?php
+namespace Tests\Unit\Library\Filters;
 
 use Mockery as m;
 use Tectonic\Shift\Library\Filters\ViewFilter;
-use Tests\UnitTestCase;
+use View;
 
-class ViewFilterTest extends UnitTestCase
+class ViewFilterTest extends \Tests\UnitTestCase
 {
-	private $mockUtility;
 	private $filter;
+    private $mockRoute;
+    private $mockRequest;
+    private $mockResponse;
 
-	public function setUp()
+    public function init()
 	{
-		parent::setUp();
+		$this->mockRoute = m::mock('mockroute');
+		$this->mockRequest = m::mock('mockrequest');
+		$this->mockResponse = m::mock('mockresponse');
 
-		$this->mockUtility = m::mock('Tectonic\Shift\Library\Utility');
-		$this->filter = new ViewFilter($this->mockUtility);
+		$this->filter = new ViewFilter;
 	}
 
-	public function testFilterShouldDeferToUtilityClass()
+	public function testFilterShouldReturnLayoutWhenNoOtherOptionsAreValid()
 	{
-		$this->mockUtility->shouldReceive('noJsonView');
+		$this->mockRequest->shouldReceive('header')->once()->with('X-PJAX')->andReturn(false);
+		$this->mockRequest->shouldReceive('wantsJson')->once()->andReturn(false);
 
-		$this->filter->filter();
+        View::shouldReceive('make')->once();
+
+		$this->filter->filter($this->mockRoute, $this->mockRequest, $this->mockResponse);
 	}
+
+    public function testFilterShouldReturnPartialViewDueToPjaxRequest()
+    {
+        $this->mockRequest->shouldReceive('header')->with('X-PJAX')->once()->andReturn(true);
+
+        View::shouldReceive('make')->once();
+
+        $this->filter->filter($this->mockRoute, $this->mockRequest, $this->mockResponse);
+    }
+
+    public function testFilterShouldReturnResponseForJsonRequests()
+    {
+        $this->mockRequest->shouldReceive('header')->once()->with('X-PJAX')->andReturn(false);
+        $this->mockRequest->shouldReceive('wantsJson')->once()->andReturn(true);
+
+        $filter = $this->filter->filter($this->mockRoute, $this->mockRequest, $this->mockResponse);
+
+        $this->assertEquals($this->mockResponse, $filter);
+    }
 }
