@@ -4,7 +4,7 @@ namespace Tectonic\Shift\Modules\Installation\Contracts;
 use Exception;
 use Tectonic\Application\Validation\ValidationException;
 
-interface InstallationObserverInterface
+interface InstallationResponderInterface
 {
     /**
      * Handler for when the installation is successful.

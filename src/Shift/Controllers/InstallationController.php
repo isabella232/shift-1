@@ -6,7 +6,7 @@ use Request;
 use Redirect;
 use Tectonic\Shift\Library\Support\Controller;
 use Tectonic\Shift\Modules\Installation\Services\InstallService;
-use Tectonic\Shift\Modules\Installation\Observers\InstallationObserver;
+use Tectonic\Shift\Modules\Installation\Observers\InstallationResponder;
 use View;
 
 class InstallationController extends Controller
@@ -51,6 +51,6 @@ class InstallationController extends Controller
      */
     public function postInstall()
     {
-        return $this->installService->freshInstall(Input::get(), new InstallationObserver);
+        return $this->installService->freshInstall(Input::get(), new InstallationResponder);
     }
 }

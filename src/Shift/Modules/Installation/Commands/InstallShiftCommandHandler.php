@@ -62,7 +62,7 @@ class InstallShiftCommandHandler implements CommandHandlerInterface
         $this->accounts->save($account);
 
         $language = $this->addLanguage($account, $command->language);
-        $account->addTranslation($language->getCode(), 'name', $command->name);
+        $account->addTranslation($language->code, 'name', $command->name);
         $account->addDomain($command->host);
 
         $this->dispatcher->dispatch($account->releaseEvents());

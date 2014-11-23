@@ -3,9 +3,9 @@ namespace Tests\Stubs;
 
 use Exception;
 use Tectonic\Application\Validation\ValidationException;
-use Tectonic\Shift\Modules\Installation\Contracts\InstallationObserverInterface;
+use Tectonic\Shift\Modules\Installation\Contracts\InstallationResponderInterface;
 
-class InstallationObserver implements InstallationObserverInterface
+class InstallationResponder implements InstallationResponderInterface
 {
 
     /**

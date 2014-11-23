@@ -18,7 +18,14 @@ class Language
      *
      * @var string
      */
-    private $code;
+    public $code;
+
+    /**
+     * The full, readable version of the language.
+     *
+     * @var string
+     */
+    public $language;
 
     /**
      * Create a new language instance, based on the language code provided.
@@ -37,25 +44,6 @@ class Language
         }
 
         $this->code = $code;
-    }
-
-    /**
-     * Returns the language code for this instance.
-     *
-     * @return string
-     */
-    public function getCode()
-    {
-        return $this->code;
-    }
-
-    /**
-     * Returns the language string for the selected code.
-     *
-     * @return string
-     */
-    public function getLanguage()
-    {
-        return static::$languages[$this->code];
+        $this->language = static::$languages[$code];
     }
 }

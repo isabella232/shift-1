@@ -10,7 +10,7 @@ use Tectonic\Shift\Modules\Installation\Services\InstallService;
 use Tectonic\Shift\Modules\Localisation\Contracts\LanguageRepositoryInterface;
 use Tectonic\Shift\Modules\Users\Contracts\UserRepositoryInterface;
 use Tests\AcceptanceTestCase;
-use Tests\Stubs\InstallationObserver;
+use Tests\Stubs\InstallationResponder;
 
 class InstallServiceTest extends AcceptanceTestCase
 {
@@ -27,12 +27,12 @@ class InstallServiceTest extends AcceptanceTestCase
             'name' => 'Install service test',
             'host' => 'somehost.com',
             'email' => 'installer@tectonic.com.au',
-            'language' => $languageRepository->getAll()->first()->getCode(),
+            'language' => $languageRepository->getAll()->first()->code,
             'password' => '1234'
         ];
 
         $installService = App::make(InstallService::class);
-        $installService->freshInstall($this->input, new InstallationObserver);
+        $installService->freshInstall($this->input, new InstallationResponder);
 
         $this->accountRepository = App::make(AccountRepositoryInterface::class);
         $this->supportedLanguageRepository = App::make(SupportedLanguageRepositoryInterface::class);

@@ -98,7 +98,7 @@ class Account extends Model
     public function addLanguage(Language $language)
     {
         $supportedLanguage = new SupportedLanguage;
-        $supportedLanguage->code = $language->getCode();
+        $supportedLanguage->code = $language->code;
 
         $this->languages()->save($supportedLanguage);
     }

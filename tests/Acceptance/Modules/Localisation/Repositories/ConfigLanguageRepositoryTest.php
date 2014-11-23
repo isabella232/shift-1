@@ -30,7 +30,7 @@ class ConfigLanguageRepositoryTest extends UnitTestCase
     {
         $language = $this->repository->getByCode('en_GB');
 
-        $this->assertEquals('en_GB', $language->getCode());
-        $this->assertEquals('English (Great Britain)', $language->getLanguage());
+        $this->assertEquals('en_GB', $language->code);
+        $this->assertEquals('English (Great Britain)', $language->language);
     }
 }
