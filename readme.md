@@ -12,6 +12,17 @@ Shift is a package that can be installed via composer, in the usual manner:
 
 As Shift is still currently in a beta state, no official releases have been created.
 
+Then, you need to setup the database tables, required data.etc.
+
+    php artisan migrate --package=tectonic/laravel-localisation
+    php artisan migrate --package=tectonic/shift
+    
+Then, make sure you publish the assets of the package:
+
+    php artisan asset:publish tectonic/shift
+
+All done!
+
 # License
  
 The MIT License (MIT)
