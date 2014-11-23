@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use Illuminate\Support\Facades\Config;
 use Mockery as m;
 
 class TestCase extends \Orchestra\Testbench\TestCase
@@ -38,6 +39,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
 	{
 		// reset base path to point to our package's src directory
 		$app['path.base'] = __DIR__ . '/../../';
+        $app['config']->set('app.debug', false);
 	}
 
     protected function getPackageAliases()

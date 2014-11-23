@@ -54,6 +54,7 @@ class InstallShiftCommandHandler implements CommandHandlerInterface
     public function handle($command)
     {
         $account = Account::install();
+
         $user = User::install($command->email, $command->password);
         $this->users->save($user);
 
@@ -62,6 +63,8 @@ class InstallShiftCommandHandler implements CommandHandlerInterface
         $this->accounts->save($account);
 
         $language = $this->addLanguage($account, $command->language);
+
+        $account->addUser($user);
         $account->addTranslation($language->code, 'name', $command->name);
         $account->addDomain($command->host);
 

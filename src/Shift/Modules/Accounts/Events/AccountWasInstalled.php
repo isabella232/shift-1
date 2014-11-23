@@ -9,8 +9,11 @@ class AccountWasInstalled extends Event
     /**
      * @var Account
      */
-    private $account;
+    public $account;
 
+    /**
+     * @param Account $account
+     */
     public function __construct(Account $account)
     {
         $this->account = $account;

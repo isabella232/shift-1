@@ -67,6 +67,16 @@ class Account extends Model
     }
 
     /**
+     * Adds a new user to an account.
+     *
+     * @param User $user
+     */
+    public function addUser(User $user)
+    {
+        $this->users()->attach($user->id);
+    }
+
+    /**
      * Sets the owner for the account.
      *
      * @param User $user
