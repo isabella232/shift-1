@@ -26,13 +26,11 @@ abstract class Controller extends Ctrl
      */
     public $crudService;
 
-    /**
-     * In our controllers we want to do some response manipulation, based on the request type, so... forward
-     * said response and filter off to the shift.view filter we registered in our routes.php file.
-     */
-    public function __construct()
+    public function setupLayout()
     {
-        $this->afterFilter('shift.view');
+        if (!Request::wantsJson() && !$this->isPjax()) {
+            $this->layout = 'shift::layouts.application';
+        }
     }
 
 	/**
@@ -123,4 +121,34 @@ abstract class Controller extends Ctrl
 	{
 		return $this->searchClass;
 	}
+
+    /**
+     * Respond with the the $data array for JSON, a partial of the view for PJAX requests,
+     * or the full layout render if it's a full page request.
+     *
+     * @param string $view
+     * @param array $data
+     */
+    protected function respond($view, array $data = [])
+    {
+        if (Request::wantsJson()) {
+            return $data;
+        }
+
+        if ($this->isPjax()) {
+            return View::make($view, $data);
+        }
+
+        $this->layout->main = View::make($view, $data);
+    }
+
+    /**
+     * Determines whether or not the request is a PJAX request.
+     *
+     * @return bool
+     */
+    protected function isPjax()
+    {
+        return Request::header('X-PJAX') === 'true';
+    }
 }
