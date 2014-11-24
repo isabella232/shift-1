@@ -32,7 +32,7 @@ abstract class Controller extends \Illuminate\Routing\Controller
      */
     protected function setupLayout()
     {
-        if (!Request::wantsJson() && !$this->isPjax()) {
+        if ($this->isFullPage()) {
             $this->layout = View::make('shift::layouts.application');
         }
     }
@@ -154,5 +154,15 @@ abstract class Controller extends \Illuminate\Routing\Controller
     protected function isPjax()
     {
         return Request::header('X-PJAX') === 'true';
+    }
+
+    /**
+     * Returns true if the request is for the full page.
+     * 
+     * @return bool
+     */
+    protected function isFullPage()
+    {
+        return !Request::wantsJson() && !$this->isPjax();
     }
 }
