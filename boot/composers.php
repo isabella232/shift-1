@@ -6,6 +6,5 @@ use Tectonic\Shift\Library\Composers\LayoutsInstallationComposer;
 
 View::composers([
     AssetsComposer::class => ['shift::layouts.application'],
-    LayoutsApplicationComposer::class => ['shift::layouts.application'],
     LayoutsInstallationComposer::class => ['shift::layouts.installation'],
 ]);

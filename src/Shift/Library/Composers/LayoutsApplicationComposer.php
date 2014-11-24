@@ -1,7 +1,9 @@
-<?php namespace Tectonic\Shift\Library\Composers;
+<?php
+namespace Tectonic\Shift\Library\Composers;
 
 use App;
 use Config;
+use Tectonic\Shift\Modules\Accounts\Services\CurrentAccountService;
 use Tectonic\Shift\Modules\Startup\StartupService;
 
 class LayoutsApplicationComposer
@@ -12,23 +14,24 @@ class LayoutsApplicationComposer
     private $startupService;
 
     /**
+     * @var CurrentAccountService
+     */
+    private $currentAccountService;
+
+    /**
      * @param StartupService $startupService
      */
-    function __construct(StartupService $startupService)
+    function __construct(StartupService $startupService, CurrentAccountService $currentAccountService)
     {
         $this->startupService = $startupService;
+        $this->currentAccountService = $currentAccountService;
     }
 
     public function compose($view)
 	{
         $configuration = $this->startupService->configuration();
 
-		$view->with('configuration', $configuration);
-
-        $languageDictionary = App::make('shift.translator')
-            ->setUICustomisations(Config::get('shift::language.locales'))
-            ->allToJson();
-
-        $view->with('language', $languageDictionary);
+		$view->share('configuration', $configuration);
+        $view->share('account', $this->currentAccountService->get());
 	}
 }

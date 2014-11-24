@@ -1,4 +1,5 @@
-<?php namespace Tectonic\Shift\Controllers;
+<?php
+namespace Tectonic\Shift\Controllers;
 
 use Auth;
 use Input;

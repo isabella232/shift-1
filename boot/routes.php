@@ -3,7 +3,10 @@
  * Shift-specific routes and routing, rules and filter definitions.
  */
 Route::group(['prefix' => Config::get('shift.url')], function() {
-    Route::get('/', 'Tectonic\Shift\Controllers\DashboardController@index');
+    Route::get('/', 'Tectonic\Shift\Controllers\HomeController@index');
+
+    Route::get('register', 'Tectonic\Shift\Controllers\RegistrationController@form');
+    Route::post('register', 'Tectonic\Shift\Controllers\RegistrationController@register');
 
     Route::collection('fields', 'Tectonic\Shift\Controllers\FieldController');
     Route::collection('roles', 'Tectonic\Shift\Controllers\RoleController');
@@ -20,9 +23,7 @@ Route::group(['prefix' => Config::get('shift.url')], function() {
     });
 });
 
-Route::filter('shift.view', 'Tectonic\Shift\Library\Filters\ViewFilter');
 Route::filter('shift.account', 'Tectonic\Shift\Library\Filters\AccountFilter');
 Route::filter('shift.install', 'Tectonic\Shift\Library\Filters\InstallationFilter');
 
 Route::whenRegex('/^(?!install)/i', 'shift.account');
-

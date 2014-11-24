@@ -24,7 +24,7 @@
 
     <div id="footer-links">
         <div class="container">
-            @include('shift::partials.footer.links')
+            <footer-links input="footerLinks"></footer-links>
         </div>
     </div>
 

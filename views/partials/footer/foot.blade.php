@@ -6,7 +6,3 @@
     {{ $container->scripts() }}
 @endforeach
 {{ Asset::container('custom')->scripts() }}
-
-<script type="text/javascript">
-	angular.module('Shift').value('bootstrap', '{{ HTML::obscure($configuration) }}');
-</script>
