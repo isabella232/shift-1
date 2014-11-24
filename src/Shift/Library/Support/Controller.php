@@ -3,12 +3,13 @@ namespace Tectonic\Shift\Library\Support;
 
 use App;
 use Input;
-use Illuminate\Routing\Controller as Ctrl;
+use Request;
 use Response;
 use Tectonic\Shift\Library\BaseValidator;
 use Tectonic\Shift\Library\SqlBaseRepositoryInterface;
+use View;
 
-abstract class Controller extends Ctrl
+abstract class Controller extends \Illuminate\Routing\Controller
 {
 	/**
 	 * Stores the full path to the search class to be used for search. The default search
@@ -26,10 +27,13 @@ abstract class Controller extends Ctrl
      */
     public $crudService;
 
-    public function setupLayout()
+    /**
+     * Setup the layout that may be required for the view.
+     */
+    protected function setupLayout()
     {
         if (!Request::wantsJson() && !$this->isPjax()) {
-            $this->layout = 'shift::layouts.application';
+            $this->layout = View::make('shift::layouts.application');
         }
     }
 

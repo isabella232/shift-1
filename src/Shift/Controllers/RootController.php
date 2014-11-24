@@ -7,6 +7,6 @@ class RootController extends Controller
 {
 	public function index()
     {
-        return null;
+        return $this->respond('shift::home.index');
     }
 }
