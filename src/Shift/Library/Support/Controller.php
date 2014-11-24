@@ -158,7 +158,7 @@ abstract class Controller extends \Illuminate\Routing\Controller
 
     /**
      * Returns true if the request is for the full page.
-     * 
+     *
      * @return bool
      */
     protected function isFullPage()
