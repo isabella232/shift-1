@@ -1,14 +1,13 @@
 // Load all the required plugins.
 var gulp   = require('gulp'),
-    notify = require('gulp-notify'),
+	custom = require('./gulp.custom'),
     exec   = require('gulp-exec'),
-    uglify = require('gulp-uglify'),
     concat = require('gulp-concat'),
-	assets = require('./gulp.custom'),
     jshint = require('gulp-jshint'),
+    notify = require('gulp-notify'),
     rename = require('gulp-rename'),
-    rsync  = require('gulp-rsync'),
 	sass   = require('gulp-ruby-sass'),
+    uglify = require('gulp-uglify'),
 	watch  = require('gulp-watch');
 
 var input  = 'assets/',
@@ -37,18 +36,14 @@ gulp.task('styles', function() {
 
 gulp.task('scripts', function() {
     return gulp.src(scripts)
+	    .pipe(jshint())
+	    .pipe(jshint.reporter('default'))
         .pipe(concat('shift.dev.js'))
         .pipe(gulp.dest(output + 'js'))
         .pipe(rename('shift.min.js'))
         .pipe(uglify({mangle: true}))
         .pipe(gulp.dest(output + 'js'))
         .pipe(notify({ message: 'Javascript files compiled.' }));
-});
-
-gulp.task('publish' , function() {
-    gulp.src('.')
-        .pipe(exec('php ../../../artisan asset:publish tectonic/shift'))
-        .pipe(notify('Bundle assets published.'));
 });
 
 // Helper task for watching the scripts directories, and only the script directories
@@ -68,48 +63,13 @@ gulp.task('styles-watch', function() {
 	});
 });
 
-gulp.task('shift-sync', function() {
-	gulp.run('sync', 'pub');
-
-	gulp.watch(['src/**/*.php', 'boot/*.php', 'views/**/*.php'], function() {
-		gulp.run('sync', 'pub');
-
-	});
-});
-
-// Kirk's rsync task
-gulp.task('sync', function() {
-	gulp.src('.')
-		.pipe(rsync({
-			root: '.',
-			destination: '/Users/kirkbushell/Documents/Development/Homestead/Shift/vendor/tectonic/shift',
-			exclude: 'vendor/*'
-		}))
-		.pipe(notify('PHP files synced locally.'));
-});
-
-// Kirk's publish task
-gulp.task('pub', function() {
-	gulp.src('.')
-		.pipe(exec('php /Users/kirkbushell/Documents/Development/Homestead/Shift/artisan asset:publish tectonic/shift'))
-		.pipe(notify('Bundle assets published.'));
-})
-
 // When running gulp without any tasks, it'll watch the scripts, styles, and do artisan publishing.etc.
 gulp.task('default' , function() {
-	gulp.start('scripts-watch', 'styles-watch', 'publish');
+	gulp.start('scripts-watch', 'styles-watch');
 
-	// Watch the sass directory.
-	gulp.watch(input + 'sass/**' , function() {
-		gulp.run('styles');
-	});
-
-	// When any changes happen to the 'public' directory, publish the changes.
-	gulp.watch(output + '**/*' , function() {
-		gulp.run('publish');
-	});
-
-	custom();
+	// Run any custom gulp code
+	custom.start();
 });
 
-
+// Registers the tasks you'd like to run
+custom.tasks();
