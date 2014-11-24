@@ -4,9 +4,12 @@ var gulp   = require('gulp'),
     exec   = require('gulp-exec'),
     uglify = require('gulp-uglify'),
     concat = require('gulp-concat'),
+	assets = require('./gulp.custom'),
     jshint = require('gulp-jshint'),
     rename = require('gulp-rename'),
-	sass   = require('gulp-ruby-sass');
+    rsync  = require('gulp-rsync'),
+	sass   = require('gulp-ruby-sass'),
+	watch  = require('gulp-watch');
 
 var input  = 'assets/',
     output = 'public/';
@@ -49,7 +52,7 @@ gulp.task('publish' , function() {
 });
 
 // Helper task for watching the scripts directories, and only the script directories
-gulp.task('scripts-watch' , function() {
+gulp.task('scripts-watch', function() {
 	gulp.run('scripts');
 
 	gulp.watch(input + 'js/**', function() {
@@ -57,7 +60,7 @@ gulp.task('scripts-watch' , function() {
 	});
 });
 
-gulp.task('styles-watch' , function() {
+gulp.task('styles-watch', function() {
 	gulp.run('styles');
 
 	gulp.watch(input + 'sass/**', function() {
@@ -65,14 +68,36 @@ gulp.task('styles-watch' , function() {
 	});
 });
 
+gulp.task('shift-sync', function() {
+	gulp.run('sync', 'pub');
+
+	gulp.watch(['src/**/*.php', 'boot/*.php', 'views/**/*.php'], function() {
+		gulp.run('sync', 'pub');
+
+	});
+});
+
+// Kirk's rsync task
+gulp.task('sync', function() {
+	gulp.src('.')
+		.pipe(rsync({
+			root: '.',
+			destination: '/Users/kirkbushell/Documents/Development/Homestead/Shift/vendor/tectonic/shift',
+			exclude: 'vendor/*'
+		}))
+		.pipe(notify('PHP files synced locally.'));
+});
+
+// Kirk's publish task
+gulp.task('pub', function() {
+	gulp.src('.')
+		.pipe(exec('php /Users/kirkbushell/Documents/Development/Homestead/Shift/artisan asset:publish tectonic/shift'))
+		.pipe(notify('Bundle assets published.'));
+})
+
 // When running gulp without any tasks, it'll watch the scripts, styles, and do artisan publishing.etc.
 gulp.task('default' , function() {
-	gulp.run('scripts' , 'styles', 'publish', 'scripts-watch', 'styles-watch');
-
-	// Watch the JS directory.
-	gulp.watch(input + 'js/src/**' , function() {
-		gulp.run('scripts');
-	});
+	gulp.start('scripts-watch', 'styles-watch', 'publish');
 
 	// Watch the sass directory.
 	gulp.watch(input + 'sass/**' , function() {
@@ -83,6 +108,8 @@ gulp.task('default' , function() {
 	gulp.watch(output + '**/*' , function() {
 		gulp.run('publish');
 	});
+
+	custom();
 });
 
 

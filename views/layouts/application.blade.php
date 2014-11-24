@@ -21,7 +21,7 @@
     <section id="content">
         <div>@yield('main')</div>
     </section>
-    
+
     <div id="footer-links">
         <div class="container">
             <footer-links input="footerLinks"></footer-links>
