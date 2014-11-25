@@ -72,14 +72,27 @@ class User extends Model implements AuthUserInterface, RemindableInterface
      */
     public static function install($email, $password)
     {
-        $user = new static;
-
-        $user->firstName = 'Super';
-        $user->lastName = 'Admin';
-        $user->email = $email;
-        $user->password = $password;
+        $user = static::add('Super', 'Admin', $email, $password);
 
         $user->raise(new AdminUserWasCreated($user));
+
+        return $user;
+    }
+
+    /**
+     * Register a new user on the system.
+     *
+     * @param string $firstName
+     * @param string $lastName
+     * @param string $email
+     * @param string $password
+     * @return User
+     */
+    public static function register($firstName, $lastName, $email, $password)
+    {
+        $user = static::add($firstName, $lastName, $email, $password);
+
+        $user->raise(new UserHasRegistered($user));
 
         return $user;
     }
