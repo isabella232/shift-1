@@ -5,7 +5,7 @@ use Redirect;
 use Tectonic\Application\Validation\ValidationException;
 use Tectonic\Shift\Controllers\HomeController;
 use Tectonic\Shift\Library\Traits\Respondable;
-use Tectonic\Shift\Modules\Users\Contracts\RegistrationListenerInterface;
+use Tectonic\Shift\Modules\Users\Contracts\RegistrationObserverInterface;
 use Tectonic\Shift\Modules\Users\Models\User;
 
 /**
@@ -16,7 +16,7 @@ use Tectonic\Shift\Modules\Users\Models\User;
  *
  * @package Tectonic\Shift\Modules\Users\Observers
  */
-class RegistrationResponder implements RegistrationListenerInterface
+class RegistrationResponder implements RegistrationObserverInterface
 {
     use Respondable;
 

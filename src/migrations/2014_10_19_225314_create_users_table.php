@@ -17,8 +17,10 @@ class CreateUsersTable extends Migration {
             $table->increments('id');
             $table->string('first_name');
             $table->string('last_name');
-            $table->string('email');
+            $table->string('email')->index();
             $table->string('password');
+            $table->string('confirmation_token', 32)->nullable()->index();
+            $table->date('confirmed_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

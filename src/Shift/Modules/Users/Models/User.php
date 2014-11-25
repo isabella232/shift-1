@@ -56,7 +56,7 @@ class User extends Model implements AuthUserInterface, RemindableInterface
      */
     public static function add($firstName, $lastName, $email, $password)
     {
-        $user = static::create(compact('firstName', 'lastName', 'email', 'password'));
+        $user = new static(compact('firstName', 'lastName', 'email', 'password'));
 
         $user->raise(new UserWasAdded($user));
 
@@ -107,6 +107,16 @@ class User extends Model implements AuthUserInterface, RemindableInterface
         $ownedAccountIds = $this->ownedAccounts->lists('id');
 
         return in_array($account->getId(), $ownedAccountIds);
+    }
+
+    /**
+     * Returns a concatenated version of both first and last names.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->firstName.' '.$this->lastName;
     }
 
     /**
@@ -180,4 +190,15 @@ class User extends Model implements AuthUserInterface, RemindableInterface
         $this->attributes["password"] = \Hash::make($value);
     }
 
+    /**
+     * Generates a new confirmation token for a user account and then returns said token.
+     *
+     * @return string
+     */
+    public function generateConfirmationToken()
+    {
+        $this->confirmationToken = md5(time().$this->id);
+
+        return $this->confirmationToken;
+    }
 }

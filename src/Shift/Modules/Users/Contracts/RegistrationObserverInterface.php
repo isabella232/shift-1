@@ -4,7 +4,7 @@ namespace Tectonic\Shift\Modules\Users\Contracts;
 use Tectonic\Application\Validation\ValidationException;
 use Tectonic\Shift\Modules\Users\Models\User;
 
-interface RegistrationListenerInterface
+interface RegistrationObserverInterface
 {
     /**
      * Called when a validation exception is thrown by the command handler.
