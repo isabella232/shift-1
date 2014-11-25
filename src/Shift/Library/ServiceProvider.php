@@ -24,7 +24,9 @@ abstract class ServiceProvider extends Provider
 	protected $serviceProviders = [];
 
     /**
-     * An array of the listeners that need to be registered with the system.
+     * An array of the listeners that need to be registered with the system. The key should
+     * refer to the event that is fired, and the value should be the class name and method
+     * that will handle that event.
      *
      * @var array
      */
@@ -65,8 +67,8 @@ abstract class ServiceProvider extends Provider
      */
     protected function registerListeners()
     {
-        foreach ($this->listeners as $listener) {
-            Event::subscribe($this->app->make($listener));
+        foreach ($this->listeners as $event => $listener) {
+            Event::listen($event, $listener);
         }
     }
 

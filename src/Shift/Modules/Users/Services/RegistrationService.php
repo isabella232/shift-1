@@ -37,13 +37,13 @@ class RegistrationService
                 $input['password_confirmation']
             );
 
-            $this->commandBus->execute($command);
+            $user = $this->commandBus->execute($command);
+
+            return $registrationListener->onSuccess($user);
         }
         catch (ValidationException $e) {
             return $registrationListener->onValidationError($e);
         }
-
-        return $registrationListener->onSuccess();
     }
 }
  
