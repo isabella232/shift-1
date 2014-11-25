@@ -7,10 +7,13 @@ use Request;
 use Response;
 use Tectonic\Shift\Library\BaseValidator;
 use Tectonic\Shift\Library\SqlBaseRepositoryInterface;
+use Tectonic\Shift\Library\Traits\Respondable;
 use View;
 
 abstract class Controller extends \Illuminate\Routing\Controller
 {
+    use Respondable;
+
 	/**
 	 * Stores the full path to the search class to be used for search. The default search
 	 * class is derived from conventions. The search class itself should sit inside the Search
@@ -125,44 +128,4 @@ abstract class Controller extends \Illuminate\Routing\Controller
 	{
 		return $this->searchClass;
 	}
-
-    /**
-     * Respond with the the $data array for JSON, a partial of the view for PJAX requests,
-     * or the full layout render if it's a full page request.
-     *
-     * @param string $view
-     * @param array $data
-     */
-    protected function respond($view, array $data = [])
-    {
-        if (Request::wantsJson()) {
-            return $data;
-        }
-
-        if ($this->isPjax()) {
-            return View::make($view, $data);
-        }
-
-        $this->layout->main = View::make($view, $data);
-    }
-
-    /**
-     * Determines whether or not the request is a PJAX request.
-     *
-     * @return bool
-     */
-    protected function isPjax()
-    {
-        return Request::header('X-PJAX') === 'true';
-    }
-
-    /**
-     * Returns true if the request is for the full page.
-     *
-     * @return bool
-     */
-    protected function isFullPage()
-    {
-        return !Request::wantsJson() && !$this->isPjax();
-    }
 }

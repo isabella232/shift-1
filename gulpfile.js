@@ -14,7 +14,7 @@ var input  = 'assets/',
     output = 'public/';
 
 var scripts = [
-  input + '_app.js',
+  input + 'js/_app.js',
   input + 'js/src/**/*.js',
   input + 'js/shift.js'
 ];
@@ -50,7 +50,7 @@ gulp.task('scripts', function() {
 gulp.task('scripts-watch', function() {
 	gulp.run('scripts');
 
-	gulp.watch(input + 'js/**', function() {
+	gulp.watch(input + 'js/**/', function() {
 		gulp.run('scripts');
 	});
 });

@@ -12,7 +12,7 @@ Route::group(['prefix' => Config::get('shift.url')], function() {
     Route::collection('roles', 'Tectonic\Shift\Controllers\RoleController');
     Route::collection('sessions', 'Tectonic\Shift\Controllers\AuthenticationController');
     Route::collection('users', 'Tectonic\Shift\Controllers\UserController');
-
+    
     Route::get('languages', 'Tectonic\Shift\Controllers\LanguageController@getLanguages');
     Route::post('languages', 'Tectonic\Shift\Controllers\LanguageController@postLanguages');
     Route::get('languages/supported', 'Tectonic\Shift\Controllers\LanguageController@getSupportedLanguages');
