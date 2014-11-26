@@ -8,7 +8,7 @@ interface AuthenticationResponderInterface
 {
     /**
      * When authentication has succeeded, then the $user object belonging to the newly
-     * authenticated user, is passed back and can be handled by this observer method.
+     * authenticated user back and can be handled by this observer method.
      *
      * @param User $user
      * @return mixed

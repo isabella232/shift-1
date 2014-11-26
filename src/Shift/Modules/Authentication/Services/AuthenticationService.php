@@ -29,7 +29,7 @@ class AuthenticationService
      * @param array                                                                             $input
      * @param \Tectonic\Shift\Modules\Authentication\Contracts\AuthenticationResponderInterface $responder
      *
-     * @return
+     * @return mixed
      */
     public function login(array $input, AuthenticationResponderInterface $responder)
     {

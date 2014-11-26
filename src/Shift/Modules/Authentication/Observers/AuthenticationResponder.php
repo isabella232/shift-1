@@ -1,7 +1,7 @@
 <?php
 namespace Tectonic\Shift\Modules\Authentication\Observers;
 
-use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Redirect;
 use Tectonic\Shift\Controllers\HomeController;
 use Tectonic\Shift\Library\Traits\Respondable;
 use Tectonic\Application\Validation\ValidationException;
@@ -17,22 +17,9 @@ use Tectonic\Shift\Modules\Authentication\Exceptions\InvalidAuthenticationCreden
  *
  * @package Tectonic\Shift\Modules\Authentication\Observers
  */
-class AuthenticationObserver implements AuthenticationResponderInterface
+class AuthenticationResponder implements AuthenticationResponderInterface
 {
     use Respondable;
-
-    /**
-     * @var \Illuminate\Routing\Redirector
-     */
-    protected $redirector;
-
-    /**
-     * @param \Illuminate\Routing\Redirector $redirector
-     */
-    public function __construct(Redirector $redirector)
-    {
-        $this->redirector = $redirector;
-    }
 
     /**
      * When authentication has succeeded, then the $user object belonging to the newly
@@ -44,7 +31,7 @@ class AuthenticationObserver implements AuthenticationResponderInterface
      */
     public function onSuccess(User $user)
     {
-        return $this->redirector->action(HomeController::class.'@user');
+        return Redirect::action(HomeController::class.'@user');
     }
 
     /**
@@ -56,8 +43,7 @@ class AuthenticationObserver implements AuthenticationResponderInterface
      */
     public function onValidationFailure(ValidationException $e)
     {
-        return $this->redirector
-            ->action(HomeController::class.'@index')
+        return Redirect::action(HomeController::class.'@index')
             ->withInput()
             ->withErrors($e->getValidator());
     }
@@ -71,8 +57,7 @@ class AuthenticationObserver implements AuthenticationResponderInterface
      */
     public function onAuthenticationFailure(InvalidAuthenticationCredentialsException $e)
     {
-        return $this->redirector
-            ->action(HomeController::class.'@index')
+        return Redirect::action(HomeController::class.'@index')
             ->withInput();
     }
 }

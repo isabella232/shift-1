@@ -3,9 +3,10 @@ namespace Tectonic\Shift\Controllers;
 
 use Input;
 use Tectonic\Shift\Library\Support\Controller;
+use Tectonic\Shift\Modules\Authentication\Observers\AuthenticationResponder;
 use Tectonic\Shift\Modules\Authentication\Services\AuthenticationService;
 
-class SessionController extends Controller
+class AuthenticationController extends Controller
 {
     /**
      * @var AuthenticationService
@@ -35,7 +36,7 @@ class SessionController extends Controller
      */
     public function login()
     {
-        return $this->authenticationService->login(Input::get(), new LoginResponder);
+        return $this->authenticationService->login(Input::get(), new AuthenticationResponder);
     }
 
 }
