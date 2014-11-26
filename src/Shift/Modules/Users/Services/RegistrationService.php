@@ -3,6 +3,7 @@ namespace Tectonic\Shift\Modules\Users\Services;
 
 use Tectonic\Application\Validation\ValidationCommandBus;
 use Tectonic\Application\Validation\ValidationException;
+use Tectonic\Shift\Modules\Users\Contracts\RegistrationListenerInterface;
 use Tectonic\Shift\Modules\Users\Contracts\UserRepositoryInterface;
 
 class RegistrationService

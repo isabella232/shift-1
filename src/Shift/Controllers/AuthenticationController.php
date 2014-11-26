@@ -1,13 +1,12 @@
 <?php
 namespace Tectonic\Shift\Controllers;
 
-use Auth;
 use Input;
-use Response;
-use Illuminate\Routing\Controller;
+use Tectonic\Shift\Library\Support\Controller;
+use Tectonic\Shift\Modules\Authentication\Observers\AuthenticationResponder;
 use Tectonic\Shift\Modules\Authentication\Services\AuthenticationService;
 
-class SessionController extends Controller
+class AuthenticationController extends Controller
 {
     /**
      * @var AuthenticationService
@@ -27,47 +26,17 @@ class SessionController extends Controller
      *
      * @return \Response
      */
-    public function getIndex()
+    public function form()
     {
-        if ($this->authenticationService->hasOpenSession()) {
-            return $this->authenticationService->user();
-        }
-
-        return Response::make(null, 401);
+        $this->respond('shift::authentication.login');
     }
 
     /**
-     * Handle authentication and creation of a new session
-     *
-     * @return \Response
+     * Handle authentication
      */
-    public function postStore()
+    public function login()
     {
-        $username = Input::get('username');
-        $password = Input::get('password');
-        $remember = Input::get('remember', false);
-
-        try {
-            if ($this->authenticationService->login($username, $password, $remember)) {
-                return Response::make(null, 200);
-            }
-
-            return Response::make(null, 400);
-        } catch (\Exception $e) {
-            return "Error occurred";
-        }
-    }
-
-    /**
-     * Handle the deletion of the current session
-     *
-     * @returns \Response
-     */
-    public function deleteIndex()
-    {
-        $this->authenticationService->logout();
-
-        return Response::make(null, 200);
+        return $this->authenticationService->login(Input::get(), new AuthenticationResponder);
     }
 
 }

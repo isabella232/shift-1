@@ -8,6 +8,9 @@ Route::group(['prefix' => Config::get('shift.url')], function() {
     Route::get('register', 'Tectonic\Shift\Controllers\RegistrationController@form');
     Route::post('register', 'Tectonic\Shift\Controllers\RegistrationController@register');
 
+    Route::get('login', 'Tectonic\Shift\Controllers\AuthenticationController@form');
+    Route::post('login', 'Tectonic\Shift\Controllers\AuthenticationController@login');
+
     Route::collection('fields', 'Tectonic\Shift\Controllers\FieldController');
     Route::collection('roles', 'Tectonic\Shift\Controllers\RoleController');
     Route::collection('sessions', 'Tectonic\Shift\Controllers\AuthenticationController');

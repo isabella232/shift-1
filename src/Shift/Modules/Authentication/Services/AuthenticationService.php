@@ -1,62 +1,51 @@
 <?php
 namespace Tectonic\Shift\Modules\Authentication\Services;
 
-use Illuminate\Auth\Guard;
+use Tectonic\Application\Validation\ValidationCommandBus;
+use Tectonic\Application\Validation\ValidationException;
+use Tectonic\Shift\Modules\Authentication\Commands\AuthenticateUserCommand;
+use Tectonic\Shift\Modules\Authentication\Contracts\AuthenticationResponderInterface;
+use Tectonic\Shift\Modules\Authentication\Exceptions\InvalidAuthenticationCredentialsException;
 
 class AuthenticationService
 {
-    /**
-     * @var Guard
-     */
-    protected $authentication;
 
     /**
-     * @param Guard $authentication
+     * @var \Tectonic\Application\Validation\ValidationCommandBus
      */
-    public function __construct(Guard $authentication)
+    protected $commandBus;
+
+    /**
+     * @param \Tectonic\Application\Validation\ValidationCommandBus $commandBus
+     */
+    public function __construct(ValidationCommandBus $commandBus)
     {
-        $this->authentication = $authentication;
+        $this->commandBus = $commandBus;
     }
 
     /**
-     * Attempt login / start session
+     * Attempt login
      *
-     * @param string $username
-     * @param string $password
-     * @param bool   $remember
+     * @param array                                                                             $input
+     * @param \Tectonic\Shift\Modules\Authentication\Contracts\AuthenticationResponderInterface $responder
      *
-     * @return bool
+     * @return mixed
      */
-    public function login($username, $password, $remember = false)
+    public function login(array $input, AuthenticationResponderInterface $responder)
     {
-        return $this->authentication->attempt(['username' => $username, 'password' => $password], $remember);
-    }
+        $remember = array_key_exists('remember', $input) ? $input['remember'] : false;
 
-    /**
-     * Logout / destroy session
-     */
-    public function logout()
-    {
-        $this->authentication->logout();
-    }
+        try {
+            $command = new AuthenticateUserCommand($input['email'], $input['password'], $remember);
 
-    /**
-     * Check to see if there's an open session current
-     *
-     * @return bool
-     */
-    public function hasOpenSession()
-    {
-        return $this->authentication->check();
-    }
+            $authenticatedUser = $this->commandBus->execute($command);
 
-    /**
-     * Get the user belonging to the current open session
-     *
-     * @return \Illuminate\Auth\UserInterface|null
-     */
-    public function user()
-    {
-        return $this->authentication->getUser();
+            return $responder->onSuccess($authenticatedUser);
+
+        } catch(ValidationException $e) {
+            return $responder->onValidationFailure($e);
+        } catch(InvalidAuthenticationCredentialsException $e) {
+            return $responder->onAuthenticationFailure($e);
+        }
     }
 }
