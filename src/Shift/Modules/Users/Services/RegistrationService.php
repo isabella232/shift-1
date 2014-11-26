@@ -3,7 +3,8 @@ namespace Tectonic\Shift\Modules\Users\Services;
 
 use Tectonic\Application\Validation\ValidationCommandBus;
 use Tectonic\Application\Validation\ValidationException;
-use Tectonic\Shift\Modules\Users\Contracts\RegistrationListenerInterface;
+use Tectonic\Shift\Modules\Users\Commands\RegisterUserCommand;
+use Tectonic\Shift\Modules\Users\Contracts\RegistrationObserverInterface;
 use Tectonic\Shift\Modules\Users\Contracts\UserRepositoryInterface;
 
 class RegistrationService
@@ -27,7 +28,7 @@ class RegistrationService
      * @param array $input
      * @param RegistrationListenerInterface $registrationListener
      */
-    public function registerUser(array $input = [], RegistrationListenerInterface $registrationListener)
+    public function registerUser(array $input = [], RegistrationObserverInterface $registrationListener)
     {
         try {
             $command = new RegisterUserCommand(

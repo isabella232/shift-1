@@ -3,6 +3,8 @@ namespace Tectonic\Shift\Controllers;
 
 use Input;
 use Tectonic\Shift\Library\Support\Controller;
+use Tectonic\Shift\Modules\Users\Observers\RegistrationResponder;
+use Tectonic\Shift\Modules\Users\Services\RegistrationService;
 
 class RegistrationController extends Controller
 {

@@ -4,7 +4,7 @@ namespace Tectonic\Shift\Modules\Users\Events;
 use Tectonic\Application\Eventing\Event;
 use Tectonic\Shift\Modules\Users\Models\User;
 
-class UserHasRegistered extends Event
+class UserWasAdded extends Event
 {
     /**
      * @var User

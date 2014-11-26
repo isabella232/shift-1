@@ -6,11 +6,10 @@ use Tectonic\Application\Eventing\EventDispatcher;
 use Tectonic\Shift\Modules\Accounts\Models\Account;
 use Tectonic\Shift\Modules\Accounts\Services\CurrentAccountService;
 use Tectonic\Shift\Modules\Users\Contracts\UserRepositoryInterface;
+use Tectonic\Shift\Modules\Users\Models\User;
 
 class RegisterUserCommandHandler implements CommandHandlerInterface
 {
-    use EventDispatcher;
-
     /**
      * @var UserRepositoryInterface
      */
@@ -22,12 +21,22 @@ class RegisterUserCommandHandler implements CommandHandlerInterface
     private $currentAccountService;
 
     /**
+     * @var EventDispatcher
+     */
+    private $eventDispatcher;
+
+    /**
      * @param UserRepositoryInterface $userRepository
      */
-    public function __construct(UserRepositoryInterface $userRepository, CurrentAccountService $currentAccountService)
+    public function __construct(
+        UserRepositoryInterface $userRepository,
+        CurrentAccountService $currentAccountService,
+        EventDispatcher $eventDispatcher
+    )
     {
         $this->userRepository = $userRepository;
         $this->currentAccountService = $currentAccountService;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -44,7 +53,7 @@ class RegisterUserCommandHandler implements CommandHandlerInterface
         $account = $this->currentAccountService->get();
         $account->addUser($user);
 
-        $this->dispatch($user->releaseEvents());
+        $this->eventDispatcher->dispatch($user->releaseEvents());
 
         return $user;
     }

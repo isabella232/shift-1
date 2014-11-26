@@ -5,11 +5,11 @@ use Tectonic\Application\Commanding\Command;
 
 class RegisterUserCommand extends Command
 {
-    private $firstName;
-    private $lastName;
-    private $email;
-    private $password;
-    private $passwordConfirmation;
+    public $firstName;
+    public $lastName;
+    public $email;
+    public $password;
+    public $passwordConfirmation;
 
     public function __construct($firstName, $lastName, $email, $password, $passwordConfirmation)
     {
