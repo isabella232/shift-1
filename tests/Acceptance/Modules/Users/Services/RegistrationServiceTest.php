@@ -30,11 +30,12 @@ class RegistrationServiceTest extends AcceptanceTestCase
             'password_confirmation' => '123456'
         ], $observer);
 
-        $users = $this->userRepository->getAll();
-        
+        $user = $this->userRepository->getAll()->first();
+
         // Assert
         $observer->shouldHaveReceived('onSuccess')->once();
-        $this->assertCount(1, $users);
+        $this->assertNotNull($user);
+        $this->assertNotNull($user->confirmationToken);
     }
 }
  

@@ -2,6 +2,7 @@
 namespace Tectonic\Shift\Modules\Users\Listeners;
 
 use Tectonic\Application\Commanding\DefaultCommandBus;
+use Tectonic\Application\Eventing\EventListener;
 use Tectonic\Shift\Modules\Users\Commands\SendRegistrationEmailCommand;
 use Tectonic\Shift\Modules\Users\Contracts\UserRepositoryInterface;
 use Tectonic\Shift\Modules\Users\Events\UserHasRegistered;

@@ -48,6 +48,18 @@ class User extends Model implements AuthUserInterface, RemindableInterface
     }
 
     /**
+     * A user can be an owner of 1 or more accounts, but it can also be a member of 1 or
+     * more accounts. Owners are defined as the user_id field on the accounts table, whereas
+     * the accounts a user is apart of, can be many.
+     *
+     * @return mixed
+     */
+    public function accounts()
+    {
+        return $this->belongsToMany(Account::class);
+    }
+
+    /**
      * Should create a new instance of the entity, with the first name, last name and email provided.
      *
      * @param string $firstName

@@ -27,6 +27,7 @@ class ShiftServiceProvider extends ServiceProvider
         'macros',
         'composers',
         'routes',
+        'validators'
     ];
 
     /**
