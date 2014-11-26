@@ -20,7 +20,7 @@ class RegisterUserCommandHandlerTest extends UnitTestCase
         $eventDispatcher = m::spy(EventDispatcher::class);
 
         $commandHandler = new RegisterUserCommandHandler($repository, $currentAccount, $eventDispatcher);
-        $command = new RegisterUserCommand('Kirk', 'Bushell', 'torm3nt@gmail.com', 'lijsdflkjsdf', 'lkajsdflkjsdf');
+        $command = new RegisterUserCommand('Kirk', 'Bushell', 'blah@blah.com', 'lijsdflkjsdf', 'lkajsdflkjsdf');
 
         $currentAccount->shouldReceive('get')->once()->andReturn($account);
         $account->shouldReceive('addUser')->once();
