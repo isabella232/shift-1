@@ -38,7 +38,7 @@ class RegistrationService
                 $input['password'],
                 $input['password_confirmation']
             );
-
+            
             $user = $this->commandBus->execute($command);
 
             return $registrationListener->onSuccess($user);

@@ -9,7 +9,7 @@ class RegisterUserCommand extends Command
     public $lastName;
     public $email;
     public $password;
-    public $passwordConfirmation;
+    public $password_confirmation;
 
     public function __construct($firstName, $lastName, $email, $password, $passwordConfirmation)
     {
@@ -17,6 +17,8 @@ class RegisterUserCommand extends Command
         $this->lastName = $lastName;
         $this->email = $email;
         $this->password = $password;
-        $this->passwordConfirmation = $passwordConfirmation;
+
+        // Note the different casing - this is required for Laravel's confirmed validation rule
+        $this->password_confirmation = $passwordConfirmation;
     }
 }
