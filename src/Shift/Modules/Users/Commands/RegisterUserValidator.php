@@ -22,7 +22,7 @@ class RegisterUserValidator extends Validator
             'firstName' => 'required',
             'lastName' => 'required',
             'email' => ['required', 'email', 'unique_account'],
-            'password' => ['required', 'min:6']
+            'password' => ['required', 'min:6', 'confirmed']
         ];
 
         return $rules;

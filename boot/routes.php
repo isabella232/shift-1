@@ -2,27 +2,27 @@
 /**
  * Shift-specific routes and routing, rules and filter definitions.
  */
-Route::group(['prefix' => Config::get('shift.url')], function() {
-    Route::get('/', 'Tectonic\Shift\Controllers\HomeController@index');
+Route::group(['prefix' => Config::get('shift.url', ''), 'namespace' => 'Tectonic\Shift\Controllers'], function() {
+    Route::get('/', 'HomeController@index');
 
-    Route::get('register', 'Tectonic\Shift\Controllers\RegistrationController@form');
-    Route::post('register', 'Tectonic\Shift\Controllers\RegistrationController@register');
+    Route::get('register', 'RegistrationController@form');
+    Route::post('register', 'RegistrationController@register');
 
-    Route::get('login', 'Tectonic\Shift\Controllers\AuthenticationController@form');
-    Route::post('login', 'Tectonic\Shift\Controllers\AuthenticationController@login');
+    Route::get('login', 'AuthenticationController@form');
+    Route::post('login', 'AuthenticationController@login');
 
-    Route::collection('fields', 'Tectonic\Shift\Controllers\FieldController');
-    Route::collection('roles', 'Tectonic\Shift\Controllers\RoleController');
-    Route::collection('sessions', 'Tectonic\Shift\Controllers\AuthenticationController');
-    Route::collection('users', 'Tectonic\Shift\Controllers\UserController');
+    Route::collection('fields', 'FieldController');
+    Route::collection('roles', 'RoleController');
+    Route::collection('sessions', 'AuthenticationController');
+    Route::collection('users', 'UserController');
     
-    Route::get('languages', 'Tectonic\Shift\Controllers\LanguageController@getLanguages');
-    Route::post('languages', 'Tectonic\Shift\Controllers\LanguageController@postLanguages');
-    Route::get('languages/supported', 'Tectonic\Shift\Controllers\LanguageController@getSupportedLanguages');
+    Route::get('languages', 'LanguageController@getLanguages');
+    Route::post('languages', 'LanguageController@postLanguages');
+    Route::get('languages/supported', 'LanguageController@getSupportedLanguages');
 
     Route::group(['before' => 'shift.install'], function() {
-        Route::get('install', 'Tectonic\Shift\Controllers\InstallationController@getInstall');
-        Route::post('install', 'Tectonic\Shift\Controllers\InstallationController@postInstall');
+        Route::get('install', 'InstallationController@getInstall');
+        Route::post('install', 'InstallationController@postInstall');
     });
 });
 

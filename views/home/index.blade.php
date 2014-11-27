@@ -2,13 +2,17 @@
     <div class="container ng-scope">
     	<div class="island"></div>
 
-    	<div validation-errors="">
-    	    <div class="alert-error sticky island">
-    	        <ul class="validation-errors">
-
-    	        </ul>
-    	    </div>
-    	</div>
+        @if ($errors->any())
+            <div validation-errors="">
+                <div class="alert-error sticky island">
+                    <ul class="validation-errors">
+                        @foreach ($errors->all() as $error)
+                            <li>{{$error}}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+    	@endif
 
     	<div class="row">
     		<div class="column-half">

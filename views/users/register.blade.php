@@ -1,7 +1,7 @@
 <h1>Register</h1>
 
 <!-- Registration form -->
-{{ Form::open(['action' => 'Tectonic\Shift\Controllers\RegistrationController@register']) }}
+{{ Form::open(['action' => 'Tectonic\Shift\Controllers\RegistrationController@register', 'novalidate' => 'novalidate']) }}
 	<div class="control">
 		<div class="control-label forty">
 		    {{ Form::label('firstName', 'First name') }}
