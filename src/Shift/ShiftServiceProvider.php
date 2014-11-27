@@ -1,6 +1,7 @@
 <?php namespace Tectonic\Shift;
 
 use App;
+use Tectonic\Shift\Commands\InstallCommand;
 use Tectonic\Shift\Library\Router;
 use Tectonic\Shift\Library\ServiceProvider;
 
@@ -56,7 +57,6 @@ class ShiftServiceProvider extends ServiceProvider
      * @var array
      */
     protected $filesToRegister = [
-        'commands',
         'composers',
     ];
 
@@ -91,6 +91,7 @@ class ShiftServiceProvider extends ServiceProvider
 		$this->package('tectonic/shift');
 
 		$this->requireFiles($this->filesToBoot);
+        $this->bootCommands();
 	}
 
 	/**
@@ -130,5 +131,11 @@ class ShiftServiceProvider extends ServiceProvider
         {
             return new Router($app['events'], $app);
         });
+    }
+
+    protected function bootCommands()
+    {
+        $this->app->bind('command.install', InstallCommand::class);
+        $this->commands('command.install');
     }
 }
