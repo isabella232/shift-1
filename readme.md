@@ -2,7 +2,10 @@
 
 [![Circle CI](https://circleci.com/gh/tectonic/shift.png?style=badge)](https://circleci.com/gh/tectonic/shift)
 
-Shift is a development platform for SAAS applications. It uses the latest and greatest technologies, including Laravel 5 and Angular JS 1.2.x (1.3+ doesn't support IE8), utilises the best development patterns and methodologies currently in use in the market, and has an intense focus on security and performance. As a result Shift is a robust, secure, feature-rich development platform for anyone wanting to create a product as a SaaS delivery platform.
+Shift is a development platform for SAAS applications. It uses the latest and greatest technologies, including Laravel 5, utilises 
+the best development patterns and methodologies currently in use in the market, and has an intense focus on security and 
+performance. As a result Shift is a robust, secure, feature-rich development platform for anyone wanting to create a product as 
+a SaaS delivery platform.
 
 ## Installation
 
@@ -12,14 +15,11 @@ Shift is a package that can be installed via composer, in the usual manner:
 
 As Shift is still currently in a beta state, no official releases have been created.
 
-Then, you need to setup the database tables, required data.etc.
+Now, before running the next step, make sure that you have your databases correctly configured in app/config/database.php
 
-    php artisan migrate --package=tectonic/laravel-localisation
-    php artisan migrate --package=tectonic/shift
+    php artisan shift:install
     
-Then, make sure you publish the assets of the package:
-
-    php artisan asset:publish tectonic/shift
+This will run the required migrations for Shift 2, as well as publishing any assets affiliated with the package.
 
 All done!
 

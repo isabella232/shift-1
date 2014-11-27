@@ -29,7 +29,7 @@ class InstallCommand extends Command
         $this->call('migrate', array('--package' => 'tectonic/laravel-localisation'));
         $this->call('migrate', array('--package' => 'tectonic/shift'));
         $this->call('asset:publish');
-        
+
         $this->info('Shift installed.');
     }
 }
