@@ -5,6 +5,7 @@ use App;
 use Tectonic\Shift\Library\ServiceProvider;
 use Tectonic\Shift\Modules\Accounts\Contracts\AccountRepositoryInterface;
 use Tectonic\Shift\Modules\Accounts\Contracts\SupportedLanguageRepositoryInterface;
+use Tectonic\Shift\Modules\Accounts\Facades\CurrentAccount;
 use Tectonic\Shift\Modules\Accounts\Repositories\EloquentAccountRepository;
 use Tectonic\Shift\Modules\Accounts\Contracts\DomainRepositoryInterface;
 use Tectonic\Shift\Modules\Accounts\Repositories\EloquentDomainRepository;
@@ -13,6 +14,10 @@ use Tectonic\Shift\Modules\Accounts\Services\CurrentAccountService;
 
 class AccountsServiceProvider extends ServiceProvider
 {
+    protected $aliases = [
+        'CurrentAccount' => CurrentAccount::class
+    ];
+
     /**
      * The repository bindings for the Accounts module.
      *
@@ -36,9 +41,9 @@ class AccountsServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        parent::register();
-
         $this->registerCurrentAccountService();
+
+        parent::register();
     }
 
     /**
@@ -46,6 +51,6 @@ class AccountsServiceProvider extends ServiceProvider
      */
     public function registerCurrentAccountService()
     {
-        $this->app->singleton(CurrentAccountService::class);
+        $this->app->singleton('current.account', CurrentAccountService::class);
     }
 }

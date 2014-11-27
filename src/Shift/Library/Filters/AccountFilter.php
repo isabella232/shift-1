@@ -2,6 +2,7 @@
 
 namespace Tectonic\Shift\Library\Filters;
 
+use CurrentAccount;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Redirect;
 use Tectonic\Shift\Controllers\InstallationController;
@@ -21,22 +22,15 @@ use Tectonic\Shift\Modules\Accounts\Services\CurrentAccountService;
 class AccountFilter
 {
 	/**
-	 * @var \Tectonic\Shift\Modules\Accounts\Services\AccountsService
-	 */
-	private $currentAccountService;
-
-	/**
 	 * @var \Tectonic\Shift\Modules\Accounts\Services\AccountManagementService
 	 */
 	private $accountManagementService;
 
 	/**
-	 * @param CurrentAccountService $currentAccountService
 	 * @param AccountManagementService $accountManagementService
 	 */
-	public function __construct(CurrentAccountService $currentAccountService, AccountManagementService $accountManagementService)
+	public function __construct(AccountManagementService $accountManagementService)
 	{
-		$this->currentAccountService = $currentAccountService;
 		$this->accountManagementService = $accountManagementService;
 	}
 
@@ -55,7 +49,7 @@ class AccountFilter
 	 */
 	public function filter()
 	{
-		$account = $this->currentAccountService->determine(Request::getHttpHost());
+		$account = CurrentAccount::determine(Request::getHttpHost());
 
 		if (!$account) {
             $count = $this->accountManagementService->totalNumberOfAccounts();
@@ -67,6 +61,6 @@ class AccountFilter
             throw new AccountNotFoundException;
 		}
 
-		$this->currentAccountService->set($account);
+        CurrentAccount::set($account);
 	}
 }

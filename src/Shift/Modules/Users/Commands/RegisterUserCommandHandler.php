@@ -1,6 +1,7 @@
 <?php
 namespace Tectonic\Shift\Modules\Users\Commands;
 
+use CurrentAccount;
 use Tectonic\Application\Commanding\CommandHandlerInterface;
 use Tectonic\Application\Eventing\EventDispatcher;
 use Tectonic\Shift\Modules\Accounts\Models\Account;
@@ -16,11 +17,6 @@ class RegisterUserCommandHandler implements CommandHandlerInterface
     private $userRepository;
 
     /**
-     * @var CurrentAccountService
-     */
-    private $currentAccountService;
-
-    /**
      * @var EventDispatcher
      */
     private $eventDispatcher;
@@ -30,12 +26,10 @@ class RegisterUserCommandHandler implements CommandHandlerInterface
      */
     public function __construct(
         UserRepositoryInterface $userRepository,
-        CurrentAccountService $currentAccountService,
         EventDispatcher $eventDispatcher
     )
     {
         $this->userRepository = $userRepository;
-        $this->currentAccountService = $currentAccountService;
         $this->eventDispatcher = $eventDispatcher;
     }
 
@@ -50,7 +44,7 @@ class RegisterUserCommandHandler implements CommandHandlerInterface
 
         $this->userRepository->save($user);
 
-        $account = $this->currentAccountService->get();
+        $account = CurrentAccount::get();
         $account->addUser($user);
 
         $this->eventDispatcher->dispatch($user->releaseEvents());

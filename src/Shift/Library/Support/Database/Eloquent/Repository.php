@@ -1,7 +1,7 @@
 <?php
 namespace Tectonic\Shift\Library\Support\Database\Eloquent;
 
-use App;
+use CurrentAccount;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Str;
 use Tectonic\Localisation\Translator\Translatable;
@@ -281,7 +281,7 @@ abstract class Repository implements RepositoryInterface
      */
     protected function currentAccountId()
     {
-        return App::make(CurrentAccountService::class)->get()->id;
+        return CurrentAccount::get()->id;
     }
 
     /**

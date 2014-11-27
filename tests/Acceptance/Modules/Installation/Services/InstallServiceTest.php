@@ -2,6 +2,7 @@
 namespace Tests\Acceptance\Modules\Installation\Services;
 
 use App;
+use CurrentAccount;
 use Mockery as m;
 use Tectonic\Shift\Modules\Accounts\Contracts\AccountRepositoryInterface;
 use Tectonic\Shift\Modules\Accounts\Contracts\DomainRepositoryInterface;
@@ -40,7 +41,7 @@ class InstallServiceTest extends AcceptanceTestCase
         $newAccount = $this->accountRepository->getAll()[1];
 
         // set the new current account
-        $this->currentAccountService->set($newAccount);
+        CurrentAccount::set($newAccount);
     }
 
 	public function testUserCreation()
@@ -56,7 +57,7 @@ class InstallServiceTest extends AcceptanceTestCase
 
     public function testAccountCreation()
     {
-        $account = $this->currentAccountService->get();
+        $account = CurrentAccount::get();
 
         // Account based assertions
         $this->assertEquals($this->input['name'], $account->translations->first()->value);
@@ -64,7 +65,7 @@ class InstallServiceTest extends AcceptanceTestCase
 
     public function testUserAccountRelationshipCreation()
     {
-        $account = $this->currentAccountService->get();
+        $account = CurrentAccount::get();
 
         $users = App::make(UserRepositoryInterface::class);
         $user = $users->getAll()[0];

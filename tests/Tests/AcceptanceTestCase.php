@@ -17,14 +17,6 @@ class AcceptanceTestCase extends TestCase
     protected $account;
 
     /**
-     * Stores the current account service for easy switching of the current account. This is necessary
-     * for when we need to test data that exist as part of other accounts.
-     *
-     * @var CurrentAccountService
-     */
-    protected $currentAccountService;
-
-    /**
      * Stores a response created by a call to the API.
      *
      * @var null
@@ -102,8 +94,7 @@ class AcceptanceTestCase extends TestCase
 
         $accountRepository->save($this->account);
 
-        $this->currentAccountService = App::make(CurrentAccountService::class);
-        $this->currentAccountService->set($this->account);
+        \CurrentAccount::set($this->account);
     }
 
     /**

@@ -1,6 +1,7 @@
 <?php
 namespace Tests\Unit\Modules\Users\Commands;
 
+use CurrentAccount;
 use Mockery as m;
 use Tectonic\Application\Eventing\EventDispatcher;
 use Tectonic\Shift\Modules\Accounts\Models\Account;
@@ -15,14 +16,14 @@ class RegisterUserCommandHandlerTest extends UnitTestCase
     public function testCommandHandling()
     {
         $repository = m::spy(UserRepositoryInterface::class);
-        $currentAccount = m::mock(CurrentAccountService::class);
         $account = m::mock(Account::class);
         $eventDispatcher = m::spy(EventDispatcher::class);
 
-        $commandHandler = new RegisterUserCommandHandler($repository, $currentAccount, $eventDispatcher);
+        $commandHandler = new RegisterUserCommandHandler($repository, $eventDispatcher);
         $command = new RegisterUserCommand('Kirk', 'Bushell', 'blah@blah.com', 'lijsdflkjsdf', 'lkajsdflkjsdf');
 
-        $currentAccount->shouldReceive('get')->once()->andReturn($account);
+        CurrentAccount::shouldReceive('get')->once()->andReturn($account);
+
         $account->shouldReceive('addUser')->once();
 
         $this->assertNotNull($commandHandler->handle($command));

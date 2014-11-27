@@ -20,7 +20,6 @@ use Tectonic\Shift\Modules\Users\Contracts\UserRepositoryInterface;
  */
 Validator::extend('unique_account', function($attribute, $email) {
     $userRepository = App::make(UserRepositoryInterface::class);
-    $currentAccountService = App::make(CurrentAccountService::class);
 
-    return !$userRepository->getByEmailAndAccount($email, $currentAccountService->get());
+    return !$userRepository->getByEmailAndAccount($email, CurrentAccount::get());
 });
