@@ -27,14 +27,13 @@ class AuthenticateUserCommandHandler implements CommandHandlerInterface
      * @param $command
      *
      * @throws \Tectonic\Shift\Modules\Authentication\Exceptions\InvalidAuthenticationCredentialsException
-     * @return \Illuminate\Auth\UserInterface|null
      */
     public function handle($command)
     {
         $credentials = ['email' => $command->email, 'password' => $command->password];
 
         if($this->authenticate->attempt($credentials, $command->remember)) {
-            return $this->authenticate->getUser();
+            return;
         }
 
         throw new InvalidAuthenticationCredentialsException();

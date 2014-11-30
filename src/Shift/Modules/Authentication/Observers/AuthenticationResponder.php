@@ -2,8 +2,9 @@
 namespace Tectonic\Shift\Modules\Authentication\Observers;
 
 use Illuminate\Support\Facades\Redirect;
-use Tectonic\Shift\Controllers\HomeController;
+use Illuminate\Support\MessageBag;
 use Tectonic\Shift\Library\Traits\Respondable;
+use Tectonic\Shift\Controllers\AuthenticationController;
 use Tectonic\Application\Validation\ValidationException;
 use Tectonic\Shift\Modules\Authentication\Contracts\User;
 use Tectonic\Shift\Modules\Authentication\Contracts\AuthenticationResponderInterface;
@@ -43,9 +44,9 @@ class AuthenticationResponder implements AuthenticationResponderInterface
      */
     public function onValidationFailure(ValidationException $e)
     {
-        return Redirect::action(HomeController::class.'@index')
+        return Redirect::action(AuthenticationController::class.'@form')
             ->withInput()
-            ->withErrors($e->getValidator());
+            ->withErrors($e->getValidationErrors());
     }
 
     /**
@@ -57,7 +58,10 @@ class AuthenticationResponder implements AuthenticationResponderInterface
      */
     public function onAuthenticationFailure(InvalidAuthenticationCredentialsException $e)
     {
-        return Redirect::action(HomeController::class.'@index')
-            ->withInput();
+        $messageBag = new MessageBag(['Your email and password combination appear to be incorrect!']);
+
+        return Redirect::action(AuthenticationController::class.'@form')
+            ->withInput()
+            ->withErrors($messageBag);
     }
 }
