@@ -1,7 +1,7 @@
 <?php
 namespace Tectonic\Shift\Modules\Authentication\Commands;
 
-use Illuminate\Auth\Guard;
+use Illuminate\Auth\AuthManager;
 use Tectonic\Application\Commanding\CommandHandlerInterface;
 use Tectonic\Shift\Modules\Authentication\Exceptions\InvalidAuthenticationCredentialsException;
 
@@ -9,14 +9,14 @@ class AuthenticateUserCommandHandler implements CommandHandlerInterface
 {
 
     /**
-     * @var \Illuminate\Auth\Guard
+     * @var \Illuminate\Auth\AuthManager
      */
     protected $authenticate;
 
     /**
-     * @param \Illuminate\Auth\Guard $authenticate
+     * @param \Illuminate\Auth\AuthManager $authenticate
      */
-    public function __construct(Guard $authenticate)
+    public function __construct(AuthManager $authenticate)
     {
         $this->authenticate = $authenticate;
     }

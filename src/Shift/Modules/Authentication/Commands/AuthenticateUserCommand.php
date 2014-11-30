@@ -8,17 +8,17 @@ class AuthenticateUserCommand extends Command
     /**
      * @var string
      */
-    private $email;
+    public $email;
 
     /**
      * @var string
      */
-    private $password;
+    public $password;
 
     /**
      * @var bool
      */
-    private $remember;
+    public $remember;
 
     /**
      * @param string $email
