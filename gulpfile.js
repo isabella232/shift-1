@@ -1,6 +1,6 @@
 // Load all the required plugins.
 var gulp   = require('gulp'),
-	custom = require('./gulp.custom'),
+	fs     = require('fs'),
     exec   = require('gulp-exec'),
     concat = require('gulp-concat'),
     jshint = require('gulp-jshint'),
@@ -9,6 +9,12 @@ var gulp   = require('gulp'),
 	sass   = require('gulp-ruby-sass'),
     uglify = require('gulp-uglify'),
 	watch  = require('gulp-watch');
+
+var custom = null;
+
+if (fs.existsSync('./gulp.custom.js')) {
+	custom = require('./gulp.custom');
+}
 
 var input  = 'assets/',
     output = 'public/';
@@ -69,8 +75,12 @@ gulp.task('default' , function() {
 	gulp.start('scripts-watch', 'styles-watch');
 
 	// Run any custom gulp code
-	custom.start();
+	if (custom) {
+		custom.start();
+	}
 });
 
 // Registers the tasks you'd like to run
-custom.tasks();
+if (custom) {
+	custom.tasks();
+}
