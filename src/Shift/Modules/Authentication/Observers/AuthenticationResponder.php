@@ -1,12 +1,12 @@
 <?php
 namespace Tectonic\Shift\Modules\Authentication\Observers;
 
-use Illuminate\Support\Facades\Redirect;
+use Illuminate\Auth\UserInterface;
 use Illuminate\Support\MessageBag;
+use Illuminate\Support\Facades\Redirect;
 use Tectonic\Shift\Library\Traits\Respondable;
 use Tectonic\Shift\Controllers\AuthenticationController;
 use Tectonic\Application\Validation\ValidationException;
-use Tectonic\Shift\Modules\Authentication\Contracts\User;
 use Tectonic\Shift\Modules\Authentication\Contracts\AuthenticationResponderInterface;
 use Tectonic\Shift\Modules\Authentication\Exceptions\InvalidAuthenticationCredentialsException;
 
@@ -26,11 +26,11 @@ class AuthenticationResponder implements AuthenticationResponderInterface
      * When authentication has succeeded, then the $user object belonging to the newly
      * authenticated user, is passed back and can be handled by this observer method.
      *
-     * @param \Tectonic\Shift\Modules\Authentication\Contracts\User $user
+     * @param \Illuminate\Auth\UserInterface    $user
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function onSuccess(User $user)
+    public function onSuccess(UserInterface $user)
     {
         return Redirect::action(HomeController::class.'@user');
     }

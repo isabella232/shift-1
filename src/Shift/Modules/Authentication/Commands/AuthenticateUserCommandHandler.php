@@ -33,7 +33,7 @@ class AuthenticateUserCommandHandler implements CommandHandlerInterface
         $credentials = ['email' => $command->email, 'password' => $command->password];
 
         if($this->authenticate->attempt($credentials, $command->remember)) {
-            return;
+            return $this->authenticate->getUser();
         }
 
         throw new InvalidAuthenticationCredentialsException();

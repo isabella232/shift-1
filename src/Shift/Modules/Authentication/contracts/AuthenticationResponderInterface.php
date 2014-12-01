@@ -1,6 +1,7 @@
 <?php
 namespace Tectonic\Shift\Modules\Authentication\Contracts;
 
+use Illuminate\Auth\UserInterface;
 use Tectonic\Application\Validation\ValidationException;
 use Tectonic\Shift\Modules\Authentication\Exceptions\InvalidAuthenticationCredentialsException;
 
@@ -10,10 +11,11 @@ interface AuthenticationResponderInterface
      * When authentication has succeeded, then the $user object belonging to the newly
      * authenticated user back and can be handled by this observer method.
      *
-     * @param User $user
+     * @param \Illuminate\Auth\UserInterface $user
+     *
      * @return mixed
      */
-    public function onSuccess(User $user);
+    public function onSuccess(UserInterface $user);
 
     /**
      * Called when a validation exception is thrown by the command handler.
