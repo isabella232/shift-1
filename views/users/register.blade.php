@@ -52,7 +52,7 @@
 			<label for="recaptcha_response_field" mandatory>Authorisation</label>
 		</div>
 		<div class="control-field sixty">
-			<div id="captcha-box" captcha model="user"></div>
+			<div class="g-recaptcha" data-sitekey="6Le_jf4SAAAAAJxm20fnRq95rlljtAYI1ELq_52d"></div>
 		</div>
 	</div>
 

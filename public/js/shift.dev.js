@@ -526,8 +526,8 @@ var Pjax = Pjax || {};
 })();
 
 (function() {
-	Controllers.Home = function() {
-
+	Controllers.home = function() {
+		Recaptcha.create( $rootScope.config[ 'recaptcha_public_key' ], attributes.id, { theme: "white" } );
 	};
 })();
 
@@ -539,5 +539,5 @@ var Pjax = Pjax || {};
 
 // Required for underscore string module
 (function() {
-  Shift.Routes.register();
+
 })();

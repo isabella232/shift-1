@@ -57,7 +57,7 @@ gulp.task('scripts', function() {
 gulp.task('scripts-watch', function() {
 	gulp.run('scripts');
 
-	gulp.watch(input + 'js/**/', function() {
+	gulp.watch(input + 'js/**', function() {
 		gulp.run('scripts');
 	});
 });

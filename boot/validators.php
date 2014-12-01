@@ -23,3 +23,16 @@ Validator::extend('unique_account', function($attribute, $email) {
 
     return !$userRepository->getByEmailAndAccount($email, CurrentAccount::get());
 });
+
+/**
+ * The following validator uses the recaptcha library to check the response from the
+ * google servers and returns boolean true or false based on that response.
+ *
+ * @param string $attribute
+ * @param string $value
+ * @param array $params
+ * @return boolean
+ */
+Validator::extend('recaptcha', function($attribute, $value, $params) {
+    return Recaptcha::checkAnswer(Config::get('recaptcha.key'), Request::ip(), '', $value);
+});
