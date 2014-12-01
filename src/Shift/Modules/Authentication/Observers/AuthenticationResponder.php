@@ -1,11 +1,12 @@
 <?php
 namespace Tectonic\Shift\Modules\Authentication\Observers;
 
+use Illuminate\Auth\UserInterface;
+use Illuminate\Support\MessageBag;
 use Illuminate\Support\Facades\Redirect;
-use Tectonic\Shift\Controllers\HomeController;
 use Tectonic\Shift\Library\Traits\Respondable;
+use Tectonic\Shift\Controllers\AuthenticationController;
 use Tectonic\Application\Validation\ValidationException;
-use Tectonic\Shift\Modules\Authentication\Contracts\User;
 use Tectonic\Shift\Modules\Authentication\Contracts\AuthenticationResponderInterface;
 use Tectonic\Shift\Modules\Authentication\Exceptions\InvalidAuthenticationCredentialsException;
 
@@ -25,11 +26,11 @@ class AuthenticationResponder implements AuthenticationResponderInterface
      * When authentication has succeeded, then the $user object belonging to the newly
      * authenticated user, is passed back and can be handled by this observer method.
      *
-     * @param \Tectonic\Shift\Modules\Authentication\Contracts\User $user
+     * @param \Illuminate\Auth\UserInterface    $user
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function onSuccess(User $user)
+    public function onSuccess(UserInterface $user)
     {
         return Redirect::action(HomeController::class.'@user');
     }
@@ -43,9 +44,9 @@ class AuthenticationResponder implements AuthenticationResponderInterface
      */
     public function onValidationFailure(ValidationException $e)
     {
-        return Redirect::action(HomeController::class.'@index')
+        return Redirect::action(AuthenticationController::class.'@form')
             ->withInput()
-            ->withErrors($e->getValidator());
+            ->withErrors($e->getValidationErrors());
     }
 
     /**
@@ -57,7 +58,10 @@ class AuthenticationResponder implements AuthenticationResponderInterface
      */
     public function onAuthenticationFailure(InvalidAuthenticationCredentialsException $e)
     {
-        return Redirect::action(HomeController::class.'@index')
-            ->withInput();
+        $messageBag = new MessageBag(['Your email and password combination appear to be incorrect!']);
+
+        return Redirect::action(AuthenticationController::class.'@form')
+            ->withInput()
+            ->withErrors($messageBag);
     }
 }

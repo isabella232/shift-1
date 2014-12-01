@@ -1,10 +1,9 @@
 <?php
-namespace Tectonic\Shift\Modules\Authentication\Validators;
-
+namespace Tectonic\Shift\Modules\Authentication\Commands;
 
 use Tectonic\Application\Validation\Validator;
 
-class AuthenticationValidation extends Validator
+class AuthenticateUserValidator extends Validator
 {
     /**
      * @var array
