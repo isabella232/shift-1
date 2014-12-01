@@ -1,7 +1,9 @@
-<?php namespace Tectonic\Shift;
+<?php
+namespace Tectonic\Shift;
 
 use App;
 use Tectonic\Shift\Commands\InstallCommand;
+use Tectonic\Shift\Library\Recaptcha;
 use Tectonic\Shift\Library\Router;
 use Tectonic\Shift\Library\ServiceProvider;
 
@@ -16,6 +18,7 @@ class ShiftServiceProvider extends ServiceProvider
         'Asset'         => 'Orchestra\Support\Facades\Asset',
         'Authority'     => 'Authority\AuthorityL4\Facades\Authority',
         'Utility'       => 'Tectonic\Shift\Library\Facades\Utility',
+        'Recaptcha'     => 'Tectonic\Shift\Library\Facades\Recaptcha'
     ];
 
     /**
@@ -44,7 +47,6 @@ class ShiftServiceProvider extends ServiceProvider
         'Tectonic\Shift\Library\LibraryServiceProvider',
         'Tectonic\Shift\Modules\Accounts\AccountsServiceProvider',
         'Tectonic\Shift\Modules\Configuration\ConfigurationServiceProvider',
-        //'Tectonic\Shift\Modules\Fields\FieldsServiceProvider',
         'Tectonic\Shift\Modules\Localisation\LocalisationServiceProvider',
         'Tectonic\Shift\Modules\Security\SecurityServiceProvider',
         'Tectonic\Shift\Modules\Users\UsersServiceProvider',
@@ -77,6 +79,7 @@ class ShiftServiceProvider extends ServiceProvider
         parent::register();
 
         $this->registerRouter();
+        $this->registerRecaptcha();
         $this->registerAuthorityConfiguration();
 		$this->requireFiles($this->filesToRegister);
     }
@@ -105,6 +108,16 @@ class ShiftServiceProvider extends ServiceProvider
 			$user = $authority->getCurrentUser();
 		});
 	}
+
+    /**
+     * Registers the recaptcha binding, and the facade/alias.
+     */
+    public function registerRecaptcha()
+    {
+        $this->app->singleton('recaptcha', function($app) {
+            return new Recaptcha($app['config']->get('shift.recaptcha.keys.private'));
+        });
+    }
 
 	/**
 	 * Helper method for requiring boot files. These are files that generally have some basic configuration,

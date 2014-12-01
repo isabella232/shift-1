@@ -1,6 +1,6 @@
 // Load all the required plugins.
 var gulp   = require('gulp'),
-	custom = require('./gulp.custom'),
+	fs     = require('fs'),
     exec   = require('gulp-exec'),
     concat = require('gulp-concat'),
     jshint = require('gulp-jshint'),
@@ -10,11 +10,18 @@ var gulp   = require('gulp'),
     uglify = require('gulp-uglify'),
 	watch  = require('gulp-watch');
 
+var custom = null;
+
+if (fs.existsSync('./gulp.custom.js')) {
+	custom = require('./gulp.custom');
+}
+
 var input  = 'assets/',
     output = 'public/';
 
 var scripts = [
   input + 'js/_app.js',
+  input + 'js/vendor/**/*.js',
   input + 'js/src/**/*.js',
   input + 'js/shift.js'
 ];
@@ -50,7 +57,7 @@ gulp.task('scripts', function() {
 gulp.task('scripts-watch', function() {
 	gulp.run('scripts');
 
-	gulp.watch(input + 'js/**/', function() {
+	gulp.watch(input + 'js/**', function() {
 		gulp.run('scripts');
 	});
 });
@@ -68,8 +75,12 @@ gulp.task('default' , function() {
 	gulp.start('scripts-watch', 'styles-watch');
 
 	// Run any custom gulp code
-	custom.start();
+	if (custom) {
+		custom.start();
+	}
 });
 
 // Registers the tasks you'd like to run
-custom.tasks();
+if (custom) {
+	custom.tasks();
+}

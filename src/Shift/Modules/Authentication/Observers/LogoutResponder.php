@@ -1,4 +1,5 @@
-<?php namespace Tectonic\Shift\Modules\Authentication\Observers; 
+<?php
+namespace Tectonic\Shift\Modules\Authentication\Observers;
 
 use Illuminate\Auth\UserInterface;
 use Illuminate\Support\Facades\Redirect;
