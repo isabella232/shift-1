@@ -2,11 +2,18 @@
 namespace Tectonic\Shift\Modules\Authentication\Commands;
 
 use Illuminate\Auth\AuthManager;
+use Tectonic\Shift\Modules\Accounts\Facades\CurrentAccount;
 use Tectonic\Application\Commanding\CommandHandlerInterface;
+use Tectonic\Shift\Modules\Users\Contracts\UserRepositoryInterface;
+use Tectonic\Shift\Modules\Authentication\Exceptions\UserAccountAssociationException;
 use Tectonic\Shift\Modules\Authentication\Exceptions\InvalidAuthenticationCredentialsException;
 
 class AuthenticateUserCommandHandler implements CommandHandlerInterface
 {
+    /**
+     * @var \Tectonic\Shift\Modules\Users\Contracts\UserRepositoryInterface
+     */
+    protected $userRepo;
 
     /**
      * @var \Illuminate\Auth\AuthManager
@@ -14,10 +21,12 @@ class AuthenticateUserCommandHandler implements CommandHandlerInterface
     protected $authenticate;
 
     /**
-     * @param \Illuminate\Auth\AuthManager $authenticate
+     * @param \Tectonic\Shift\Modules\Users\Contracts\UserRepositoryInterface $userRepo
+     * @param \Illuminate\Auth\AuthManager                                    $authenticate
      */
-    public function __construct(AuthManager $authenticate)
+    public function __construct(UserRepositoryInterface $userRepo, AuthManager $authenticate)
     {
+        $this->userRepo = $userRepo;
         $this->authenticate = $authenticate;
     }
 
@@ -27,15 +36,41 @@ class AuthenticateUserCommandHandler implements CommandHandlerInterface
      * @param $command
      *
      * @throws \Tectonic\Shift\Modules\Authentication\Exceptions\InvalidAuthenticationCredentialsException
+     * @throws \Tectonic\Shift\Modules\Authentication\Exceptions\UserAccountAssociationException
+     * @return \Illuminate\Auth\UserInterface|null
      */
     public function handle($command)
     {
-        $credentials = ['email' => $command->email, 'password' => $command->password];
+        // First check to see if the users credentials are valid.
+        $userCredentialsAreValid = $this->authenticate->validate(['email' => $command->email, 'password' => $command->password]);
 
-        if($this->authenticate->attempt($credentials, $command->remember)) {
+        // If user credential are invalid, throw exception.
+        if(!$userCredentialsAreValid) throw new InvalidAuthenticationCredentialsException();
+
+        // Find out if user has an account id with the current account
+        $accountUser = $this->userRepo->getByEmailAndAccountId($command->email, $this->getAccountId());
+
+        // If an account user is found, login and return user
+        if($accountUser)
+        {
+            $this->authenticate->login($accountUser->id, $command->remember);
+
             return $this->authenticate->getUser();
         }
 
-        throw new InvalidAuthenticationCredentialsException();
+        // Login failed, throw exception
+        throw new UserAccountAssociationException();
+    }
+
+    /**
+     * Get current account id
+     *
+     * @return int
+     */
+    protected function getAccountId()
+    {
+        $currentAccount = CurrentAccount::get();
+
+        return $currentAccount->id;
     }
 }

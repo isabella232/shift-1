@@ -8,6 +8,7 @@ use Tectonic\Shift\Library\Traits\Respondable;
 use Tectonic\Shift\Controllers\AuthenticationController;
 use Tectonic\Application\Validation\ValidationException;
 use Tectonic\Shift\Modules\Authentication\Contracts\AuthenticationResponderInterface;
+use Tectonic\Shift\Modules\Authentication\Exceptions\UserAccountAssociationException;
 use Tectonic\Shift\Modules\Authentication\Exceptions\InvalidAuthenticationCredentialsException;
 
 /**
@@ -58,10 +59,25 @@ class AuthenticationResponder implements AuthenticationResponderInterface
      */
     public function onAuthenticationFailure(InvalidAuthenticationCredentialsException $e)
     {
-        $messageBag = new MessageBag(['Your email and password combination appear to be incorrect!']);
+        $messageBag = new MessageBag([$e->getMessage()]);
 
         return Redirect::action(AuthenticationController::class.'@form')
             ->withInput()
             ->withErrors($messageBag);
     }
-}
+
+    /**
+     * Called when a user-account association exception is thrown by the command handler.
+     *
+     * @param UserAccountAssociationException $e
+     *
+     * @return mixed
+     */
+    public function onUserAccountFailure(UserAccountAssociationException $e)
+    {
+        $messageBag = new MessageBag([$e->getMessage()]);
+
+        return Redirect::action(AuthenticationController::class.'@form')
+            ->withInput()
+            ->withErrors($messageBag);
+    }}

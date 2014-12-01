@@ -6,5 +6,5 @@ class InvalidAuthenticationCredentialsException extends \Exception
     /**
      * @var string
      */
-    protected $message = 'The login credentials you provided are invalid!';
+    protected $message = 'The login credentials you provided are invalid.';
 }
