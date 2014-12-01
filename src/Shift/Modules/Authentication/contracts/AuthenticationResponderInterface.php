@@ -4,6 +4,7 @@ namespace Tectonic\Shift\Modules\Authentication\Contracts;
 use Illuminate\Auth\UserInterface;
 use Tectonic\Application\Validation\ValidationException;
 use Tectonic\Shift\Modules\Authentication\Exceptions\InvalidAuthenticationCredentialsException;
+use Tectonic\Shift\Modules\Authentication\Exceptions\UserAccountAssociationException;
 
 interface AuthenticationResponderInterface
 {
@@ -32,4 +33,16 @@ interface AuthenticationResponderInterface
      * @return mixed
      */
     public function onAuthenticationFailure(InvalidAuthenticationCredentialsException $e);
+
+
+
+    /**
+     * Called when a user-account association exception is thrown by the command handler.
+     *
+     * @param UserAccountAssociationException $e
+     * @return mixed
+     */
+    public function onUserAccountFailure(UserAccountAssociationException $e);
+
+
 }

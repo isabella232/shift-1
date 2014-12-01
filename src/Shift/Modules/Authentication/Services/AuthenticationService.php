@@ -9,6 +9,7 @@ use Tectonic\Shift\Modules\Authentication\Commands\LogoutUserCommand;
 use Tectonic\Shift\Modules\Authentication\Contracts\AuthenticationResponderInterface;
 use Tectonic\Shift\Modules\Authentication\Contracts\LogoutResponderInterface;
 use Tectonic\Shift\Modules\Authentication\Exceptions\InvalidAuthenticationCredentialsException;
+use Tectonic\Shift\Modules\Authentication\Exceptions\UserAccountAssociationException;
 
 class AuthenticationService
 {
@@ -49,6 +50,8 @@ class AuthenticationService
             return $responder->onValidationFailure($e);
         } catch(InvalidAuthenticationCredentialsException $e) {
             return $responder->onAuthenticationFailure($e);
+        } catch(UserAccountAssociationException $e) {
+            return $responder->onUserAccountFailure($e);
         }
     }
 
