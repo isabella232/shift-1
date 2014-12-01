@@ -5,8 +5,5 @@ use Illuminate\Support\Facades\Facade;
 
 class Recaptcha extends Facade
 {
-	protected static function getFacadeAccessor()
-	{
-		return 'recaptcha';
-	}
+	protected static function getFacadeAccessor() { return 'recaptcha'; }
 }

@@ -27,7 +27,8 @@ class RegistrationServiceTest extends AcceptanceTestCase
             'lastName' => 'Bushell',
             'email' => 'blah@blah.com',
             'password' => '123456',
-            'password_confirmation' => '123456'
+            'password_confirmation' => '123456',
+            'g-recaptcha-response' => 'oiajsdlkjasdljksadf'
         ], $observer);
 
         $user = $this->userRepository->getAll()->first();

@@ -18,7 +18,7 @@ class ShiftServiceProvider extends ServiceProvider
         'Asset'         => 'Orchestra\Support\Facades\Asset',
         'Authority'     => 'Authority\AuthorityL4\Facades\Authority',
         'Utility'       => 'Tectonic\Shift\Library\Facades\Utility',
-        'Recaptcha'       => 'Tectonic\Shift\Library\Facades\Recaptcha'
+        'Recaptcha'     => 'Tectonic\Shift\Library\Facades\Recaptcha'
     ];
 
     /**
@@ -47,7 +47,6 @@ class ShiftServiceProvider extends ServiceProvider
         'Tectonic\Shift\Library\LibraryServiceProvider',
         'Tectonic\Shift\Modules\Accounts\AccountsServiceProvider',
         'Tectonic\Shift\Modules\Configuration\ConfigurationServiceProvider',
-        //'Tectonic\Shift\Modules\Fields\FieldsServiceProvider',
         'Tectonic\Shift\Modules\Localisation\LocalisationServiceProvider',
         'Tectonic\Shift\Modules\Security\SecurityServiceProvider',
         'Tectonic\Shift\Modules\Users\UsersServiceProvider',
@@ -115,7 +114,9 @@ class ShiftServiceProvider extends ServiceProvider
      */
     public function registerRecaptcha()
     {
-        $this->app->singleton('recaptcha', Recaptcha::class);
+        $this->app->singleton('recaptcha', function($app) {
+            return new Recaptcha($app['config']->get('shift.recaptcha.keys.private'));
+        });
     }
 
 	/**

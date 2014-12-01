@@ -36,7 +36,8 @@ class RegistrationService
                 $input['lastName'],
                 $input['email'],
                 $input['password'],
-                $input['password_confirmation']
+                $input['password_confirmation'],
+                $input['g-recaptcha-response']
             );
 
             $user = $this->commandBus->execute($command);

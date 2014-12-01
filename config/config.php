@@ -8,5 +8,13 @@ return [
     'language' => [
         'autoloads' => ['shift'],               // Modules/packages (bundles) to load language files for
         'locales'   => ['en_GB'],               // Locales (language file translations) to pull in
+    ],
+
+    // The private and public keys for recaptcha usage
+    'recaptcha' => [
+        'keys' => [
+            'private' => '',
+            'public' => ''
+        ]
     ]
 ];

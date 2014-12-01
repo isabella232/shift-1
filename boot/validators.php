@@ -34,5 +34,5 @@ Validator::extend('unique_account', function($attribute, $email) {
  * @return boolean
  */
 Validator::extend('recaptcha', function($attribute, $value, $params) {
-    return Recaptcha::checkAnswer(Config::get('recaptcha.key'), Request::ip(), '', $value);
+    return Recaptcha::check(Request::ip(), $value);
 });
