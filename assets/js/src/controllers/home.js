@@ -1,0 +1,5 @@
+(function() {
+	Controllers.Home = function() {
+
+	};
+})();

@@ -3,4 +3,5 @@
  *
  * @type {object}
  */
-var Tectonic = Tectonic || {Shift: {}};
+var Shift = {};
+var Controllers = {};

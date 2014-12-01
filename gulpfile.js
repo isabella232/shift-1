@@ -15,6 +15,7 @@ var input  = 'assets/',
 
 var scripts = [
   input + 'js/_app.js',
+  input + 'js/vendor/**/*.js',
   input + 'js/src/**/*.js',
   input + 'js/shift.js'
 ];
