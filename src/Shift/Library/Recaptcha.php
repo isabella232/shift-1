@@ -50,7 +50,10 @@ class Recaptcha
             'remoteip' => $ip
         ];
 
-        return $this->request($this->url, $arguments);
+        $request = $this->request($this->url, $arguments);
+        $response = $this->parse($request);
+
+        return $response['success'];
     }
 
     /**
@@ -73,5 +76,16 @@ class Recaptcha
         curl_close($ch);
 
         return $response;
+    }
+
+    /**
+     * Parse a request response.
+     *
+     * @param string $request
+     * @return mixed
+     */
+    protected function parse($request)
+    {
+        return json_decode($request, true);
     }
 }
