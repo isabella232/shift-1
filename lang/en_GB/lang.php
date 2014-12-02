@@ -10,4 +10,10 @@ return [
         'colour'   => 'colour',
     ],
 
+    'custom' => [
+        'recaptcha' => [
+
+        ]
+    ]
+
 ];

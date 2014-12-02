@@ -91,7 +91,7 @@ class ShiftServiceProvider extends ServiceProvider
 	 */
 	public function boot()
 	{
-		$this->package('tectonic/shift');
+		$this->package('tectonic/shift', 'shift');
 
 		$this->requireFiles($this->filesToBoot);
         $this->bootCommands();
@@ -115,7 +115,7 @@ class ShiftServiceProvider extends ServiceProvider
     public function registerRecaptcha()
     {
         $this->app->singleton('recaptcha', function($app) {
-            return new Recaptcha($app['config']->get('shift.recaptcha.keys.private'));
+            return new Recaptcha($app['config']->get('shift::recaptcha.keys.private'));
         });
     }
 

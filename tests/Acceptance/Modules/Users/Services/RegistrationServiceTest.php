@@ -3,6 +3,7 @@ namespace Tests\Acceptance\Modules\Users\Services;
 
 use App;
 use Mockery as m;
+use Recaptcha;
 use Tectonic\Shift\Modules\Users\Contracts\RegistrationObserverInterface;
 use Tectonic\Shift\Modules\Users\Contracts\UserRepositoryInterface;
 use Tectonic\Shift\Modules\Users\Services\RegistrationService;
@@ -22,6 +23,8 @@ class RegistrationServiceTest extends AcceptanceTestCase
     {
         $observer = m::spy(RegistrationObserverInterface::class);
 
+        Recaptcha::shouldReceive('check')->once()->andReturn(true);
+        
         $this->service->registerUser([
             'firstName' => 'Kirk',
             'lastName' => 'Bushell',
@@ -30,6 +33,7 @@ class RegistrationServiceTest extends AcceptanceTestCase
             'password_confirmation' => '123456',
             'g-recaptcha-response' => 'oiajsdlkjasdljksadf'
         ], $observer);
+
 
         $user = $this->userRepository->getAll()->first();
 
