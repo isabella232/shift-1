@@ -2,25 +2,30 @@
     <div class="container ng-scope">
     	<div class="island"></div>
 
-        @if ($errors->any())
-            <div validation-errors="">
-                <div class="alert-error sticky island">
-                    <ul class="validation-errors">
-                        @foreach ($errors->all() as $error)
-                            <li>{{$error}}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            </div>
-    	@endif
+        @include('shift::partials.errors.display')
 
     	<div class="row">
-    		<div class="column-half">
-    		    <!-- LOGIN FORM GOES HERE -->
+    		<div class="column-third">
+    		    <!-- Info box goes here... -->
+    		    <h1>3 easy steps</h1>
+                <div class="tips islet">
+                    <div class="tips-title"></div>
+                    <div class="tips-body tips-home">
+                        <ol>
+                            <li>Create your very own user login account.</li>
+                            <li>Choose your award category.</li>
+                            <li>Submit your entry.</li>
+                        </ol>
+                    </div>
+                </div>
     		</div>
 
-    		<div class="column-half">
+    		<div class="column-third">
                 @include('shift::users.register')
+    		</div>
+
+    		<div class="column-third">
+                @include('shift::authentication.login')
     		</div>
     	</div>
     </div>
