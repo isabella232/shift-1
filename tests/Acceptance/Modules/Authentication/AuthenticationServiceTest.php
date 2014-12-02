@@ -1,10 +1,11 @@
 <?php
 namespace Tests\Acceptance\Modules\Authentication;
 
-use Tectonic\Shift\Modules\Authentication\Contracts\AuthenticationResponderInterface;
+use App;
+use Mockery as m;
 use Tests\AcceptanceTestCase;
-use Illuminate\Support\Facades\App;
 use Tectonic\Shift\Modules\Authentication\Services\AuthenticationService;
+use Tectonic\Shift\Modules\Authentication\Contracts\AuthenticationResponderInterface;
 
 class AuthenticationServiceTest extends AcceptanceTestCase
 {
@@ -22,13 +23,28 @@ class AuthenticationServiceTest extends AcceptanceTestCase
 
         // Act
         $this->service->login([
-            'email' => 'email@address.dev',
-            'password' => '',               // Missing password, should cause validation failure.
+            'email'    => 'email@address.dev',
+            'password' => '',                  // Missing password, should cause validation failure.
             'remember' => false
         ], $observer);
 
-        // Assert
+        // Assert.
         $observer->shouldHaveReceived('onValidationFailure')->once();
     }
 
+    public function testAuthenticationFailureOnLogin()
+    {
+        // Arrange
+        $observer = m::spy(AuthenticationResponderInterface::class);
+
+        // Act (Incorrect email & password combination should cause authentication failure)
+        $this->service->login([
+            'email'    => 'email@address.dev',
+            'password' => 'password',
+            'remember' => false
+        ], $observer);
+
+        // Assert.
+        $observer->shouldHaveReceived('onAuthenticationFailure')->once();
+    }
 }

@@ -37,6 +37,8 @@ class RegisterUserCommandHandler implements CommandHandlerInterface
      * Handle the command.
      *
      * @param $command
+     *
+     * @return \Tectonic\Shift\Modules\Users\Models\User
      */
     public function handle($command)
     {

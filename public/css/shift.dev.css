@@ -2640,6 +2640,9 @@ div#recaptcha_area #recaptcha_response_field {
 | Place any code that you are not proud of here. Document it well.
 | 
 */
+.tips-home {
+  margin-left: 80px; }
+
 .lt-ie11 .attachment-control .remove-button a {
   top: -5px; }
 
@@ -2667,4 +2670,4 @@ div#recaptcha_area #recaptcha_response_field {
   .lt-ie8 body #unsupported-browser, .lt-ie8 body #no-javascript {
     display: block; }
 
-/*# sourceMappingURL=0ed72b0a-8ca1-4280-93db-3a436fad0bce.scss.map */
+/*# sourceMappingURL=f14dce04-93be-4ef9-a848-c4f7e74075a4.scss.map */

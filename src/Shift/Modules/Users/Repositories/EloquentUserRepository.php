@@ -46,20 +46,7 @@ class EloquentUserRepository extends Repository implements UserRepositoryInterfa
         $user = $this->getQuery()->whereHas('accounts', function($query) use ($account) {
             $query->where('accounts.id', '=', $account->getId());
         })->whereEmail($email)->first();
-    }
 
-    /**
-     * Get user by email and account id
-     *
-     * @param string $email
-     * @param int    $accountId
-     *
-     * @return User
-     */
-    public function getByEmailAndAccountId($email, $accountId)
-    {
-        $user = $this->getQuery()->whereHas('accounts', function($query) use ($accountId) {
-            $query->where('accounts.id', '=', $accountId);
-        })->whereEmail($email)->first();
+        return $user;
     }
 }
