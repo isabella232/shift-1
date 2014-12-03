@@ -5,6 +5,7 @@ use App;
 use Tectonic\Shift\Commands\InstallCommand;
 use Tectonic\Shift\Library\Recaptcha;
 use Tectonic\Shift\Library\Router;
+use Tectonic\Shift\Library\Security\HoneyPot;
 use Tectonic\Shift\Library\ServiceProvider;
 
 class ShiftServiceProvider extends ServiceProvider
@@ -81,6 +82,7 @@ class ShiftServiceProvider extends ServiceProvider
         $this->registerRouter();
         $this->registerRecaptcha();
         $this->registerAuthorityConfiguration();
+        $this->registerHoneyPot();
 		$this->requireFiles($this->filesToRegister);
     }
 
@@ -108,6 +110,13 @@ class ShiftServiceProvider extends ServiceProvider
 			$user = $authority->getCurrentUser();
 		});
 	}
+
+    protected function registerHoneyPot()
+    {
+        $this->app->singleton(HoneyPot::class, function($app) {
+            return new HoneyPot($app['config']->get('shift::honeypot.api_key', ''));
+        });
+    }
 
     /**
      * Registers the recaptcha binding, and the facade/alias.

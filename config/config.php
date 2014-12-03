@@ -1,13 +1,20 @@
 <?php
 
 return [
-    // Url settings. If you want Shift located at something like /admin/, for example, put 'admin'
-    'url' => '',
+    // Emails required by the application
+    'emails' => [
+        'support' => '',
+    ],
+
+    // Honeypot api key configuration
+    'honeypot' => [
+        'api_key' => ''
+    ],
 
     // Language / localisation configuration settings
     'language' => [
-        'autoloads' => ['shift'],               // Modules/packages (bundles) to load language files for
-        'locales'   => ['en_GB'],               // Locales (language file translations) to pull in
+        'autoloads' => ['shift'],               // Packages to load language files for
+        'locales' => ['en_GB'],                 // Locales (language file translations) to pull in
     ],
 
     // The private and public keys for recaptcha usage
@@ -16,5 +23,8 @@ return [
             'private' => '',
             'public' => ''
         ]
-    ]
+    ],
+
+    // Url settings. If you want Shift located at something like /admin/, for example, put 'admin'
+    'url' => ''
 ];

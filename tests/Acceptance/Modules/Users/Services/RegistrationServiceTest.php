@@ -24,7 +24,7 @@ class RegistrationServiceTest extends AcceptanceTestCase
         $observer = m::spy(RegistrationObserverInterface::class);
 
         Recaptcha::shouldReceive('check')->once()->andReturn(true);
-        
+
         $this->service->registerUser([
             'firstName' => 'Kirk',
             'lastName' => 'Bushell',
