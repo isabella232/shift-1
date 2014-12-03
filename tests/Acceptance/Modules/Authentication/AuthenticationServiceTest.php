@@ -4,8 +4,10 @@ namespace Tests\Acceptance\Modules\Authentication;
 use App;
 use Hash;
 use Mockery as m;
-use Tectonic\Shift\Modules\Identity\Users\Contracts\UserRepositoryInterface;
 use Tests\AcceptanceTestCase;
+use Illuminate\Support\Facades\DB;
+use Tectonic\Shift\Modules\Accounts\Facades\CurrentAccount;
+use Tectonic\Shift\Modules\Identity\Users\Contracts\UserRepositoryInterface;
 use Tectonic\Shift\Modules\Authentication\Services\AuthenticationService;
 use Tectonic\Shift\Modules\Authentication\Contracts\AuthenticationResponderInterface;
 
@@ -39,7 +41,7 @@ class AuthenticationServiceTest extends AcceptanceTestCase
         // Arrange
         $observer = m::spy(AuthenticationResponderInterface::class);
 
-        // Act (Incorrect email & password combination should cause authentication failure)
+        // Act (Incorrect email & password combination should cause authentication failure. In this example no users exist)
         $this->service->login([
             'email'    => 'email@address.dev',
             'password' => 'password',
@@ -56,6 +58,48 @@ class AuthenticationServiceTest extends AcceptanceTestCase
         $observer = m::spy(AuthenticationResponderInterface::class);
 
         // Create a new user, that isn't associated with the current account.
+        $user = $this->createTempUser();
+
+        // Act (User not associated with current account, so it should cause a UserAccountAssociation exception)
+        $this->service->login([
+            'email'    => 'email@address.dev',
+            'password' => 'password',
+            'remember' => false
+        ], $observer);
+
+        // Assert.
+        $this->assertSame(1, (int)$user->id);
+
+        $observer->shouldHaveReceived('onUserAccountFailure')->once();
+    }
+
+    public function testOnSuccessfulLogin()
+    {
+        // Arrange
+        $observer = m::spy(AuthenticationResponderInterface::class);
+
+        // Create a new user.
+        $user = $this->createTempUser();
+
+        // Associate user with this account.
+        $currentAccount = CurrentAccount::get();
+        DB::table('account_user')->insert(['account_id' => $currentAccount->id, 'user_id' => $user->id]);
+
+        // Act (User not associated with current account, so it should cause a UserAccountAssociation exception)
+        $this->service->login([
+            'email'    => 'email@address.dev',
+            'password' => 'password',
+            'remember' => false
+        ], $observer);
+
+        // Assert.
+        $this->assertSame(1, (int)$user->id);
+
+        $observer->shouldHaveReceived('onSuccess')->once();
+    }
+
+    private function createTempUser()
+    {
         $userRepository = App::make(UserRepositoryInterface::class);
 
         $user = $userRepository->getNew();
@@ -63,22 +107,11 @@ class AuthenticationServiceTest extends AcceptanceTestCase
         $user->first_name = "Test";
         $user->last_name = "User";
         $user->email = "email@address.dev";
-        $user->password = Hash::make('password');
+        $user->password = 'password';
 
         $userRepository->save($user);
 
-        $tempUser = $userRepository->getByEmail($user->email);
-
-        // Act (Incorrect email & password combination should cause authentication failure)
-        /*$this->service->login([
-            'email'    => 'email@address.dev',
-            'password' => 'password',
-            'remember' => false
-        ], $observer);*/
-
-        // Assert.
-        $this->assertSame(1, (int)$tempUser->id);
-
-        //$observer->shouldHaveReceived('onAuthenticationFailure')->once();
+        return $userRepository->getByEmail($user->email);
     }
+
 }
