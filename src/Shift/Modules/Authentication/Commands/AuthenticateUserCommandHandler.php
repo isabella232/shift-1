@@ -4,14 +4,14 @@ namespace Tectonic\Shift\Modules\Authentication\Commands;
 use Illuminate\Auth\AuthManager;
 use Tectonic\Shift\Modules\Accounts\Facades\CurrentAccount;
 use Tectonic\Application\Commanding\CommandHandlerInterface;
-use Tectonic\Shift\Modules\Users\Contracts\UserRepositoryInterface;
+use Tectonic\Shift\Modules\Identity\Users\Contracts\UserRepositoryInterface;
 use Tectonic\Shift\Modules\Authentication\Exceptions\UserAccountAssociationException;
 use Tectonic\Shift\Modules\Authentication\Exceptions\InvalidAuthenticationCredentialsException;
 
 class AuthenticateUserCommandHandler implements CommandHandlerInterface
 {
     /**
-     * @var \Tectonic\Shift\Modules\Users\Contracts\UserRepositoryInterface
+     * @var \Tectonic\Shift\Modules\Identity\Users\Contracts\UserRepositoryInterface
      */
     protected $userRepo;
 
@@ -21,7 +21,7 @@ class AuthenticateUserCommandHandler implements CommandHandlerInterface
     protected $authenticate;
 
     /**
-     * @param \Tectonic\Shift\Modules\Users\Contracts\UserRepositoryInterface $userRepo
+     * @param \Tectonic\Shift\Modules\Identity\Users\Contracts\UserRepositoryInterface $userRepo
      * @param \Illuminate\Auth\AuthManager                                    $authenticate
      */
     public function __construct(UserRepositoryInterface $userRepo, AuthManager $authenticate)

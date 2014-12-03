@@ -1,5 +1,5 @@
 <?php
-namespace Tectonic\Shift\Modules\Users\Contracts;
+namespace Tectonic\Shift\Modules\Identity\Users\Contracts;
 
 use Tectonic\Shift\Modules\Accounts\Contracts\AccountInterface;
 

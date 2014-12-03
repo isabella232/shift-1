@@ -1,13 +1,13 @@
 <?php
-namespace Tectonic\Shift\Modules\Users\Commands;
+namespace Tectonic\Shift\Modules\Identity\Users\Commands;
 
 use CurrentAccount;
 use Tectonic\Application\Commanding\CommandHandlerInterface;
 use Tectonic\Application\Eventing\EventDispatcher;
 use Tectonic\Shift\Modules\Accounts\Models\Account;
 use Tectonic\Shift\Modules\Accounts\Services\CurrentAccountService;
-use Tectonic\Shift\Modules\Users\Contracts\UserRepositoryInterface;
-use Tectonic\Shift\Modules\Users\Models\User;
+use Tectonic\Shift\Modules\Identity\Users\Contracts\UserRepositoryInterface;
+use Tectonic\Shift\Modules\Identity\Users\Models\User;
 
 class RegisterUserCommandHandler implements CommandHandlerInterface
 {
@@ -38,7 +38,7 @@ class RegisterUserCommandHandler implements CommandHandlerInterface
      *
      * @param $command
      *
-     * @return \Tectonic\Shift\Modules\Users\Models\User
+     * @return \Tectonic\Shift\Modules\Identity\Users\Models\User
      */
     public function handle($command)
     {

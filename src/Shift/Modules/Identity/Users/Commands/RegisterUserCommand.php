@@ -1,5 +1,5 @@
 <?php
-namespace Tectonic\Shift\Modules\Users\Commands;
+namespace Tectonic\Shift\Modules\Identity\Users\Commands;
 
 use Tectonic\Application\Commanding\Command;
 

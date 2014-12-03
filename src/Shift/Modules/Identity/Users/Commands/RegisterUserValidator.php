@@ -1,9 +1,9 @@
 <?php
-namespace Tectonic\Shift\Modules\Users\Commands;
+namespace Tectonic\Shift\Modules\Identity\Users\Commands;
 
 use Tectonic\Application\Validation\Validator;
 use Tectonic\Shift\Modules\Accounts\Services\CurrentAccountService;
-use Tectonic\Shift\Modules\Users\Contracts\UserRepositoryInterface;
+use Tectonic\Shift\Modules\Identity\Users\Contracts\UserRepositoryInterface;
 
 class RegisterUserValidator extends Validator
 {

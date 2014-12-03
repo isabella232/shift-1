@@ -1,8 +1,8 @@
 <?php
-namespace Tectonic\Shift\Modules\Users\Commands;
+namespace Tectonic\Shift\Modules\Identity\Users\Commands;
 
 use Tectonic\Application\Commanding\Command;
-use Tectonic\Shift\Modules\Users\Models\User;
+use Tectonic\Shift\Modules\Identity\Users\Models\User;
 
 class SendRegistrationEmailCommand extends Command
 {

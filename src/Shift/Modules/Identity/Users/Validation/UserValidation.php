@@ -1,6 +1,6 @@
 <?php
 
-namespace Tectonic\Shift\Modules\Users\Validation;
+namespace Tectonic\Shift\Modules\Identity\Users\Validation;
 
 use Tectonic\Shift\Library\Validation\Validation;
 

@@ -9,7 +9,7 @@ use Tectonic\Shift\Library\Support\Database\Eloquent\TranslatableModel;
 use Tectonic\Shift\Modules\Accounts\Events\AccountWasInstalled;
 use Tectonic\Shift\Modules\Accounts\Events\OwnerWasChanged;
 use Tectonic\Shift\Modules\Localisation\Languages\Language;
-use Tectonic\Shift\Modules\Users\Models\User;
+use Tectonic\Shift\Modules\Identity\Users\Models\User;
 
 class Account extends Model
 {

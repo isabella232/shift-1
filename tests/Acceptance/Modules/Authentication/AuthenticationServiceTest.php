@@ -4,7 +4,7 @@ namespace Tests\Acceptance\Modules\Authentication;
 use App;
 use Hash;
 use Mockery as m;
-use Tectonic\Shift\Modules\Users\Contracts\UserRepositoryInterface;
+use Tectonic\Shift\Modules\Identity\Users\Contracts\UserRepositoryInterface;
 use Tests\AcceptanceTestCase;
 use Tectonic\Shift\Modules\Authentication\Services\AuthenticationService;
 use Tectonic\Shift\Modules\Authentication\Contracts\AuthenticationResponderInterface;

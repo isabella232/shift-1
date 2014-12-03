@@ -1,7 +1,7 @@
 <?php
 namespace Tectonic\Shift\Modules\Accounts\Contracts;
 
-use Tectonic\Shift\Modules\Users\Contracts\UserInterface;
+use Tectonic\Shift\Modules\Identity\Users\Contracts\UserInterface;
 
 /**
  * Interface AccountInterface

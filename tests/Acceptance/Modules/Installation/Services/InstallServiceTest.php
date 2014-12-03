@@ -9,7 +9,7 @@ use Tectonic\Shift\Modules\Accounts\Contracts\DomainRepositoryInterface;
 use Tectonic\Shift\Modules\Accounts\Contracts\SupportedLanguageRepositoryInterface;
 use Tectonic\Shift\Modules\Installation\Services\InstallService;
 use Tectonic\Shift\Modules\Localisation\Contracts\LanguageRepositoryInterface;
-use Tectonic\Shift\Modules\Users\Contracts\UserRepositoryInterface;
+use Tectonic\Shift\Modules\Identity\Users\Contracts\UserRepositoryInterface;
 use Tests\AcceptanceTestCase;
 use Tests\Stubs\InstallationResponder;
 

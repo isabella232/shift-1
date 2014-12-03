@@ -1,8 +1,8 @@
 <?php
-namespace Tectonic\Shift\Modules\Users\Commands;
+namespace Tectonic\Shift\Modules\Identity\Users\Commands;
 
 use Tectonic\Application\Commanding\CommandHandlerInterface;
-use Tectonic\Shift\Modules\Users\Contracts\UserRepositoryInterface;
+use Tectonic\Shift\Modules\Identity\Users\Contracts\UserRepositoryInterface;
 
 class SendRegistrationEmailCommandHandler implements CommandHandlerInterface
 {

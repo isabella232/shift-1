@@ -1,7 +1,7 @@
 <?php
 
 use Tectonic\Shift\Modules\Accounts\Services\CurrentAccountService;
-use Tectonic\Shift\Modules\Users\Contracts\UserRepositoryInterface;
+use Tectonic\Shift\Modules\Identity\Users\Contracts\UserRepositoryInterface;
 
 /**
  * A collection of additional validators for global use.

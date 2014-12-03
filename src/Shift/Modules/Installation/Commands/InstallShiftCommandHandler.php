@@ -6,8 +6,8 @@ use Tectonic\Application\Eventing\EventDispatcher;
 use Tectonic\Shift\Modules\Accounts\Contracts\AccountRepositoryInterface;
 use Tectonic\Shift\Modules\Accounts\Models\Account;
 use Tectonic\Shift\Modules\Localisation\Contracts\LanguageRepositoryInterface;
-use Tectonic\Shift\Modules\Users\Contracts\UserRepositoryInterface;
-use Tectonic\Shift\Modules\Users\Models\User;
+use Tectonic\Shift\Modules\Identity\Users\Contracts\UserRepositoryInterface;
+use Tectonic\Shift\Modules\Identity\Users\Models\User;
 
 class InstallShiftCommandHandler implements CommandHandlerInterface
 {

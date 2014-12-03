@@ -1,11 +1,11 @@
 <?php
-namespace Tectonic\Shift\Modules\Users\Services;
+namespace Tectonic\Shift\Modules\Identity\Users\Services;
 
 use Tectonic\Application\Validation\ValidationCommandBus;
 use Tectonic\Application\Validation\ValidationException;
-use Tectonic\Shift\Modules\Users\Commands\RegisterUserCommand;
-use Tectonic\Shift\Modules\Users\Contracts\RegistrationObserverInterface;
-use Tectonic\Shift\Modules\Users\Contracts\UserRepositoryInterface;
+use Tectonic\Shift\Modules\Identity\Users\Commands\RegisterUserCommand;
+use Tectonic\Shift\Modules\Identity\Users\Contracts\RegistrationObserverInterface;
+use Tectonic\Shift\Modules\Identity\Users\Contracts\UserRepositoryInterface;
 
 class RegistrationService
 {

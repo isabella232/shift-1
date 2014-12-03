@@ -2,7 +2,7 @@
 namespace Tectonic\Shift\Modules\Accounts\Contracts;
 
 use Tectonic\Shift\Library\Support\Database\RepositoryInterface;
-use Tectonic\Shift\Modules\Users\Contracts\UserInterface;
+use Tectonic\Shift\Modules\Identity\Users\Contracts\UserInterface;
 
 interface AccountRepositoryInterface extends RepositoryInterface
 {

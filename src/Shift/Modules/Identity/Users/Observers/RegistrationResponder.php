@@ -1,12 +1,12 @@
 <?php
-namespace Tectonic\Shift\Modules\Users\Observers;
+namespace Tectonic\Shift\Modules\Identity\Users\Observers;
 
 use Redirect;
 use Tectonic\Application\Validation\ValidationException;
 use Tectonic\Shift\Controllers\HomeController;
 use Tectonic\Shift\Library\Traits\Respondable;
-use Tectonic\Shift\Modules\Users\Contracts\RegistrationObserverInterface;
-use Tectonic\Shift\Modules\Users\Models\User;
+use Tectonic\Shift\Modules\Identity\Users\Contracts\RegistrationObserverInterface;
+use Tectonic\Shift\Modules\Identity\Users\Models\User;
 
 /**
  * Class RegistrationResponder
@@ -14,7 +14,7 @@ use Tectonic\Shift\Modules\Users\Models\User;
  * This registration listener manages the responses to be sent back to the browser when
  * a given registration request is either successful or fails.
  *
- * @package Tectonic\Shift\Modules\Users\Observers
+ * @package Tectonic\Shift\Modules\Identity\Users\Observers
  */
 class RegistrationResponder implements RegistrationObserverInterface
 {

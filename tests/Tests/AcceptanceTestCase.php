@@ -53,7 +53,7 @@ class AcceptanceTestCase extends TestCase
             'database' => ':memory:',
             'prefix'   => ''
         ));
-        $app['config']->set('auth.model', '\Tectonic\Shift\Modules\Users\Models\User');
+        $app['config']->set('auth.model', '\Tectonic\Shift\Modules\Identity\Users\Models\User');
     }
 
     /**

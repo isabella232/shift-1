@@ -1,9 +1,9 @@
 <?php
-namespace Tectonic\Shift\Modules\Users\Repositories;
+namespace Tectonic\Shift\Modules\Identity\Users\Repositories;
 
 use Tectonic\Shift\Library\Support\Database\Eloquent\Repository;
-use Tectonic\Shift\Modules\Users\Contracts\UserRepositoryInterface;
-use Tectonic\Shift\Modules\Users\Models\User;
+use Tectonic\Shift\Modules\Identity\Users\Contracts\UserRepositoryInterface;
+use Tectonic\Shift\Modules\Identity\Users\Models\User;
 
 class EloquentUserRepository extends Repository implements UserRepositoryInterface
 {

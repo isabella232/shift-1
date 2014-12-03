@@ -6,7 +6,7 @@ use Tectonic\Shift\Modules\Accounts\Contracts\AccountInterface;
 use Tectonic\Shift\Modules\Accounts\Contracts\AccountRepositoryInterface;
 use Tectonic\Shift\Modules\Accounts\Models\Account;
 use Tectonic\Shift\Library\Support\Database\Eloquent\Repository;
-use Tectonic\Shift\Modules\Users\Contracts\UserInterface;
+use Tectonic\Shift\Modules\Identity\Users\Contracts\UserInterface;
 
 class EloquentAccountRepository extends Repository implements AccountRepositoryInterface
 {

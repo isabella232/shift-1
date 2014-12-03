@@ -1,8 +1,8 @@
 <?php
-namespace Tectonic\Shift\Modules\Users\Contracts;
+namespace Tectonic\Shift\Modules\Identity\Users\Contracts;
 
 use Tectonic\Application\Validation\ValidationException;
-use Tectonic\Shift\Modules\Users\Models\User;
+use Tectonic\Shift\Modules\Identity\Users\Models\User;
 
 interface RegistrationObserverInterface
 {

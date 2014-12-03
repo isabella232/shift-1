@@ -6,9 +6,9 @@ use Mockery as m;
 use Tectonic\Application\Eventing\EventDispatcher;
 use Tectonic\Shift\Modules\Accounts\Models\Account;
 use Tectonic\Shift\Modules\Accounts\Services\CurrentAccountService;
-use Tectonic\Shift\Modules\Users\Commands\RegisterUserCommand;
-use Tectonic\Shift\Modules\Users\Commands\RegisterUserCommandHandler;
-use Tectonic\Shift\Modules\Users\Contracts\UserRepositoryInterface;
+use Tectonic\Shift\Modules\Identity\Users\Commands\RegisterUserCommand;
+use Tectonic\Shift\Modules\Identity\Users\Commands\RegisterUserCommandHandler;
+use Tectonic\Shift\Modules\Identity\Users\Contracts\UserRepositoryInterface;
 use Tests\UnitTestCase;
 
 class RegisterUserCommandHandlerTest extends UnitTestCase

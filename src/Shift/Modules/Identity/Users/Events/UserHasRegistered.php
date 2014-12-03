@@ -1,19 +1,18 @@
 <?php
-namespace Tectonic\Shift\Modules\Users\Events;
+namespace Tectonic\Shift\Modules\Identity\Users\Events;
 
 use Tectonic\Application\Eventing\Event;
-use Tectonic\Shift\Modules\Users\Models\User;
+use Tectonic\Shift\Modules\Identity\Users\Models\User;
 
-class AdminUserWasCreated extends Event
+class UserHasRegistered extends Event
 {
     /**
      * @var User
      */
-    private $user;
+    public $user;
 
     public function __construct(User $user)
     {
         $this->user = $user;
     }
 }
- 

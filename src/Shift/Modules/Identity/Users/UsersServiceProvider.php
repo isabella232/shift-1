@@ -1,10 +1,10 @@
 <?php
-namespace Tectonic\Shift\Modules\Users;
+namespace Tectonic\Shift\Modules\Identity\Users;
 
 use Tectonic\Shift\Library\ServiceProvider;
-use Tectonic\Shift\Modules\Users\Contracts\UserRepositoryInterface;
-use Tectonic\Shift\Modules\Users\Listeners\NotificationListener;
-use Tectonic\Shift\Modules\Users\Repositories\EloquentUserRepository;
+use Tectonic\Shift\Modules\Identity\Users\Contracts\UserRepositoryInterface;
+use Tectonic\Shift\Modules\Identity\Users\Listeners\NotificationListener;
+use Tectonic\Shift\Modules\Identity\Users\Repositories\EloquentUserRepository;
 
 class UsersServiceProvider extends ServiceProvider
 {
@@ -23,6 +23,6 @@ class UsersServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listeners = [
-        'Tectonic.Shift.Modules.Users.Events.UserHasRegistered' => NotificationListener::class
+        'Tectonic.Shift.Modules.Identity.Users.Events.UserHasRegistered' => NotificationListener::class
     ];
 }

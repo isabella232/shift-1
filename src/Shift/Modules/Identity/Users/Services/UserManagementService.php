@@ -1,17 +1,17 @@
 <?php
 
-namespace Tectonic\Shift\Modules\Users\Services;
+namespace Tectonic\Shift\Modules\Identity\Users\Services;
 
 use Tectonic\Shift\Library\Support\ManagementService;
-use Tectonic\Shift\Modules\Users\Contracts\UserRepositoryInterface;
-use Tectonic\Shift\Modules\Users\Validation\UserValidation;
+use Tectonic\Shift\Modules\Identity\Users\Contracts\UserRepositoryInterface;
+use Tectonic\Shift\Modules\Identity\Users\Validation\UserValidation;
 
 /**
  * Class UserManagementService
  *
  * Class to manage the normal crud operations for users.
  *
- * @package Tectonic\Shift\Modules\Users\Services
+ * @package Tectonic\Shift\Modules\Identity\Users\Services
  */
 class UserManagementService extends ManagementService
 {

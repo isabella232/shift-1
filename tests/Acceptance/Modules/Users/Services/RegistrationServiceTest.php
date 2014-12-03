@@ -4,9 +4,9 @@ namespace Tests\Acceptance\Modules\Users\Services;
 use App;
 use Mockery as m;
 use Recaptcha;
-use Tectonic\Shift\Modules\Users\Contracts\RegistrationObserverInterface;
-use Tectonic\Shift\Modules\Users\Contracts\UserRepositoryInterface;
-use Tectonic\Shift\Modules\Users\Services\RegistrationService;
+use Tectonic\Shift\Modules\Identity\Users\Contracts\RegistrationObserverInterface;
+use Tectonic\Shift\Modules\Identity\Users\Contracts\UserRepositoryInterface;
+use Tectonic\Shift\Modules\Identity\Users\Services\RegistrationService;
 use Tests\AcceptanceTestCase;
 
 class RegistrationServiceTest extends AcceptanceTestCase
@@ -33,7 +33,6 @@ class RegistrationServiceTest extends AcceptanceTestCase
             'password_confirmation' => '123456',
             'g-recaptcha-response' => 'oiajsdlkjasdljksadf'
         ], $observer);
-
 
         $user = $this->userRepository->getAll()->first();
 

@@ -1,16 +1,16 @@
 <?php
-namespace Tectonic\Shift\Modules\Users\Models;
+namespace Tectonic\Shift\Modules\Identity\Users\Models;
 
 use Illuminate\Auth\UserInterface as AuthUserInterface;
 use Tectonic\Application\Eventing\EventGenerator;
 use Tectonic\Shift\Modules\Accounts\Contracts\AccountInterface;
 use Tectonic\Shift\Modules\Accounts\Models\Account;
-use Tectonic\Shift\Modules\Users\Contracts\UserInterface;
+use Tectonic\Shift\Modules\Identity\Users\Contracts\UserInterface;
 use Illuminate\Auth\Reminders\RemindableInterface;
 use Tectonic\Shift\Library\Support\Database\Eloquent\Model;
-use Tectonic\Shift\Modules\Users\Events\AdminUserWasCreated;
-use Tectonic\Shift\Modules\Users\Events\UserHasRegistered;
-use Tectonic\Shift\Modules\Users\Events\UserWasAdded;
+use Tectonic\Shift\Modules\Identity\Users\Events\AdminUserWasCreated;
+use Tectonic\Shift\Modules\Identity\Users\Events\UserHasRegistered;
+use Tectonic\Shift\Modules\Identity\Users\Events\UserWasAdded;
 
 class User extends Model implements AuthUserInterface, RemindableInterface
 {

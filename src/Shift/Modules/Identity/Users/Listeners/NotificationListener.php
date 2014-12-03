@@ -1,11 +1,11 @@
 <?php
-namespace Tectonic\Shift\Modules\Users\Listeners;
+namespace Tectonic\Shift\Modules\Identity\Users\Listeners;
 
 use Tectonic\Application\Commanding\DefaultCommandBus;
 use Tectonic\Application\Eventing\EventListener;
-use Tectonic\Shift\Modules\Users\Commands\SendRegistrationEmailCommand;
-use Tectonic\Shift\Modules\Users\Contracts\UserRepositoryInterface;
-use Tectonic\Shift\Modules\Users\Events\UserHasRegistered;
+use Tectonic\Shift\Modules\Identity\Users\Commands\SendRegistrationEmailCommand;
+use Tectonic\Shift\Modules\Identity\Users\Contracts\UserRepositoryInterface;
+use Tectonic\Shift\Modules\Identity\Users\Events\UserHasRegistered;
 
 class NotificationListener extends EventListener
 {
