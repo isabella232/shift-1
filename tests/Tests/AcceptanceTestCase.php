@@ -53,6 +53,7 @@ class AcceptanceTestCase extends TestCase
             'database' => ':memory:',
             'prefix'   => ''
         ));
+        $app['config']->set('auth.model', '\Tectonic\Shift\Modules\Users\Models\User');
     }
 
     /**
@@ -84,7 +85,7 @@ class AcceptanceTestCase extends TestCase
     }
 
     /**
-     * Configures the databas for the default account.
+     * Configures the database for the default account.
      */
     public function setupAccount()
     {

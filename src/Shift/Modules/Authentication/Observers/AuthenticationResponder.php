@@ -4,8 +4,8 @@ namespace Tectonic\Shift\Modules\Authentication\Observers;
 use Illuminate\Auth\UserInterface;
 use Illuminate\Support\MessageBag;
 use Illuminate\Support\Facades\Redirect;
+use Tectonic\Shift\Controllers\HomeController;
 use Tectonic\Shift\Library\Traits\Respondable;
-use Tectonic\Shift\Controllers\AuthenticationController;
 use Tectonic\Application\Validation\ValidationException;
 use Tectonic\Shift\Modules\Authentication\Contracts\AuthenticationResponderInterface;
 use Tectonic\Shift\Modules\Authentication\Exceptions\UserAccountAssociationException;
@@ -45,7 +45,7 @@ class AuthenticationResponder implements AuthenticationResponderInterface
      */
     public function onValidationFailure(ValidationException $e)
     {
-        return Redirect::action(AuthenticationController::class.'@form')
+        return Redirect::action(HomeController::class.'@index')
             ->withInput()
             ->withErrors($e->getValidationErrors());
     }
@@ -61,7 +61,7 @@ class AuthenticationResponder implements AuthenticationResponderInterface
     {
         $messageBag = new MessageBag([$e->getMessage()]);
 
-        return Redirect::action(AuthenticationController::class.'@form')
+        return Redirect::action(HomeController::class.'@index')
             ->withInput()
             ->withErrors($messageBag);
     }
@@ -77,7 +77,7 @@ class AuthenticationResponder implements AuthenticationResponderInterface
     {
         $messageBag = new MessageBag([$e->getMessage()]);
 
-        return Redirect::action(AuthenticationController::class.'@form')
+        return Redirect::action(HomeController::class.'@index')
             ->withInput()
             ->withErrors($messageBag);
     }}

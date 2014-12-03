@@ -37,9 +37,8 @@ class Recaptcha
     /**
      * Wrapper method for recaptcha_check_answer.
      *
-     * @param string $key
      * @param string $ip
-     * @param string $value
+     * @param string $response
      * @return \ReCaptchaResponse
      */
     public function check($ip, $response)
@@ -60,7 +59,9 @@ class Recaptcha
      * Execute a request against the url.
      *
      * @param string $url
-     * @param array $params
+     * @param array  $params
+     *
+     * @return mixed
      */
     public function request($url, array $params = [])
     {
