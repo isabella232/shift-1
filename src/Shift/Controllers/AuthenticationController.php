@@ -1,12 +1,12 @@
 <?php
 namespace Tectonic\Shift\Controllers;
 
-use Input;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
 use Tectonic\Shift\Library\Support\Controller;
-use Tectonic\Shift\Modules\Authentication\Observers\AuthenticationResponder;
 use Tectonic\Shift\Modules\Authentication\Observers\LogoutResponder;
 use Tectonic\Shift\Modules\Authentication\Services\AuthenticationService;
+use Tectonic\Shift\Modules\Authentication\Observers\AuthenticationResponder;
 
 class AuthenticationController extends Controller
 {

@@ -2,7 +2,6 @@
 namespace Tests\Acceptance\Modules\Authentication;
 
 use App;
-use Hash;
 use Mockery as m;
 use Tests\AcceptanceTestCase;
 use Illuminate\Support\Facades\DB;

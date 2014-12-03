@@ -33,7 +33,7 @@ class AuthenticationResponder implements AuthenticationResponderInterface
      */
     public function onSuccess(UserInterface $user)
     {
-        return Redirect::action(HomeController::class.'@user');
+        return Redirect::action(UserController::class.'@profile');
     }
 
     /**
