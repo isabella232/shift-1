@@ -1,12 +1,12 @@
 <?php
 namespace Tectonic\Shift\Controllers;
 
-use Input;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
 use Tectonic\Shift\Library\Support\Controller;
-use Tectonic\Shift\Modules\Authentication\Observers\AuthenticationResponder;
 use Tectonic\Shift\Modules\Authentication\Observers\LogoutResponder;
 use Tectonic\Shift\Modules\Authentication\Services\AuthenticationService;
+use Tectonic\Shift\Modules\Authentication\Observers\AuthenticationResponder;
 
 class AuthenticationController extends Controller
 {
@@ -21,16 +21,6 @@ class AuthenticationController extends Controller
     public function __construct(AuthenticationService $authenticationService)
     {
         $this->authenticationService = $authenticationService;
-    }
-
-    /**
-     * Simple check to see whether or not a session is currently open.
-     *
-     * @return \Response
-     */
-    public function form()
-    {
-        $this->respond('shift::authentication.login');
     }
 
     /**

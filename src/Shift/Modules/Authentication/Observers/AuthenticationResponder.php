@@ -5,6 +5,7 @@ use Illuminate\Auth\UserInterface;
 use Illuminate\Support\MessageBag;
 use Illuminate\Support\Facades\Redirect;
 use Tectonic\Shift\Controllers\HomeController;
+use Tectonic\Shift\Controllers\UserController;
 use Tectonic\Shift\Library\Traits\Respondable;
 use Tectonic\Application\Validation\ValidationException;
 use Tectonic\Shift\Modules\Authentication\Contracts\AuthenticationResponderInterface;
@@ -33,7 +34,7 @@ class AuthenticationResponder implements AuthenticationResponderInterface
      */
     public function onSuccess(UserInterface $user)
     {
-        return Redirect::action(HomeController::class.'@user');
+        return Redirect::action(UserController::class.'@profile');
     }
 
     /**

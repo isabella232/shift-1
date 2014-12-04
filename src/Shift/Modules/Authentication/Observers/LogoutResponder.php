@@ -17,6 +17,6 @@ class LogoutResponder implements LogoutResponderInterface
      */
     public function onSuccess(UserInterface $user)
     {
-        return Redirect::to('/login');
+        return Redirect::action(HomeController::class.'@index');
     }
 }

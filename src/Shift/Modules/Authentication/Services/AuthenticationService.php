@@ -46,11 +46,11 @@ class AuthenticationService
 
             return $responder->onSuccess($authenticatedUser);
 
-        } catch(ValidationException $e) {
+        } catch (ValidationException $e) {
             return $responder->onValidationFailure($e);
-        } catch(InvalidAuthenticationCredentialsException $e) {
+        } catch (InvalidAuthenticationCredentialsException $e) {
             return $responder->onAuthenticationFailure($e);
-        } catch(UserAccountAssociationException $e) {
+        } catch (UserAccountAssociationException $e) {
             return $responder->onUserAccountFailure($e);
         }
     }
