@@ -1,6 +1,7 @@
 <?php
 namespace Tectonic\Shift\Modules\Identity\Users\Services;
 
+use Illuminate\Support\Facades\Auth;
 use Tectonic\Application\Validation\ValidationException;
 use Tectonic\Application\Validation\ValidationCommandBus;
 use Tectonic\Shift\Modules\Identity\Users\Commands\UpdateUserProfileCommand;
@@ -46,17 +47,16 @@ class UserProfileService
     /**
      * Update user profile information
      *
-     * @param                                                                               $user
      * @param array                                                                         $input
      * @param \Tectonic\Shift\Modules\Identity\Users\Contracts\UserProfileObserverInterface $responder
      *
      * @return mixed
      */
-    public function updateProfile($user, $input, UserProfileObserverInterface $responder)
+    public function updateProfile($input, UserProfileObserverInterface $responder)
     {
         try {
             $command = new UpdateUserProfileCommand(
-                $user, $input['firstName'], $input['lastName'], $input['email'], $input['password'], $input['passwordConfirmation']
+                Auth::user(), $input['firstName'], $input['lastName'], $input['email'], $input['password'], $input['passwordConfirmation']
             );
 
             $updatedUserProfile = $this->commandBus->execute($command);

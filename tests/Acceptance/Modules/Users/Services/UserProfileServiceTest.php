@@ -31,7 +31,8 @@ class UserProfileServiceTest extends AcceptanceTestCase
         ];
 
         // Act
-        $this->service->updateProfile($user, $testData, $observer);
+        $this->be($user); // Set logged in user
+        $this->service->updateProfile($testData, $observer);
 
         // Assert.
         $observer->shouldHaveReceived('onValidationFailure')->once();
@@ -54,7 +55,8 @@ class UserProfileServiceTest extends AcceptanceTestCase
         ];
 
         // Act
-        $this->service->updateProfile($user, $testData, $observer);
+        $this->be($user); // Set logged in user
+        $this->service->updateProfile($testData, $observer);
 
         // Assert.
         $observer->shouldHaveReceived('onSuccess')->once();
