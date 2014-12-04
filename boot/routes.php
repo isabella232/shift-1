@@ -13,6 +13,10 @@ Route::group(['prefix' => Config::get('shift.url', ''), 'namespace' => 'Tectonic
     Route::post('login', 'AuthenticationController@login');
     Route::get('logout', ['uses' => 'AuthenticationController@logout', 'before' => 'auth']);
 
+    // User profile routes
+    Route::get('profile', 'UserController@profile');
+    Route::post('profile', 'UserController@updateProfile');
+
     Route::collection('fields', 'FieldController');
     Route::collection('roles', 'RoleController');
     Route::collection('sessions', 'AuthenticationController');
