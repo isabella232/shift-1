@@ -28,4 +28,12 @@ class RoleController extends Controller
 
         return $this->respond('shift::roles.index', compact('roles'));
     }
+
+    /**
+     * Renders the form required for creating a new role.
+     */
+    public function getNew()
+    {
+        return $this->respond('shift::roles.form');
+    }
 }

@@ -20,7 +20,7 @@ class Router extends \Illuminate\Routing\Router
 	public function collection($path, $class, $options = [])
 	{
 		$defaults = [
-			'get'    => ['index', 'view'],
+			'get'    => ['index', 'new', 'view'],
 			'post'   => ['store'],
 			'put'    => ['update'],
 			'delete' => ['destroy']
@@ -41,6 +41,10 @@ class Router extends \Illuminate\Routing\Router
 				}
 			}
 		}
+
+        if (array_search('get.new', $routes) !== false) {
+            $this->get("{$path}/new", "{$class}@getNew");
+        }
 
 		if (array_search('get.view', $routes) !== false) {
 			$this->get("{$path}/{id}", "{$class}@getShow");

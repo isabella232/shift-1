@@ -1,21 +1,20 @@
 <?php namespace Tests\Unit\Library;
 
 use Mockery as m;
+use Tectonic\Shift\Library\Router;
 
 class RouterTest extends \Tests\UnitTestCase
 {
     private $router;
 
-    public function setUp()
+    public function init()
 	{
-        parent::setUp();
-
-		$this->router = m::mock('Tectonic\Shift\Library\Router')->makePartial();
+        $this->router = m::mock(Router::class)->makePartial();
 	}
 
 	public function testCallWithoutOptionsShouldCreateDefaultRoutes()
 	{
-		$this->router->shouldReceive('get')->twice();
+		$this->router->shouldReceive('get')->times(3);
 		$this->router->shouldReceive('delete')->twice();
 		$this->router->shouldReceive('put')->once();
 		$this->router->shouldReceive('post')->once();
@@ -25,6 +24,7 @@ class RouterTest extends \Tests\UnitTestCase
 
     public function testCompleteSetup()
     {
+        $this->router->shouldReceive('get')->once()->with('users/new', 'User@getNew');
         $this->router->shouldReceive('get')->once()->with('users/{id}', 'User@getShow');
         $this->router->shouldReceive('put')->once()->with('users/{id}', 'User@putUpdate');
         $this->router->shouldReceive('get')->once()->with('users', 'User@getIndex');
