@@ -29,7 +29,7 @@ class UserController extends Controller
     {
         $profile = $this->userProfileService->getUserProfile(Auth::user()->id);
 
-        $this->respond('shift::users.profile', ['profile' => $profile]);
+        $this->respond('shift::users.profile', compact('profile'));
     }
 
     /**
