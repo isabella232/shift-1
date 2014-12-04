@@ -9,7 +9,6 @@ Route::group(['prefix' => Config::get('shift.url', ''), 'namespace' => 'Tectonic
     Route::post('register', 'RegistrationController@register');
 
     // Authentication routes
-    Route::get('login', 'AuthenticationController@form');
     Route::post('login', 'AuthenticationController@login');
     Route::get('logout', ['uses' => 'AuthenticationController@logout', 'before' => 'auth']);
 

@@ -24,16 +24,6 @@ class AuthenticationController extends Controller
     }
 
     /**
-     * Simple check to see whether or not a session is currently open.
-     *
-     * @return \Response
-     */
-    public function form()
-    {
-        $this->respond('shift::authentication.login');
-    }
-
-    /**
      * Handle authentication
      */
     public function login()
