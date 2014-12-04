@@ -49,7 +49,7 @@ class ShiftServiceProvider extends ServiceProvider
         'Tectonic\Shift\Modules\Accounts\AccountsServiceProvider',
         'Tectonic\Shift\Modules\Configuration\ConfigurationServiceProvider',
         'Tectonic\Shift\Modules\Localisation\LocalisationServiceProvider',
-        'Tectonic\Shift\Modules\Security\SecurityServiceProvider',
+        'Tectonic\Shift\Modules\Identity\Roles\RolesServiceProvider',
         'Tectonic\Shift\Modules\Identity\Users\UsersServiceProvider',
         'Tectonic\Shift\Modules\Authentication\AuthenticationServiceProvider',
     ];

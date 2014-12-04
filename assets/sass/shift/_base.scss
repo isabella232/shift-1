@@ -81,7 +81,6 @@ body {
 	display: block;
 }
 
-
 // Breadcrumbs (Page heading).
 .page-heading {
 	background: $colour-breadcrumbs;
@@ -94,6 +93,24 @@ body {
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
+	}
+
+	.buttons {
+		.button {
+			float: right;
+
+			&.big {
+				margin-top: 13px;
+			}
+
+			&.small {
+				margin-top: 17px;
+			}
+
+			& > .button {
+				margin-left: 10px;
+			}
+		}
 	}
 }
 

@@ -1,10 +1,10 @@
 <?php
-namespace Tectonic\Shift\Modules\Security\Services;
+namespace Tectonic\Shift\Modules\Identity\Roles\Services;
 
-use Tectonic\Shift\Modules\Security\Contracts\PermissionRepositoryInterface;
-use Tectonic\Shift\Modules\Security\Contracts\RoleRepositoryInterface;
+use Tectonic\Shift\Modules\Identity\Roles\Contracts\RoleRepositoryInterface;
+use Tectonic\Shift\Modules\Identity\Users\Models\User;
 
-class RolePermissionService
+class PermissionsService
 {
     /**
      * @var RoleRepositoryInterface
@@ -105,6 +105,32 @@ class RolePermissionService
         $this->permissionRepository->save($permission);
 
         return $permission;
+    }
+
+    /**
+     * Determines whether a given user is allowed access based on an array of resources => required permissions.
+     *
+     * @param User $user
+     * @param array $permissions
+     */
+    public function allowed(User $user, $resource, $action)
+    {
+        $allowed = false;
+
+        foreach ($user->roles as $role) {
+            $rolePermitted = $role->can($action, $resource);
+
+            // Permission specifically denied
+            if (false === $rolePermitted) {
+                return false;
+            }
+
+            if (true === $rolePermitted) {
+                $allowed = true;
+            }
+        }
+
+        return $allowed;
     }
 }
  

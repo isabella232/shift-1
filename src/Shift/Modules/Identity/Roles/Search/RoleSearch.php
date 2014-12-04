@@ -1,12 +1,11 @@
 <?php
-
-namespace Tectonic\Shift\Modules\Security\Search;
+namespace Tectonic\Shift\Modules\Identity\Roles\Search;
 
 use Tectonic\Shift\Library\Search\SearchFilterCollection;
 use Tectonic\Shift\Library\Search\Filters\KeywordFilter;
 use Tectonic\Shift\Library\Search\Filters\OrderFilter;
 use Tectonic\Shift\Library\Search\SearchInterface;
-use Tectonic\Shift\Modules\Security\Contracts\RoleRepositoryInterface;
+use Tectonic\Shift\Modules\Identity\Roles\Contracts\RoleRepositoryInterface;
 
 class RoleSearch implements SearchInterface
 {
@@ -43,6 +42,6 @@ class RoleSearch implements SearchInterface
 
 		$filterCollection->add(OrderFilter::byInput($input));
 
-		return $this->roleRepository->getByCriteria($filterCollection);
+		return $this->roleRepository->getByFilters($filterCollection);
 	}
 }

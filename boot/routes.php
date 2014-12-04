@@ -17,10 +17,6 @@ Route::group(['prefix' => Config::get('shift.url', ''), 'namespace' => 'Tectonic
     Route::collection('roles', 'RoleController');
     Route::collection('sessions', 'AuthenticationController');
     Route::collection('users', 'UserController');
-    
-    Route::get('languages', 'LanguageController@getLanguages');
-    Route::post('languages', 'LanguageController@postLanguages');
-    Route::get('languages/supported', 'LanguageController@getSupportedLanguages');
 
     Route::group(['before' => 'shift.install'], function() {
         Route::get('install', 'InstallationController@getInstall');

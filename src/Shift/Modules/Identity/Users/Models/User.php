@@ -1,10 +1,12 @@
 <?php
 namespace Tectonic\Shift\Modules\Identity\Users\Models;
 
+use CurrentAccount;
 use Illuminate\Auth\UserInterface as AuthUserInterface;
 use Tectonic\Application\Eventing\EventGenerator;
 use Tectonic\Shift\Modules\Accounts\Contracts\AccountInterface;
 use Tectonic\Shift\Modules\Accounts\Models\Account;
+use Tectonic\Shift\Modules\Identity\Roles\Models\Role;
 use Tectonic\Shift\Modules\Identity\Users\Contracts\UserInterface;
 use Illuminate\Auth\Reminders\RemindableInterface;
 use Tectonic\Shift\Library\Support\Database\Eloquent\Model;
@@ -57,6 +59,16 @@ class User extends Model implements AuthUserInterface, RemindableInterface
     public function accounts()
     {
         return $this->belongsToMany(Account::class);
+    }
+
+    /**
+     * A user has many roles, but only for the current account that has been loaded.
+     *
+     * @return mixed
+     */
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class)->whereAccountId(CurrentAccount::get()->id);
     }
 
     /**

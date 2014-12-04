@@ -1,10 +1,14 @@
-@extends('layouts.application')
+<div class="page-heading">
+    <div class="container">
+        <div class="column-half">
+            @yield('breadcrumbs')
+        </div>
 
-@section('main')
-    <div class="page-heading">
-    	@yield('page-header')
+        <div class="column-half buttons">
+            @yield('buttons')
+        </div>
     </div>
+</div>
 
-    @yield('filters')
-    @yield('content')
-@stop
+@yield('filters')
+@yield('content')

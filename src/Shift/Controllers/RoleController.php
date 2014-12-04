@@ -1,22 +1,31 @@
 <?php
-
 namespace Tectonic\Shift\Controllers;
 
+use Input;
 use Tectonic\Shift\Library\Support\Controller;
-use Tectonic\Shift\Modules\Security\Services\RoleManagementService;
-use Tectonic\Shift\Modules\Security\Search\RoleSearch;
+use Tectonic\Shift\Modules\Identity\Roles\Search\RoleSearch;
 
 class RoleController extends Controller
 {
-	/**
-	 * Search class used for role search.
-	 *
-	 * @var string
-	 */
-	public $searchClass = RoleSearch::class;
+    /**
+     * @var RoleSearch
+     */
+    private $search;
 
-	public function __construct(RoleManagementService $roleManagementService)
+    public function __construct(RoleSearch $search)
 	{
-		$this->crudService = $roleManagementService;
-	}
+        $this->search = $search;
+    }
+
+    /**
+     * Retrieve a list of roles based on the search conditions provided.
+     *
+     * @return mixed
+     */
+    public function getIndex()
+    {
+        $roles = $this->search->fromInput(Input::get());
+
+        return $this->respond('shift::roles.index', compact('roles'));
+    }
 }

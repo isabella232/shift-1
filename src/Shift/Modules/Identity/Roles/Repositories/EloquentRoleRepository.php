@@ -1,17 +1,16 @@
 <?php
-namespace Tectonic\Shift\Modules\Security\Repositories;
+namespace Tectonic\Shift\Modules\Identity\Roles\Repositories;
 
-use App;
 use DB;
 use Tectonic\Shift\Library\Support\Database\Eloquent\Repository;
-use Tectonic\Shift\Modules\Security\Contracts\RoleRepositoryInterface;
-use Tectonic\Shift\Modules\Security\Models\Role;
+use Tectonic\Shift\Modules\Identity\Roles\Models\Role;
+use Tectonic\Shift\Modules\Identity\Roles\Contracts\RoleRepositoryInterface;
 
 class EloquentRoleRepository extends Repository implements RoleRepositoryInterface
 {
-    public function __construct(Role $role)
+    function __construct(Role $model)
     {
-        $this->model = $role;
+        $this->setModel($model);
     }
 
     /**
@@ -23,13 +22,13 @@ class EloquentRoleRepository extends Repository implements RoleRepositoryInterfa
      */
     public function getDefault()
     {
-	    $defaultRole = $this->getBy('default', true);
+        $defaultRole = $this->getBy('default', true);
 
-	    if (!$defaultRole->isEmpty()) {
-		    return $defaultRole->first();
-	    }
+        if (!$defaultRole->isEmpty()) {
+            return $defaultRole->first();
+        }
 
-	    return null;
+        return null;
     }
 
     /**
@@ -67,19 +66,19 @@ class EloquentRoleRepository extends Repository implements RoleRepositoryInterfa
         return DB::transaction($updateRoles);
     }
 
-	/**
-	 * Saves the resource provided to the database. If the role in this case is wishing to be set as the default
+    /**
+     * Saves the resource provided to the database. If the role in this case is wishing to be set as the default
      * role, then we'll save the role via the setDefault method and return this result.
-	 *
-	 * @param $resource
-	 * @return Resource
-	 */
-	public function save($resource)
-	{
-		if ($resource->default) {
-			return $this->setDefault($resource);
-		}
+     *
+     * @param $resource
+     * @return Resource
+     */
+    public function save($resource)
+    {
+        if ($resource->default) {
+            return $this->setDefault($resource);
+        }
 
-		return parent::save($resource);
-	}
+        return parent::save($resource);
+    }
 }

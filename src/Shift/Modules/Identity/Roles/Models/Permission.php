@@ -1,5 +1,5 @@
 <?php
-namespace Tectonic\Shift\Modules\Security\Models;
+namespace Tectonic\Shift\Modules\Identity\Roles\Models;
 
 class Permission
 {

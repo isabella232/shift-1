@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\Acceptance\Modules\Security\Repositories;
+namespace Tests\Acceptance\Modules\Identity\Roles\Repositories;
 
 use App;
-use Tectonic\Shift\Modules\Security\Repositories\EloquentRoleRepository;
+use Tectonic\Shift\Modules\Identity\Roles\Repositories\EloquentRoleRepository;
 use Tests\AcceptanceTestCase;
 
 class EloquentRoleRepositoryTest extends AcceptanceTestCase
