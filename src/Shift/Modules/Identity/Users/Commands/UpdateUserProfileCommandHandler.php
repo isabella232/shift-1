@@ -32,16 +32,15 @@ class UpdateUserProfileCommandHandler implements CommandHandlerInterface
         $updatedProfileData = [
             'firstName' => $command->firstName,
             'lastName'  => $command->lastName,
-            'email'      => $command->email
+            'email'     => $command->email
         ];
 
         // If a new password has been provided, update that too.
-        if(strlen($command->password) > 0) $updatedProfileData['password'] = $command->password;
+        if (strlen($command->password) > 0) {
+            $updatedProfileData['password'] = $command->password;
+        }
 
-        // Grab current user, updated profile details and return.
-        $user = $this->userRepo->getOneBy('id', $command->userId);
-        $user->update($updatedProfileData);
-
-        return $user;
+        // Update profile details and return.
+        return $this->userRepo->update($command->user, $updatedProfileData);
     }
 }

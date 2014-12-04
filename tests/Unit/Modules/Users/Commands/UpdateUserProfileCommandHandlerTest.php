@@ -14,13 +14,12 @@ class UpdateUserProfileCommandHandlerTest extends UnitTestCase
     {
         // Arrange
         $user           = m::mock(User::class);
-        $command        = new UpdateUserProfileCommand(1, 'Test', 'User', 'test@email.dev', 'password', 'password');
+        $command        = new UpdateUserProfileCommand($user, 'Test', 'User', 'test@email.dev', 'password', 'password');
         $userRepository = m::mock(UserRepositoryInterface::class);
         $commandHandler = new UpdateUserProfileCommandHandler($userRepository);
 
         // Ready Assertions
-        $userRepository->shouldReceive('getOneBy')->once()->andReturn($user);
-        $user->shouldReceive('update')->once();
+        $userRepository->shouldReceive('update')->once()->andReturn($user);
 
         // Act
         $this->assertNotNull($commandHandler->handle($command));

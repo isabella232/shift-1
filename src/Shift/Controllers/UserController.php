@@ -39,6 +39,6 @@ class UserController extends Controller
      */
     public function updateProfile()
     {
-        return $this->userProfileService->updateProfile(Auth::user()->id, Input::all(), new UserProfileResponder);
+        return $this->userProfileService->updateProfile(Auth::user(), Input::all(), new UserProfileResponder);
     }
 }

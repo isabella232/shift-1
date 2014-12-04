@@ -6,9 +6,9 @@ use Tectonic\Application\Commanding\Command;
 class UpdateUserProfileCommand extends Command
 {
     /**
-     * @var int
+     * @var
      */
-    public $userId;
+    public $user;
 
     /**
      * @var string
@@ -43,9 +43,9 @@ class UpdateUserProfileCommand extends Command
      * @param string $password
      * @param string $passwordConfirmation
      */
-    public function __construct($userId, $firstName, $lastName, $email, $password, $passwordConfirmation)
+    public function __construct($user, $firstName, $lastName, $email, $password, $passwordConfirmation)
     {
-        $this->userId = $userId;
+        $this->user = $user;
         $this->firstName = $firstName;
         $this->lastName = $lastName;
         $this->email = $email;

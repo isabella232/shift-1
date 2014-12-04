@@ -46,23 +46,23 @@ class UserProfileService
     /**
      * Update user profile information
      *
-     * @param int                                                                           $userId
+     * @param                                                                               $user
      * @param array                                                                         $input
      * @param \Tectonic\Shift\Modules\Identity\Users\Contracts\UserProfileObserverInterface $responder
      *
      * @return mixed
      */
-    public function updateProfile($userId, $input, UserProfileObserverInterface $responder)
+    public function updateProfile($user, $input, UserProfileObserverInterface $responder)
     {
         try {
             $command = new UpdateUserProfileCommand(
-                $userId, $input['firstName'], $input['lastName'], $input['email'], $input['password'], $input['passwordConfirmation']
+                $user, $input['firstName'], $input['lastName'], $input['email'], $input['password'], $input['passwordConfirmation']
             );
 
             $updatedUserProfile = $this->commandBus->execute($command);
 
             return $responder->onSuccess($updatedUserProfile);
-        } catch(ValidationException $e) {
+        } catch (ValidationException $e) {
             return $responder->onValidationFailure($e);
         }
     }

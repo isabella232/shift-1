@@ -13,8 +13,6 @@ class LogoutUserCommand extends Command
 
     /**
      * @param \Illuminate\Auth\UserInterface $user
-     *
-     * @internal param $
      */
     public function __construct(UserInterface $user)
     {

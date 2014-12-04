@@ -62,7 +62,7 @@ class AuthenticateUserCommandHandler implements CommandHandlerInterface
         $accountUser = $this->userRepo->getByEmailAndAccount($command->email, CurrentAccount::get());
 
         // If an account user is found, login and return user
-        if($accountUser)
+        if ($accountUser)
         {
             $this->authenticate->login($accountUser, $command->remember);
 
