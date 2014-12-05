@@ -1,9 +1,9 @@
 <?php
-namespace Tectonic\Shift\Modules\Security\Repositories;
+namespace Tectonic\Shift\Modules\Identity\Roles\Repositories;
 
 use Tectonic\Shift\Library\Support\Database\Eloquent\Repository;
-use Tectonic\Shift\Modules\Security\Contracts\PermissionRepositoryInterface;
-use Tectonic\Shift\Modules\Security\Models\Permission;
+use Tectonic\Shift\Modules\Identity\Roles\Contracts\PermissionRepositoryInterface;
+use Tectonic\Shift\Modules\Identity\Roles\Models\Permission;
 
 class EloquentPermissionRepository extends Repository implements PermissionRepositoryInterface
 {

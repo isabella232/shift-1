@@ -42,7 +42,7 @@
 }
 
 
-// Simple Button
+// Simple ButtonBuilder
 //************************************************************************//
 @mixin simple($base-color, $grayscale: false) {
 	$color:         hsl(0, 0, 100%);
@@ -107,7 +107,7 @@
 }
 
 
-// Shiny Button
+// Shiny ButtonBuilder
 //************************************************************************//
 @mixin shiny($base-color, $grayscale: false) {
 	$color:         hsl(0, 0, 100%);
@@ -180,7 +180,7 @@
 }
 
 
-// Pill Button
+// Pill ButtonBuilder
 //************************************************************************//
 @mixin pill($base-color, $grayscale: false) {
 	$color:         hsl(0, 0, 100%);

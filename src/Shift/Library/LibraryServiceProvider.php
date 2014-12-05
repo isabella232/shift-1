@@ -1,10 +1,15 @@
-<?php namespace Tectonic\Shift\Library;
+<?php
+namespace Tectonic\Shift\Library;
 
 use App;
 use Tectonic\Shift\Library\Support\AssetFactory;
 
 class LibraryServiceProvider extends ServiceProvider
 {
+    protected $serviceProviders = [
+        'Tectonic\Shift\Library\Html\HtmlServiceProvider',
+    ];
+
     /**
      * Register the service provider.
      *

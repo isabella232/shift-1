@@ -5,9 +5,7 @@
 @stop
 
 @section('buttons')
-    <a class="primary big button icon" href="{{ action('Tectonic\Shift\Controllers\RoleController@getNew') }}" permissions="create:Role" behaviour="hide" icon="plus">
-        <span class="icon icon-plus"></span><span>New role</span>
-    </a>
+    {{Button::link(action('Tectonic\Shift\Controllers\RoleController@getNew'), 'New role', ['icon' => 'plus'])}}
 @stop
 
 @section('filters')

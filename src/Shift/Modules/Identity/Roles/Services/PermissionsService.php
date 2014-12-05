@@ -1,6 +1,7 @@
 <?php
 namespace Tectonic\Shift\Modules\Identity\Roles\Services;
 
+use Tectonic\Shift\Modules\Identity\Roles\Contracts\PermissionRepositoryInterface;
 use Tectonic\Shift\Modules\Identity\Roles\Contracts\RoleRepositoryInterface;
 use Tectonic\Shift\Modules\Identity\Users\Models\User;
 
@@ -20,8 +21,10 @@ class PermissionsService
      * @param RoleRepositoryInterface $roleRepository
      * @param PermissionRepositoryInterface $permissionRepository
      */
-    public function __construct(RoleRepositoryInterface $roleRepository, PermissionRepositoryInterface $permissionRepository)
-    {
+    public function __construct(
+        RoleRepositoryInterface $roleRepository,
+        PermissionRepositoryInterface $permissionRepository
+    ) {
         $this->roleRepository = $roleRepository;
         $this->permissionRepository = $permissionRepository;
     }
@@ -36,6 +39,19 @@ class PermissionsService
     public function allow($role, $resource, $action)
     {
         return $this->updatePermission($role, $resource, $action, true);
+    }
+
+    /**
+     * Determines whether or not an authorised consumer has permission based on the required permissions.
+     *
+     * @param User $user
+     * @param array $permissions
+     */
+    public function allows(User $user, array $permissions = [])
+    {
+        foreach ($permissions as $resource => $action) {
+
+        }
     }
 
     /**
