@@ -27,6 +27,7 @@
 		"tectonic/laravel-localisation": "dev-master"
 	},
 	"require-dev": {
+		"league/factory-muffin": "~2.0",
 		"mockery/mockery": "dev-master@dev",
 		"orchestra/testbench": "2.2.*",
 		"phpunit/phpunit": "3.7.*"

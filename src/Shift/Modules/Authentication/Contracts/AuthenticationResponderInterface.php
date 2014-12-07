@@ -34,8 +34,6 @@ interface AuthenticationResponderInterface
      */
     public function onAuthenticationFailure(InvalidAuthenticationCredentialsException $e);
 
-
-
     /**
      * Called when a user-account association exception is thrown by the command handler.
      *
@@ -43,6 +41,4 @@ interface AuthenticationResponderInterface
      * @return mixed
      */
     public function onUserAccountFailure(UserAccountAssociationException $e);
-
-
 }

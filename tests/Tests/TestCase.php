@@ -7,13 +7,6 @@ use Mockery as m;
 
 class TestCase extends \Orchestra\Testbench\TestCase
 {
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->init();
-    }
-
     /**
      * Reset the test case to its base level test status, clearing mocks.
      */

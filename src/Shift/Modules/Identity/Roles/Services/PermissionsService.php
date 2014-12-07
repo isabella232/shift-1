@@ -42,19 +42,6 @@ class PermissionsService
     }
 
     /**
-     * Determines whether or not an authorised consumer has permission based on the required permissions.
-     *
-     * @param User $user
-     * @param array $permissions
-     */
-    public function allows(User $user, array $permissions = [])
-    {
-        foreach ($permissions as $resource => $action) {
-
-        }
-    }
-
-    /**
      * Deny access to a given resource.
      *
      * @param $role

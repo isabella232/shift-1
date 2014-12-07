@@ -16,4 +16,29 @@ class EloquentPermissionRepository extends Repository implements PermissionRepos
     {
         $this->model = $permission;
     }
+
+    /**
+     * Retrieves a specific permission by the role id, and if the resource or action
+     * params are provided, then will find a permissions record based on those as well.
+     *
+     * @param integer $roleId
+     * @param string $resource
+     * @param string $action
+     * @return mixed
+     */
+    public function getByRole($roleId, $resource = null, $action = null)
+    {
+        $query = $this->model->newQuery();
+        $query->whereRoleId($roleId);
+
+        if (!is_null($resource)) {
+            $query->whereResource($resource);
+        }
+
+        if (!is_null($action)) {
+            $query->whereAction($action);
+        }
+
+        return $query->get();
+    }
 }

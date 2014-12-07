@@ -1,6 +1,7 @@
 <?php
 namespace Tectonic\Shift\Library\Html;
 
+use Auth;
 use Illuminate\Html\HtmlBuilder;
 use Tectonic\Shift\Modules\Identity\Roles\Services\PermissionsService;
 use View;
@@ -44,10 +45,26 @@ class ButtonBuilder
             $iconClass = 'icon';
         }
 
-        if (isset($options['permissions']) && !$this->permissionsService->allows(Auth::user(), $options['permissions'])) {
-
+        if (!$this->permitted($options)) {
+            return;
         }
 
         return View::make('shift::html.buttons.link', compact('title', 'url', 'icon', 'iconClass', 'size', 'type'));
+    }
+
+    /**
+     * Determine whether or not the user is permitted to view the element. This is based on the permissions
+     * element of the array, the required permissions, and the resource/action we're checking against.
+     *
+     * @param array $options
+     * @return bool
+     */
+    protected function permitted(array $options)
+    {
+        if (isset($options['permissions'])) {
+            return $this->permissionsService->allows(Auth::user(), $options['permissions']);
+        }
+
+        return true;
     }
 }
