@@ -3,6 +3,7 @@ namespace Tectonic\Shift\Controllers;
 
 use Input;
 use Tectonic\Shift\Library\Support\Controller;
+use Tectonic\Shift\Modules\Identity\Roles\Models\Role;
 use Tectonic\Shift\Modules\Identity\Roles\Search\RoleSearch;
 
 class RoleController extends Controller
@@ -34,6 +35,8 @@ class RoleController extends Controller
      */
     public function getNew()
     {
-        return $this->respond('shift::roles.form');
+        $role = new Role;
+
+        return $this->respond('shift::roles.form', compact('role'));
     }
 }

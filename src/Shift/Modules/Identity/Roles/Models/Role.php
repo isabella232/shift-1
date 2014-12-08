@@ -7,8 +7,6 @@ use Tectonic\Shift\Modules\Identity\Users\Models\User;
 
 class Role extends Model
 {
-    public $fillable = ['name'];
-
     /**
      * Each role belongs to exactly one account.
      *

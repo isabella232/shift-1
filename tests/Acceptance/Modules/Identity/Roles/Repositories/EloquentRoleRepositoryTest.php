@@ -1,5 +1,4 @@
 <?php
-
 namespace Tests\Acceptance\Modules\Identity\Roles\Repositories;
 
 use App;
@@ -17,7 +16,7 @@ class EloquentRoleRepositoryTest extends AcceptanceTestCase
 
     public function testGetDefault()
     {
-        $role = $this->roleRepository->getNew(['name' => 'Role']);
+        $role = $this->roleRepository->getNew();
 
         $this->roleRepository->setDefault($role);
 
@@ -28,7 +27,7 @@ class EloquentRoleRepositoryTest extends AcceptanceTestCase
 
     public function testRetrievalViaPermission()
     {
-        $role = $this->roleRepository->getNew(['name' => 'Role via permissions']);
+        $role = $this->roleRepository->getNew();
         $this->roleRepository->save($role);
     }
 }

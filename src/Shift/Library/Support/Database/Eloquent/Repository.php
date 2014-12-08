@@ -110,14 +110,19 @@ abstract class Repository implements RepositoryInterface
      * Retrieve a collection of results based on the search filters provided.
      *
      * @param SearchFilterCollection $filterCollection
+     * @param boolean $paginate
      * @return mixed
      */
-    public function getByFilters(SearchFilterCollection $filterCollection)
+    public function getByFilters(SearchFilterCollection $filterCollection, $paginate = true)
     {
         $query = $this->getQuery();
 
         foreach ($filterCollection as $filter) {
             $filter->applyToEloquent($query);
+        }
+
+        if ($paginate) {
+            return $query->paginate();
         }
 
         return $query->get();

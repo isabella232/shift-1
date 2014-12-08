@@ -82,9 +82,10 @@ interface RepositoryInterface
      * Retrieve a collection of results based on the search filters provided.
      *
      * @param SearchFilterCollection $filterCollection
+     * @param boolean $paginate
      * @return mixed
      */
-    public function getByFilters(SearchFilterCollection $filterCollection);
+    public function getByFilters(SearchFilterCollection $filterCollection, $paginate = true);
 
     /**
      * Save 1-n resources.

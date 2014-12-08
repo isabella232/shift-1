@@ -1,5 +1,5 @@
 @section('main')
-    <div class="page-heading">
+    <div class="page-heading island">
         <div class="container">
             <div class="column-half">
                 @yield('breadcrumbs')

@@ -38,14 +38,14 @@ class ButtonBuilder
         $icon = '';
         $iconClass = '';
         $size = array_get($options, 'size', 'big');
-        $type = array_get($options, 'type', 'primary');
+        $type = array_get($options, 'type', '');
 
         if (isset($options['icon'])) {
             $icon = $options['icon'];
             $iconClass = 'icon';
         }
 
-        if (!$this->permitted($options)) {
+        if (isset($options['permissions']) && false === $this->permitted($options['permissions'])) {
             return;
         }
 
@@ -61,10 +61,6 @@ class ButtonBuilder
      */
     protected function permitted(array $options)
     {
-        if (isset($options['permissions'])) {
-            return $this->permissionsService->allows(Auth::user(), $options['permissions']);
-        }
-
-        return true;
+        return $this->permissionsService->permits($options['permissions']);
     }
 }
