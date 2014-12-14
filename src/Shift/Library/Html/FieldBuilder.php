@@ -62,6 +62,51 @@ class FieldBuilder
     }
 
     /**
+     * Generate a date field. This basically an alias for the text field
+     * (instead of a HTML5 date field), so browser compatibility isn't an issue.
+     *
+     * @param        $name
+     * @param string $value
+     * @param array  $options
+     *
+     * @return string
+     */
+    public function date($name, $value = '', $options = [])
+    {
+        return $this->text($name, $value, $options);
+    }
+
+    /**
+     * Generate a time field. This basically an alias for the text field
+     * (instead of a HTML5 time field), so browser compatibility isn't an issue.
+     *
+     * @param        $name
+     * @param string $value
+     * @param array  $options
+     *
+     * @return string
+     */
+    public function time($name, $value = '', $options = [])
+    {
+        return $this->text($name, $value, $options);
+    }
+
+    /**
+     * Generate a datetime field. This basically an alias for the text field
+     * (instead of a HTML5 datetime field), so browser compatibility isn't an issue.
+     *
+     * @param        $name
+     * @param string $value
+     * @param array  $options
+     *
+     * @return string
+     */
+    public function datetime($name, $value = '', $options = [])
+    {
+        return $this->text($name, $value, $options);
+    }
+
+    /**
      * Generate a checkbox input field
      *
      * @param string $name
@@ -77,4 +122,30 @@ class FieldBuilder
         return $this->formBuilder->checkbox($name, $value, $checked, $options);
     }
 
+    /**
+     * Generate a select field.
+     *
+     * @param        $name
+     * @param string $value
+     * @param array  $options
+     *
+     * @return string
+     */
+    public function select($name, $value = null, $options = [])
+    {
+        $select_options = [];
+
+        // Loop through, and pluck out the select box list options
+        // from the $options array, then remove the select options.
+        foreach($options as $key => $label)
+        {
+            if(is_array($label))
+            {
+                $select_options = $label;
+                unset($options[$key]);
+            }
+        }
+
+        return $this->formBuilder->select($name, $select_options, $value, $options);
+    }
 }

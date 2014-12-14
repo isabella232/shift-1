@@ -35,4 +35,43 @@ class FieldTest extends UnitTestCase
 
         $this->assertSame($field, $expected);
     }
+
+    public function testGeneratingCustomDateField()
+    {
+        $field = \Field::custom('date', 'testField', '2016-01-01', ['id' => 'testField', 'class' => 'control-field']);
+        $expected = '<input id="testField" class="control-field" name="testField" type="text" value="2016-01-01">';
+
+        $this->assertSame($field, $expected);
+    }
+
+    public function testGeneratingCustomTimeField()
+    {
+        $field = \Field::custom('time', 'testField', '22:19', ['id' => 'testField', 'class' => 'control-field']);
+        $expected = '<input id="testField" class="control-field" name="testField" type="text" value="22:19">';
+
+        $this->assertSame($field, $expected);
+    }
+
+    public function testGeneratingCustomDateTimeField()
+    {
+        $field = \Field::custom('datetime', 'testField', '2016-01-01 22:19', ['id' => 'testField', 'class' => 'control-field']);
+        $expected = '<input id="testField" class="control-field" name="testField" type="text" value="2016-01-01 22:19">';
+
+        $this->assertSame($field, $expected);
+    }
+
+    public function testGeneratingCustomSelectBoxField()
+    {
+        $options = ['1' => 'One', '2' => 'Two', '3' => 'Three'];
+
+        $field = \Field::custom('select', 'testField', "2", ['id' => 'testField', 'class' => 'control-field', $options]);
+
+        $expected =  '<select id="testField" class="control-field" name="testField">';
+        $expected .= '<option value="1">One</option>';
+        $expected .= '<option value="2" selected="selected">Two</option>';
+        $expected .= '<option value="3">Three</option>';
+        $expected .= '</select>';
+
+        $this->assertSame($field, $expected);
+    }
 }
