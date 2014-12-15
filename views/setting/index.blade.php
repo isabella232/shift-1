@@ -7,7 +7,7 @@
 
             <h1>Settings</h1>
 
-            {{ Form::open(['action' => 'Tectonic\Shift\Controllers\SettingController@update', 'novalidate' => 'novalidate', 'class' => 'vertical']) }}
+            {{ Form::open(['action' => 'Tectonic\Shift\Controllers\SettingController@update', 'class' => 'vertical']) }}
 
                 @foreach($registry as $key => $value)
                 <div class="row">
@@ -19,7 +19,7 @@
                                     {{ $setting['label'] }}
                                 </div>
                                 <div class="control-field">
-                                    {{ Field::custom($setting['type'], $setting['name'], Input::get($setting['name'], $settings[$setting['name']])) }}
+                                    {{ Field::custom($setting['type'], $setting['name'], Input::get($setting['name'], $settings[$setting['name']]), $setting['options']) }}
                                 </div>
                             </div>
                         @endforeach

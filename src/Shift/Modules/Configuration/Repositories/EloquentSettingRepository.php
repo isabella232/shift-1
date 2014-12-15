@@ -71,4 +71,29 @@ class EloquentSettingRepository extends Repository implements SettingRepositoryI
 
         return $formatted;
     }
+
+    /**
+     * Save all settings with updated values
+     *
+     * @param  $input
+     * @return void
+     */
+    public function saveSettings($input)
+    {
+        $settings = $this->getAll();
+
+        foreach($settings as $setting) {
+            // Because Laravel replace form element names containing a dot with and underscore, we need to do this.
+            $key = str_replace('.', '_', $setting->key);
+
+            // If array_key does not exist, it's because the setting is a check box field, and it's been unchecked.
+            $newValue = (array_key_exists($key, $input)) ? $input[$key] : '';
+
+            // Only update a settings value if it has changed.
+            if($setting->value !== $newValue) {
+                $setting->value = $newValue;
+                $setting->save();
+            }
+        }
+    }
 }

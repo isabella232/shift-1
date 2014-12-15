@@ -117,7 +117,7 @@ class FieldBuilder
      */
     public function checkbox($name, $value = null, $options = [])
     {
-        $checked = ($value == 1 || $value == true) ? true : null;
+        $checked = ($value === 1 || $value === "1" || $value === true) ? true : null;
 
         return $this->formBuilder->checkbox($name, 1, $checked, $options);
     }

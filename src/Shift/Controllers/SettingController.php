@@ -1,9 +1,9 @@
 <?php
 namespace Tectonic\Shift\Controllers;
 
-use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Redirect;
+use Input;
 use Tectonic\Shift\Library\Support\Controller;
-use Tectonic\Shift\Modules\Configuration\Models\Setting;
 use Tectonic\Shift\Modules\Configuration\Services\SettingsService;
 
 class SettingController extends Controller
@@ -21,10 +21,15 @@ class SettingController extends Controller
         $this->settingsService = $settingsService;
     }
 
+    /**
+     * Display editable settings.
+     *
+     * @return array
+     */
     public function index()
     {
-        // I'm thinking setting will be globally available at some point, so we might
-        // not need to include them here?
+        // I'm thinking settings will be globally available at some point, so we might
+        // not need to include them here permanently.
         $settings = $this->settingsService->getSettings();
 
         $registry = $this->settingsService->getRegisteredSettings();
@@ -32,9 +37,16 @@ class SettingController extends Controller
         return $this->respond('shift::setting.index', compact('settings', 'registry'));
     }
 
+    /**
+     * Update modified settings.
+     */
     public function update()
     {
-        dd(Input::get());
+        // TODO: Establish a method of validating settings?
+        // ...
 
+        $this->settingsService->update(Input::get());
+
+        return Redirect::action('Tectonic\Shift\Controllers\SettingController@index');
     }
 }
