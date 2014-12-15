@@ -13,8 +13,6 @@ use Tectonic\Shift\Library\Support\Database\RecordNotFoundException;
  */
 class EloquentSettingRepository extends Repository implements SettingRepositoryInterface
 {
-    private $settings = [];
-
     /**
      * @param Setting $setting
      */
@@ -64,10 +62,11 @@ class EloquentSettingRepository extends Repository implements SettingRepositoryI
     public function getAllAsKeyValue()
     {
         $settings = $this->getAll();
+
         $formatted = [];
 
         foreach ($settings as $s) {
-            $formatted[$s->setting] = $s->value;
+            $formatted[$s->key] = $s->value;
         }
 
         return $formatted;

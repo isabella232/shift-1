@@ -115,11 +115,11 @@ class FieldBuilder
      *
      * @return string
      */
-    public function checkbox($name, $value, $options = [])
+    public function checkbox($name, $value = null, $options = [])
     {
-        $checked = array_key_exists('checked', $options) ? $options['checked'] : null;
+        $checked = ($value == 1 || $value == true) ? true : null;
 
-        return $this->formBuilder->checkbox($name, $value, $checked, $options);
+        return $this->formBuilder->checkbox($name, 1, $checked, $options);
     }
 
     /**
@@ -147,5 +147,15 @@ class FieldBuilder
         }
 
         return $this->formBuilder->select($name, $select_options, $value, $options);
+    }
+
+    public function file()
+    {
+        // TODO: Generate file input field
+    }
+
+    public function multiselect()
+    {
+        // TODO: Generate multi-select field
     }
 }

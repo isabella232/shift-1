@@ -25,18 +25,12 @@ Route::group(['prefix' => Config::get('shift.url', ''), 'namespace' => 'Tectonic
         Route::get('install', 'InstallationController@getInstall');
         Route::post('install', 'InstallationController@postInstall');
     });
+
+    Route::get('settings', ['uses' => 'SettingController@index']);
+    Route::post('settings', ['uses' => 'SettingController@update']);
 });
 
 Route::filter('shift.account', 'Tectonic\Shift\Library\Filters\AccountFilter');
 Route::filter('shift.install', 'Tectonic\Shift\Library\Filters\InstallationFilter');
 
 Route::whenRegex('/^(?!install)/i', 'shift.account');
-
-Route::get('settings', function() {
-    \Tectonic\Shift\Modules\Configuration\Models\Setting::register('Group One', [
-        ['name' => 'app.site.name', 'text' => 'Site name', 'type' => 'text'],
-        ['name' => 'app.site.desc', 'text' => 'Site desc', 'type' => 'textarea'],
-    ]);
-
-    return \Tectonic\Shift\Modules\Configuration\Models\Setting::$registry;
-});

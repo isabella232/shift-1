@@ -19,6 +19,48 @@ class Setting extends Model implements SettingInterface
     public static $registry = [];
 
     /**
+     * Retrieves settings from the database.
+     * You can pass a string for a single setting, an array for multpiple
+     * or pass no value for all settings.
+     *
+     * @param null|string|array $key
+     * @param mixed $default You can provide a default value if the record is not found.
+     *
+     * @return array
+     */
+    public static function get( $key = null, $default = null )
+    {
+        if ( $key === null )
+        {
+            $settings = Setting::all();
+        }
+        else
+        {
+            if ( !is_array( $key ) ) $key = [ $key ];
+
+            $settings = static::whereIn( 'key' , $key )->get();
+        }
+
+        $return = [];
+
+        foreach ( $settings as $s )
+        {
+            $return[ $s->key ] = $s->value;
+        }
+
+        // If it's just a single object, then return only that value. Saves us having to do things like:
+        //
+        // $setting = Setting::get( 'some.key.setting' );
+        // $setting[ 'some.key.setting' ];
+        if ( count( $return ) == 1 )
+        {
+            return array_pop( $return );
+        }
+
+        return empty( $return ) ? $default : $return;
+    }
+
+    /**
      * Registers a new setting that is modifiable in some way by a user.
      *
      * @param string $key

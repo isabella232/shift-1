@@ -22,7 +22,7 @@ class FieldTest extends UnitTestCase
 
     public function testGeneratingCustomUncheckedCheckboxField()
     {
-        $field = \Field::custom('checkbox', 'testField', '1', ['id' => 'testField', 'class' => 'control-field']);
+        $field = \Field::custom('checkbox', 'testField', null, ['id' => 'testField', 'class' => 'control-field']);
         $expected = '<input id="testField" class="control-field" name="testField" type="checkbox" value="1">';
 
         $this->assertSame($field, $expected);
@@ -30,8 +30,8 @@ class FieldTest extends UnitTestCase
 
     public function testGeneratingCustomCheckedCheckboxField()
     {
-        $field = \Field::custom('checkbox', 'testField', '1', ['checked' => true, 'id' => 'testField', 'class' => 'control-field']);
-        $expected = '<input checked="checked" id="testField" class="control-field" name="testField" type="checkbox" value="1">';
+        $field = \Field::custom('checkbox', 'testField', '1', ['id' => 'testField', 'class' => 'control-field']);
+        $expected = '<input id="testField" class="control-field" checked="checked" name="testField" type="checkbox" value="1">';
 
         $this->assertSame($field, $expected);
     }
