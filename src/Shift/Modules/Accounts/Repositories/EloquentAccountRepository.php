@@ -19,7 +19,7 @@ class EloquentAccountRepository extends Repository implements AccountRepositoryI
 	public $restrictByAccount = false;
 
     /**
-     * Make sure we assign the rqeuired model.
+     * Make sure we assign the required model.
      *
      * @param Account $model
      */
@@ -30,7 +30,7 @@ class EloquentAccountRepository extends Repository implements AccountRepositoryI
 
 	/**
 	 * Require an account based on the domain that has been provided. If no account is found,
-	 * an AccountNotFoundException is thrown.rsi
+	 * an AccountNotFoundException is thrown.
 	 *
 	 * @param $account
      * @return array
