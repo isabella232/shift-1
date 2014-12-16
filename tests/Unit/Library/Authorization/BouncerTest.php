@@ -7,7 +7,6 @@ use Tectonic\Shift\Library\Authorization\Consumer;
 
 class BouncerTest extends UnitTestCase
 {
-	private $consumer;
 	private $bouncer;
 	private $mockAuthority;
 
@@ -16,10 +15,8 @@ class BouncerTest extends UnitTestCase
 		parent::setUp();
 
 		$this->mockAuthority = m::mock('Authority\Authority');
-		$this->consumer = new Consumer($this->mockAuthority);
 
-		$this->bouncer = new Bouncer('User', $this->consumer);
-		$this->bouncer->setConsumer($this->consumer);
+		$this->bouncer = new Bouncer($this->mockAuthority, 'User');
 	}
 
 	public function testDetermineAction()

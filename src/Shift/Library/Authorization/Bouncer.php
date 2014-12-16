@@ -1,6 +1,8 @@
-<?php namespace Tectonic\Shift\Library\Authorization;
+<?php
+namespace Tectonic\Shift\Library\Authorization;
 
 use App;
+use Authority\Authority;
 use Log;
 use Illuminate\Support\Str;
 
@@ -31,11 +33,11 @@ final class Bouncer
 	private $matrix;
 
 	/**
-	 * Stores the authenticated consumer object which will be used for the authorization of requested actions.
+	 * The authority object will be used to do permission checks.
 	 *
-	 * @var Consumer
+	 * @var Authority
 	 */
-	private $consumer;
+	private $authority;
 
 	/**
 	 * The resource provided must be the resource that is matched throughout the system. Usually this in camelcase,
@@ -43,19 +45,10 @@ final class Bouncer
 	 *
 	 * @param $resource
 	 */
-	public function __construct($resource)
+	public function __construct(Authority $authority, $resource)
 	{
 		$this->resource = $resource;
-	}
-
-	/**
-	 * Sets the consumer object that is required for doing authorisation checks.
-	 *
-	 * @param Consumer $consumer
-	 */
-	public function setConsumer(Consumer $consumer)
-	{
-		$this->consumer = $consumer;
+		$this->authority = $authority;
 	}
 
 	/**
@@ -222,9 +215,7 @@ final class Bouncer
         // Guest access allowed
         if ('any' == $rule) return true;
 
-        if (!$this->consumer) return false;
-
-        return $this->consumer->can($rule, $resource);
+        return $this->authority->can($rule, $resource);
     }
 
 	/**

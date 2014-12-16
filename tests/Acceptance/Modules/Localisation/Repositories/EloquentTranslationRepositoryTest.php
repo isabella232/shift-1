@@ -32,7 +32,7 @@ class EloquentTranslationRepositoryTest extends AcceptanceTestCase
     public function init()
     {
         $this->cleanData = [
-            ['language' => 'en_GB', 'foreign_id' => 1, 'resource' => 'Tectonic\Shift\CustomField', 'field' => 'label', 'value' => 'Custom field en_GB']
+            ['language' => 'en_GB', 'foreignId' => 1, 'resource' => 'Tectonic\Shift\CustomField', 'field' => 'label', 'value' => 'Custom field en_GB']
         ];
 
         $this->languageRepository = App::make(ConfigLanguageRepository::class);

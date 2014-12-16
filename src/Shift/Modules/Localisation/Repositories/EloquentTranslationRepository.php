@@ -1,10 +1,10 @@
 <?php
 namespace Tectonic\Shift\Modules\Localisation\Repositories;
 
-use Tectonic\LaravelLocalisation\Database\Translation;
 use Tectonic\Localisation\Contracts\TranslationRepositoryInterface;
 use Tectonic\Localisation\Translator\ResourceCriteria;
 use Tectonic\Shift\Library\Support\Database\Eloquent\Repository;
+use Tectonic\Shift\Modules\Localisation\Models\Translation;
 
 class EloquentTranslationRepository extends Repository implements TranslationRepositoryInterface
 {
