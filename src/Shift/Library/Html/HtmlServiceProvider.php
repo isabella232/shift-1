@@ -7,6 +7,7 @@ class HtmlServiceProvider extends ServiceProvider
 {
     protected $aliases = [
         'Button' => 'Tectonic\Shift\Library\Facades\Button',
+        'Field'  => 'Tectonic\Shift\Library\Facades\Field',
         'Multilingual' => 'Tectonic\Shift\Library\Facades\Multilingual'
     ];
 
@@ -15,12 +16,18 @@ class HtmlServiceProvider extends ServiceProvider
         parent::register();
 
         $this->registerButton();
+        $this->registerField();
         $this->registerMultilingualForm();
     }
 
     public function registerButton()
     {
         $this->app->singleton('button', ButtonBuilder::class);
+    }
+
+    public function registerField()
+    {
+        $this->app->singleton('field', FieldBuilder::class);
     }
 
     public function registerMultilingualForm()

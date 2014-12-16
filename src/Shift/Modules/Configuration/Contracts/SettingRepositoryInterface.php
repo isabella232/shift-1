@@ -17,4 +17,9 @@ interface SettingRepositoryInterface
      * @return array
      */
     public function getAllAsKeyValue();
+
+    /**
+     * @param array $input
+     */
+    public function saveSettings($input);
 }

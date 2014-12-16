@@ -25,6 +25,9 @@ Route::group(['prefix' => Config::get('shift.url', ''), 'namespace' => 'Tectonic
         Route::get('install', 'InstallationController@getInstall');
         Route::post('install', 'InstallationController@postInstall');
     });
+
+    Route::get('settings', ['uses' => 'SettingController@index']);
+    Route::post('settings', ['uses' => 'SettingController@update']);
 });
 
 Route::filter('shift.account', 'Tectonic\Shift\Library\Filters\AccountFilter');

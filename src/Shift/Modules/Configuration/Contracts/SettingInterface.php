@@ -30,4 +30,3 @@ interface SettingInterface
      */
     public function setValue($value);
 }
- 
