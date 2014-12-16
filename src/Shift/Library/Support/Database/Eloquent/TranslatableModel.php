@@ -1,6 +1,7 @@
 <?php
 namespace Tectonic\Shift\Library\Support\Database\Eloquent;
 
+use CurrentAccount;
 use Tectonic\Shift\Modules\Localisation\Models\Translation;
 
 trait TranslatableModel
@@ -30,7 +31,7 @@ trait TranslatableModel
         }
 
         $translation = new Translation(compact('language', 'field', 'value'));
-        $translation->accountId = $this->id;
+        $translation->accountId = CurrentAccount::get()->id;
         $translation->resource = class_basename($this);
         $translation->foreignId = $this->id;
 
