@@ -18,10 +18,8 @@ class InstallServiceTest extends AcceptanceTestCase
     private $input, $accountRepository;
     private $supportedLanguageRepository;
 
-    public function setUp()
+    public function init()
     {
-        parent::setUp();
-
         $languageRepository = App::make(LanguageRepositoryInterface::class);
 
         $this->input = [
