@@ -8,7 +8,7 @@ use Tectonic\Shift\Modules\Localisation\Services\TranslationsService;
 use Tectonic\Shift\Modules\Localisation\Services\UITranslationService;
 
 /**
- * Class Engine
+ * Class Translator
  *
  * This class extends Laravel own translator class and adds a few extra helper
  * method for convenience. For example it can autoload module/package language
@@ -90,14 +90,16 @@ class Translator
             return $cacheValue;
         }
 
-        $default = $this->translator->get($key, $replace, $locale);
+        $translatedValue = $this->translator->get($key, $replace, $locale);
 
         // Look for customisations
-        $value = $this->translationsService->get($key);
+        if (($value = $this->translationsService->get($key, 'ui'))) {
+            $translatedValue = $value;
+        }
 
-        array_set($this->cache, $key, $value);
+        array_set($this->cache, $key, $translatedValue);
 
-        return $value;
+        return $translatedValue;
     }
 
     /**

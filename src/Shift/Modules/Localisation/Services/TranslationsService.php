@@ -60,7 +60,11 @@ class TranslationsService
      */
     public function get($field, $resource, $foreignId = null)
     {
-        $params = compact($field, $resource, $foreignId);
+        $params = compact($field, $resource);
+
+        if (!is_null($foreignId)) {
+            $params['foreignId'] = $foreignId;
+        }
 
         return $this->translationRepository->getByCriteria($params);
     }
