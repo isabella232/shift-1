@@ -116,7 +116,7 @@ class Translator
         $translations = $this->translator->get($namespace.$area);
         $dbTranslations = $this->translationsService->getByPartial('ui', $area);
 
-        $this->hydrateFromLanguageFile($translations);
+        $this->hydrateFromLanguageFile($area, $translations);
         $this->hydrateFromDatabase($dbTranslations);
     }
 
@@ -158,11 +158,12 @@ class Translator
     /**
      * Hydrates the cache based on the array provided from a language translation file.
      *
+     * @param string $area
      * @param array $translations
      */
-    protected function hydrateFromLanguageFile(array $translations)
+    protected function hydrateFromLanguageFile($area, array $translations)
     {
-        $this->cache = array_merge($this->cache, $translations);
+        $this->cache[$area] = array_merge($this->cache, $translations);
     }
 
     /**

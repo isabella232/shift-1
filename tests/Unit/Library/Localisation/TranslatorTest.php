@@ -20,4 +20,18 @@ class TranslatorTest extends UnitTestCase
 
         $this->translator = new Translator($this->mockIlluminateTranslator, $this->mockTranslationsService);
     }
+
+    public function testTranslationPreparation()
+    {
+        $translation = new \stdClass;
+        $translation->field = 'roles.title';
+        $translation->value = 'My roles';
+
+        $this->mockIlluminateTranslator->shouldReceive('get')->once()->with('shift::roles')->andReturn(['title' => 'roles']);
+        $this->mockTranslationsService->shouldReceive('getByPartial')->once()->with('ui', 'roles')->andReturn([$translation]);
+
+        $this->translator->prepare('shift', 'roles');
+
+        $this->assertEquals('My roles', $this->translator->get('roles.title'));
+    }
 }
