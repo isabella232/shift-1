@@ -34,4 +34,43 @@ class TranslatorTest extends UnitTestCase
 
         $this->assertEquals('My roles', $this->translator->get('roles.title'));
     }
+
+    public function testTranslationRetrieval()
+    {
+        $this->mockIlluminateTranslator->shouldReceive('get')->once()->with('some.field', [], null);
+        $this->mockTranslationsService->shouldReceive('get')->once()->with('some.field', 'ui')->andReturn(null);
+
+        $this->assertNull($this->translator->get('some.field'));
+    }
+
+    public function testTranslationRetrievalWithNoCustomisations()
+    {
+        $this->mockIlluminateTranslator->shouldReceive('get')->once()->with('some.field', [], null)->andReturn('a value');
+        $this->mockTranslationsService->shouldReceive('get')->once()->with('some.field', 'ui')->andReturn(null);
+
+        $this->assertEquals('a value', $this->translator->get('some.field'));
+    }
+
+    public function testTranslationRetrievalWithCustomisations()
+    {
+        $this->mockIlluminateTranslator->shouldReceive('get')->once()->with('another.field', [], null)->andReturn('a value');
+        $this->mockTranslationsService->shouldReceive('get')->once()->with('another.field', 'ui')->andReturn('another value');
+
+        $this->assertEquals('another value', $this->translator->get('another.field'));
+    }
+
+    public function testCacheKeySetting()
+    {
+        $this->translator->setKey('a.very.nested.translated.field', 'value');
+
+        $this->assertEquals('value', $this->translator->get('a.very.nested.translated.field'));
+    }
+
+    public function testBulkCacheKeySetting()
+    {
+        $this->translator->setKeys(['a.key' => 'a value', 'another.key' => 'another value']);
+
+        $this->assertEquals('a value', $this->translator->get('a.key'));
+        $this->assertEquals('another value', $this->translator->get('another.key'));
+    }
 }
