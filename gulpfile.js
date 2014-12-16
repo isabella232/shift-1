@@ -43,8 +43,8 @@ gulp.task('styles', function() {
 
 gulp.task('scripts', function() {
     return gulp.src(scripts)
-	    .pipe(jshint())
-	    .pipe(jshint.reporter('default'))
+	    //.pipe(jshint())
+	    //.pipe(jshint.reporter('default'))
         .pipe(concat('shift.dev.js'))
         .pipe(gulp.dest(output + 'js'))
         .pipe(rename('shift.min.js'))
@@ -53,12 +53,18 @@ gulp.task('scripts', function() {
         .pipe(notify({ message: 'Javascript files compiled.' }));
 });
 
+gulp.task( 'publish' , function() {
+	gulp.src('.')
+		.pipe(exec('php ../../../artisan asset:publish'))
+		.pipe(notify({ message: 'Assets published.' }));
+});
+
 // Helper task for watching the scripts directories, and only the script directories
 gulp.task('scripts-watch', function() {
 	gulp.run('scripts');
 
 	gulp.watch(input + 'js/**', function() {
-		gulp.run('scripts');
+		gulp.run('scripts', 'publish');
 	});
 });
 
@@ -66,13 +72,14 @@ gulp.task('styles-watch', function() {
 	gulp.run('styles');
 
 	gulp.watch(input + 'sass/**', function() {
-		gulp.run('styles');
+		gulp.run('styles', 'publish');
 	});
 });
 
 // When running gulp without any tasks, it'll watch the scripts, styles, and do artisan publishing.etc.
 gulp.task('default' , function() {
 	gulp.start('scripts-watch', 'styles-watch');
+	gulp.run('styles', 'publish');
 
 	// Run any custom gulp code
 	if (custom) {
