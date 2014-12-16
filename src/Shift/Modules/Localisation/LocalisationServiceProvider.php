@@ -81,7 +81,7 @@ class LocalisationServiceProvider extends ServiceProvider
     {
         $this->app->singleton('shift.translator', function($app)
         {
-            return new \Tectonic\Shift\Library\Translation\Translator(
+            return new \Tectonic\Shift\Library\Localisation\Translator(
                 $app['translation.loader'],
                 $app['Tectonic\Shift\Modules\Localisation\Services\UILocalisationService'],
                 $app['config']['app.locale'],

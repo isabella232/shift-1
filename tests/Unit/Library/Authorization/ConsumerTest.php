@@ -1,59 +1,31 @@
-<?php namespace Tests\Unit\Library\Authorization;
+<?php
+namespace Tests\Unit\Library\Authorization;
 
+use Illuminate\Support\Collection;
 use Mockery as m;
 use Tectonic\Shift\Library\Authorization\UserConsumer;
 use Tectonic\Shift\Library\Authorization\Consumer;
 use Tectonic\Shift\Library\Authorization\UserInterface;
+use Tectonic\Shift\Modules\Localisation\Languages\Language;
 
 class ConsumerTest extends \Tests\UnitTestCase
 {
-	private $authenticatedConsumer;
-	private $consumer;
-	private $mockAuthority;
-
-	public function setUp()
+	public function init()
 	{
-		$this->consumer = new UserConsumer(m::mock(UserInterface::class));
-		$this->mockAuthority = m::mock('Authority\Authority');
-
-		$this->authenticatedConsumer = new Consumer($this->mockAuthority);
-        $this->authenticatedConsumer->setConsumer($this->consumer);
+		$this->consumer = new Consumer;
 	}
 
-	public function tearDown()
+	public function testLanguageSettingAndRetrieval()
 	{
-		m::close();
+		$this->consumer->setLanguage(new Language('en_GB'));
+
+		$this->assertEquals('en_GB', $this->consumer->language()->code);
 	}
 
-	public function testSetPermissions()
+	public function testAccountsSettingAndRetrieval()
 	{
-		$permissions = [
-			['allow' => true, 'resource' => 'User', 'rule' => 'read'],
-			['deny' => true, 'resource' => 'User', 'rule' => 'write'],
-			['allow' => false, 'resource' => 'User', 'rule' => 'update'],
-			['deny' => false, 'resource' => 'User', 'rule' => 'create']
-		];
+		$this->consumer->setAccounts(new Collection);
 
-		$this->mockAuthority->shouldReceive('allow')->with('read', 'User')->once();
-		$this->mockAuthority->shouldReceive('allow')->with('create', 'User')->once();
-
-		$this->authenticatedConsumer->setPermissions($permissions);
-	}
-
-	public function testGetConsumer()
-	{
-		$this->assertEquals($this->consumer, $this->authenticatedConsumer->getConsumer());
-	}
-
-	public function testGetAuthority()
-	{
-		$this->assertEquals($this->mockAuthority, $this->authenticatedConsumer->getAuthority());
-	}
-
-	public function testCan()
-	{
-		$this->mockAuthority->shouldReceive('can')->with('read', 'Resource')->andReturn(true);
-
-		$this->assertEquals(true, $this->authenticatedConsumer->can('read', 'Resource'));
+		$this->assertEquals(new Collection, $this->consumer->accounts());
 	}
 }

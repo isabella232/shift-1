@@ -1,12 +1,20 @@
 <?php
 namespace Tectonic\Shift\Modules\Identity\Roles\Models;
 
+use Tectonic\Application\Eventing\EventGenerator;
+use Tectonic\Localisation\Translator\Translatable;
 use Tectonic\Shift\Library\Support\Database\Eloquent\Model;
+use Tectonic\Shift\Library\Support\Database\Eloquent\TranslatableModel;
 use Tectonic\Shift\Modules\Accounts\Models\Account;
+use Tectonic\Shift\Modules\Identity\Roles\Events\RoleWasCreated;
 use Tectonic\Shift\Modules\Identity\Users\Models\User;
 
 class Role extends Model
 {
+    use EventGenerator;
+    use Translatable;
+    use TranslatableModel;
+
     /**
      * Each role belongs to exactly one account.
      *
@@ -36,5 +44,30 @@ class Role extends Model
     public function permissions()
     {
         return $this->hasMany();
+    }
+
+    /**
+     * Returns an array of the field names that can be used for translations.
+     *
+     * @return array
+     */
+    public function getTranslatableFields()
+    {
+        return ['name'];
+    }
+
+    /**
+     * Roles themselves don't require any fields to create the records - but they do need a record. The name
+     * translations are handled within the business rules of the translations.
+     *
+     * @return static
+     */
+    public static function create(array $attributes)
+    {
+        $role = new static;
+
+        $role->raise(new RoleWasCreated($role));
+
+        return $role;
     }
 }

@@ -54,6 +54,18 @@ class TranslationsService
     }
 
     /**
+     * @param string $field
+     * @param string $resource
+     * @param int|null $foreignId
+     */
+    public function get($field, $resource, $foreignId = null)
+    {
+        $params = compact($field, $resource, $foreignId);
+
+        return $this->translationRepository->getByCriteria($params);
+    }
+
+    /**
      * Updates all translations based on the array provided. The provided array should have been one given
      * by the client, in the following format:
      *

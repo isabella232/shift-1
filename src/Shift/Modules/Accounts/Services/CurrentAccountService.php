@@ -1,5 +1,4 @@
 <?php
-
 namespace Tectonic\Shift\Modules\Accounts\Services;
 
 use Request;

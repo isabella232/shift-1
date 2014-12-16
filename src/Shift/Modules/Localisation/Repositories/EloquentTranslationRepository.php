@@ -8,8 +8,6 @@ use Tectonic\Shift\Library\Support\Database\Eloquent\Repository;
 
 class EloquentTranslationRepository extends Repository implements TranslationRepositoryInterface
 {
-    protected $restrictByAccount = false;
-
     /**
      * @param Translation $model
      */

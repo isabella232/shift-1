@@ -5,6 +5,7 @@ use Input;
 use Tectonic\Shift\Library\Support\Controller;
 use Tectonic\Shift\Modules\Identity\Roles\Models\Role;
 use Tectonic\Shift\Modules\Identity\Roles\Search\RoleSearch;
+use Tectonic\Shift\Modules\Identity\Roles\Services\RoleService;
 
 class RoleController extends Controller
 {
@@ -13,9 +14,15 @@ class RoleController extends Controller
      */
     private $search;
 
-    public function __construct(RoleSearch $search)
+    /**
+     * @var RolesService
+     */
+    private $rolesService;
+
+    public function __construct(RoleSearch $search, RoleService $rolesService)
 	{
         $this->search = $search;
+        $this->rolesService = $rolesService;
     }
 
     /**
@@ -38,5 +45,13 @@ class RoleController extends Controller
         $role = new Role;
 
         return $this->respond('shift::roles.form', compact('role'));
+    }
+
+    /**
+     * Creates a new role based on the information provided by the user.
+     */
+    public function postStore()
+    {
+        return $this->rolesService->create(Input::get(), new DefaultResponder('roles'));
     }
 }

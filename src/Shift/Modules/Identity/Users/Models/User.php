@@ -58,7 +58,7 @@ class User extends Model implements AuthUserInterface, RemindableInterface
      */
     public function accounts()
     {
-        return $this->belongsToMany(Account::class);
+        return $this->belongsToMany(Account::class)->withPivot('language');
     }
 
     /**

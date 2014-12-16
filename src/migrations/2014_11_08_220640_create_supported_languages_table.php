@@ -17,6 +17,7 @@ class CreateSupportedLanguagesTable extends Migration {
 			$table->increments('id');
             $table->integer('account_id')->index();
             $table->integer('code')->index();
+            $table->boolean('default')->default(false);
 			$table->timestamps();
 		});
 	}

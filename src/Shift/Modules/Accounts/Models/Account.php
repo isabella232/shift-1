@@ -46,6 +46,16 @@ class Account extends Model
     }
 
     /**
+     * Returns the default supported language for an account.
+     *
+     * @return mixed
+     */
+    public function defaultLanguage()
+    {
+        return $this->languages()->whereDefault(true)->first();
+    }
+
+    /**
      * Each account can have one owner. That owner gets additional permissions for the account, and is basically
      * the top-level user for a given account, regardless of permissions.
      *

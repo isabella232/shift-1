@@ -46,4 +46,15 @@ class Language
         $this->code = $code;
         $this->language = static::$languages[$code];
     }
+
+    /**
+     * Determines whether one language instance is equal to another.
+     *
+     * @param Language $language
+     * @return bool
+     */
+    public function equals(Language $language)
+    {
+        return $language == $this;
+    }
 }

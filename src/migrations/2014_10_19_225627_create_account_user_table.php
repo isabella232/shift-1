@@ -17,6 +17,7 @@ class CreateAccountUserTable extends Migration {
             $table->increments('id');
             $table->bigInteger('account_id');
             $table->bigInteger('user_id');
+            $table->string('language')->nullable();
         });
 	}
 
@@ -29,5 +30,4 @@ class CreateAccountUserTable extends Migration {
 	{
 		Schema::drop('account_user');
 	}
-
 }

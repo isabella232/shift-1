@@ -1,9 +1,13 @@
-<?php namespace Tectonic\Shift\Library\Authorization;
+<?php
+namespace Tectonic\Shift\Library\Authorization;
 
 use Authority\Authority;
+use Illuminate\Support\Collection;
+use Tectonic\Shift\Modules\Accounts\Facades\CurrentAccount;
+use Tectonic\Shift\Modules\Localisation\Languages\Language;
 
 /**
- * Class AuthenticatedConsumer
+ * Class Consumer
  *
  * When a user or api consumer authenticates against the system, a new AuthenticatedConsumer
  * object is created that will get passed to Authority.
@@ -21,116 +25,69 @@ use Authority\Authority;
  *
  * @package Tectonic\Shift\Library\Authorization
  */
-
 final class Consumer
 {
-	/**
-	 * @var \Authority\Authority
-	 */
-	private $authority;
-
-	/**
-	 * @var ConsumerInterface
-	 */
-	private $consumer;
-
-	/**
-	 * @param Authority $authority
-	 */
-	public function __construct(Authority $authority)
-	{
-		$this->authority = $authority;
-	}
-
-	/**
-	 * Set the permissions for the consumer. This should be a multi-dimensional array that
-	 * contains the permissions the consumer will be checked against.
-	 *
-	 * @param array $permissions
-	 */
-	public function setPermissions(array $permissions)
-	{
-		foreach ($permissions as $permission) {
-			if ($this->allowable($permission)) {
-				$this->authority->allow($permission['rule'], $permission['resource']);
-			}
-		}
-	}
+    /**
+     * A collection of accounts that this consumer has access to.
+     *
+     * @var Collection
+     */
+    private $accounts;
 
     /**
-     * Sets the consumer that is currently authorised to work with the api.
+     * The language that the consumer will use.
      *
-     * @param ConsumerInterface $consumer
+     * @var string
      */
-    public function setConsumer(ConsumerInterface $consumer)
-    {
-        $this->consumer = $consumer;
-    }
-
-	/**
-	 * Wrapper method for Authority's can() method. Exact same usage. The first parameter
-	 * should be the required permission, and the second argument is the required resource.
-	 *
-	 * @param $permission
-	 * @param $resource
-	 * @return bool
-	 */
-	public function can($permission, $resource)
-	{
-		return $this->authority->can($permission, $resource);
-	}
-
-	/**
-	 * Returns the authority object being used for the access checks.
-	 *
-	 * @return Authority
-	 */
-	public function getAuthority()
-	{
-		return $this->authority;
-	}
-
-	/**
-	 * Returns the consumer object that is currently authenticated against the API.
-	 *
-	 * @return UserConsumer
-	 */
-	public function getConsumer()
-	{
-		return $this->consumer;
-	}
+    private $language;
 
     /**
      * Returns the accounts that this consumer can safely manage and work with.
      *
-     * @return array
+     * @return Collection
      */
-    public function getAccounts()
+    public function accounts()
     {
-        return $this->getConsumer()->getAccounts();
+        return $this->accounts;
     }
 
     /**
-     * Return the account id that the consumer is currently managing.
+     * Defines the accounts that the consumer has access to.
      *
-     * @return mixed
+     * @var Collection $accounts
      */
-    public function getAccountId()
+    public function setAccounts(Collection $accounts)
     {
-        return $this->getConsumer()->getAccountId();
+        $this->accounts = $accounts;
     }
 
-	/**
-	 * Defines whether or not a given permission is allowable. That is, that either:
-	 *
-	 * - the allow array element is defined and set to true OR
-	 * - the deny array element is defined and set to false
-	 *
-	 * @param array $permission
-	 * @return bool
-	 */
-	private function allowable(array $permission)
-	{
-		return @$permission['allow'] === true or @$permission['deny'] === false;
-	}
+    /**
+     * Returns the language used by the consumer.
+     *
+     * @return Language
+     */
+    public function language()
+    {
+        return $this->language;
+    }
+
+    /**
+     * Sets the language that the consumer will use as its default.
+     *
+     * @param string $language
+     */
+    public function setLanguage(Language $language)
+    {
+        $this->language = $language;
+    }
+
+    /**
+     * Sets the type of consumer we're dealing with - user, or api?
+     *
+     * @param ConsumerType $type
+     */
+    public function setType(ConsumerType $type)
+    {
+        $this->type = $type;
+    }
 }

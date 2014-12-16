@@ -17,7 +17,7 @@ class MultiLingualFormBuilder
      */
     public function text($name, $value = null, $options = array())
     {
-        return $this->multilingualTextField('text', $name, $value, $options);
+        return $this->textField('text', $name, $value, $options);
     }
 
     /**
@@ -30,7 +30,7 @@ class MultiLingualFormBuilder
      */
     public function textarea($name, $value = null, $options = array())
     {
-        return $this->multilingualTextField('textarea', $name, $value, $options);
+        return $this->textField('textarea', $name, $value, $options);
     }
 
     /**
@@ -40,7 +40,7 @@ class MultiLingualFormBuilder
      * @param array $options
      * @return string
      */
-    private function multilingualTextField($type, $name, $value = null, $options = array())
+    public function textField($type, $name, $value = null, $options = array())
     {
         $supportedLanguages = CurrentAccount::get()->languages;
 

@@ -71,11 +71,6 @@ class AcceptanceTestCase extends TestCase
 
         $artisan->call('migrate', [
             '--database' => $this->database,
-            '--package'  => 'tectonic/laravel-localisation'
-        ]);
-
-        $artisan->call('migrate', [
-            '--database' => $this->database,
             '--path'     => 'src/migrations'
         ]);
 
