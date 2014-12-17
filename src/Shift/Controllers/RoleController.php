@@ -44,7 +44,7 @@ class RoleController extends Controller
     {
         $role = new Role;
 
-        return $this->respond('shift::roles.form', compact('role'));
+        return $this->respond('shift::roles.new', compact('role'));
     }
 
     /**

@@ -8,4 +8,4 @@
 
 @section('content')
     @include('shift::roles.form')
-@endsection
+@stop

@@ -4,6 +4,7 @@ namespace Tectonic\Shift\Library;
 use App;
 use Tectonic\Shift\Library\Authorization\Consumer;
 use Tectonic\Shift\Library\Localisation\CurrentLocaleService;
+use Tectonic\Shift\Library\Localisation\Translator;
 use Tectonic\Shift\Library\Support\AssetFactory;
 
 class LibraryServiceProvider extends ServiceProvider
