@@ -5,7 +5,6 @@ use CurrentAccount;
 use Tectonic\Application\Commanding\CommandHandlerInterface;
 use Tectonic\Application\Eventing\EventDispatcher;
 use Tectonic\Shift\Modules\Accounts\Contracts\AccountRepositoryInterface;
-use Tectonic\Shift\Modules\Accounts\Facades\CurrentAccount;
 use Tectonic\Shift\Modules\Accounts\Models\Account;
 use Tectonic\Shift\Modules\Localisation\Contracts\LanguageRepositoryInterface;
 use Tectonic\Shift\Modules\Identity\Users\Contracts\UserRepositoryInterface;
