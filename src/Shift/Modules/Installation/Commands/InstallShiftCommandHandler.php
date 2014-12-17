@@ -1,6 +1,7 @@
 <?php
 namespace Tectonic\Shift\Modules\Installation\Commands;
 
+use CurrentAccount;
 use Tectonic\Application\Commanding\CommandHandlerInterface;
 use Tectonic\Application\Eventing\EventDispatcher;
 use Tectonic\Shift\Modules\Accounts\Contracts\AccountRepositoryInterface;
@@ -62,6 +63,8 @@ class InstallShiftCommandHandler implements CommandHandlerInterface
         $account->setOwner($user);
 
         $this->accounts->save($account);
+
+        CurrentAccount::set($account);
 
         $language = $this->addLanguage($account, $command->language);
 

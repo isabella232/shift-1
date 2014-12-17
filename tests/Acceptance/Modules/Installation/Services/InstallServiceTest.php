@@ -18,10 +18,8 @@ class InstallServiceTest extends AcceptanceTestCase
     private $input, $accountRepository;
     private $supportedLanguageRepository;
 
-    public function setUp()
+    public function init()
     {
-        parent::setUp();
-
         $languageRepository = App::make(LanguageRepositoryInterface::class);
 
         $this->input = [
@@ -39,9 +37,6 @@ class InstallServiceTest extends AcceptanceTestCase
         $this->supportedLanguageRepository = App::make(SupportedLanguageRepositoryInterface::class);
 
         $newAccount = $this->accountRepository->getAll()[1];
-
-        // set the new current account
-        CurrentAccount::set($newAccount);
     }
 
 	public function testUserCreation()
