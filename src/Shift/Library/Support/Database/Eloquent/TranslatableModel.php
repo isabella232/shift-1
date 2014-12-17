@@ -2,7 +2,7 @@
 namespace Tectonic\Shift\Library\Support\Database\Eloquent;
 
 use CurrentAccount;
-use Tectonic\Shift\Modules\Localisation\Models\Translation;
+use Tectonic\LaravelLocalisation\Database\Translation;
 
 trait TranslatableModel
 {
@@ -22,7 +22,9 @@ trait TranslatableModel
      * @param string $language
      * @param string $field
      * @param string $value
-     * @return Translation
+     *
+     * @return \Tectonic\LaravelLocalisation\Database\Translation
+     * @throws \Exception
      */
     public function addTranslation($language, $field, $value)
     {
@@ -31,9 +33,9 @@ trait TranslatableModel
         }
 
         $translation = new Translation(compact('language', 'field', 'value'));
-        $translation->accountId = CurrentAccount::get()->id;
+        $translation->account_id = CurrentAccount::get()->id;
         $translation->resource = class_basename($this);
-        $translation->foreignId = $this->id;
+        $translation->foreign_id = $this->id;
 
         $this->translations()->save($translation);
     }
