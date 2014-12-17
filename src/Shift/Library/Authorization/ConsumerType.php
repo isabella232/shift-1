@@ -1,6 +1,7 @@
 <?php
 namespace Tectonic\Shift\Library\Authorization;
 
+
 use Assert\Assertion;
 
 class ConsumerType
