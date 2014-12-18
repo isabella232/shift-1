@@ -1,14 +1,14 @@
 <h1>Log in</h1>
 
 <!-- Login form -->
-{{ NewForm::open(['action' => 'Tectonic\Shift\Controllers\AuthenticationController@login', 'validator' => 'Tectonic\Shift\Modules\Authentication\Commands\AuthenticateUserValidator', 'class' => 'vertical well']) }}
+{{ Form::open(['action' => 'Tectonic\Shift\Controllers\AuthenticationController@login', 'validator' => 'Tectonic\Shift\Modules\Authentication\Commands\AuthenticateUserValidator', 'class' => 'vertical well']) }}
 
     <div class="control">
         <div class="control-label">
             {{ Form::label('email', 'Email') }}
         </div>
         <div class="control-field">
-            {{ NewForm::email('email') }}
+            {{ Form::email('email') }}
         </div>
     </div>
 
@@ -17,7 +17,7 @@
             {{ Form::label('password', 'Password') }}
         </div>
         <div class="control-field">
-            {{ NewForm::password('password') }}
+            {{ Form::password('password') }}
         </div>
     </div>
 

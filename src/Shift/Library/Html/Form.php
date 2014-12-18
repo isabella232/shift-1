@@ -4,7 +4,7 @@ namespace Tectonic\Shift\Library\Html;
 
 use Illuminate\Html\FormBuilder as BaseFormBuilder;
 
-class NewFormBuilder extends BaseFormBuilder 
+class Form extends BaseFormBuilder 
 {
 
     protected $modelName = null;
@@ -178,7 +178,9 @@ class NewFormBuilder extends BaseFormBuilder
      */
     public function input($type, $name, $value = null, $options = [])
     {
-        $options = array_merge( $options, $this->parsley->getFieldRules($name) );
+        if( $this->parsley ) {
+            $options = array_merge( $options, $this->parsley->getFieldRules($name) ); 
+        }
 
         return parent::input($type, $name, $value, $options);
     }
@@ -188,14 +190,18 @@ class NewFormBuilder extends BaseFormBuilder
      */
     public function textarea($name, $value = null, $options = [])
     {
-        $options = array_merge($options, $this->parsley->getFieldRules($name));
+        if( $this->parsley ) {
+            $options = array_merge( $options, $this->parsley->getFieldRules($name) ); 
+        }
 
         return parent::textarea($name, $value, $options);
     }
 
     public function select($name, $list = [], $selected = null, $options = [])
     {
-        $options = array_merge($options, $this->parsley->getFieldRules($name));
+        if( $this->parsley ) {
+            $options = array_merge( $options, $this->parsley->getFieldRules($name) ); 
+        }
 
         return parent::select($name, $list, $selected, $options);
     }
