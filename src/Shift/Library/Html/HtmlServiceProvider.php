@@ -8,7 +8,8 @@ class HtmlServiceProvider extends ServiceProvider
     protected $aliases = [
         'Button' => 'Tectonic\Shift\Library\Facades\Button',
         'Field'  => 'Tectonic\Shift\Library\Facades\Field',
-        'Multilingual' => 'Tectonic\Shift\Library\Facades\Multilingual'
+        'Multilingual' => 'Tectonic\Shift\Library\Facades\Multilingual',
+        'Form' => 'Tectonic\Shift\Library\Facades\Form',
     ];
 
 	public function register()
