@@ -21,11 +21,17 @@ class ParsleyConvertor
         $this->translator = app()['translator'];
     }
 
+    public function getRules()
+    {
+        return $this->rules;
+    }
+
     public function getFieldRules($field)
     {
         $rules = [];
 
         if (isset($this->rules[$field])) {
+
             $rawRules = explode('|', $this->rules[$field]);
 
             $rules = array_merge($rules, $this->convertRules($field, $rawRules));
@@ -40,6 +46,7 @@ class ParsleyConvertor
         $message = null;
 
         foreach ($rules as $rule) {
+
             list($rule, $params) = explode(':', $rule . ':');
 
             $params = explode(',', str_replace(' ', '', $params));
@@ -47,7 +54,10 @@ class ParsleyConvertor
             $parsleyRule = $rule;
 
             $isNumeric = $this->hasNumericRule($rules);
-            $message = $this->getMessage($attribute, $rule, $rules);
+
+            $message = $this->getMessage( $attribute, $rule, $rules );
+
+            dd( $message );
 
             switch ($rule) {
                 case 'required':
@@ -132,7 +142,9 @@ class ParsleyConvertor
 
         if ($customMessage !== $customKey) {
             return $customMessage;
-        } else if (in_array($currentRule, ['size', 'between', 'min', 'max'])) {
+        } 
+        else if( in_array( $currentRule, ['size', 'between', 'min', 'max'] ) ) {
+
             if ($this->hasNumericRule($rules)) {
                 $key = "validation.{$lowerRule}.numeric";
             } else {
@@ -144,7 +156,7 @@ class ParsleyConvertor
 
         $key = "validation.{$lowerRule}";
 
-        if ($key != ($value = $this->translator->trans($key))) {
+        if ($key != ($value = $this->translator->get($key))) {
             return $value;
         }
 

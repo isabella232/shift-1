@@ -12,7 +12,9 @@ class NewFormBuilder extends BaseFormBuilder
     /**
      * @type ParsleyConverter
      */
-    protected $parsley   = null;
+    public $parsley   = null;
+
+    public $validator = null;
 
     /**
      * Create a new custom form builder instance.
@@ -26,10 +28,39 @@ class NewFormBuilder extends BaseFormBuilder
     {
         $this->url = $url;
         $this->html = $html;
-        $this->csrfToken = csrf_token();
+        $this->csrfToken = $csrfToken ?: csrf_token();
 
         // Add the validator to the reserved list to ommit from attributes
         $this->reserved[] = 'validator';
+    }
+
+    /**
+     * Load a validator into the form builder
+     *
+     * @param  mixed  $validator  Either location string or validator object instance
+     * @return void
+     */
+    public function loadValidator( $validator )
+    {
+        // If we pass in an already loaded validator instance save it locally
+        if( $validator instanceOf Tectonic\Application\Validation\Validator ) {
+            $this->validator = $validator;
+        }
+
+        // If we pass in a string we need to load the validator up first
+        else {
+            $this->validator = new $validator;
+        }
+    }
+
+    /**
+     * Convert laravel validation rules to parsley
+     *
+     * @return void
+     */
+    public function convertRulesToParsley()
+    {
+        $this->parsley = new ParsleyConvertor( $this->validator->getRules() );
     }
 
     /**
@@ -40,14 +71,16 @@ class NewFormBuilder extends BaseFormBuilder
      */
     public function open(array $options = array())
     {
+        // If we pass a validator in as an option, override any existing validator
+        if( isset( $options['validator'] ) ) {
+            $this->loadValidator( $options['validator'] );
+        }
+
         // We're going to require a validator to use this builder
-        if( $options['validator'] ) {
+        if( !is_null( $this->validator ) ) {
 
-            // Create new instance of validator
-            $validator = new $options['validator'];
-
-            // Set up new parsley convertor using validators rules
-            $this->parsley = new ParsleyConvertor( $validator->getRules() );
+            // Convert our validator rules to a parsley instance
+            $this->convertRulesToParsley();
 
             $method = array_get($options, 'method', 'post');
 
@@ -98,6 +131,18 @@ class NewFormBuilder extends BaseFormBuilder
     /**
      * {@inheritdoc}
      */
+    public function model($model, array $options = []) {
+        $this->setModel($model);
+        return $this->open($options);
+    }
+    
+    public function openModel($model, array $options = []) {
+        return $this->model($model, $options);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function label($name, $value = null, $options = []) {
         $this->labels[] = $name;
 
@@ -133,7 +178,7 @@ class NewFormBuilder extends BaseFormBuilder
      */
     public function input($type, $name, $value = null, $options = [])
     {
-        $options = array_merge($options, $this->parsley->getFieldRules($name));
+        $options = array_merge( $options, $this->parsley->getFieldRules($name) );
 
         return parent::input($type, $name, $value, $options);
     }
