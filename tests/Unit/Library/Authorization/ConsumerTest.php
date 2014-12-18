@@ -17,9 +17,9 @@ class ConsumerTest extends \Tests\UnitTestCase
 
 	public function testLanguageSettingAndRetrieval()
 	{
-		$this->consumer->setLanguage(new Language('en_GB'));
+		$this->consumer->setLanguage(new Language('en'));
 
-		$this->assertEquals('en_GB', $this->consumer->language()->code);
+		$this->assertEquals('en', $this->consumer->language()->code);
 	}
 
 	public function testAccountsSettingAndRetrieval()

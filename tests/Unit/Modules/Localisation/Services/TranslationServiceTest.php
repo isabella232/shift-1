@@ -3,10 +3,10 @@ namespace Tests\Unit\Modules\Localisation\Services;
 
 use Mockery as m;
 use Tectonic\Localisation\Contracts\TranslationRepositoryInterface;
-use Tectonic\Shift\Modules\Localisation\Services\TranslationsService;
+use Tectonic\Shift\Modules\Localisation\Services\TranslationService;
 use Tests\UnitTestCase;
 
-class TranslationsServiceTest extends UnitTestCase
+class TranslationServiceTest extends UnitTestCase
 {
     private $service;
     private $mockTranslationsRepository;
@@ -14,7 +14,7 @@ class TranslationsServiceTest extends UnitTestCase
     public function init()
     {
         $this->mockTranslationsRepository = m::spy(TranslationRepositoryInterface::class);
-        $this->service = new TranslationsService($this->mockTranslationsRepository);
+        $this->service = new TranslationService($this->mockTranslationsRepository);
     }
 
     public function testGetTranslations()

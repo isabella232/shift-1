@@ -4,7 +4,7 @@
             <div class="column-half">
                 @yield('breadcrumbs')
             </div>
-            asdfasdfasdf
+
             <div class="column-half buttons">
                 @yield('buttons')
             </div>

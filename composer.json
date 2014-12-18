@@ -40,9 +40,6 @@
 		},
 		"classmap": [
 			"src/migrations"
-		],
-	    "files": [
-		  "src/Shift/Library/helpers.php"
 		]
 	},
 	"minimum-stability": "dev",

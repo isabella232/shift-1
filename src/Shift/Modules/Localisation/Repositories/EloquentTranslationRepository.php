@@ -4,6 +4,7 @@ namespace Tectonic\Shift\Modules\Localisation\Repositories;
 use Tectonic\Localisation\Contracts\TranslationRepositoryInterface;
 use Tectonic\Localisation\Translator\ResourceCriteria;
 use Tectonic\Shift\Library\Support\Database\Eloquent\Repository;
+use Tectonic\Shift\Modules\Accounts\Facades\CurrentAccount;
 use Tectonic\Shift\Modules\Localisation\Models\Translation;
 
 class EloquentTranslationRepository extends Repository implements TranslationRepositoryInterface
@@ -59,6 +60,26 @@ class EloquentTranslationRepository extends Repository implements TranslationRep
     public function getOneByCriteria($params)
     {
         return $this->getByCriteriaQuery($params)->first();
+    }
+
+    /**
+     * Returns a collection of translations based on the locale, the resource (such as ui) and the group.
+     * The group represents a like query. Say for example you want all translations for roles, then the group
+     * would be "roles", but the query created would be: WHERE field LIKE "roles.%"
+     *
+     * @param $locale
+     * @param $resource
+     * @param $group
+     * @return mixed
+     */
+    public function getByGroup($locale, $resource, $group)
+    {
+        return $this->getQuery()
+            ->whereAccountId(CurrentAccount::get()->id)
+            ->whereLanguage($locale)
+            ->whereResource($resource)
+            ->where('field', 'LIKE', "{$group}.%")
+            ->get();
     }
 
     /**

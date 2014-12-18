@@ -10,6 +10,9 @@ class RoleService
      */
     private $commandBus;
 
+    /**
+     * @param ValidationCommandBus $commandBus
+     */
     public function __construct(ValidationCommandBus $commandBus)
     {
         $this->commandBus = $commandBus;

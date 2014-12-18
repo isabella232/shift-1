@@ -6,6 +6,7 @@ use Tectonic\Shift\Library\Authorization\Consumer;
 use Tectonic\Shift\Library\Localisation\CurrentLocaleService;
 use Tectonic\Shift\Library\Localisation\Translator;
 use Tectonic\Shift\Library\Support\AssetFactory;
+use Tectonic\Shift\Modules\Localisation\Services\TranslationService;
 
 class LibraryServiceProvider extends ServiceProvider
 {
@@ -31,6 +32,7 @@ class LibraryServiceProvider extends ServiceProvider
         $this->registerAssetContainer();
         $this->registerConsumer();
         $this->registerCurrentLocale();
+        $this->registerDeferredProviders();
     }
 
     protected function registerConsumer()
@@ -41,6 +43,11 @@ class LibraryServiceProvider extends ServiceProvider
     protected function registerCurrentLocale()
     {
         $this->app->singleton('currentLocale', CurrentLocaleService::class);
+    }
+
+    protected function registerDeferredProviders()
+    {
+        $this->app->registerDeferredProvider('Tectonic\Shift\Library\Localisation\LocalisationServiceProvider');
     }
 
     /**

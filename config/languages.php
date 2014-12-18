@@ -5,5 +5,5 @@
  * @param array
  */
 return [
-    'en_GB' => 'English (Great Britain)'
+    'en' => 'English (Great Britain)'
 ];

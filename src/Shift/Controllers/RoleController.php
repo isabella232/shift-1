@@ -3,6 +3,7 @@ namespace Tectonic\Shift\Controllers;
 
 use Input;
 use Tectonic\Shift\Library\Support\Controller;
+use Tectonic\Shift\Library\Support\DefaultResponder;
 use Tectonic\Shift\Modules\Identity\Roles\Models\Role;
 use Tectonic\Shift\Modules\Identity\Roles\Search\RoleSearch;
 use Tectonic\Shift\Modules\Identity\Roles\Services\RoleService;
@@ -19,6 +20,10 @@ class RoleController extends Controller
      */
     private $rolesService;
 
+    /**
+     * @param RoleSearch $search
+     * @param RoleService $rolesService
+     */
     public function __construct(RoleSearch $search, RoleService $rolesService)
 	{
         $this->search = $search;

@@ -5,7 +5,7 @@ use Tectonic\Localisation\Translator\Translatable;
 use Tectonic\Localisation\Contracts\TranslationRepositoryInterface;
 
 /**
- * Class TranslationsService
+ * Class TranslationService
  *
  * This service manages the creation, updating and removal of translations based on resources and
  * input from the client-side. It is far more specific than the TranslationManagementService, which deals
@@ -16,7 +16,7 @@ use Tectonic\Localisation\Contracts\TranslationRepositoryInterface;
  *
  * @package Tectonic\Shift\Modules\Localisation\Services
  */
-class TranslationsService
+class TranslationService
 {
     /**
      * @var TranslationRepositoryInterface

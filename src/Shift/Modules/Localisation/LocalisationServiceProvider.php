@@ -48,7 +48,6 @@ class LocalisationServiceProvider extends ServiceProvider
 	    parent::register();
 
         $this->registerAssetContainer();
-        $this->registerTranslator();
         $this->registerLangSingleton();
         $this->registerLocaliserInterface();
     }
@@ -69,41 +68,6 @@ class LocalisationServiceProvider extends ServiceProvider
     {
         $this->app->singleton('shift.asset', function($app) {
             return new \Tectonic\Shift\Library\Support\AssetFactory($app['orchestra.asset.dispatcher']);
-        });
-    }
-
-    /**
-     * Register Engine
-     *
-     * @return void
-     */
-    protected function registerTranslator()
-    {
-        $this->app->singleton('shift.translator', function($app)
-        {
-            return new \Tectonic\Shift\Library\Localisation\Translator(
-                $app['translation.loader'],
-                $app['Tectonic\Shift\Modules\Localisation\Services\UILocalisationService'],
-                $app['config']['app.locale'],
-                $app['config']['shift::language.autoloads'],
-                $app['config']['shift::language.locales']
-            );
-        });
-
-        $this->app->bind('Symfony\Component\Translation\TranslatorInterface', function($app) {
-            return $app['shift.translator'];
-        });
-
-        // Setup our Translator instance and facade
-        $this->app->singleton('Translator', function($app) {
-            $translatorEngine = new Engine;
-
-            $translatorEngine->registerTransformer(
-                new CollectionTransformer,
-                new ModelTransformer
-            );
-
-            return $translatorEngine;
         });
     }
 
