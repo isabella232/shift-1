@@ -14,6 +14,9 @@ class Form extends BaseFormBuilder
      */
     public $parsley   = null;
 
+    /**
+     * @type Tectonic\Application\Validation\Validator
+     */
     public $validator = null;
 
     /**
@@ -196,7 +199,10 @@ class Form extends BaseFormBuilder
 
         return parent::textarea($name, $value, $options);
     }
-
+    
+    /**
+     * {@inheritdoc}
+     */
     public function select($name, $list = [], $selected = null, $options = [])
     {
         if( $this->parsley ) {

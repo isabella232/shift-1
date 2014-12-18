@@ -3,13 +3,13 @@
 use Mockery as m;
 use Tests\UnitTestCase;
 use Illuminate\Http\Request;
-use Tectonic\Shift\Library\Html\NewFormBuilder as FormBuilder;
+use Tectonic\Shift\Library\Html\Form as FormBuilder;
 use Illuminate\Html\HtmlBuilder;
 use Illuminate\Routing\UrlGenerator;
 use Illuminate\Routing\RouteCollection;
 
 
-class NewFormBuilderTest extends UnitTestCase
+class FormTest extends UnitTestCase
 {
     /**
      * Setup the test environment.
