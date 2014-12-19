@@ -11,7 +11,10 @@
             <a href="" class="logo"></a>
             <div id="control-panel">
                 <ul class="horizontal">
-                    Have an account? <a href="#">Log in</a>
+                    <li>Have an account? <a href="#">Log in</a></li>
+                    <li>
+                        <div id="accountSwitcher" class="select2-container"></div>
+                    </li>
                 </ul>
             </div>
         </div>

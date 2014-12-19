@@ -16,6 +16,10 @@ Route::group(['prefix' => Config::get('shift.url', ''), 'namespace' => 'Tectonic
     Route::get('profile', 'UserController@profile');
     Route::post('profile', 'UserController@updateProfile');
 
+    // Account switching routes
+    Route::get('auth/accounts', 'AuthenticationController@getAccounts');
+    Route::get('auth/account/{id}', 'AuthenticationController@switchAccount');
+
     Route::collection('fields', 'FieldController');
     Route::collection('roles', 'RoleController');
     Route::collection('sessions', 'AuthenticationController');

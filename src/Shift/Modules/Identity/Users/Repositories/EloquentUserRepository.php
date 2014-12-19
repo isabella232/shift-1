@@ -49,4 +49,31 @@ class EloquentUserRepository extends Repository implements UserRepositoryInterfa
 
         return $user;
     }
+
+    /**
+     * Get a list of account ids a user belongs to.
+     *
+     * @param $user
+     *
+     * @return array
+     */
+    public function getAccounts($user)
+    {
+        $queryResult = $this->getQuery()->with('accounts.translations')
+            ->where('id', '=', $user->id)
+            ->first();
+
+        $results = [];
+
+        foreach ($queryResult->accounts as $account)
+        {
+            // TODO: Add where('language', '=', <CurrentUsersLanguagePreference>)
+            $nameTranslation = $account->translations()->where('field', '=', 'name')->first();
+
+            $results[] = [$account->id, $nameTranslation['value']];
+        }
+
+        return $results;
+
+    }
 }
