@@ -2,8 +2,10 @@
 namespace Tectonic\Shift\Modules\Identity\Roles\Services;
 
 use Authority;
+use Illuminate\Database\Eloquent\Collection;
 use Tectonic\Shift\Modules\Identity\Roles\Contracts\PermissionRepositoryInterface;
 use Tectonic\Shift\Modules\Identity\Roles\Contracts\RoleRepositoryInterface;
+use Tectonic\Shift\Modules\Identity\Roles\Models\Role;
 use Tectonic\Shift\Modules\Identity\Users\Models\User;
 
 class PermissionsService
@@ -128,5 +130,54 @@ class PermissionsService
         }
 
         return $required == $allowed;
+    }
+
+    /**
+     * Updates a range of permissions for a role based on the array of input provided.
+     *
+     * @param Role $existingPermissions
+     * @param $newPermissions
+     */
+    public function bulkUpdateFromInput(Role $role, $newPermissions)
+    {
+        foreach ($newPermissions as $resource => $actions) {
+            $this->updateFromActions($role, $actions, $resource);
+        }
+    }
+
+    /**
+     * Searches a collection of permissions
+     * @param Collection $collection
+     * @param $resource
+     * @param $action
+     * @return mixed|null
+     */
+    protected function findMatchingPermission(PermissionCollection $collection, $resource, $action)
+    {
+        foreach ($collection as $permission) {
+            if ($permission->resource == $resource && $permission->action == $action) return $permission;
+        }
+
+        return null;
+    }
+
+    /**
+     * @param Role $role
+     * @param $actions
+     * @param $resource
+     */
+    protected function updateFromActions(Role $role, $actions, $resource)
+    {
+        foreach ($actions as $action => $permission) {
+            $record = $role->permissions->match($resource, $action);
+
+            if (is_null($record)) {
+                $record = Permission::create(['roleId' => $role->id, 'resource' => $resource, 'action' => $action]);
+            }
+
+            $record->allowed = $permission;
+
+            $this->permissionRepository->save($record);
+        }
     }
 }
