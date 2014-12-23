@@ -6,5 +6,5 @@ class UserAccountAssociationException extends \Exception
     /**
      * @var string
      */
-    protected $message = 'The login credentials provided are not associated with this account.';
+    protected $message = 'User is not associated with this account.';
 } 

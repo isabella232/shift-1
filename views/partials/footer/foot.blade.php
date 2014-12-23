@@ -11,20 +11,24 @@
 {{ Asset::container('custom')->scripts() }}
 
 <script>
-    function repoFormatResult(repo) {
-        return repo[1];
+    function formatResult(repo) {
+        return repo.text;
+    }
+
+    function formatSelection(repo) {
+        return repo.text;
     }
 
     $("#accountSwitcher").select2({
         placeholder: "Search",
-        minimumInputLength: 0,
+        minimumInputLength: 1,
         ajax: {
             url: "http://shift2.app/auth/accounts",
             dataType: 'json',
             quietMillis: 250,
             data: function (term, page) { // page is the one-based page number tracked by Select2
                 return {
-                    q: term, //search term
+                    q: term // search term
                 };
             },
             results: function (data, page) {
@@ -32,8 +36,13 @@
                 return { results: data };
             }
         },
-        formatResult: repoFormatResult, // omitted for brevity, see the source of this page
+        formatResult: formatResult, // omitted for brevity, see the source of this page
+        formatSelection: formatSelection, // omitted for brevity, see the source of this page
         dropdownCssClass: "bigdrop", // apply css that makes the dropdown taller
-        escapeMarkup: function (m) { return m; } // we do not want to escape markup since we are displaying html in results
+        //escapeMarkup: function (m) { return m; } // we do not want to escape markup since we are displaying html in results
+    });
+
+    $('#accountSwitcher').on("select2-selecting", function(e) {
+        // TODO: On select do something...
     });
 </script>

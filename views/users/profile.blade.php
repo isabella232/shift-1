@@ -1,4 +1,4 @@
-@extends('shift::layouts.application')
+@extends('shift::layouts.fullpage')
 
 @section('main')
 

@@ -1,6 +1,7 @@
 <?php
 namespace Tectonic\Shift\Modules\Identity\Users\Repositories;
 
+use Tectonic\LaravelLocalisation\Facades\Translator;
 use Tectonic\Shift\Library\Support\Database\Eloquent\Repository;
 use Tectonic\Shift\Modules\Identity\Users\Contracts\UserRepositoryInterface;
 use Tectonic\Shift\Modules\Identity\Users\Models\User;
@@ -51,29 +52,31 @@ class EloquentUserRepository extends Repository implements UserRepositoryInterfa
     }
 
     /**
-     * Get a list of account ids a user belongs to.
+     * Get a list of account ids with account name a user belongs to.
      *
-     * @param $user
+     * @param      $user
+     * @param null $queryString
      *
      * @return array
      */
-    public function getAccounts($user)
+    public function getAccounts($user, $queryString = null)
     {
-        $queryResult = $this->getQuery()->with('accounts.translations')
-            ->where('id', '=', $user->id)
-            ->first();
+        $queryResult = $this->getQuery()->where('id', '=', $user->id)->first();
 
         $results = [];
 
         foreach ($queryResult->accounts as $account)
         {
-            // TODO: Add where('language', '=', <CurrentUsersLanguagePreference>)
-            $nameTranslation = $account->translations()->where('field', '=', 'name')->first();
+            $language = $account->language;
 
-            $results[] = [$account->id, $nameTranslation['value']];
+            $nameTranslation = $account->translations()
+                ->where('field', '=', 'name')
+                ->where('value', 'LIKE', "%{$queryString}%")
+                ->first();
+
+            $results[] = ['id' => $account->id, 'text' => $nameTranslation['value']];
         }
 
         return $results;
-
     }
 }

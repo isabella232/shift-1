@@ -58,7 +58,7 @@ class AuthenticationController extends Controller
      */
     public function getAccounts()
     {
-        return $this->accountSwitcherService->getUserAccounts();
+        return $this->accountSwitcherService->getUserAccounts(Input::get());
     }
 
     /**

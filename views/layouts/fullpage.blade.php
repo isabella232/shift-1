@@ -12,9 +12,6 @@
             <div id="control-panel">
                 <ul class="horizontal">
                     <li>Have an account? <a href="#">Log in</a></li>
-                    <li>
-                        <div id="accountSwitcher" class="select2-container"></div>
-                    </li>
                 </ul>
             </div>
         </div>
@@ -22,7 +19,11 @@
 
     <nav id="navigation">
         <div class="container pad-on-handheld">
-            <ul class="horizontal menu"></ul>
+            <ul class="horizontal menu">
+                <li>
+                    <div id="accountSwitcher" class="select2-container"></div>
+                </li>
+            </ul>
         </div>
     </nav>
 
