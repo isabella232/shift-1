@@ -46,7 +46,8 @@ class AccountSwitcherService
     /**
      * Handle switching user to another account
      *
-     * @param int $accountId
+     * @param int                                                                                $accountId
+     * @param \Tectonic\Shift\Modules\Authentication\Contracts\AccountSwitcherResponderInterface $responder
      *
      * @return mixed
      */
