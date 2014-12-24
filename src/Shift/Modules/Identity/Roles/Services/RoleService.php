@@ -2,6 +2,7 @@
 namespace Tectonic\Shift\Modules\Identity\Roles\Services;
 
 use Tectonic\Application\Validation\ValidationCommandBus;
+use Tectonic\Shift\Modules\Identity\Roles\Commands\CreateRoleCommand;
 
 class RoleService
 {
@@ -25,7 +26,7 @@ class RoleService
      */
     public function create(array $input)
     {
-        $command = new CreateRoleCommand($input['name']);
+        $command = new CreateRoleCommand($input['translated']['name']);
 
         $this->commandBus->execute($command);
     }

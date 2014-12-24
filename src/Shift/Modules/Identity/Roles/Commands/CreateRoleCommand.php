@@ -6,12 +6,12 @@ use Tectonic\Application\Commanding\Command;
 class CreateRoleCommand extends Command
 {
     /**
-     * @var string
+     * @var
      */
-    private $name;
+    private $nameTranslations;
 
-    public function __construct($name)
+    public function __construct($nameTranslations)
     {
-        $this->name = $name;
+        $this->nameTranslations = $nameTranslations;
     }
 }
