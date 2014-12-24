@@ -4,6 +4,7 @@ namespace Tectonic\Shift\Modules\Identity\Roles\Commands;
 use Tectonic\Application\Commanding\CommandHandlerInterface;
 use Tectonic\Application\Eventing\EventDispatcher;
 use Tectonic\Shift\Modules\Identity\Roles\Contracts\RoleRepositoryInterface;
+use Tectonic\Shift\Modules\Identity\Roles\Models\Role;
 
 class CreateRoleCommandHandler implements CommandHandlerInterface
 {
@@ -33,7 +34,7 @@ class CreateRoleCommandHandler implements CommandHandlerInterface
      */
     public function handle($command)
     {
-        $role = Role::create();
+        $role = Role::create($attributes = []);
 
         $this->roleRepository->save($role);
 

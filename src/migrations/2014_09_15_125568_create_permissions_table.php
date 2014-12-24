@@ -15,9 +15,9 @@ class CreatePermissionsTable extends Migration
 		Schema::create('permissions', function(Blueprint $table)
 		{
 			$table->integer('role_id')->unsigned()->index();
-			$table->string('resource');
-			$table->string('action');
-			$table->boolean('allow')->nullable();
+			$table->string('resource')->index();
+			$table->string('action')->index();
+			$table->string('mode');
 		});
 	}
 
