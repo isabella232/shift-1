@@ -25,11 +25,18 @@ class InstallCommand extends Command
      */
     public function fire()
     {
-        $this->call('migrate:install');
-        $this->call('migrate', array('--package' => 'tectonic/laravel-localisation'));
+        $this->tryMigrateInstall();
+
         $this->call('migrate', array('--package' => 'tectonic/shift'));
         $this->call('asset:publish');
 
         $this->info('Shift installed.');
+    }
+
+    private function tryMigrateInstall()
+    {
+        try {
+            $this->call('migrate:install');
+        } catch (\Exception $e) {}
     }
 }

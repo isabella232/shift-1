@@ -5,6 +5,7 @@ use Tectonic\Application\Eventing\EventGenerator;
 use Tectonic\Localisation\Translator\Translatable;
 use Tectonic\Shift\Library\Support\Database\Eloquent\Model;
 use Tectonic\Shift\Library\Support\Database\Eloquent\TranslatableModel;
+use Tectonic\Shift\Modules\Accounts\Facades\CurrentAccount;
 use Tectonic\Shift\Modules\Accounts\Models\Account;
 use Tectonic\Shift\Modules\Identity\Roles\Events\RoleWasCreated;
 use Tectonic\Shift\Modules\Identity\Users\Models\User;
@@ -65,6 +66,7 @@ class Role extends Model
     public static function create(array $attributes)
     {
         $role = new static;
+        $role->accountId = CurrentAccount::get()->id;
 
         $role->raise(new RoleWasCreated($role));
 

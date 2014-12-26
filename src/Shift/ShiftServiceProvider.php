@@ -44,6 +44,7 @@ class ShiftServiceProvider extends ServiceProvider
         'Authority\AuthorityL4\AuthorityL4ServiceProvider',
         'Orchestra\Asset\AssetServiceProvider',
         'Eloquence\EloquenceServiceProvider',
+        'Tectonic\LaravelLocalisation\ServiceProvider',
         'Tectonic\Shift\Library\Authorization\AuthorizationServiceProvider',
         'Tectonic\Shift\Library\LibraryServiceProvider',
         'Tectonic\Shift\Modules\Accounts\AccountsServiceProvider',

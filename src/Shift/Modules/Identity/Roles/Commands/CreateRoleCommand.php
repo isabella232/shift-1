@@ -6,12 +6,15 @@ use Tectonic\Application\Commanding\Command;
 class CreateRoleCommand extends Command
 {
     /**
-     * @var
+     * @var array
      */
-    private $nameTranslations;
+    public $translated;
 
-    public function __construct($nameTranslations)
+    /**
+     * @param array $translated
+     */
+    public function __construct(array $translated)
     {
-        $this->nameTranslations = $nameTranslations;
+        $this->translated = $translated;
     }
 }

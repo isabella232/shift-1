@@ -1,6 +1,9 @@
 <?php
 namespace Tectonic\Shift\Library\Support;
 
+use Redirect;
+use Tectonic\Application\Validation\ValidationException;
+
 class DefaultResponder
 {
     private $baseUrl;
