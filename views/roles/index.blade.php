@@ -34,19 +34,22 @@
     			<table>
     				<thead>
     					<tr>
-    						<th class="checkbox"><input type="checkbox" ng-click="markAll()"></th>
+    						<th class="checkbox"><input type="checkbox"></th>
     						<th><a href="javascript:;" sort="roles.name" class="sortable">Name</a></th>
     						<th># Users</th>
     						<th><a href="javascript:;" sort="roles.created_at" class="sortable">Created</a></th>
     					</tr>
     				</thead>
     				<tbody>
-    					<tr ng-repeat="role in roles.results" ng-class-even="'even'" class="ng-scope">
-    						<td class="checkbox"><input type="checkbox"></td>
-    						<td><a href="">Convenor</a></td>
-    						<td>2</td>
-    						<td>2 months ago</td>
-    					</tr>
+						{{ $roles }}
+						@foreach ($roles as $i => $role)
+							<tr @if ($i % 2 == 0) class="even"@endif>
+								<td class="checkbox"><input type="checkbox"></td>
+								<td><a href="">{{ $role->name }}</a></td>
+								<td>{{ $role->userCount }}</td>
+								<td>{{ $role->createdAt }}</td>
+							</tr>
+						@endforeach
     				</tbody>
     			</table>
 

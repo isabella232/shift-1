@@ -2,6 +2,7 @@
 namespace Tectonic\Shift\Controllers;
 
 use Input;
+use Tectonic\LaravelLocalisation\Facades\Translator;
 use Tectonic\Shift\Library\Support\Controller;
 use Tectonic\Shift\Library\Support\DefaultResponder;
 use Tectonic\Shift\Modules\Identity\Roles\Models\Role;
@@ -37,7 +38,7 @@ class RoleController extends Controller
      */
     public function getIndex()
     {
-        $roles = $this->search->fromInput(Input::get());
+        $roles = Translator::translate($this->search->fromInput(Input::get()));
 
         return $this->respond('shift::roles.index', compact('roles'));
     }

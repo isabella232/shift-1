@@ -2,6 +2,9 @@
 namespace Tectonic\Shift\Modules\Identity\Roles\Services;
 
 use Tectonic\Application\Validation\ValidationCommandBus;
+use Tectonic\Application\Validation\ValidationException;
+use Tectonic\Shift\Library\Support\DefaultResponder;
+use Tectonic\Shift\Modules\Identity\Roles\Commands\CreateRoleCommand;
 
 class RoleService
 {
@@ -23,11 +26,20 @@ class RoleService
      *
      * @param array $input
      */
-    public function create(array $input)
+    public function create(array $input, DefaultResponder $responder)
     {
-        $command = new CreateRoleCommand($input['name']);
+        try {
+            $command = new CreateRoleCommand($input['translated']);
 
-        $this->commandBus->execute($command);
+            $this->commandBus->execute($command);
+        }
+        catch (ValidationException $e) {
+            return $responder->onValidationFailure($e);
+        }
+        catch (Exception $e) {
+            return $responder->onFailure($e);
+        }
+
+        return $responder->onSuccess();
     }
 }
- 

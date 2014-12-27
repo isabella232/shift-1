@@ -1,29 +1,27 @@
 <?php
 namespace Tectonic\Shift\Modules\Identity\Roles\ValueObjects;
 
-use InvalidArgumentException;
+use Assert\Assertion;
 
-class Permitted
+class Mode
 {
     /**
      * Determines whether or not the value object represents a permissable state.
      *
      * @var bool|null
      */
-    private $permitted;
+    private $mode;
 
     /**
      * True if permitted, false if denied - null for inherit permission values.
      *
-     * @param bool|null $permitted
+     * @param bool|null $mode
      */
-    public function __construct($permitted)
+    public function __construct($mode)
     {
-        if (!in_array($permitted, [true, false, null])) {
-            throw new InvalidArgumentException(sprintf('"%s" is not a valid $permitted value.'));
-        }
+        Assertion::inArray($mode, ['allow', 'deny', 'inherit']);
 
-        $this->permitted = $permitted;
+        $this->mode = $mode;
     }
 
     /**
@@ -33,7 +31,6 @@ class Permitted
      */
     public function __toString()
     {
-        return (string) $this->permitted;
+        return (string) $this->mode;
     }
 }
- 

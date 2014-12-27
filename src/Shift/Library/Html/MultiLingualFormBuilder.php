@@ -17,11 +17,11 @@ class MultiLingualFormBuilder
      */
     public function text($name, $value = null, $options = array())
     {
-        return $this->textField('text', $name, $value, $options);
+        return $this->field('text', $name, $value, $options);
     }
 
     /**
-     * Identical to the text method, only it manages textarea field generation.
+     * Identical to the text method, only that it manages textarea field generation.
      *
      * @param string $name
      * @param string|null $value
@@ -30,17 +30,20 @@ class MultiLingualFormBuilder
      */
     public function textarea($name, $value = null, $options = array())
     {
-        return $this->textField('textarea', $name, $value, $options);
+        return $this->field('textarea', $name, $value, $options);
     }
 
     /**
+     * Generates the required field via the blade template, retrieves the necessary supported langues and returns
+     * the rendered HTML for the response.
+     *
      * @param string $type
      * @param string $name
      * @param string|null $value
      * @param array $options
      * @return string
      */
-    public function textField($type, $name, $value = null, $options = array())
+    public function field($type, $name, $value = null, $options = array())
     {
         $supportedLanguages = CurrentAccount::get()->languages;
 
