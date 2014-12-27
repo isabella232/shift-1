@@ -8,7 +8,7 @@ use Tectonic\Shift\Modules\Authentication\Models\AccountSwitch;
 use Tectonic\Shift\Modules\Accounts\Contracts\DomainRepositoryInterface;
 use Tectonic\Shift\Modules\Authentication\Exceptions\UserAccountAssociationException;
 
-class SwitchAccountCommandHandler implements CommandHandlerInterface
+class SwitchToAccountCommandHandler implements CommandHandlerInterface
 {
 
     /**
@@ -83,7 +83,7 @@ class SwitchAccountCommandHandler implements CommandHandlerInterface
         if(substr($domainRecord->domain, 0, 4) !== 'http') $domain = 'http://' . $domain;
 
         // This will likely be a different URL, but putting this here just for the time being.
-        return $domain . '?token=' . $accountSwitchRecord->token;
+        return $domain . '/auth/switch?token=' . $accountSwitchRecord->token;
     }
 
     /**

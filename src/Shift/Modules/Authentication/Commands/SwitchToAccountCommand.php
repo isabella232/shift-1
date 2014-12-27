@@ -2,7 +2,7 @@
 
 use Tectonic\Application\Commanding\Command;
 
-class SwitchAccountCommand extends Command
+class SwitchToAccountCommand extends Command
 {
     /**
      * @var int

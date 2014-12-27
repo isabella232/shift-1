@@ -3,9 +3,12 @@
 use Illuminate\Support\Facades\Auth;
 use Tectonic\Application\Commanding\DefaultCommandBus;
 use Tectonic\Shift\Modules\Authentication\Commands\SwitchAccountCommand;
-use Tectonic\Shift\Modules\Authentication\Contracts\AccountSwitcherResponderInterface;
-use Tectonic\Shift\Modules\Authentication\Exceptions\UserAccountAssociationException;
+use Tectonic\Shift\Modules\Authentication\Commands\SwitchToAccountCommand;
+use Tectonic\Shift\Modules\Authentication\Contracts\SwitchAccountResponderInterface;
+use Tectonic\Shift\Modules\Authentication\Exceptions\AccountSwitchTokenNotFoundException;
 use Tectonic\Shift\Modules\Identity\Users\Contracts\UserRepositoryInterface;
+use Tectonic\Shift\Modules\Authentication\Exceptions\UserAccountAssociationException;
+use Tectonic\Shift\Modules\Authentication\Contracts\AccountSwitcherResponderInterface;
 
 class AccountSwitcherService
 {
@@ -54,13 +57,35 @@ class AccountSwitcherService
     public function switchToAccount($accountId, AccountSwitcherResponderInterface $responder)
     {
         try {
-            $command = new SwitchAccountCommand($accountId, Auth::user()->id);
+            $command = new SwitchToAccountCommand($accountId, Auth::user()->id);
 
             $redirectUrl = $this->commandBus->execute($command);
 
             return $responder->onSuccess($redirectUrl);
 
         } catch (UserAccountAssociationException $e) {
+            return $responder->onFailure();
+        }
+    }
+
+    /**
+     * Handle switching in to a different account
+     *
+     * @param string                                                                           $token
+     * @param \Tectonic\Shift\Modules\Authentication\Contracts\SwitchAccountResponderInterface $responder
+     *
+     * @return mixed
+     */
+    public function switchAccount($token, SwitchAccountResponderInterface $responder)
+    {
+        try {
+            $command = new SwitchAccountCommand($token);
+
+            $this->commandBus->execute($command);
+
+            return $responder->onSuccess();
+
+        } catch (AccountSwitchTokenNotFoundException $e) {
             return $responder->onFailure();
         }
     }

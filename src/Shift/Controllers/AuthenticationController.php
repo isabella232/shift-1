@@ -4,7 +4,9 @@ namespace Tectonic\Shift\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Tectonic\Shift\Library\Support\Controller;
+use Tectonic\Shift\Modules\Authentication\Observers\AccountSwitcherResponder;
 use Tectonic\Shift\Modules\Authentication\Observers\LogoutResponder;
+use Tectonic\Shift\Modules\Authentication\Observers\SwitchAccountResponder;
 use Tectonic\Shift\Modules\Authentication\Services\AccountSwitcherService;
 use Tectonic\Shift\Modules\Authentication\Services\AuthenticationService;
 use Tectonic\Shift\Modules\Authentication\Observers\AuthenticationResponder;
@@ -68,9 +70,19 @@ class AuthenticationController extends Controller
      *
      * @return mixed
      */
-    public function switchAccount($id)
+    public function switchToAccount($id)
     {
-        return $this->accountSwitcherService->switchToAccount($id);
+        return $this->accountSwitcherService->switchToAccount($id, new AccountSwitcherResponder);
+    }
+
+    /**
+     * Handle switching to new account, logging in and redirecting to home page
+     *
+     * @return mixed
+     */
+    public function switchAccount()
+    {
+        return $this->accountSwitcherService->switchAccount(Input::get('token'), new SwitchAccountResponder);
     }
 
 }
