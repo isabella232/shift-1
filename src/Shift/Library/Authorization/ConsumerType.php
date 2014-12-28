@@ -52,6 +52,17 @@ class ConsumerType
     }
 
     /**
+     * Determines whether or not the current consumer type is equal to another.
+     *
+     * @param ConsumerType $type
+     * @return bool
+     */
+    public function equals(ConsumerType $type)
+    {
+        return $this == $type;
+    }
+
+    /**
      * Return the type value for string output.
      *
      * @return mixed

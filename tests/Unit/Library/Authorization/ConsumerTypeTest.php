@@ -57,4 +57,14 @@ class ConsumerTypeTest extends UnitTestCase
         $this->assertFalse($consumerApiType->user());
         $this->assertFalse($consumerApiType->guest());
     }
+
+    public function testEquality()
+    {
+        $apiType = new ConsumerType('api');
+        $userType = new ConsumerType('user');
+        $api2Type = new ConsumerType('api');
+
+        $this->assertFalse($apiType->equals($userType));
+        $this->assertTrue($apiType->equals($api2Type));
+    }
 }
