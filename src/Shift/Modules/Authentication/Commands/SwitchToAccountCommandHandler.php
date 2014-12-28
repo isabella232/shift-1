@@ -1,11 +1,14 @@
 <?php namespace Tectonic\Shift\Modules\Authentication\Commands;
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 use Tectonic\Application\Commanding\Command;
+use Tectonic\Application\Eventing\EventDispatcher;
+use Tectonic\Shift\Modules\Authentication\Models\Token;
+use Tectonic\Shift\Modules\Accounts\Facades\CurrentAccount;
 use Tectonic\Application\Commanding\CommandHandlerInterface;
-use Tectonic\Shift\Modules\Authentication\Models\AccountSwitch;
 use Tectonic\Shift\Modules\Accounts\Contracts\DomainRepositoryInterface;
+use Tectonic\Shift\Modules\Accounts\Contracts\AccountRepositoryInterface;
 use Tectonic\Shift\Modules\Authentication\Exceptions\UserAccountAssociationException;
 
 class SwitchToAccountCommandHandler implements CommandHandlerInterface
@@ -16,13 +19,29 @@ class SwitchToAccountCommandHandler implements CommandHandlerInterface
      */
     private $domainRepository;
 
+    /**
+     * @var \Tectonic\Application\Eventing\EventDispatcher
+     */
+    private $eventDispatcher;
 
     /**
-     * @param \Tectonic\Shift\Modules\Accounts\Contracts\DomainRepositoryInterface $domainRepository
+     * @var \Tectonic\Shift\Modules\Accounts\Contracts\AccountRepositoryInterface
      */
-    public function __construct(DomainRepositoryInterface $domainRepository)
-    {
+    private $accountRepository;
+
+    /**
+     * @param \Tectonic\Shift\Modules\Accounts\Contracts\DomainRepositoryInterface  $domainRepository
+     * @param \Tectonic\Shift\Modules\Accounts\Contracts\AccountRepositoryInterface $accountRepository
+     * @param \Tectonic\Application\Eventing\EventDispatcher                        $eventDispatcher
+     */
+    public function __construct(
+        DomainRepositoryInterface $domainRepository,
+        AccountRepositoryInterface $accountRepository,
+        EventDispatcher $eventDispatcher
+    ) {
         $this->domainRepository = $domainRepository;
+        $this->eventDispatcher  = $eventDispatcher;
+        $this->accountRepository = $accountRepository;
     }
 
     /**
@@ -36,32 +55,31 @@ class SwitchToAccountCommandHandler implements CommandHandlerInterface
     public function handle($command)
     {
         // 1. Make sure user is associated with account.
-        if(!$this->accountUserExists($command->accountId, $command->userId)) throw new UserAccountAssociationException;
+        if(!$this->accountUserExists($command->user->id)) throw new UserAccountAssociationException;
 
         // 2. Create a DB record with unique token, account id and user id (if an existing record doesn't exist)
-        $accountSwitchRecord = $this->createAccountSwitchRecord($command);
+        $token = $this->createAccountSwitchRecord($command);
+        $this->accountRepository->save($token);
 
-        // 3. Generate the URL for the account we're switching to (inclusive of token)
+        // 3. Release events
+        $this->eventDispatcher->dispatch($token->releaseEvents());
+
+        // 4. Generate the URL for the account we're switching to (inclusive of token)
         $domainRecord = $this->domainRepository->getOneBy('account_id', $command->accountId);
 
-        // 4. Return that URL
-        return $this->generateReturnUrl($domainRecord, $accountSwitchRecord);
+        return $this->generateReturnUrl($domainRecord->domain, $token->token);
     }
 
     /**
      * Check to see if user is associated with account
      *
-     * @param $accountId
-     * @param $userId
+     * @param $user
      *
      * @return bool
      */
-    protected function accountUserExists($accountId, $userId)
+    protected function accountUserExists($user)
     {
-        $accountUser = DB::table('account_user')
-            ->where('account_id', '=', $accountId)
-            ->where('user_id', '=', $userId)
-            ->first();
+        $accountUser = $this->accountRepository->getByUser($user);
 
         if($accountUser) return true;
 
@@ -71,19 +89,16 @@ class SwitchToAccountCommandHandler implements CommandHandlerInterface
     /**
      * Generate the return URL
      *
-     * @param $domainRecord
-     * @param $accountSwitchRecord
+     * @param $domain
+     * @param $token
      *
      * @return string
      */
-    protected function generateReturnUrl($domainRecord, $accountSwitchRecord)
+    protected function generateReturnUrl($domain, $token)
     {
-        $domain = $domainRecord->domain;
+        if(substr($domain, 0, 4) !== 'http') $domain = 'http://' . $domain;
 
-        if(substr($domainRecord->domain, 0, 4) !== 'http') $domain = 'http://' . $domain;
-
-        // This will likely be a different URL, but putting this here just for the time being.
-        return $domain . '/auth/switch?token=' . $accountSwitchRecord->token;
+        return $domain . '/auth/switch?token=' . $token;
     }
 
     /**
@@ -95,12 +110,6 @@ class SwitchToAccountCommandHandler implements CommandHandlerInterface
      */
     protected function createAccountSwitchRecord(Command $command)
     {
-        $accountSwitchRecord = AccountSwitch::create([
-            'account_id' => $command->accountId,
-            'user_id'    => $command->userId,
-            'token'      => md5(Str::random())
-        ]);
-
-        return $accountSwitchRecord;
+        return Token::createToken($command->accountId, CurrentAccount::get(), $command->user->id, md5(Str::random()));
     }
 }

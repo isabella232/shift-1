@@ -12,15 +12,15 @@ class SwitchToAccountCommand extends Command
     /**
      * @var int
      */
-    public $userId;
+    public $user;
 
     /**
      * @param $accountId
-     * @param $userId
+     * @param $user
      */
-    public function __construct($accountId, $userId)
+    public function __construct($accountId, $user)
     {
         $this->accountId = $accountId;
-        $this->userId = $userId;
+        $this->user = $user;
     }
 }

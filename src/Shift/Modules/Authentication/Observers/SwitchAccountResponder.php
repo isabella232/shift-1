@@ -1,8 +1,8 @@
 <?php namespace Tectonic\Shift\Modules\Authentication\Observers;
 
 use Illuminate\Support\Facades\Redirect;
-use Tectonic\Shift\Controllers\AuthenticationController;
 use Tectonic\Shift\Controllers\UserController;
+use Tectonic\Shift\Controllers\AuthenticationController;
 use Tectonic\Shift\Modules\Authentication\Contracts\SwitchAccountResponderInterface;
 
 class SwitchAccountResponder implements SwitchAccountResponderInterface

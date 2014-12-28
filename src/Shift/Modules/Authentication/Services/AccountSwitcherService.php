@@ -4,9 +4,9 @@ use Illuminate\Support\Facades\Auth;
 use Tectonic\Application\Commanding\DefaultCommandBus;
 use Tectonic\Shift\Modules\Authentication\Commands\SwitchAccountCommand;
 use Tectonic\Shift\Modules\Authentication\Commands\SwitchToAccountCommand;
-use Tectonic\Shift\Modules\Authentication\Contracts\SwitchAccountResponderInterface;
-use Tectonic\Shift\Modules\Authentication\Exceptions\AccountSwitchTokenNotFoundException;
+use Tectonic\Shift\Modules\Authentication\Exceptions\TokenNotFoundException;
 use Tectonic\Shift\Modules\Identity\Users\Contracts\UserRepositoryInterface;
+use Tectonic\Shift\Modules\Authentication\Contracts\SwitchAccountResponderInterface;
 use Tectonic\Shift\Modules\Authentication\Exceptions\UserAccountAssociationException;
 use Tectonic\Shift\Modules\Authentication\Contracts\AccountSwitcherResponderInterface;
 
@@ -57,7 +57,7 @@ class AccountSwitcherService
     public function switchToAccount($accountId, AccountSwitcherResponderInterface $responder)
     {
         try {
-            $command = new SwitchToAccountCommand($accountId, Auth::user()->id);
+            $command = new SwitchToAccountCommand($accountId, Auth::user());
 
             $redirectUrl = $this->commandBus->execute($command);
 
@@ -85,7 +85,7 @@ class AccountSwitcherService
 
             return $responder->onSuccess();
 
-        } catch (AccountSwitchTokenNotFoundException $e) {
+        } catch (TokenNotFoundException $e) {
             return $responder->onFailure();
         }
     }

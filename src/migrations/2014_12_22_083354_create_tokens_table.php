@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAccountSwitchesTable extends Migration {
+class CreateTokensTable extends Migration {
 
     /**
      * Run the migrations.
@@ -12,10 +12,11 @@ class CreateAccountSwitchesTable extends Migration {
      */
     public function up()
     {
-        Schema::create('account_switches', function(Blueprint $table)
+        Schema::create('tokens', function(Blueprint $table)
         {
             $table->increments('id');
             $table->integer('account_id');
+            $table->integer('from_id');
             $table->integer('user_id');
             $table->string('token');
             $table->timestamps();
@@ -29,7 +30,7 @@ class CreateAccountSwitchesTable extends Migration {
      */
     public function down()
     {
-        Schema::drop('account_switches');
+        Schema::drop('tokens');
     }
 
 }

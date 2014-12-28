@@ -1,6 +1,6 @@
 <?php namespace Tectonic\Shift\Modules\Authentication\Exceptions; 
 
-class AccountSwitchTokenNotFoundException extends \Exception
+class TokenNotFoundException extends \Exception
 {
     /**
      * @var string
