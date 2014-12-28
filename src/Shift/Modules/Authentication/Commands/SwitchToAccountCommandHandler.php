@@ -55,7 +55,9 @@ class SwitchToAccountCommandHandler implements CommandHandlerInterface
     public function handle($command)
     {
         // 1. Make sure user is associated with account.
-        if(!$this->accountUserExists($command->user->id)) throw new UserAccountAssociationException;
+        if(!$this->accountUserExists($command->user->id)) {
+            throw new UserAccountAssociationException;
+        }
 
         // 2. Create a DB record with unique token, account id and user id (if an existing record doesn't exist)
         $token = $this->createAccountSwitchRecord($command);

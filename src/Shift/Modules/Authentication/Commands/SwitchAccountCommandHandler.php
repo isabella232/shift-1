@@ -35,7 +35,9 @@ class SwitchAccountCommandHandler implements CommandHandlerInterface
         $tokenRecord = $this->tokenRepository->getByToken($command->token);
 
         // 2. If token record does NOT exist, throw exception
-        if(!$tokenRecord) throw new TokenNotFoundException;
+        if(!$tokenRecord) {
+            throw new TokenNotFoundException;
+        }
 
         // 3. Authenticate user
         $authUser = Auth::loginUsingId($tokenRecord->user_id);

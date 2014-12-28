@@ -5,7 +5,6 @@ use Event;
 use Tectonic\Application\Eventing\EventDispatcher;
 use Tectonic\Shift\Modules\Accounts\Contracts\AccountRepositoryInterface;
 use Tectonic\Shift\Modules\Accounts\Models\Account;
-use Tectonic\Shift\Modules\Identity\Users\Contracts\UserInterface;
 use Tectonic\Shift\Modules\Identity\Users\Models\User;
 
 class AccountUsersService
@@ -37,7 +36,7 @@ class AccountUsersService
      * @param UserInterface $user
      * @returns Account
      */
-    public function transferOwnership(Account $account, UserInterface $user)
+    public function transferOwnership(Account $account, User $user)
     {
         $account->setOwner($user);
 
