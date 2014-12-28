@@ -8,6 +8,13 @@ use Tectonic\Shift\Modules\Identity\Roles\Models\Permission;
 class EloquentPermissionRepository extends Repository implements PermissionRepositoryInterface
 {
     /**
+     * Permissions are restricted by role, not account.
+     * 
+     * @var bool
+     */
+    public $restrictByAccount = false;
+
+    /**
      * This repository manages the permissions.
      *
      * @param Permission $permission

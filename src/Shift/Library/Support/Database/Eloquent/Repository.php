@@ -188,10 +188,6 @@ abstract class Repository implements RepositoryInterface
     {
         $model = $this->model->newInstance($data);
 
-        if ($this->restrictByAccount && !$model->accountId) {
-            $model->accountId = $this->currentAccountId();
-        }
-
         return $model;
     }
 
@@ -271,7 +267,11 @@ abstract class Repository implements RepositoryInterface
     {
         $attributes = $resource->getDirty();
 
-        if (!empty($attributes)) {
+        if (!$resource->exists && $this->restrictByAccount && !$resource->accountId) {
+            $resource->accountId = $this->currentAccountId();
+        }
+
+        if (!empty($attributes) || !$resource->exists) {
             return $resource->save();
         }
 

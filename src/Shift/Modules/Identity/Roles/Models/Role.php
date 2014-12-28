@@ -66,8 +66,6 @@ class Role extends Model
     public static function create(array $attributes)
     {
         $role = new static;
-        $role->accountId = CurrentAccount::get()->id;
-
         $role->raise(new RoleWasCreated($role));
 
         return $role;
