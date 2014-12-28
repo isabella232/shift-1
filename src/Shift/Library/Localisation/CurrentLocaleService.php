@@ -13,24 +13,13 @@ class CurrentLocaleService
     private $language;
 
     /**
-     * Determines the current account based on consumer settings.
+     * Determines the current language/locale based on consumer settings.
      *
      * @return string
      */
 	protected function determine()
     {
-        $currentAccount = CurrentAccount::get();
-        $supportedLanguageCodes = $currentAccount->languages->pluck('code');
-        $preferredLanguageCode = Consumer::language()->code;
-
-        if (in_array($preferredLanguageCode, $supportedLanguageCodes)) {
-            $this->language = new Language($preferredLanguageCode);
-        }
-        else {
-            $this->language = new Language($currentAccount->defaultLanguage());
-        }
-
-        return $this->language;
+        return Consumer::language();
     }
 
     /**

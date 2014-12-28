@@ -11,8 +11,8 @@
  */
 function lang(\Tectonic\LaravelLocalisation\Translator\Translated\Entity $model, $field)
 {
-    $languageCode = \Tectonic\Shift\Library\Facades\CurrentLocale::get();
-    
+    $languageCode = \Tectonic\Shift\Library\Facades\CurrentLocale::code();
+
     if (isset($model->translated[$field][$languageCode])) {
         return $model->translated[$field][$languageCode];
     }

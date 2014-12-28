@@ -16,9 +16,39 @@ class ConsumerType
      */
     public function __construct($type)
     {
-        Assertion::inArray($type, ['user', 'api']);
+        Assertion::inArray($type, ['user', 'api', 'guest']);
 
         $this->type = $type;
+    }
+
+    /**
+     * Returns true if the consumer type is user.
+     *
+     * @return bool
+     */
+    public function user()
+    {
+        return $this->type == 'user';
+    }
+
+    /**
+     * Returns true if the consumer type is api.
+     *
+     * @return bool
+     */
+    public function api()
+    {
+        return $this->type == 'api';
+    }
+
+    /**
+     * Returns true if the consumer type is guest.
+     *
+     * @return bool
+     */
+    public function guest()
+    {
+        return $this->type == 'guest';
     }
 
     /**

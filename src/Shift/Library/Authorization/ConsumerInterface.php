@@ -1,4 +1,5 @@
-<?php namespace Tectonic\Shift\Library\Authorization;
+<?php
+namespace Tectonic\Shift\Library\Authorization;
 
 interface ConsumerInterface
 {
@@ -7,14 +8,14 @@ interface ConsumerInterface
      *
      * @return array Account
      */
-    public function getAccounts();
+    public function accounts();
 
     /**
-     * Returns the exact account id that the consumer is currently managing.
+     * Returns the language that the consumer prefers.
      *
-     * @return integer
+     * @return Language
      */
-    public function getAccountId();
+    public function language();
 
     /**
      * Return the id for the consumer.
@@ -22,4 +23,11 @@ interface ConsumerInterface
      * @return integer
      */
     public function id();
+
+    /**
+     * Returns the type of the consumer.
+     *
+     * @return ConsumerType
+     */
+    public function type();
 }

@@ -48,11 +48,11 @@ class Account extends Model
     /**
      * Returns the default supported language for an account.
      *
-     * @return mixed
+     * @return Language
      */
     public function defaultLanguage()
     {
-        return $this->languages()->whereDefault(true)->first();
+        return new Language($this->languages()->whereDefault(true)->first()->code);
     }
 
     /**

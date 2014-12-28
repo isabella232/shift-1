@@ -2,7 +2,7 @@
 namespace Tectonic\Shift\Library;
 
 use App;
-use Tectonic\Shift\Library\Authorization\Consumer;
+use Tectonic\Shift\Library\Authorization\ConsumerManager;
 use Tectonic\Shift\Library\Localisation\CurrentLocaleService;
 use Tectonic\Shift\Library\Localisation\Translator;
 use Tectonic\Shift\Library\Support\AssetFactory;
@@ -11,7 +11,7 @@ use Tectonic\Shift\Modules\Localisation\Services\TranslationService;
 class LibraryServiceProvider extends ServiceProvider
 {
     protected $aliases = [
-        'Consumer' => 'Tectonic\Shift\Library\Facades\Consumer',
+        'ConsumerManager' => 'Tectonic\Shift\Library\Facades\Consumer',
         'CurrentLocale' => 'Tectonic\Shift\Library\Facades\CurrentLocale',
     ];
 
@@ -37,7 +37,7 @@ class LibraryServiceProvider extends ServiceProvider
 
     protected function registerConsumer()
     {
-        $this->app->singleton('consumer', Consumer::class);
+        $this->app->singleton('consumer', ConsumerManager::class);
     }
 
     protected function registerCurrentLocale()
