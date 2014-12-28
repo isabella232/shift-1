@@ -1,7 +1,7 @@
 <?php
 namespace Tectonic\Shift\Library\Localisation;
 
-use Consumer;
+use Tectonic\Shift\Library\Facades\Consumer;
 use Tectonic\Shift\Modules\Accounts\Facades\CurrentAccount;
 use Tectonic\Shift\Modules\Localisation\Languages\Language;
 
@@ -15,7 +15,7 @@ class CurrentLocaleService
     /**
      * Determines the current language/locale based on consumer settings.
      *
-     * @return string
+     * @return Language
      */
 	protected function determine()
     {

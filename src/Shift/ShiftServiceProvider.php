@@ -19,7 +19,7 @@ class ShiftServiceProvider extends ServiceProvider
         'Asset'         => 'Orchestra\Support\Facades\Asset',
         'Authority'     => 'Authority\AuthorityL4\Facades\Authority',
         'Utility'       => 'Tectonic\Shift\Library\Facades\Utility',
-        'Recaptcha'     => 'Tectonic\Shift\Library\Facades\Recaptcha'
+        'Recaptcha'     => 'Tectonic\Shift\Library\Facades\Recaptcha',
     ];
 
     /**

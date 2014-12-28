@@ -12,7 +12,8 @@ class AuthFilter
         if (Auth::guest()) {
             return Redirect::to('/');
         }
-
-
+        else {
+            Consumer::set(new UserConsumer(Auth::user()));
+        }
     }
 }

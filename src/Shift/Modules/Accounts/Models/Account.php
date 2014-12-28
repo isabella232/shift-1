@@ -52,7 +52,8 @@ class Account extends Model
      */
     public function defaultLanguage()
     {
-        return new Language($this->languages()->whereDefault(true)->first()->code);
+        // @TODO: Support default language choice for accounts
+        return new Language($this->languages()->first()->code);
     }
 
     /**

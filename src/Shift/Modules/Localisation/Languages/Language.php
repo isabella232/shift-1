@@ -2,7 +2,6 @@
 namespace Tectonic\Shift\Modules\Localisation\Languages;
 
 use Config;
-use Tectonic\Shift\Modules\Localisation\UnsupportedLanguageException;
 
 class Language
 {

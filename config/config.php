@@ -11,12 +11,6 @@ return [
         'api_key' => ''
     ],
 
-    // Language / localisation configuration settings
-    'language' => [
-        'autoloads' => ['shift'],               // Packages to load language files for
-        'locales' => ['en_GB'],                 // Locales (language file translations) to pull in
-    ],
-
     // The private and public keys for recaptcha usage
     'recaptcha' => [
         'keys' => [

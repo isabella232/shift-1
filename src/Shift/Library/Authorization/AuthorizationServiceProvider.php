@@ -1,17 +1,22 @@
-<?php namespace Tectonic\Shift\Library\Authorization;
+<?php
+namespace Tectonic\Shift\Library\Authorization;
 
+use App;
+use Event;
 use Illuminate\Foundation\AliasLoader;
-use Illuminate\Support\ServiceProvider;
-use App, Event;
+use Tectonic\Shift\Library\Authorization\ConsumerManager;
+use Tectonic\Shift\Library\ServiceProvider;
 
 class AuthorizationServiceProvider extends ServiceProvider
 {
 	/**
-	 * Indicates if loading of the provider is deferred.
+	 * A collection of custom aliases to register.
 	 *
-	 * @var bool
+	 * @var array
 	 */
-	protected $defer = true;
+	protected $aliases = [
+		'Consumer' => 'Tectonic\Shift\Library\Facades\Consumer',
+	];
 
 	/**
 	 * Register the service provider.
@@ -20,30 +25,14 @@ class AuthorizationServiceProvider extends ServiceProvider
 	 */
 	public function register()
 	{
-        $this->registerAuthenticatedConsumer();
+        $this->registerConsumer();
     }
-
-	/**
-	 * Register the various classes required to Bootstrap Shift
-	 */
-	public function boot()
-	{
-		$this->package('tectonic/shift');
-	}
 
 	/**
 	 * Here we register our authenticated consumer
 	 */
-	public function registerAuthenticatedConsumer()
+	public function registerConsumer()
 	{
-        $loginHandler = function() {
-            $this->app->bindShared('AuthenticatedConsumer', function($app) {
-                return;
-            });
-        };
-
-        $loginHandler->bindTo($this);
-
-		Event::listen('login.successful', $loginHandler);
+		$this->app->singleton('consumer.manager', ConsumerManager::class);
 	}
 }
