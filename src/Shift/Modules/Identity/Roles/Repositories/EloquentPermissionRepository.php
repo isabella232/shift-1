@@ -9,7 +9,7 @@ class EloquentPermissionRepository extends Repository implements PermissionRepos
 {
     /**
      * Permissions are restricted by role, not account.
-     * 
+     *
      * @var bool
      */
     public $restrictByAccount = false;

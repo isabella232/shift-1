@@ -1,6 +1,5 @@
 <?php
-use CurrentLocale;
-use Tectonic\LaravelLocalisation\Translator\Translated\Entity;
+
 
 /**
  * Manages the output for a translation of a given model object, and the required field. It will
@@ -10,10 +9,10 @@ use Tectonic\LaravelLocalisation\Translator\Translated\Entity;
  * @param Entity $model
  * @param string $field
  */
-function lang(Entity $model, $field)
+function lang(\Tectonic\LaravelLocalisation\Translator\Translated\Entity $model, $field)
 {
-    $languageCode = CurrentLocale::get();
-
+    $languageCode = \Tectonic\Shift\Library\Facades\CurrentLocale::get();
+    
     if (isset($model->translated[$field][$languageCode])) {
         return $model->translated[$field][$languageCode];
     }
