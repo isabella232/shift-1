@@ -8,7 +8,7 @@ dependencies:
 
 test:
   override:
-    - phpunit --coverage-clover={$CIRCLE_ARTIFACTS}/coverage.clover tests
+    - phpunit --coverage-clover={$CIRCLE_ARTIFACTS}/coverage.clover
 
   post:
     - wget https://scrutinizer-ci.com/ocular.phar
