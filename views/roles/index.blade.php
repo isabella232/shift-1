@@ -46,7 +46,7 @@
 								<td class="checkbox"><input type="checkbox"></td>
 								<td><a href="">{{ lang($role, 'name') }}</a></td>
 								<!--<td></td>-->
-								<td>{{ dd($role) }}</td>
+								<td>{{ $role->createdAt }}</td>
 							</tr>
 						@endforeach
     				</tbody>

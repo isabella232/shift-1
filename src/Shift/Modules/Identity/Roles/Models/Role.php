@@ -2,6 +2,7 @@
 namespace Tectonic\Shift\Modules\Identity\Roles\Models;
 
 use Tectonic\Application\Eventing\EventGenerator;
+use Tectonic\Localisation\Contracts\TranslatableInterface;
 use Tectonic\Localisation\Translator\Translatable;
 use Tectonic\Shift\Library\Support\Database\Eloquent\Model;
 use Tectonic\Shift\Library\Support\Database\Eloquent\TranslatableModel;
@@ -10,7 +11,7 @@ use Tectonic\Shift\Modules\Accounts\Models\Account;
 use Tectonic\Shift\Modules\Identity\Roles\Events\RoleWasCreated;
 use Tectonic\Shift\Modules\Identity\Users\Models\User;
 
-class Role extends Model
+class Role extends Model implements TranslatableInterface
 {
     use EventGenerator;
     use Translatable;
