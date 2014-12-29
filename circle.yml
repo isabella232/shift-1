@@ -4,6 +4,7 @@ machine:
 
 dependencies:
   pre:
+    - echo "memory_limit = 512M" > ~/.phpenv/versions/$(phpenv global)/etc/conf.d/memory.ini
     - composer config --global github-oauth.github.com ${COMPOSER_OAUTH_TOKEN}
     - sed -i 's/^;//' ~/.phpenv/versions/$(phpenv global)/etc/conf.d/xdebug.ini
 
