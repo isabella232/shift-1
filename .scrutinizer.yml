@@ -1,12 +1,10 @@
 build:
     environment:
-        php: '5.5.12'
+        php: '5.6.0'
 
 filter:
     paths:
-        - 'src/Stylist/*'
-    excluded_paths:
-        - 'src/Stylist/StylistServiceProvider.php'
+        - 'src/Shift/*'
 
 checks:
     php:
