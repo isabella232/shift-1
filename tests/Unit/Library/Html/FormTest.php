@@ -20,26 +20,22 @@ class FormTest extends UnitTestCase
         $this->htmlBuilder = new HtmlBuilder( $this->urlGenerator );
         $this->formBuilder = new FormBuilder( $this->htmlBuilder, $this->urlGenerator, 123 );
 
+        // Create mock instance of validator class
         $validator = m::mock( 'Tectonic\Application\Validation\Validator' );
 
+        // Set up some basic validation rules that should be used for
+        // all validation tests
         $validator->shouldReceive('getRules')
             ->andReturn([
-                'name' => 'required|alpha',
-                'email' => 'required|email',
+                'name' => 'required',
+                'email' => 'email',
                 'textarea' => 'required',
                 'select' => 'required'
             ]);
 
+        // 
         $this->formBuilder->validator = $validator;
         $this->formBuilder->convertRulesToParsley();
-    }
-
-    /**
-     * Destroy the test environment.
-     */
-    public function tearDown()
-    {
-        m::close();
     }
 
     public function testOpenNewForm()
@@ -49,9 +45,23 @@ class FormTest extends UnitTestCase
         $this->assertEquals('<form method="GET" action="http://localhost/foo" accept-charset="UTF-8" data-parsley-validate="data-parsley-validate">', $form1);
     }
 
-    public function testFormText()
+    public function testTextInput()
     {
+
+        $translator = M::mock( 'Laravel\Services\Translator' );
+
+        $translator->shouldReceive( 'get' )
+            ->with( '' )
+            ->andReturn( $expected );
+
+
         $form1 = $this->formBuilder->input('text', 'name');
+        $this->assertEquals('<input data-parsley-required="" data-parsley-required-message="The name field is required." data-parsley-pattern="/^[a-zа-яё]+$/i" data-parsley-pattern-message="The name may only contain letters." name="name" type="text">', $form1);
+    }
+
+    public function testEmailInput()
+    {
+        $form1 = $this->formBuilder->email('email');
 
         $this->assertEquals('<input data-parsley-required="" data-parsley-required-message="The name field is required." data-parsley-pattern="/^[a-zа-яё]+$/i" data-parsley-pattern-message="The name may only contain letters." name="name" type="text">', $form1);
     }

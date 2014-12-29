@@ -43,8 +43,8 @@ gulp.task('styles', function() {
 
 gulp.task('scripts', function() {
     return gulp.src(scripts)
-	    //.pipe(jshint())
-	    //.pipe(jshint.reporter('default'))
+	    .pipe(jshint())
+	    .pipe(jshint.reporter('default'))
         .pipe(concat('shift.dev.js'))
         .pipe(gulp.dest(output + 'js'))
         .pipe(rename('shift.min.js'))
@@ -53,10 +53,39 @@ gulp.task('scripts', function() {
         .pipe(notify({ message: 'Javascript files compiled.' }));
 });
 
-gulp.task( 'publish' , function() {
-	gulp.src('.')
-		.pipe(exec('php ../../../artisan asset:publish'))
-		.pipe(notify({ message: 'Assets published.' }));
+gulp.task( 'theme-config', function() {
+
+	// The location of our default theme file
+	var theme_default = './assets/sass/_theme-default.scss';
+
+	// If our default theme file does not exist we need to create it
+	if ( fs.existsSync( theme_default ) == false ) {
+
+		// Read our PHP theme config file
+		runner.exec(
+		    'php -r \'print json_encode(include("./config/theme.php"));\'', 
+		    function (err, stdout, stderr) {
+
+		    	// Convert array stdout to json
+		    	var theme_settings = JSON.parse(stdout);
+		    	
+		    	// Loop over theme settings and create sass variables
+				for (var i=0; i < theme_settings.length; i++) {
+
+					// Alias current setting
+					var s = theme_settings[i];
+
+					// Append sass variable string to theme_default file with sync
+					fs.appendFileSync( theme_default, '$' + s.name + ': ' + s._default + ";\r\n" , { 'mode': 420 }, function (err) {
+						console.log( err );
+					});
+				}
+		  	}
+		);
+	}
+	else {
+		console.log( 'Theme file already exists' );
+	}
 });
 
 // Helper task for watching the scripts directories, and only the script directories
@@ -64,7 +93,7 @@ gulp.task('scripts-watch', function() {
 	gulp.run('scripts');
 
 	gulp.watch(input + 'js/**', function() {
-		gulp.run('scripts', 'publish');
+		gulp.run('scripts');
 	});
 });
 
@@ -72,14 +101,16 @@ gulp.task('styles-watch', function() {
 	gulp.run('styles');
 
 	gulp.watch(input + 'sass/**', function() {
-		gulp.run('styles', 'publish');
+		gulp.run('styles');
 	});
 });
 
 // When running gulp without any tasks, it'll watch the scripts, styles, and do artisan publishing.etc.
 gulp.task('default' , function() {
+
+	gulp.run('theme-config');
+
 	gulp.start('scripts-watch', 'styles-watch');
-	gulp.run('styles', 'publish');
 
 	// Run any custom gulp code
 	if (custom) {

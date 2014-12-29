@@ -20,6 +20,11 @@ class Form extends BaseFormBuilder
     public $validator = null;
 
     /**
+     * @type Laravel\Services\Translator
+     */
+    public $translator = null;
+
+    /**
      * Create a new custom form builder instance.
      *
      * @param  \Illuminate\Routing\UrlGenerator  $url
@@ -27,7 +32,7 @@ class Form extends BaseFormBuilder
      * @param  string  $csrfToken
      * @return void
      */
-    public function __construct(\Illuminate\Html\HtmlBuilder $html, \Illuminate\Routing\UrlGenerator $url, $csrfToken = false )
+    public function __construct( \Illuminate\Html\HtmlBuilder $html, \Illuminate\Routing\UrlGenerator $url, $csrfToken = false )
     {
         $this->url = $url;
         $this->html = $html;
@@ -45,15 +50,7 @@ class Form extends BaseFormBuilder
      */
     public function loadValidator( $validator )
     {
-        // If we pass in an already loaded validator instance save it locally
-        if( $validator instanceOf Tectonic\Application\Validation\Validator ) {
-            $this->validator = $validator;
-        }
-
-        // If we pass in a string we need to load the validator up first
-        else {
-            $this->validator = new $validator;
-        }
+        $this->validator = $validator instanceOf Tectonic\Application\Validation\Validator ? $validator : new $validator;
     }
 
     /**
@@ -199,7 +196,7 @@ class Form extends BaseFormBuilder
 
         return parent::textarea($name, $value, $options);
     }
-    
+
     /**
      * {@inheritdoc}
      */

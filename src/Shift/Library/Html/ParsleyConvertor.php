@@ -140,6 +140,8 @@ class ParsleyConvertor
 
         $customMessage = $this->translator->trans($customKey);
 
+        dd( $customMessage );
+
         if ($customMessage !== $customKey) {
             return $customMessage;
         } 
