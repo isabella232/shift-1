@@ -45,8 +45,8 @@
 							<tr @if ($i % 2 == 0) class="even"@endif>
 								<td class="checkbox"><input type="checkbox"></td>
 								<td><a href="">{{ lang($role, 'name') }}</a></td>
-								<!--<td>{{ $role->userCount }}</td>-->
-								<td>{{ $role->createdAt }}</td>
+								<!--<td></td>-->
+								<td>{{ dd($role) }}</td>
 							</tr>
 						@endforeach
     				</tbody>

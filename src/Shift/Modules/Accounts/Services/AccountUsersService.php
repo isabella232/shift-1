@@ -43,12 +43,4 @@ class AccountUsersService
 
         $this->dispatcher->dispatch($account->releaseEvents());
     }
-
-    /**
-     * @param User $user
-     */
-    public function getLocaleFor(User $user)
-    {
-
-    }
 }

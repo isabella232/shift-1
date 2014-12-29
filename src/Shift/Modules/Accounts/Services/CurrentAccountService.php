@@ -60,6 +60,16 @@ class CurrentAccountService
     }
 
     /**
+     * Returns the default language for the account.
+     *
+     * @return \Tectonic\Shift\Modules\Localisation\Languages\Language
+     */
+    public function defaultLanguage()
+    {
+        return $this->account->defaultLanguage();
+    }
+
+    /**
      * Determines the account that is being used for the current request.
      *
      * @return Account
