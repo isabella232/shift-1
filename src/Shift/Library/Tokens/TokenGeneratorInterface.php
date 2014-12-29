@@ -5,16 +5,23 @@ interface TokenGeneratorInterface
     /**
      * Generate a token, based on the array of given data.
      *
-     * @param array $data
+     * @return string
+     */
+    public function generateToken();
+
+    /**
+     * Encode the data array and return as string.
      *
      * @return string
      */
-    public function generateToken(array $data);
+    public function encodeData();
 
     /**
-     * Retrieve an array of all data elements given to the token generator
+     * Decode the data string, and return as an array
+     *
+     * @param string $data
      *
      * @return mixed
      */
-    public function getData();
+    public function decodeData($data);
 }

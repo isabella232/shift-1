@@ -4,6 +4,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Tectonic\Application\Commanding\Command;
 use Tectonic\Application\Eventing\EventDispatcher;
+use Tectonic\Shift\Modules\Authentication\AccountSwitcherTokenGenerator;
 use Tectonic\Shift\Modules\Authentication\Models\Token;
 use Tectonic\Shift\Modules\Accounts\Facades\CurrentAccount;
 use Tectonic\Application\Commanding\CommandHandlerInterface;
@@ -112,6 +113,9 @@ class SwitchToAccountCommandHandler implements CommandHandlerInterface
      */
     protected function createAccountSwitchRecord(Command $command)
     {
-        return Token::createToken($command->accountId, CurrentAccount::get(), $command->user->id, md5(Str::random()));
+        $generator = new AccountSwitcherTokenGenerator();
+        $generator->setData($command->accountId, CurrentAccount::get(), $command->user->id);
+
+        return Token::createToken($generator);
     }
 }

@@ -2,6 +2,7 @@
 
 use Tectonic\Application\Eventing\EventGenerator;
 use Tectonic\Shift\Library\Support\Database\Eloquent\Model;
+use Tectonic\Shift\Library\Tokens\TokenGeneratorInterface;
 use Tectonic\Shift\Modules\Authentication\Events\TokenWasGenerated;
 
 class Token extends Model
@@ -20,29 +21,25 @@ class Token extends Model
      *
      * @var array
      */
-    public $fillable = ['account_id', 'from_id', 'user_id', 'token'];
+    public $fillable = ['token', 'data'];
 
     /**
      * Create an account switch token
      *
-     * @param $accountId
-     * @param $userId
-     * @param $token
+     * @param \Tectonic\Shift\Library\Tokens\TokenGeneratorInterface $tokenGenerator
      *
      * @return static
      */
-    public static function createToken($accountId, $fromId, $userId, $token)
+    public static function createToken(TokenGeneratorInterface $tokenGenerator)
     {
-        $tokenRecord = new static;
+        $token = new static;
 
-        $tokenRecord->account_id = $accountId;
-        $tokenRecord->from_id    = $fromId;
-        $tokenRecord->user_id    = $userId;
-        $tokenRecord->token      = $token;
+        $token->token = $tokenGenerator->generateToken();
+        $token->data  = $tokenGenerator->encodeData();
 
-        $tokenRecord->raise(new TokenWasGenerated($tokenRecord));
+        $token->raise(new TokenWasGenerated($token));
 
-        return $tokenRecord;
+        return $token;
     }
 
 }
