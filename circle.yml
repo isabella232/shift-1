@@ -1,13 +1,15 @@
 machine:
-  node:
-    version: v0.10.28
+  php:
+    version: 5.6.2
 
 dependencies:
   pre:
-    - phpenv global 5.6.2
     - composer config --global github-oauth.github.com ${COMPOSER_OAUTH_TOKEN}
 
 test:
   override:
-    - phpunit tests
+    - phpunit --coverage-clover=coverage.clover tests
 
+  post:
+    - wget https://scrutinizer-ci.com/ocular.phar
+    - php ocular.phar code-coverage:upload --access-token="${SCRUTINIZER_ACCESS_TOKEN}" --format=php-clover coverage.clover

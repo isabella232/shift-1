@@ -5,6 +5,8 @@ build:
 filter:
     paths:
         - 'src/Shift/*'
+    excluded_paths:
+        - '*ServiceProvider.php'
 
 checks:
     php:
