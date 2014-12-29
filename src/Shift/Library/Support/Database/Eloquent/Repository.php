@@ -290,26 +290,6 @@ abstract class Repository implements RepositoryInterface
     }
 
     /**
-     * Lock the required tables/collections.
-     *
-     * @param ...$collections
-     */
-    public function lock(...$collections)
-    {
-        DB::statement('LOCK TABLES '.implode(', ', $collections));
-    }
-
-    /**
-     * Unlock all tables.
-     *
-     * @param ...$collections
-     */
-    public function unlock(...$collections)
-    {
-        DB::statement('UNLOCK TABLES');
-    }
-
-    /**
      * A single method to return the currentAccountId. This is the account id that represents
      * the current request's account, domain.etc.
      *
