@@ -18,8 +18,4 @@ class RolesServiceProvider extends ServiceProvider
         RoleRepositoryInterface::class => EloquentRoleRepository::class,
         PermissionRepositoryInterface::class => EloquentPermissionRepository::class
     ];
-
-    protected $listeners = [
-        'Tectonic.Shift.Modules.Identity.Roles.Events.RoleWasCreated' => SlugsListener::class
-    ];
 }
