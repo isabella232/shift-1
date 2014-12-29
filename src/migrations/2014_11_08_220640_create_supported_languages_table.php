@@ -16,7 +16,7 @@ class CreateSupportedLanguagesTable extends Migration {
 		{
 			$table->increments('id');
             $table->integer('account_id')->index();
-            $table->integer('code')->index();
+            $table->string('code')->index();
             $table->boolean('default')->default(false);
 			$table->timestamps();
 		});
@@ -31,5 +31,4 @@ class CreateSupportedLanguagesTable extends Migration {
 	{
 		Schema::drop('supported_languages');
 	}
-
 }

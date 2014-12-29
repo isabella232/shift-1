@@ -33,7 +33,7 @@ class EloquentTranslationRepository extends Repository implements TranslationRep
         foreach ($resources as $resource) {
             $query->orWhere(function($query) use ($criteria, $resource) {
                 $query->whereResource($resource);
-                $query->whereIn('foreign_id', $criteria->getIds($resource));
+                $query->whereIn('foreignId', $criteria->getIds($resource));
             });
         }
 

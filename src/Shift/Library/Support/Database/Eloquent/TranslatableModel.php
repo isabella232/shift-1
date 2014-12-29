@@ -39,5 +39,23 @@ trait TranslatableModel
 
         $this->translations()->save($translation);
     }
+
+    /**
+     * Saves numerous translations at once, but must follow the format:
+     *
+     * [ 'field' => [ 'languageCode' => 'value' ] ]
+     *
+     * eg.
+     *
+     * [ 'name' =>
+     *   [
+     *     'en_GB' => 'Colours',
+     *     'en_US' => 'Colors'
+     *   ]
+     * ]
+     *
+     * @param array $translations
+     * @param null $field
+     */
 }
  

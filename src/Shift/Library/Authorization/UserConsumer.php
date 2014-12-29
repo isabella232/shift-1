@@ -1,9 +1,10 @@
 <?php
-
 namespace Tectonic\Shift\Library\Authorization;
 
+use Tectonic\Shift\Modules\Identity\Users\Models\User;
+
 /**
- * Class Consumer
+ * Class ConsumerManager
  *
  * Simple value object for user with the AuthenticatedConsumer class.
  *
@@ -29,7 +30,7 @@ final class UserConsumer implements ConsumerInterface
 	 *
      * @param UserInterface $user
 	 */
-	public function __construct(UserInterface $user)
+	public function __construct(User $user)
 	{
         $this->user = $user;
 	}
@@ -38,22 +39,10 @@ final class UserConsumer implements ConsumerInterface
      * Returns an array of accounts that the user can manage or contribute to.
      *
      * @return array
-     * @todo Return the array of accounts the user can manage
      */
-    public function getAccounts()
+    public function accounts()
     {
-        return $this->user->getAccounts();
-    }
-
-    /**
-     * Returns the specific account id that the consumer is currently contributing to.
-     *
-     * @return integer
-     */
-    public function getAccountId()
-    {
-        // @todo: Implement the return of the account id
-        return 0;
+        return $this->user->accounts();
     }
 
     /**
@@ -63,6 +52,27 @@ final class UserConsumer implements ConsumerInterface
      */
     public function id()
     {
-        return $this->user->getId();
+        return $this->user->id;
+    }
+
+    /**
+     * Returns the language that the consumer prefers.
+     *
+     * @return Language
+     */
+    public function language()
+    {
+        // @TODO: Add support of user-preferred language
+        return CurrentAccount::get()->defaultLanguage();
+    }
+
+    /**
+     * Type is user.
+     *
+     * @return ConsumerType
+     */
+    public function type()
+    {
+        return new ConsumerType('user');
     }
 }

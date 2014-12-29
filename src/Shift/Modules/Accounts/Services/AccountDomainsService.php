@@ -1,7 +1,7 @@
 <?php
 namespace Tectonic\Shift\Modules\Accounts\Services;
 
-use Tectonic\Shift\Library\Authorization\Consumer;
+use Tectonic\Shift\Library\Authorization\ConsumerManager;
 use Tectonic\Shift\Modules\Accounts\Contracts\AccountInterface;
 use Tectonic\Shift\Modules\Accounts\Contracts\AccountRepositoryInterface;
 use Tectonic\Shift\Modules\Accounts\Contracts\DomainInterface;

@@ -3,7 +3,7 @@
 use Mockery as m;
 use Tests\UnitTestCase;
 use Tectonic\Shift\Library\Authorization\Bouncer;
-use Tectonic\Shift\Library\Authorization\Consumer;
+use Tectonic\Shift\Library\Authorization\ConsumerManager;
 
 class BouncerTest extends UnitTestCase
 {

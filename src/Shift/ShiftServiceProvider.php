@@ -3,6 +3,7 @@ namespace Tectonic\Shift;
 
 use App;
 use Tectonic\Shift\Commands\InstallCommand;
+use Tectonic\Shift\Commands\ResetCommand;
 use Tectonic\Shift\Library\Recaptcha;
 use Tectonic\Shift\Library\Router;
 use Tectonic\Shift\Library\Security\HoneyPot;
@@ -19,7 +20,7 @@ class ShiftServiceProvider extends ServiceProvider
         'Asset'         => 'Orchestra\Support\Facades\Asset',
         'Authority'     => 'Authority\AuthorityL4\Facades\Authority',
         'Utility'       => 'Tectonic\Shift\Library\Facades\Utility',
-        'Recaptcha'     => 'Tectonic\Shift\Library\Facades\Recaptcha'
+        'Recaptcha'     => 'Tectonic\Shift\Library\Facades\Recaptcha',
     ];
 
     /**
@@ -160,5 +161,8 @@ class ShiftServiceProvider extends ServiceProvider
     {
         $this->app->bind('command.install', InstallCommand::class);
         $this->commands('command.install');
+
+        $this->app->bind('command.reset', ResetCommand::class);
+        $this->commands('command.reset');
     }
 }

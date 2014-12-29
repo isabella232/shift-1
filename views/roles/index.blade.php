@@ -41,12 +41,11 @@
     					</tr>
     				</thead>
     				<tbody>
-						{{ $roles }}
-						@foreach ($roles as $i => $role)
+						@foreach ($roles->getItems() as $i => $role)
 							<tr @if ($i % 2 == 0) class="even"@endif>
 								<td class="checkbox"><input type="checkbox"></td>
-								<td><a href="">{{ $role->name }}</a></td>
-								<td>{{ $role->userCount }}</td>
+								<td><a href="">{{ lang($role, 'name') }}</a></td>
+								<!--<td></td>-->
 								<td>{{ $role->createdAt }}</td>
 							</tr>
 						@endforeach
