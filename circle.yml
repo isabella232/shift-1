@@ -8,8 +8,8 @@ dependencies:
 
 test:
   override:
-    - phpunit --coverage-clover=coverage.clover tests
+    - phpunit --coverage-clover={$CIRCLE_ARTIFACTS}/coverage.clover tests
 
   post:
     - wget https://scrutinizer-ci.com/ocular.phar
-    - php ocular.phar code-coverage:upload --access-token="${SCRUTINIZER_ACCESS_TOKEN}" --format=php-clover coverage.clover
+    - php ocular.phar code-coverage:upload --access-token="${SCRUTINIZER_ACCESS_TOKEN}" --format=php-clover {$CIRCLE_ARTIFACTS}/coverage.clover
