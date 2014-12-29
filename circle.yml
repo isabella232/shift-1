@@ -4,12 +4,18 @@ machine:
 
 dependencies:
   pre:
+    - echo "memory_limit = 512M" > ~/.phpenv/versions/$(phpenv global)/etc/conf.d/memory.ini
     - composer config --global github-oauth.github.com ${COMPOSER_OAUTH_TOKEN}
+    - sed -i 's/^;//' ~/.phpenv/versions/$(phpenv global)/etc/conf.d/xdebug.ini
+
+general:
+  artifacts:
+    - "coverage.clover"
 
 test:
   override:
-    - phpunit --coverage-clover={$CIRCLE_ARTIFACTS}/coverage.clover tests
+    - phpunit --coverage-clover=${CIRCLE_ARTIFACTS}/coverage.xml
 
   post:
     - wget https://scrutinizer-ci.com/ocular.phar
-    - php ocular.phar code-coverage:upload --access-token="${SCRUTINIZER_ACCESS_TOKEN}" --format=php-clover {$CIRCLE_ARTIFACTS}/coverage.clover
+    - php ocular.phar code-coverage:upload --access-token="${SCRUTINIZER_ACCESS_TOKEN}" --format=php-clover ${CIRCLE_ARTIFACTS}/coverage.xml

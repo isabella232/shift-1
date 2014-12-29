@@ -4,6 +4,7 @@ namespace Tectonic\Shift\Library\Support\Database\Eloquent;
 use CurrentAccount;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Str;
+use Tectonic\Localisation\Contracts\TranslatableInterface;
 use Tectonic\Localisation\Translator\Translatable;
 use Tectonic\Shift\Library\Search\SearchFilterCollection;
 use Tectonic\Shift\Library\Support\Database\RepositoryInterface;
@@ -59,6 +60,16 @@ abstract class Repository implements RepositoryInterface
     public function getOneBy($field, $value)
     {
         return $this->getByQuery($field, $value)->first();
+    }
+
+    /**
+     * Returns a single record based on the slug string.
+     *
+     * @param string $slug
+     */
+    public function getBySlug($slug)
+    {
+        return $this->requireBy('slug', $slug);
     }
 
     /**
@@ -297,7 +308,7 @@ abstract class Repository implements RepositoryInterface
      */
     protected function getTranslatableFields(Model $model)
     {
-        return in_array(Translatable::class, class_uses($model)) ? $model->getTranslatableFields() : [];
+        return $model instanceof TranslatableInterface ? $model->getTranslatableFields() : [];
     }
 
     /**

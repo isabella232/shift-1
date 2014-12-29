@@ -1,5 +1,4 @@
 <?php
-
 namespace Tectonic\Shift\Library\Support\Database;
 
 use Tectonic\Shift\Library\Search\SearchFilterCollection;

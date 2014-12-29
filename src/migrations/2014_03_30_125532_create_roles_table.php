@@ -16,6 +16,7 @@ class CreateRolesTable extends Migration
 		{
 			$table->increments('id');
 			$table->bigInteger('account_id')->unsigned()->index();
+            $table->char('slug', 8)->nullable()->index();
             $table->boolean('default')->default(false)->index();
 			$table->timestamps();
             $table->softDeletes();

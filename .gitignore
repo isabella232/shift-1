@@ -7,3 +7,4 @@ bin
 node_modules/*
 vendor/*
 gulp.custom.js
+report/*
