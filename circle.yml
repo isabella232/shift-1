@@ -5,6 +5,7 @@ machine:
 dependencies:
   pre:
     - composer config --global github-oauth.github.com ${COMPOSER_OAUTH_TOKEN}
+    - sed -i 's/^;//' ~/.phpenv/versions/$(phpenv global)/etc/conf.d/xdebug.ini
 
 general:
   artifacts:
@@ -12,8 +13,8 @@ general:
 
 test:
   override:
-    - phpunit --coverage-clover coverage.clover
+    - phpunit --coverage-clover=${CIRCLE_ARTIFACTS}/coverage.xml
 
   post:
     - wget https://scrutinizer-ci.com/ocular.phar
-    - php ocular.phar code-coverage:upload --access-token="${SCRUTINIZER_ACCESS_TOKEN}" --format=php-clover ${CIRCLE_ARTIFACTS}/coverage.clover
+    - php ocular.phar code-coverage:upload --access-token="${SCRUTINIZER_ACCESS_TOKEN}" --format=php-clover ${CIRCLE_ARTIFACTS}/coverage.xml
