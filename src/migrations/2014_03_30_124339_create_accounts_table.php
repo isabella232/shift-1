@@ -16,6 +16,7 @@ class CreateAccountsTable extends Migration {
 		{
 			$table->increments('id');
 			$table->bigInteger('user_id')->unsigned()->index()->nullable(); // the owner of the account
+			$table->char('slug', 8)->index()->nullable();
 			$table->timestamps();
             $table->softDeletes();
 		});
@@ -30,5 +31,4 @@ class CreateAccountsTable extends Migration {
 	{
 		Schema::drop('accounts');
 	}
-
 }

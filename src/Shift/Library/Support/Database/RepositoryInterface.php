@@ -1,5 +1,4 @@
 <?php
-
 namespace Tectonic\Shift\Library\Support\Database;
 
 use Tectonic\Shift\Library\Search\SearchFilterCollection;
@@ -95,4 +94,20 @@ interface RepositoryInterface
      * @return mixed
      */
     public function saveAll();
+
+    /**
+     * Locks 1 or more collections based on the requirements.
+     *
+     * @param ...$collections
+     * @return mixed
+     */
+    public function lock(...$collections);
+
+    /**
+     * Unlocks any previously locked collections.
+     *
+     * @param ...$collections
+     * @return mixed
+     */
+    public function unlock(...$collections);
 }

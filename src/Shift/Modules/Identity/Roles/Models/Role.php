@@ -4,6 +4,7 @@ namespace Tectonic\Shift\Modules\Identity\Roles\Models;
 use Tectonic\Application\Eventing\EventGenerator;
 use Tectonic\Localisation\Contracts\TranslatableInterface;
 use Tectonic\Localisation\Translator\Translatable;
+use Tectonic\Shift\Library\Slugs\Sluggable;
 use Tectonic\Shift\Library\Support\Database\Eloquent\Model;
 use Tectonic\Shift\Library\Support\Database\Eloquent\TranslatableModel;
 use Tectonic\Shift\Modules\Accounts\Facades\CurrentAccount;
@@ -16,6 +17,7 @@ class Role extends Model implements TranslatableInterface
     use EventGenerator;
     use Translatable;
     use TranslatableModel;
+    use Sluggable;
 
     /**
      * Each role belongs to exactly one account.

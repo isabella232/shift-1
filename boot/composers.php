@@ -5,6 +5,6 @@ use Tectonic\Shift\Library\Composers\LayoutsInstallationComposer;
 
 View::composers([
     AssetsComposer::class => ['shift::layouts.fullpage'],
-    LocaleComposer::class => ['shift::layouts.fullpage', 'shift::layouts.installation'],
+    LocaleComposer::class => ['shift::layouts.fullpage'],
     LayoutsInstallationComposer::class => ['shift::layouts.installation'],
 ]);
