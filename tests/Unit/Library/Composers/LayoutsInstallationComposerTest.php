@@ -3,7 +3,6 @@ namespace Tests\Unit\Library\Composers;
 
 use Asset;
 use Mockery as m;
-use Tectonic\Shift\Library\Composers\AssetsComposer;
 use Tectonic\Shift\Library\Composers\LayoutsInstallationComposer;
 
 class LayoutsInstallationComposerTest extends \Tests\UnitTestCase
