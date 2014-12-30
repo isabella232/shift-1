@@ -19,6 +19,7 @@
             <exclude>
                 <directory>./src/Shift/Commands</directory>
                 <directory>./src/Shift/Controllers</directory>
+                <directory>./src/Shift/Library/Facades</directory>
             </exclude>
         </whitelist>
     </filter>
