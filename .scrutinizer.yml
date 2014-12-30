@@ -1,7 +1,3 @@
-build:
-    environment:
-        php: hhvm
-
 filter:
     paths:
         - 'src/Shift/*'
