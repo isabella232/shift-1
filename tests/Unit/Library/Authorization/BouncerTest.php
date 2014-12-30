@@ -10,10 +10,8 @@ class BouncerTest extends UnitTestCase
 	private $bouncer;
 	private $mockAuthority;
 
-	public function setUp()
+	public function init()
 	{
-		parent::setUp();
-
 		$this->mockAuthority = m::mock('Authority\Authority');
 
 		$this->bouncer = new Bouncer($this->mockAuthority, 'User');
@@ -84,6 +82,16 @@ class BouncerTest extends UnitTestCase
 
 		$this->assertTrue($this->bouncer->allowed('post', 'index'));
 		$this->assertFalse($this->bouncer->allowed('post', 'creator'));
+	}
+
+	public function testArrayAuthorisation()
+	{
+		$this->mockAuthority->shouldReceive('can')->with('create', 'Entry')->once()->andReturn(true);
+		$this->mockAuthority->shouldReceive('can')->with('update', 'Entry')->once()->andReturn(false);
+
+		$this->bouncer->authoriseArray(['create', 'update'], 'Entry');
+
+		$this->assertTrue($this->bouncer->permitted());
 	}
 
 	public function testAuthoriseWithArrayWithAllFailures()

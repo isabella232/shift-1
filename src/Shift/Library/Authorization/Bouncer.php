@@ -40,6 +40,13 @@ final class Bouncer
 	private $authority;
 
 	/**
+	 * Used as a kind of pointer. If any authorise method passes, this should be set to true.
+	 *
+	 * @var bool
+	 */
+	private $permitted = false;
+
+	/**
 	 * The resource provided must be the resource that is matched throughout the system. Usually this in camelcase,
 	 * such as User or EntrySubmission.etc.
 	 *
@@ -113,18 +120,20 @@ final class Bouncer
 	 */
 	public function allowed($method, $action)
 	{
+		$this->reset();
+
 		$method = $this->method($method);
 
 		$this->debug("Access request from [{$this->resource}] with [$method] to [$action].");
 
 		// let's see if such an action and resource exists in the matrix
 		if (isset($this->matrix[$method][$action])) {
-			return $this->authoriseMatrix($this->matrix[$method][$action], $this->resource);
+			$this->authoriseMatrix($this->matrix[$method][$action], $this->resource);
 		}
 
 		$this->debug('Access request denied.');
 
-		return false;
+		return $this->permitted();
 	}
 
 	/**
@@ -140,27 +149,16 @@ final class Bouncer
 		foreach ($rules as $key => $check) {
 			$resource = is_numeric($key) ? $this->resource : $key;
 
-			// if the auth check value is a callable function, let that handle whether
-			// access is allowable or not for the user's request.
 			if (is_callable($check)) {
-				if ($this->authoriseFunction($check)) {
-					return true;
-				}
+				$this->authoriseFunction($check);
 			}
-			// If auth check value is an array, check each member rule
 			else if (is_array($check)) {
-				if ($this->authoriseArray($check, $resource)) {
-					return true;
-				}
+				$this->authoriseArray($check, $resource);
 			}
 			else {
-				if ($this->authoriseRule($check, $resource)) {
-					return true;
-				}
+				$this->authoriseRule($check, $resource);
 			}
 		}
-
-		return false;
 	}
 
 	/**
@@ -173,31 +171,10 @@ final class Bouncer
 	public function authoriseArray(array $rules, $resource)
 	{
 		foreach ($rules as $rule) {
-			// 'any' means anyone can do it
 			if ($this->authoriseRule($rule, $resource)) {
-				return true;
+				$this->permit();
 			}
 		}
-
-		return false;
-	}
-
-	/**
-	 * Some authorization requires very complex conditions. Passing a callback as part of the rule requirement
-	 * for the matrix allows this functionality. This method executes and returns the result of that callback.
-	 *
-	 * @param \Closure $function
-	 * @return bool
-	 */
-	public function authoriseFunction(\Closure $function)
-	{
-		$access = $function();
-
-		if ($access) {
-			$this->debug("Access request granted for provided closure.");
-		}
-
-		return $access;
 	}
 
 	/**
@@ -212,10 +189,49 @@ final class Bouncer
 		if ($this->can($rule, $resource)) {
 			$this->debug("Access request granted from [$resource] on rule $rule");
 
-			return true;
+			return $this->permit();
 		}
+	}
 
-		return false;
+	/**
+	 * Some authorization requires very complex conditions. Passing a callback as part of the rule requirement
+	 * for the matrix allows this functionality. This method executes and returns the result of that callback.
+	 *
+	 * @param \Closure $function
+	 * @return bool
+	 */
+	public function authoriseFunction(\Closure $function)
+	{
+		if ($function()) {
+			$this->debug("Access request granted for provided closure.");
+			$this->permit();
+		}
+	}
+
+	/**
+	 * Returns the permitted value.
+	 *
+	 * @return bool
+     */
+	public function permitted()
+	{
+		return $this->permitted;
+	}
+
+	/**
+	 * Permits access.
+	 */
+	public function permit()
+	{
+		return $this->permitted = true;
+	}
+
+	/**
+	 * Reset the permitted check. Necessary if doing numerous checks.
+	 */
+	public function reset()
+	{
+		$this->permitted = false;
 	}
 
     /**
@@ -228,9 +244,15 @@ final class Bouncer
     private function can($rule, $resource)
     {
         // Guest access allowed
-        if ('guest' == $rule) return true;
+        if ('guest' == $rule) {
+	        return $this->permit();
+        }
 
-        return $this->authority->can($rule, $resource);
+        if ($this->authority->can($rule, $resource)) {
+	        return $this->permit();
+        }
+
+	    return false;
     }
 
 	/**
