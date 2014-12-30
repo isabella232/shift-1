@@ -61,6 +61,16 @@ abstract class ServiceProvider extends Provider
 		$this->setupEntityPaths();
 	}
 
+	/**
+	 * Return an array of service providers that you would like to defer.
+	 *
+	 * @return array
+	 */
+	public static function defer()
+	{
+		return [];
+	}
+
     /**
      * If there are any listeners defined on the service provider, here we'll loop through
      * them and register them as subscribers with Laravel's events system.
@@ -94,6 +104,16 @@ abstract class ServiceProvider extends Provider
 		foreach ($this->serviceProviders as $provider) {
 			$this->app->register($provider);
 		}
+	}
+
+	/**
+	 * Returns the array of service providers that are registered by this service provider.
+	 *
+	 * @return array
+     */
+	public function serviceProviders()
+	{
+		return $this->serviceProviders;
 	}
 
     /**
