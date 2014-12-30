@@ -44,7 +44,7 @@
 						@foreach ($roles->getItems() as $i => $role)
 							<tr @if ($i % 2 == 0) class="even"@endif>
 								<td class="checkbox"><input type="checkbox"></td>
-								<td><a href="{{ action('Tectonic\Shift\Controllers\RoleController@getNew@getShow', $role->slug) }}">{{ lang($role, 'name') }}</a></td>
+								<td><a href="{{ action('Tectonic\Shift\Controllers\RoleController@getShow', $role->slug) }}">{{ lang($role, 'name') }}</a></td>
 								<!--<td></td>-->
 								<td>{{ $role->createdAt }}</td>
 							</tr>
