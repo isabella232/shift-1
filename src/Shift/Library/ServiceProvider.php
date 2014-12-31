@@ -51,26 +51,6 @@ abstract class ServiceProvider extends Provider
 		$this->registerServiceProviders();
 	}
 
-	/**
-	 * When booting any service provider issued by Shift or any child packages, it's important
-	 * that upon boot we register any entity paths that the system wants to use. This is used
-	 * for database migrations via Doctrine.
-	 */
-	public function boot()
-	{
-		$this->setupEntityPaths();
-	}
-
-	/**
-	 * Return an array of service providers that you would like to defer.
-	 *
-	 * @return array
-	 */
-	public static function defer()
-	{
-		return [];
-	}
-
     /**
      * If there are any listeners defined on the service provider, here we'll loop through
      * them and register them as subscribers with Laravel's events system.
@@ -127,22 +107,6 @@ abstract class ServiceProvider extends Provider
             $this->app->singleton($interface, $repository);
         }
     }
-
-	/**
-	 * Method to automatically inject entity paths for doctrine usage. This is particularly
-	 * useful when wanting to automatically generate database schema design based on entities.
-	 */
-	protected function setupEntityPaths()
-	{
-		$directory = $this->getServiceProviderDirectory('Entities');
-		$configuration = $this->cleanupConfiguration(Config::get('doctrine::doctrine.metadata', []));
-
-		if (File::isDirectory($directory)) {
-			$configuration[] = $directory;
-		}
-
-		Config::set('doctrine::doctrine.metadata', append_config($configuration));
-	}
 
 	/**
 	 * Due to the way in which the configuration array is initially configured, it can mean that the first

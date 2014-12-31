@@ -13,13 +13,6 @@ use Tectonic\Shift\Modules\Localisation\Repositories\EloquentTranslationReposito
 class LocalisationServiceProvider extends ServiceProvider
 {
     /**
-     * Indicates if loading of the provider is deferred.
-     *
-     * @var bool
-     */
-    protected $defer = false;
-
-    /**
      * Required listeners for the system.
      *
      * @var array
@@ -49,7 +42,6 @@ class LocalisationServiceProvider extends ServiceProvider
 
         $this->registerAssetContainer();
         $this->registerLangSingleton();
-        $this->registerLocaliserInterface();
     }
 
     public function boot()
@@ -80,19 +72,6 @@ class LocalisationServiceProvider extends ServiceProvider
     {
         $this->app->singleton('lang', function($app) {
             return $app['shift.translator'];
-        });
-    }
-
-    /**
-     * Register the localiser and bind and implementation to interface
-     *
-     * @return void
-     */
-    protected function registerLocaliserInterface()
-    {
-        $this->app->singleton('Tectonic\Shift\Modules\Localisation\Contracts\LocaliserInterface', function()
-        {
-            return $this->app->make('Tectonic\Shift\Modules\Localisation\Services\Localiser');
         });
     }
 

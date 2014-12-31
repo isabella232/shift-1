@@ -5,12 +5,12 @@ use Illuminate\Console\Command;
 use Illuminate\Container\Container;
 use Tectonic\Shift\ShiftServiceProvider;
 
-class CompileDeferredServicesCommand extends Command
+class CompileServicesCommand extends Command
 {
     /**
      * @var string
      */
-    protected $name = 'shift:compile-deferred';
+    protected $name = 'shift:compile-services';
 
     /**
      * @var string
@@ -49,7 +49,7 @@ class CompileDeferredServicesCommand extends Command
     {
         $providers = $this->getProviders();
 
-        $this->providerRepository->compileManifest($this->app, $providers);
+        $this->providerRepository->compile($this->app, $providers);
     }
 
     /**
@@ -78,13 +78,12 @@ class CompileDeferredServicesCommand extends Command
         $allProviders = [];
 
         foreach ($providers as $provider) {
-            $provider = $this->createProvider($provider);
+            $instance = $this->createProvider($provider);
 
-            if (method_exists($provider, 'serviceProviders')) {
-                $allProviders = array_merge($allProviders, $this->getShiftProviders($provider->serviceProviders()))
-            }
-            else {
-                $allProviders[] = $provider;
+            $allProviders[] = $provider;
+
+            if (method_exists($instance, 'serviceProviders')) {
+                $allProviders = array_merge($allProviders, $this->getShiftProviders($instance->serviceProviders()));
             }
         }
 
@@ -93,7 +92,7 @@ class CompileDeferredServicesCommand extends Command
 
     /**
      * Creates a new provider instance.
-     * 
+     *
      * @param string $provider
      * @return ServiceProvider
      */

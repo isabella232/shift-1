@@ -10,6 +10,13 @@ use Tectonic\Shift\Library\ServiceProvider;
 class AuthorizationServiceProvider extends ServiceProvider
 {
 	/**
+	 * Defer the loading of auth.
+	 *
+	 * @var bool
+	 */
+	public $defer = true;
+
+	/**
 	 * A collection of custom aliases to register.
 	 *
 	 * @var array
@@ -25,6 +32,8 @@ class AuthorizationServiceProvider extends ServiceProvider
 	 */
 	public function register()
 	{
+		parent::register();
+
         $this->registerConsumer();
     }
 
@@ -34,5 +43,15 @@ class AuthorizationServiceProvider extends ServiceProvider
 	public function registerConsumer()
 	{
 		$this->app->singleton('consumer.manager', ConsumerManager::class);
+	}
+
+	/**
+	 * Return the classes and objects provided by this service provider.
+	 *
+	 * @return array
+	 */
+	public function provides()
+	{
+		return ['consumer.manager', 'Consumer'];
 	}
 }
