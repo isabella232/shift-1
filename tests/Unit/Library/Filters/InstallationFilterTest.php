@@ -1,6 +1,7 @@
 <?php
 namespace Tests\Unit\Library\Filters;
 
+use Illuminate\Support\Facades\App;
 use Mockery as m;
 use Tectonic\Shift\Library\Filters\InstallationFilter;
 use Tectonic\Shift\Modules\Accounts\Services\AccountManagementService;
@@ -14,19 +15,18 @@ class InstallationFilterTest extends UnitTestCase
 	public function init()
     {
         $this->mockAccountManagementService = m::mock(AccountManagementService::class);
+
         $this->filter = new InstallationFilter($this->mockAccountManagementService);
     }
 
-    /**
-     * @expectedException Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     */
     public function testInstallationAlreadyCompleted()
     {
         $this->mockAccountManagementService->shouldReceive('totalNumberOfAccounts')->andReturn(1);
+        App::shouldReceive('abort')->with(404)->once();
 
         $this->filter->filter();
     }
-    
+
     public function testInstallationNeedsToBeCompleted()
     {
         $this->mockAccountManagementService->shouldReceive('totalNumberOfAccounts')->andReturn(0);
