@@ -1,5 +1,4 @@
 <?php
-
 namespace Tectonic\Shift\Library\Filters;
 
 use App;

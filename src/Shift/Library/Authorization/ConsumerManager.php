@@ -11,7 +11,7 @@ use Tectonic\Shift\Modules\Localisation\Languages\Language;
  *
  * @package Tectonic\Shift\Library\Authorization
  */
-final class ConsumerManager
+class ConsumerManager
 {
     /**
      * Stores the actual consumer object of the application/api.

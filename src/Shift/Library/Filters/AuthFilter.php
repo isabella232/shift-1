@@ -6,6 +6,7 @@ use Consumer;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
 use Redirect;
+use Tectonic\Shift\Library\Authorization\UserConsumer;
 
 /**
  * Class AuthFilter
