@@ -7,6 +7,11 @@ use Tectonic\Localisation\Contracts\TranslationRepositoryInterface;
 
 class LocalisationServiceProvider extends TranslationServiceProvider
 {
+    /**
+     * Here we're overloading the registerLoader method by Laravel, and creating our own
+     * translation loader, which manages not only lang files, but database language value customisations
+     * as well.
+     */
     protected function registerLoader()
     {
         $this->app->bindShared('translation.loader', function($app) {
