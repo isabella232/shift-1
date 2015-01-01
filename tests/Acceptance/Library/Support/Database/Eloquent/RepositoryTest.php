@@ -25,7 +25,7 @@ class RepositoryTest extends AcceptanceTestCase
      */
     public function testRequireByWithNoResult()
     {
-        $this->repository->requireBy('createdAt', 'bogus value');
+        $this->repository->requireByCreatedAt('bogus value');
     }
 
     public function testRequireBy()
