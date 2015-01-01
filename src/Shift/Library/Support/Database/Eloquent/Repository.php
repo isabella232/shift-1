@@ -75,19 +75,19 @@ abstract class Repository implements RepositoryInterface
     {
         $model = $this->model;
         $translatableFields = $this->getTranslatableFields($this->model);
+        $query = $this->getQuery();
 
         // If the model is translatable, and the field exists within the array, as well as the model having a
         // translations relationship defined on the model, we can do some neat stuff querying for a field value.
         if (in_array($field, $translatableFields) && method_exists($model, 'translations')) {
-            $query = $this->getQuery()
-                ->whereHas('translations', function($query) use ($field, $value, $model) {
-                    $query->where('resource', '=', class_basename($model));
-                    $query->where('field', '=', $field);
-                    $query->where('value', 'LIKE', "%{$value}%");
-                });
+            $query = $query->whereHas('translations', function($query) use ($field, $value, $model) {
+                $query->where('resource', '', class_basename($model));
+                $query->where('field', '=', $field);
+                $query->where('value', 'LIKE', "%{$value}%");
+            });
         }
         else {
-            $query = $this->getQuery()->where($field, '=', $value);
+            $query = $query->where($field, '=', $value);
         }
 
         return $query;

@@ -85,4 +85,31 @@ class RepositoryTest extends AcceptanceTestCase
 
         $this->assertNotNull($account);
     }
+
+    public function testSoftDelete()
+    {
+        $this->repository->delete($this->account);
+
+        $this->assertNull($this->repository->getById($this->account->id));
+    }
+
+    public function testHardDelete()
+    {
+        $this->repository->delete($this->account, $permanent = true);
+
+        $this->assertNull($this->repository->getById($this->account->id));
+    }
+
+    public function testUpdates()
+    {
+        $this->assertEquals($this->account, $this->repository->update($this->account, ['id' => 2]));
+    }
+
+    /**
+     * @expectedException Tectonic\Shift\Library\Support\Exceptions\MethodNotFoundException
+     */
+    public function testInvalidMethodCall()
+    {
+        $this->repository->lksjefljsdf();
+    }
 }
