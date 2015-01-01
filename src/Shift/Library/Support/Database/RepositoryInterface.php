@@ -92,5 +92,5 @@ interface RepositoryInterface
      * @param array $resources
      * @return mixed
      */
-    public function saveAll(...$resources);
+    public function saveAll();
 }
