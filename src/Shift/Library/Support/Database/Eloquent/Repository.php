@@ -63,16 +63,6 @@ abstract class Repository implements RepositoryInterface
     }
 
     /**
-     * Returns a single record based on the slug string.
-     *
-     * @param string $slug
-     */
-    public function getBySlug($slug)
-    {
-        return $this->requireBy('slug', $slug);
-    }
-
-    /**
      * Creates a query object used for getBy and getOneBy methods. This is particularly handy for models
      * that have translatable fields. In short, it allows the developer to easily query for model objects
      * that may have fields that reside within the translations table.
@@ -89,15 +79,18 @@ abstract class Repository implements RepositoryInterface
         // If the model is translatable, and the field exists within the array, as well as the model having a
         // translations relationship defined on the model, we can do some neat stuff querying for a field value.
         if (in_array($field, $translatableFields) && method_exists($model, 'translations')) {
-            return $this->getQuery()->whereHas('translations', function($query) use ($field, $value, $model) {
-                $query->where('resource', '', class_basename($model));
-                $query->where('field', '=', $field);
-                $query->where('value', 'like', "%{$value}%");
-            });
+            $query = $this->getQuery()
+                ->whereHas('translations', function($query) use ($field, $value, $model) {
+                    $query->where('resource', '=', class_basename($model));
+                    $query->where('field', '=', $field);
+                    $query->where('value', 'LIKE', "%{$value}%");
+                });
         }
         else {
-            return $this->getQuery()->where($field, '=', $value);
+            $query = $this->getQuery()->where($field, '=', $value);
         }
+
+        return $query;
     }
 
     /**
@@ -150,7 +143,7 @@ abstract class Repository implements RepositoryInterface
         $resources = func_get_args();
 
         if (count($resources) == 0) {
-            throw new Exception('You must provide at least one $resource argument.');
+            throw new \Exception('You must provide at least one $resource argument.');
         }
 
         foreach ($resources as $resource) {
@@ -171,8 +164,10 @@ abstract class Repository implements RepositoryInterface
     {
         $result = $this->getBy($field, $value);
 
-        if (!$result) {
-            throw with(new ModelNotFoundException)->setModel(get_class($this->model));
+        if ($result->isEmpty()) {
+            $exception = with(new ModelNotFoundException)->setModel(get_class($this->model));
+
+            throw $exception;
         }
 
         return $result[0];

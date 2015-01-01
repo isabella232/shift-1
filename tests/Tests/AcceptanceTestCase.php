@@ -2,9 +2,9 @@
 namespace Tests;
 
 use App;
+use CurrentAccount;
 use Route;
 use Tectonic\Shift\Modules\Accounts\Contracts\AccountRepositoryInterface;
-use Tectonic\Shift\Modules\Accounts\Services\CurrentAccountService;
 
 class AcceptanceTestCase extends TestCase
 {
@@ -89,7 +89,9 @@ class AcceptanceTestCase extends TestCase
 
         $accountRepository->save($this->account);
 
-        \CurrentAccount::set($this->account);
+        CurrentAccount::set($this->account);
+
+        $this->account->addTranslation('en', 'name', 'Account');
     }
 
     /**

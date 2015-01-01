@@ -13,7 +13,7 @@ trait TranslatableModel
      */
     public function translations()
     {
-        return $this->hasMany(Translation::class, 'foreign_id')->where('resource', '=', class_basename($this));
+        return $this->hasMany(Translation::class, 'foreign_id');
     }
 
     /**

@@ -73,7 +73,7 @@ class RoleController extends Controller
      */
     public function getShow($roleSlug)
     {
-        $role = Translator::translate($this->roleRepository->getBySlug($roleSlug));
+        $role = Translator::translate($this->roleRepository->requireBy('slug', $roleSlug));
 
         return $this->respond('shift::roles.edit', compact('role'));
     }

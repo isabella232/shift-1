@@ -3,6 +3,7 @@ namespace Tectonic\Shift\Modules\Accounts\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletingTrait;
 use Tectonic\Application\Eventing\EventGenerator;
+use Tectonic\Localisation\Contracts\TranslatableInterface;
 use Tectonic\Localisation\Translator\Translatable;
 use Tectonic\Shift\Library\Slugs\Sluggable;
 use Tectonic\Shift\Library\Support\Database\Eloquent\Model;
@@ -12,7 +13,7 @@ use Tectonic\Shift\Modules\Accounts\Events\OwnerWasChanged;
 use Tectonic\Shift\Modules\Localisation\Languages\Language;
 use Tectonic\Shift\Modules\Identity\Users\Models\User;
 
-class Account extends Model
+class Account extends Model implements TranslatableInterface
 {
     use EventGenerator;
     use SoftDeletingTrait;
