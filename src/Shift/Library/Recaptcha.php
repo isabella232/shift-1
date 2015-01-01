@@ -1,5 +1,6 @@
 <?php
 namespace Tectonic\Shift\Library;
+use Curl\Curl;
 
 /**
  * Class Recaptcha
@@ -27,11 +28,19 @@ class Recaptcha
     protected $privateKey;
 
     /**
+     * Manages the requests to the recaptcha api.
+     *
+     * @var \Curl\Curl
+     */
+    private $curl;
+
+    /**
      * @param string $privateKey
      */
-    public function __construct($privateKey)
+    public function __construct(Curl $curl, $privateKey)
     {
         $this->privateKey = $privateKey;
+        $this->curl = $curl;
     }
 
     /**
@@ -65,16 +74,12 @@ class Recaptcha
      */
     public function request($url, array $params = [])
     {
-        $url = $url.'?'.http_build_query($params);
+        $this->curl->get($url, $params);
+        $this->curl->setOpt(CURLOPT_RETURNTRANSFER, true);
 
-        $ch = curl_init();
+        $response = $this->curl->response;
 
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-        $response = curl_exec($ch);
-
-        curl_close($ch);
+        $this->curl->close();
 
         return $response;
     }

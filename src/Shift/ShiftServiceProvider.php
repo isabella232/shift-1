@@ -2,6 +2,7 @@
 namespace Tectonic\Shift;
 
 use App;
+use Curl\Curl;
 use Tectonic\Shift\Commands\CompileServicesCommand;
 use Tectonic\Shift\Commands\InstallCommand;
 use Tectonic\Shift\Commands\ResetCommand;
@@ -126,7 +127,7 @@ class ShiftServiceProvider extends ServiceProvider
     public function registerRecaptcha()
     {
         $this->app->singleton('recaptcha', function($app) {
-            return new Recaptcha($app['config']->get('shift::recaptcha.keys.private'));
+            return new Recaptcha(new Curl, $app['config']->get('shift::recaptcha.keys.private'));
         });
     }
 
