@@ -1,4 +1,5 @@
-<?php namespace Tests\Unit\Library\Search\Filters;
+<?php
+namespace Tests\Unit\Library\Search\Filters;
 
 use Mockery as m;
 use Tectonic\Shift\Library\Search\Filters\OrderFilter;
@@ -7,10 +8,8 @@ class OrderFilterTest extends \Tests\UnitTestCase
 {
 	private $query;
 
-	public function setUp()
+	public function init()
 	{
-		parent::setUp();
-
 		$this->query = m::mock('query');
 	}
 
