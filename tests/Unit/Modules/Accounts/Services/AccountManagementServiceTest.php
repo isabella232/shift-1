@@ -14,14 +14,21 @@ class AccountManagementServiceTest  extends UnitTestCase
 
 	public function init()
 	{
-		$this->mockRepository = m::spy(AccountRepositoryInterface::class);
+		$this->mockRepository = m::mock(AccountRepositoryInterface::class);
 		$this->service = new AccountManagementService($this->mockRepository, new AccountValidation);
 	}
 
 	public function testRequestedDomain()
 	{
-        $this->service->getAccountForDomain('whatever');
+        $this->mockRepository->shouldReceive('requireByDomain')->with('whatever')->once()->andReturn('account');
 
-        $this->mockRepository->shouldHaveReceived('requireByDomain')->once();
+        $this->assertEquals('account', $this->service->getAccountForDomain('whatever'));
+	}
+
+	public function testNumberOfAccounts()
+	{
+		$this->mockRepository->shouldReceive('getCount')->once()->andReturn(1);
+
+		$this->assertEquals(1, $this->service->totalNumberOfAccounts('whatever'));
 	}
 }
