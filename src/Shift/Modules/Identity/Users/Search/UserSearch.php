@@ -1,6 +1,5 @@
 <?php
-
-namespace Tectonic\Shift\Modules\Accounts\Search;
+namespace Tectonic\Shift\Modules\Identity\Users\Search;
 
 use Tectonic\Shift\Modules\Accounts\Models\User;
 use Tectonic\Shift\Library\Search\Filters\KeywordFilter;

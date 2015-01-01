@@ -23,9 +23,19 @@ class EloquentRoleRepositoryTest extends AcceptanceTestCase
         $this->assertEquals($role->id, $defaultRole->id);
     }
 
-    public function testRetrievalViaPermission()
+    public function testSetDefault()
     {
         $role = $this->roleRepository->getNew();
-        $this->roleRepository->save($role);
+        $this->roleRepository->setDefault($role);
+
+        $role2 = $this->roleRepository->getNew();
+        $this->roleRepository->setDefault($role2);
+
+        // This tests a special use-case
+        $this->roleRepository->setDefault($role2);
+
+        $defaultRole = $this->roleRepository->getDefault();
+
+        $this->assertEquals($role2->id, $defaultRole->id);
     }
 }
