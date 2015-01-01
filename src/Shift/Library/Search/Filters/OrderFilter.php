@@ -54,14 +54,6 @@ class OrderFilter implements SearchFilterInterface
 		return static::byFieldAndDirection($field, $direction);
 	}
 
-	/**
-	 * Add an order by clause to the search query.
-	 */
-	public function applyToDoctrine($queryBuilder)
-	{
-		$queryBuilder->orderBy($this->sortField($queryBuilder), $this->sortDirection());
-	}
-
     /**
      * Apply the given search filter to an Eloquent query.
      *

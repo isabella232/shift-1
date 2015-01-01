@@ -5,39 +5,36 @@ use Tectonic\Shift\Library\Search\Filters\OrderFilter;
 
 class OrderFilterTest extends \Tests\UnitTestCase
 {
-	private $queryBuilder;
+	private $query;
 
 	public function setUp()
 	{
 		parent::setUp();
 
-		$this->queryBuilder = m::mock('querybuilder');
+		$this->query = m::mock('query');
 	}
 
 	public function testByFieldAndDirection()
 	{
-		$this->queryBuilder->shouldReceive('getRootAliases')->andReturn('alias');
-		$this->queryBuilder->shouldReceive('orderBy')->with('a.field', 'ASC');
+		$this->query->shouldReceive('orderBy')->with('field', 'ASC');
 
 		$filter = OrderFilter::byFieldAndDirection('field', 'asc');
-		$filter->applyToDoctrine($this->queryBuilder);
+		$filter->applyToEloquent($this->query);
 	}
 
 	public function testByInputWithOnlyField()
 	{
-		$this->queryBuilder->shouldReceive('getRootAliases')->andReturn('alias');
-		$this->queryBuilder->shouldReceive('orderBy')->with('a.something', 'DESC');
+		$this->query->shouldReceive('orderBy')->with('something', 'DESC');
 
 		$filter = OrderFilter::byInput(['order' => 'something']);
-		$filter->applyToDoctrine($this->queryBuilder);
+		$filter->applyToEloquent($this->query);
 	}
 
 	public function testByInputWithOnlyDirection()
 	{
-		$this->queryBuilder->shouldReceive('getRootAliases')->andReturn('alias');
-		$this->queryBuilder->shouldReceive('orderBy')->with('a.id', 'ASC');
+		$this->query->shouldReceive('orderBy')->with('id', 'ASC');
 
 		$filter = OrderFilter::byInput(['direction' => 'asc']);
-		$filter->applyToDoctrine($this->queryBuilder);
+		$filter->applyToEloquent($this->query);
 	}
 }
