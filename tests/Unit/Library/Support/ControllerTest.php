@@ -1,69 +1,35 @@
-<?php namespace Tests\Unit\Library\Support;
+<?php
+namespace Tests\Unit\Library\Support;
 
-use Input;
-use Mockery as m;
-use Response;
+use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\View;
 use Tests\UnitTestCase;
 use Tests\Stubs\ControllerStub;
 
 class ControllerTest extends UnitTestCase
 {
+    protected $controller;
 
-    protected $controller,
-        $mockService,
-        $mockInput;
-
-    public function setUp()
+    public function init()
     {
-        parent::setUp();
-
-        $this->mockService  = m::mock('MockService');
-        $this->mockInput    = m::mock('Illuminate\Http\Request');
-
-        Input::swap($this->mockInput);
-
-        $this->controller = new ControllerStub($this->mockService);
+        $this->controller = new ControllerStub;
     }
 
-    public function testGetIndex()
+    public function testFullPageRequest()
     {
-        $searchMock = m::mock('searchclass');
-        $searchMock->shouldReceive('fromInput')->with(['param' => 'value'])->andReturn('search results');
+        Request::shouldReceive('wantsJson')->andReturn(false);
+        Request::shouldReceive('header')->with('X-PJAX')->once()->andReturn('false');
+        View::shouldReceive('make')->with('shift::layouts.fullpage')->once();
 
-        $this->app->instance('Tests\Stubs\SearchStub', $searchMock);
-
-        $this->mockInput->shouldReceive('input')->andReturn(['param' => 'value']);
+        $this->controller->setup();
     }
 
-    public function testPostStore()
+    public function testPjaxRequest()
     {
-        $params = ['param' > 'value'];
+        Request::shouldReceive('wantsJson')->andReturn(false);
+        Request::shouldReceive('header')->with('X-PJAX')->twice()->andReturn('true');
+        View::shouldReceive('make')->with('shift::layouts.pjax')->once();
 
-        $this->mockInput->shouldReceive('input')->andReturn($params);
-
-        $this->mockService->shouldReceive('create')->once()->with($params);
-
-        $this->controller->postStore();
-    }
-
-    public function testPutUpdate()
-    {
-        $id     = 1;
-        $params = ['param' > 'value'];
-
-        $this->mockInput->shouldReceive('input')->andReturn($params);
-
-        $this->mockService->shouldReceive('update')->once()->with($id, $params);
-
-        $this->controller->putUpdate($id);
-    }
-
-    public function testDeleteDestroy()
-    {
-        $id = 1;
-
-        $this->mockService->shouldReceive('delete')->once()->with($id);
-
-        $this->controller->deleteDestroy($id);
+        $this->controller->setup();
     }
 }

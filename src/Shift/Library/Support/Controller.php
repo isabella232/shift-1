@@ -22,7 +22,7 @@ abstract class Controller extends \Illuminate\Routing\Controller
         if ($this->isFullPage()) {
             $this->layout = View::make('shift::layouts.fullpage');
         }
-        elseif ($this->isPjax()) {
+        else if ($this->isPjax()) {
             $this->layout = View::make('shift::layouts.pjax');
         }
     }
