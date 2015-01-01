@@ -36,4 +36,13 @@ class OrderFilterTest extends \Tests\UnitTestCase
 		$filter = OrderFilter::byInput(['direction' => 'asc']);
 		$filter->applyToEloquent($this->query);
 	}
+
+	/**
+	 * @expectedException \Exception
+	 */
+	public function testInvalidSortDirection()
+	{
+		$filter = OrderFilter::byFieldAndDirection('field', 'invalid direction');
+		$filter->applyToEloquent($this->query);
+	}
 }

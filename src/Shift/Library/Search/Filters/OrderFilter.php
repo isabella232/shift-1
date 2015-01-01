@@ -65,17 +65,6 @@ class OrderFilter implements SearchFilterInterface
         $query->orderBy($this->field, $this->sortDirection());
     }
 
-
-    /**
-	 * Provides a default sort field if the order key is not present in the search params.
-	 * 
-	 * @return string 
-	 */
-	protected function sortField($queryBuilder)
-	{
-		return $queryBuilder->getRootAliases()[0].'.'.$this->field;
-	}
-
 	/**
 	 * Returns the required sort direction.
 	 * 
