@@ -2,7 +2,6 @@
 namespace Tectonic\Shift\Library\Html;
 
 use Auth;
-use Illuminate\Html\HtmlBuilder;
 use Tectonic\Shift\Modules\Identity\Roles\Services\PermissionsService;
 use View;
 
@@ -14,17 +13,11 @@ class ButtonBuilder
     private $permissionsService;
 
     /**
-     * @var HtmlBuilder
-     */
-    private $htmlBuilder;
-
-    /**
      * @param PermissionsService $permissionsService
      */
-    public function __construct(PermissionsService $permissionsService, HtmlBuilder $htmlBuilder)
+    public function __construct(PermissionsService $permissionsService)
     {
         $this->permissionsService = $permissionsService;
-        $this->htmlBuilder = $htmlBuilder;
     }
 
     /**
@@ -56,11 +49,11 @@ class ButtonBuilder
      * Determine whether or not the user is permitted to view the element. This is based on the permissions
      * element of the array, the required permissions, and the resource/action we're checking against.
      *
-     * @param array $options
+     * @param array $permissions
      * @return bool
      */
-    protected function permitted(array $options)
+    protected function permitted(array $permissions)
     {
-        return $this->permissionsService->permits($options['permissions']);
+        return $this->permissionsService->permits($permissions);
     }
 }
