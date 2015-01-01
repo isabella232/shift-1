@@ -23,13 +23,14 @@ class Slug
     /**
      * Generate a new 8-character slug.
      *
+     * @param integer $id
      * @return Slug
      */
-    public static function create($string)
+    public static function create($id)
     {
-        $salt = md5($string);
+        $salt = md5($id);
         $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $slug = with(new Hashids($salt, $length = 8, $alphabet))->encode($string);
+        $slug = with(new Hashids($salt, $length = 8, $alphabet))->encode($id);
 
         return new Slug($slug);
     }

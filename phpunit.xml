@@ -21,6 +21,7 @@
                 <directory>./src/Shift/Commands</directory>
                 <directory>./src/Shift/Controllers</directory>
                 <directory>./src/Shift/Library/Facades</directory>
+                <file>./src/Shift/Library/Security/HoneyPotBlacklist.php</file>
             </exclude>
         </whitelist>
     </filter>
