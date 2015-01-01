@@ -89,9 +89,8 @@ interface RepositoryInterface
     /**
      * Save 1-n resources.
      *
-     * @param $resources
-     * @TODO: Utilise PHP 5.6 (make $resources an argument via variadic function argument syntax)
+     * @param array $resources
      * @return mixed
      */
-    public function saveAll();
+    public function saveAll(...$resources);
 }

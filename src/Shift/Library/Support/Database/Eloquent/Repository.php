@@ -142,13 +142,11 @@ abstract class Repository implements RepositoryInterface
     /**
      * Save 1-n resources.
      *
-     * @param $resources
+     * @param array $resources
      * @return mixed
      */
-    public function saveAll()
+    public function saveAll(...$resources)
     {
-        $resources = func_get_args();
-
         if (count($resources) == 0) {
             throw new Exception('You must provide at least one $resource argument.');
         }

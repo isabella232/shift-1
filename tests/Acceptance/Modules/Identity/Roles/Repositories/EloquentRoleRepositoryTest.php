@@ -7,10 +7,8 @@ use Tests\AcceptanceTestCase;
 
 class EloquentRoleRepositoryTest extends AcceptanceTestCase
 {
-    public function setUp()
+    public function init()
     {
-        parent::setUp();
-
         $this->roleRepository = App::make(EloquentRoleRepository::class);
     }
 
