@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Redirect;
 use Tectonic\Shift\Controllers\InstallationController;
 use Tectonic\Shift\Modules\Accounts\AccountNotFoundException;
-use Tectonic\Shift\Modules\Accounts\Services\AccountManagementService;
+use Tectonic\Shift\Modules\Accounts\Services\AccountsService;
 use Tectonic\Shift\Modules\Accounts\Services\CurrentAccountService;
 
 /**
@@ -29,7 +29,7 @@ class AccountFilter
 	/**
 	 * @param AccountManagementService $accountManagementService
 	 */
-	public function __construct(AccountManagementService $accountManagementService)
+	public function __construct(AccountsService $accountManagementService)
 	{
 		$this->accountManagementService = $accountManagementService;
 	}

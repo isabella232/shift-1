@@ -17,4 +17,15 @@ class CreateRoleCommand extends Command
     {
         $this->translated = $translated;
     }
+
+    /**
+     * Create a new command instance based on user input.
+     *
+     * @param array $input
+     * @return static
+     */
+    public static function withInput(array $input)
+    {
+        return new static($input['translated']);
+    }
 }

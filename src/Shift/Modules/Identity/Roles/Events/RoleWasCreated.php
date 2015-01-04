@@ -9,7 +9,7 @@ class RoleWasCreated extends Event
     /**
      * @var Role
      */
-    private $role;
+    public $role;
 
     /**
      * @param Role $role

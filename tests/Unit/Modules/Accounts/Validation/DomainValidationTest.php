@@ -3,7 +3,7 @@ namespace Tests\Unit\Modules\Accounts\Validation;
 
 use Tectonic\Shift\Modules\Accounts\Validators\DomainValidation;
 
-class DomainValidationTest extends \Tests\AcceptanceTestCase
+class DomainValidationTest extends \Tests\IntegratedTestCase
 {
     /**
      * @expectedException Tectonic\Application\Validation\ValidationException

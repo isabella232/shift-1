@@ -29,7 +29,8 @@
 		"tectonic/laravel-localisation": "dev-master"
 	},
 	"require-dev": {
-		"league/factory-muffin": "~2.0",
+	  	"behat/mink": "1.6.*",
+	  	"behat/mink-zombie-driver": "*",
 		"mockery/mockery": "dev-master@dev",
 		"orchestra/testbench": "2.2.*",
 		"phpunit/phpunit": "4.2.*"

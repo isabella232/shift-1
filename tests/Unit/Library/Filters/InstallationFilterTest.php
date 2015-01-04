@@ -4,7 +4,7 @@ namespace Tests\Unit\Library\Filters;
 use Illuminate\Support\Facades\App;
 use Mockery as m;
 use Tectonic\Shift\Library\Filters\InstallationFilter;
-use Tectonic\Shift\Modules\Accounts\Services\AccountManagementService;
+use Tectonic\Shift\Modules\Accounts\Services\AccountsService;
 use Tests\UnitTestCase;
 
 class InstallationFilterTest extends UnitTestCase
@@ -14,7 +14,7 @@ class InstallationFilterTest extends UnitTestCase
 
 	public function init()
     {
-        $this->mockAccountManagementService = m::mock(AccountManagementService::class);
+        $this->mockAccountManagementService = m::mock(AccountsService::class);
 
         $this->filter = new InstallationFilter($this->mockAccountManagementService);
     }

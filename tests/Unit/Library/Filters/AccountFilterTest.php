@@ -5,7 +5,7 @@ use CurrentAccount;
 use Mockery as m;
 use Tectonic\Shift\Library\Filters\AccountFilter;
 use Tectonic\Shift\Modules\Accounts\Models\Account;
-use Tectonic\Shift\Modules\Accounts\Services\AccountManagementService;
+use Tectonic\Shift\Modules\Accounts\Services\AccountsService;
 use Tectonic\Shift\Modules\Accounts\Services\CurrentAccountService;
 use Tests\UnitTestCase;
 
@@ -20,7 +20,7 @@ class AccountFilterTest extends UnitTestCase
 		parent::setUp();
 
         $this->mockAccount = m::mock(Account::class);
-		$this->mockAccountManagementService = m::mock(AccountManagementService::class)->makePartial();
+		$this->mockAccountManagementService = m::mock(AccountsService::class)->makePartial();
 
 		$this->filter = new AccountFilter($this->mockAccountManagementService);
 	}

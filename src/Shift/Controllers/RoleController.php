@@ -1,7 +1,9 @@
 <?php
 namespace Tectonic\Shift\Controllers;
 
+use Illuminate\Support\Facades\Redirect;
 use Input;
+use Tectonic\Application\Validation\ValidationCommandBus;
 use Tectonic\LaravelLocalisation\Facades\Translator;
 use Tectonic\Shift\Library\Support\Controller;
 use Tectonic\Shift\Library\Support\DefaultResponder;
@@ -18,24 +20,27 @@ class RoleController extends Controller
     private $search;
 
     /**
-     * @var RolesService
-     */
-    private $rolesService;
-
-    /**
      * @var RoleRepositoryInterface
      */
     private $roleRepository;
 
     /**
+     * @var ValidationCommandBus
+     */
+    private $commandBus;
+
+    /**
      * @param RoleSearch $search
      * @param RoleService $rolesService
      */
-    public function __construct(RoleSearch $search, RoleService $rolesService, RoleRepositoryInterface $roleRepository)
-	{
+    public function __construct(
+        RoleSearch $search,
+        ValidationCommandBus $commandBus,
+        RoleRepositoryInterface $roleRepository
+    ) {
         $this->search = $search;
-        $this->rolesService = $rolesService;
         $this->roleRepository = $roleRepository;
+        $this->commandBus = $commandBus;
     }
 
     /**
@@ -65,7 +70,11 @@ class RoleController extends Controller
      */
     public function postStore()
     {
-        return $this->rolesService->create(Input::get(), new DefaultResponder('roles'));
+        $command = CreateRoleCommand::withInput(Input::get());
+
+        $this->commandBus->execute($command);
+
+        return Redirect::to('roles');
     }
 
     /**

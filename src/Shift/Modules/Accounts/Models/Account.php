@@ -22,13 +22,6 @@ class Account extends Model implements TranslatableInterface
     use Sluggable;
 
     /**
-     * Fillable fields via mass assignment.
-     *
-     * @var array
-     */
-    protected $fillable = ['name'];
-
-    /**
      * An account can have one or more domains, and is often queried via this relationship.
      *
      * @return collection

@@ -2,7 +2,7 @@
 namespace Tectonic\Shift\Library\Filters;
 
 use App;
-use Tectonic\Shift\Modules\Accounts\Services\AccountManagementService;
+use Tectonic\Shift\Modules\Accounts\Services\AccountsService;
 
 class InstallationFilter
 {
@@ -14,7 +14,7 @@ class InstallationFilter
 	/**
 	 * @param AccountManagementService $accountManagementService
 	 */
-	public function __construct(AccountManagementService $accountManagementService)
+	public function __construct(AccountsService $accountManagementService)
 	{
 		$this->accountManagementService = $accountManagementService;
 	}
