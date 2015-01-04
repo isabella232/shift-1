@@ -55,13 +55,15 @@ class KeywordFilter implements SearchFilterInterface
     {
         if ($this->keywords) {
             if (!is_array($this->fields)) {
-                $query->where($this->fields, 'LIKE', '%' . $this->keywords . '%');
+                $query = $query->where($this->fields, 'LIKE', '%' . $this->keywords . '%');
             }
             else {
                 foreach ($this->fields as $field) {
-                    $query->where($field, 'LIKE', '%' . $this->keywords . '%');
+                    $query = $query->where($field, 'LIKE', '%' . $this->keywords . '%');
                 }
             }
         }
+
+        return $query;
     }
 }

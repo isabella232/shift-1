@@ -2,7 +2,7 @@
 namespace Tectonic\Shift\Library\Support\Database\Eloquent;
 
 use CurrentAccount;
-use Tectonic\LaravelLocalisation\Database\Translation;
+use Tectonic\Shift\Modules\Localisation\Models\Translation;
 
 trait TranslatableModel
 {

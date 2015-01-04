@@ -38,12 +38,12 @@ class KeywordFilterTest extends \Tests\UnitTestCase
 
 	public function testWithArrayOfFieldNames()
 	{
-		$mockQuery = m::spy('query');
+		$mockQuery = m::mock('query');
+		$mockQuery->shouldReceive('where')->with('title', 'LIKE', '%keywords%')->once()->andReturn($mockQuery);
+		$mockQuery->shouldReceive('where')->with('name', 'LIKE', '%keywords%')->once()->andReturn($mockQuery);
 
 		$filter = KeywordFilter::fromKeywords('keywords', ['title', 'name']);
-		$filter->applyToEloquent($mockQuery);
 
-		$mockQuery->shouldHaveReceived('where')->with('title', 'LIKE', '%keywords%')->once();
-		$mockQuery->shouldHaveReceived('where')->with('name', 'LIKE', '%keywords%')->once();
+		$filter->applyToEloquent($mockQuery);
 	}
 }

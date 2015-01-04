@@ -32,7 +32,7 @@ class ShiftServiceProvider extends ServiceProvider
      */
     protected $filesToBoot = [
         'errors',
-        'composers',
+        'macros',
         'routes',
         'validators'
     ];

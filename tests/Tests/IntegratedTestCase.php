@@ -5,6 +5,7 @@ use App;
 use CurrentAccount;
 use Route;
 use Tectonic\Shift\Modules\Accounts\Contracts\AccountRepositoryInterface;
+use Tectonic\Shift\Modules\Accounts\Models\Account;
 
 class IntegratedTestCase extends TestCase
 {
@@ -85,7 +86,7 @@ class IntegratedTestCase extends TestCase
     {
         $accountRepository = App::make(AccountRepositoryInterface::class);
 
-        $this->account = $accountRepository->getNew();
+        $this->account = Account::create([]);
 
         $accountRepository->save($this->account);
 

@@ -21,7 +21,7 @@ class RepositoryTest extends IntegratedTestCase
         // We're also using the account repository, because it ticks all required boxes for testing.
         $this->repository = App::make(EloquentAccountRepository::class);
     }
-    
+
     public function testRequireByWithNoResult()
     {
         $this->setExpectedException(ModelNotFoundException::class);

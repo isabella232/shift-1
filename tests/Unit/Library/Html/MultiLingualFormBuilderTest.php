@@ -29,7 +29,9 @@ class MultiLingualFormBuilderTest extends UnitTestCase
 
     public function testTextFieldGeneration()
     {
-        $response = $this->formBuilder->text('name')->render();
+        $model = new stdClass;
+
+        $response = $this->formBuilder->text('name', $model);
         $crawler = new Crawler($response);
 
         $this->assertCount(2, $crawler->filter('input'));
@@ -39,7 +41,9 @@ class MultiLingualFormBuilderTest extends UnitTestCase
 
     public function testTextareaFieldGeneration()
     {
-        $response = $this->formBuilder->textarea('description')->render();
+        $model = new stdClass;
+
+        $response = $this->formBuilder->textarea('description', $model);
         $crawler = new Crawler($response);
 
         $this->assertCount(2, $crawler->filter('textarea'));

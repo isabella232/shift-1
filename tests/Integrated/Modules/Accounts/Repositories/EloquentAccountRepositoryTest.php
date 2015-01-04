@@ -38,6 +38,9 @@ class EloquentAccountRepositoryTest extends IntegratedTestCase
     public function testCount()
     {
         $account = Account::create([]);
+
+        $this->repository->save($account);
+
         $account->delete();
 
         $this->assertSame(2, $this->repository->getCount());

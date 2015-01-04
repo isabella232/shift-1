@@ -62,7 +62,7 @@ class OrderFilter implements SearchFilterInterface
      */
     public function applyToEloquent($query)
     {
-        $query->orderBy($this->field, $this->sortDirection());
+        return $query->orderBy($this->field, $this->sortDirection());
     }
 
 	/**

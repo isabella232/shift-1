@@ -8,6 +8,7 @@ use Tectonic\Localisation\Translator\Translatable;
 use Tectonic\Shift\Library\Slugs\Sluggable;
 use Tectonic\Shift\Library\Support\Database\Eloquent\Model;
 use Tectonic\Shift\Library\Support\Database\Eloquent\TranslatableModel;
+use Tectonic\Shift\Modules\Accounts\Events\AccountWasCreated;
 use Tectonic\Shift\Modules\Accounts\Events\AccountWasInstalled;
 use Tectonic\Shift\Modules\Accounts\Events\OwnerWasChanged;
 use Tectonic\Shift\Modules\Localisation\Languages\Language;
@@ -92,6 +93,20 @@ class Account extends Model implements TranslatableInterface
     {
         $this->owner()->associate($user);
         $this->raise(new OwnerWasChanged($user));
+    }
+
+    /**
+     * Create a new account instance.
+     *
+     * @param array $attributes
+     * @return static
+     */
+    public static function create(array $attributes)
+    {
+        $account = new static($attributes);
+        $account->raise(new AccountWasCreated($account));
+
+        return $account;
     }
 
     /**

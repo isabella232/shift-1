@@ -7,6 +7,8 @@ use Tectonic\Application\Validation\ValidationCommandBus;
 use Tectonic\LaravelLocalisation\Facades\Translator;
 use Tectonic\Shift\Library\Support\Controller;
 use Tectonic\Shift\Library\Support\DefaultResponder;
+use Tectonic\Shift\Modules\Identity\Roles\Commands\CreateRoleCommand;
+use Tectonic\Shift\Modules\Identity\Roles\Commands\UpdateRoleCommand;
 use Tectonic\Shift\Modules\Identity\Roles\Contracts\RoleRepositoryInterface;
 use Tectonic\Shift\Modules\Identity\Roles\Models\Role;
 use Tectonic\Shift\Modules\Identity\Roles\Search\RoleSearch;
@@ -74,16 +76,31 @@ class RoleController extends Controller
 
         $this->commandBus->execute($command);
 
-        return Redirect::to('roles');
+        return Redirect::route('roles.index');
     }
 
     /**
      * Retrieve a single role.
      */
-    public function getShow($roleSlug)
+    public function getShow($slug)
     {
-        $role = Translator::translate($this->roleRepository->requireBy('slug', $roleSlug));
+        $role = Translator::translate($this->roleRepository->requireBy('slug', $slug));
 
         return $this->respond('shift::roles.edit', compact('role'));
+    }
+
+    /**
+     * Manage the updating of a specific role, based on the slug provided.
+     *
+     * @param string $slug
+     * @return mixed
+     */
+    public function putUpdate($slug)
+    {
+        $command = UpdateRoleCommand::withInput($slug, Input::get());
+
+        $this->commandBus->execute($command);
+
+        return Redirect::route('roles.index');
     }
 }

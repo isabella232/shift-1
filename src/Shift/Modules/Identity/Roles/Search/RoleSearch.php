@@ -42,6 +42,8 @@ class RoleSearch implements SearchInterface
 
 		$filterCollection->add(OrderFilter::byInput($input));
 
-		return $this->roleRepository->getByFilters($filterCollection, $paginate = true);
+		$roles = $this->roleRepository->getByFilters($filterCollection);
+
+		return $roles;
 	}
 }

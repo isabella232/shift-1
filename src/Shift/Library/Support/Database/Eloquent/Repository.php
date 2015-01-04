@@ -122,7 +122,7 @@ abstract class Repository implements RepositoryInterface
         $query = $this->getQuery();
 
         foreach ($filterCollection as $filter) {
-            $filter->applyToEloquent($query);
+            $query = $filter->applyToEloquent($query);
         }
 
         if ($paginate) {

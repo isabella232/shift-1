@@ -21,6 +21,7 @@ class CreateTranslationsTable extends Migration {
             $table->string('resource');
             $table->string('field');
             $table->string('value');
+            $table->timestamps();
 
             // now setup the required index
             $table->index(['account_id', 'foreign_id', 'language', 'resource', 'field']);

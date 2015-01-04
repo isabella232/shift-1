@@ -5,9 +5,8 @@ use Tectonic\Application\Commanding\CommandHandlerInterface;
 use Tectonic\Application\Eventing\EventDispatcher;
 use Tectonic\LaravelLocalisation\Database\TranslationService;
 use Tectonic\Shift\Modules\Identity\Roles\Contracts\RoleRepositoryInterface;
-use Tectonic\Shift\Modules\Identity\Roles\Models\Role;
 
-class CreateRoleCommandHandler implements CommandHandlerInterface
+class UpdateRoleCommandHandler implements CommandHandlerInterface
 {
     /**
      * @var RoleRepositoryInterface
@@ -26,6 +25,8 @@ class CreateRoleCommandHandler implements CommandHandlerInterface
 
     /**
      * @param RoleRepositoryInterface $roleRepository
+     * @param EventDispatcher $eventDispatcher
+     * @param TranslationService $translationService
      */
     function __construct(
         RoleRepositoryInterface $roleRepository,
@@ -44,9 +45,11 @@ class CreateRoleCommandHandler implements CommandHandlerInterface
      */
     public function handle($command)
     {
-        $role = Role::create($attributes = []);
+        $role = $this->roleRepository->requireBySlug($command->slug);
 
+        $role->update();
         $this->roleRepository->save($role);
+
         $this->translationService->sync($role, $command->translated);
 
         $this->eventDispatcher->dispatch($role->releaseEvents());

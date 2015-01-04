@@ -2,7 +2,7 @@
 namespace Tectonic\Shift\Library\Html;
 
 use CurrentAccount;
-use View;
+use Form;
 
 class MultiLingualFormBuilder
 {
@@ -11,26 +11,28 @@ class MultiLingualFormBuilder
      * text fields based on the number of supported languages the account has.
      *
      * @param string $name
-     * @param string|null $value
+     * @param object $model
      * @param array $options
      * @return string
+     * @internal param null|string $value
      */
-    public function text($name, $value = null, $options = array())
+    public function text($name, $model, $options = array())
     {
-        return $this->field('text', $name, $value, $options);
+        return $this->field('text', $name, $model, $options);
     }
 
     /**
      * Identical to the text method, only that it manages textarea field generation.
      *
      * @param string $name
-     * @param string|null $value
+     * @param object $model
      * @param array $options
      * @return string
+     * @internal param null|string $value
      */
-    public function textarea($name, $value = null, $options = array())
+    public function textarea($name, $model, $options = array())
     {
-        return $this->field('textarea', $name, $value, $options);
+        return $this->field('textarea', $name, $model, $options);
     }
 
     /**
@@ -39,14 +41,37 @@ class MultiLingualFormBuilder
      *
      * @param string $type
      * @param string $name
-     * @param string|null $value
+     * @param object $model
      * @param array $options
      * @return string
      */
-    public function field($type, $name, $value = null, $options = array())
+    public function field($type, $name, $model, $options = array())
     {
         $supportedLanguages = CurrentAccount::get()->languages;
+        $html = [];
 
-        return View::make("shift::html.form.$type", compact('name', 'value', 'options', 'supportedLanguages'));
+        foreach ($supportedLanguages as $language) {
+            $html[] = Form::$type("translated[{$name}][{$language->code}]", $this->getValue($name, $model, $language), $options);
+        }
+
+        return implode("\r\n", $html);
+    }
+
+    /**
+     * Returns the value from a model/entity based on the name of the model's field,
+     * and the language we need to render a form field for.
+     *
+     * @param string $name
+     * @param object $model
+     * @param object $language
+     * @return null
+     */
+    protected function getValue($name, $model, $language)
+    {
+        if (isset($model->$name) && isset($model->{$name}[$language->code])) {
+            return $model->{$name}[$language->code];
+        }
+
+        return null;
     }
 }
