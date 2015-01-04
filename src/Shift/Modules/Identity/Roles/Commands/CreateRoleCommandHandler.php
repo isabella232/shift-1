@@ -44,7 +44,7 @@ class CreateRoleCommandHandler implements CommandHandlerInterface
      */
     public function handle($command)
     {
-        $role = Role::create($attributes = []);
+        $role = Role::create(['default' => $command->default]);
 
         $this->roleRepository->save($role);
         $this->translationService->sync($role, $command->translated);

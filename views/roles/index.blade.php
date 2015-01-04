@@ -38,6 +38,7 @@
 								<th class="checkbox"><input type="checkbox"></th>
 								<th><a href="javascript:;" sort="roles.name" class="sortable">Name</a></th>
 								<th># Users</th>
+								<th>Default</th>
 								<th><a href="javascript:;" sort="roles.created_at" class="sortable">Created</a></th>
 							</tr>
 						</thead>
@@ -47,6 +48,7 @@
 									<td class="checkbox"><input type="checkbox"></td>
 									<td><a href="{{ route('roles.show', $role->slug) }}">{{ lang($role, 'name') }}</a></td>
 									<td>TBI</td>
+									<td>{{ $role->default ? 'Yes' : 'No' }}</td>
 									<td>{{ HTML::relativeTime($role->createdAt) }}</td>
 								</tr>
 							@endforeach

@@ -47,11 +47,10 @@ class UpdateRoleCommandHandler implements CommandHandlerInterface
     {
         $role = $this->roleRepository->requireBySlug($command->slug);
 
-        $role->update();
+        $role->update(['default' => $command->default]);
+
         $this->roleRepository->save($role);
-
         $this->translationService->sync($role, $command->translated);
-
         $this->eventDispatcher->dispatch($role->releaseEvents());
     }
 }

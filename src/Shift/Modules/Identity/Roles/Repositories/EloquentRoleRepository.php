@@ -52,18 +52,16 @@ class EloquentRoleRepository extends Repository implements RoleRepositoryInterfa
                 $role->default = true;
 
                 $this->saveAll($existingRole, $role);
-
-                return $role;
             }
 
             $role->default = true;
 
-            return parent::save($role);
+            parent::save($role);
         };
 
         $updateRoles->bindTo($this);
 
-        return DB::transaction($updateRoles);
+        DB::transaction($updateRoles);
     }
 
     /**

@@ -21,6 +21,13 @@ class Role extends Model implements TranslatableInterface
     use Sluggable;
 
     /**
+     * Roles only have one definable attribute that can be mass-assigned.
+     *
+     * @var array
+     */
+    public $fillable = ['default'];
+
+    /**
      * Each role belongs to exactly one account.
      *
      * @return Query
@@ -92,6 +99,7 @@ class Role extends Model implements TranslatableInterface
      */
     public function update(array $attributes = [])
     {
+        $this->default = $attributes['default'];
         $this->raise(new RoleWasUpdated($this));
 
         return $this;

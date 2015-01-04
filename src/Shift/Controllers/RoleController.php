@@ -97,7 +97,10 @@ class RoleController extends Controller
      */
     public function putUpdate($slug)
     {
-        $command = UpdateRoleCommand::withInput($slug, Input::get());
+        $input = Input::get();
+        $input['slug'] = $slug;
+
+        $command = UpdateRoleCommand::withInput($input);
 
         $this->commandBus->execute($command);
 

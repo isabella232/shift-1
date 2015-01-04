@@ -11,11 +11,17 @@ class CreateRoleCommand extends Command
     public $translated;
 
     /**
+     * @var
+     */
+    private $default;
+
+    /**
      * @param array $translated
      */
-    public function __construct(array $translated)
+    public function __construct($default, array $translated)
     {
         $this->translated = $translated;
+        $this->default = $default;
     }
 
     /**
@@ -26,6 +32,6 @@ class CreateRoleCommand extends Command
      */
     public static function withInput(array $input)
     {
-        return new static($input['translated']);
+        return new static($input['default'], $input['translated']);
     }
 }
