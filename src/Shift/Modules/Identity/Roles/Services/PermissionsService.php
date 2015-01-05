@@ -90,11 +90,11 @@ class PermissionsService
      * Updates a range of permissions for a role based on the array of input provided.
      *
      * @param Role $existingPermissions
-     * @param $newPermissions
+     * @param array $permissions
      */
-    public function bulkUpdateFromInput(Role $role, $newPermissions)
+    public function sync(Role $role, $permissions)
     {
-        foreach ($newPermissions as $resource => $actions) {
+        foreach ($permissions as $resource => $actions) {
             $this->updateFromActions($role, $actions, $resource);
         }
     }
@@ -106,14 +106,17 @@ class PermissionsService
      */
     protected function updateFromActions(Role $role, $actions, $resource)
     {
-        foreach ($actions as $action => $permission) {
+        foreach ($actions as $action => $mode) {
+            $mode = new Mode($mode);
+
             $record = $role->permissions->match($resource, $action);
 
             if (is_null($record)) {
-                $record = Permission::create(['roleId' => $role->id, 'resource' => $resource, 'action' => $action]);
+                $record = Permission::add($role, $resource, $action, $mode);
             }
-
-            $record->allowed = $permission;
+            else {
+                $record->mode = $mode;
+            }
 
             $this->permissionRepository->save($record);
         }

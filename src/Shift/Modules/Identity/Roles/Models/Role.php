@@ -65,7 +65,7 @@ class Role extends Model implements TranslatableInterface
      */
     public function permissions()
     {
-        return $this->hasMany();
+        return $this->hasMany(Permission::class);
     }
 
     /**
@@ -87,6 +87,7 @@ class Role extends Model implements TranslatableInterface
     public static function create(array $attributes)
     {
         $role = new static;
+        $role->default = $attributes['default'];
         $role->raise(new RoleWasCreated($role));
 
         return $role;

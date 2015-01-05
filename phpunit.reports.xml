@@ -10,6 +10,21 @@
          stopOnFailure="false"
          syntaxCheck="false"
 >
+    <logging>
+        <log type="coverage-html" target="./report" charset="UTF-8" highlight="false" lowUpperBound="65" highLowerBound="90"/>
+    </logging>
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="false">
+            <directory suffix=".php">./src/Shift</directory>
+            <exclude>
+                <directory suffix="ServiceProvider.php">./src/Shift</directory>
+                <directory>./src/Shift/Commands</directory>
+                <directory>./src/Shift/Controllers</directory>
+                <directory>./src/Shift/Library/Facades</directory>
+                <file>./src/Shift/Library/Security/HoneyPotBlacklist.php</file>
+            </exclude>
+        </whitelist>
+    </filter>
     <testsuites>
         <testsuite name="all">
             <directory suffix="Test.php">./tests/</directory>

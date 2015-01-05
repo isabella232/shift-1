@@ -27,14 +27,22 @@ class UpdateRoleCommand extends Command
     public $default;
 
     /**
+     * Stores the permissions submitted by the form.
+     *
+     * @var array
+     */
+    public $permissions;
+
+    /**
      * @param string $slug
      * @param array $translated
      */
-    public function __construct($slug, $default, $translated)
+    public function __construct($slug, $default, $translated, $permissions)
     {
         $this->slug = $slug;
         $this->default = $default;
         $this->translated = $translated;
+        $this->permissions = $permissions;
     }
 
     /**
@@ -45,6 +53,6 @@ class UpdateRoleCommand extends Command
      */
     public static function withInput($input)
     {
-        return new static($input['slug'], $input['default'], $input['translated']);
+        return new static($input['slug'], array_get($input, 'default', false), $input['translated'], $input['permission']);
     }
 }

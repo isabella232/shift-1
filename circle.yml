@@ -14,8 +14,5 @@ general:
 
 test:
   override:
-    - phpunit --coverage-clover=${CIRCLE_ARTIFACTS}/coverage.xml
+    - phpunit -c phpunit.xml
 
-  post:
-    - wget https://scrutinizer-ci.com/ocular.phar
-    - php ocular.phar code-coverage:upload --access-token="${SCRUTINIZER_ACCESS_TOKEN}" --format=php-clover ${CIRCLE_ARTIFACTS}/coverage.xml

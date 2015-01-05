@@ -32,30 +32,36 @@
     			</div>
 
 				@if ($roles->count())
-					<table>
-						<thead>
-							<tr>
-								<th class="checkbox"><input type="checkbox"></th>
-								<th><a href="javascript:;" sort="roles.name" class="sortable">Name</a></th>
-								<th># Users</th>
-								<th>Default</th>
-								<th><a href="javascript:;" sort="roles.created_at" class="sortable">Created</a></th>
-							</tr>
-						</thead>
-						<tbody>
-							@foreach ($roles->getItems() as $i => $role)
-								<tr @if ($i % 2 == 1) class="even"@endif>
-									<td class="checkbox"><input type="checkbox"></td>
-									<td><a href="{{ route('roles.show', $role->slug) }}">{{ lang($role, 'name') }}</a></td>
-									<td>TBI</td>
-									<td>{{ $role->default ? 'Yes' : 'No' }}</td>
-									<td>{{ HTML::relativeTime($role->createdAt) }}</td>
+					<div class="row">
+						<table>
+							<thead>
+								<tr>
+									<th class="checkbox"><input type="checkbox"></th>
+									<th><a href="javascript:;" sort="roles.name" class="sortable">Name</a></th>
+									<th># Users</th>
+									<th>Default</th>
+									<th><a href="javascript:;" sort="roles.created_at" class="sortable">Created</a></th>
 								</tr>
-							@endforeach
-						</tbody>
-					</table>
+							</thead>
+							<tbody>
+								@foreach ($roles->getItems() as $i => $role)
+									<tr @if ($i % 2 == 1) class="even"@endif>
+										<td class="checkbox"><input type="checkbox"></td>
+										<td><a href="{{ route('roles.show', $role->slug) }}">{{ lang($role, 'name') }}</a></td>
+										<td>TBI</td>
+										<td>{{ $role->default ? 'Yes' : 'No' }}</td>
+										<td>{{ HTML::relativeTime($role->createdAt) }}</td>
+									</tr>
+								@endforeach
+							</tbody>
+						</table>
+					</div>
 
-					@include('shift::partials.page.pagination')
+					<div class="row">
+						<div class="two-thirds">
+							@include('shift::partials.page.pagination')
+						</div>
+					</div>
 				@else
 					<div>
 						<p>There are currently no roles, or none matching your search criteria.</p>

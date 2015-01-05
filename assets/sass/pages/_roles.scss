@@ -1,0 +1,33 @@
+.permission-action {
+	text-align: center;
+
+	input {
+		margin: 0;
+	}
+}
+
+th.delete {
+	border-bottom-right-radius: 0 !important;
+}
+
+th.action {
+	font-size: 10px;
+	text-align: center;
+	border-top: 1px solid #56657B;
+	border-left: 1px solid #56657B;
+
+	&:first-child {
+		border-bottom-left-radius: 0;
+	}
+	&:last-child {
+		border-bottom-top-radius: 0;
+	}
+}
+
+.matrix {
+	tr {
+		td.separator {
+			border-left: 1px solid #E8E8E8;
+		}
+	}
+}

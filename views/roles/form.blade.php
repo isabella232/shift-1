@@ -16,12 +16,16 @@
                     <div class="control-field">
                         <ul class="vertical">
                             <li>
-                                {{ Form::checkbox('default') }}
-                                {{ Form::label('default', trans('shift::roles.form.default.label')) }}
+                                {{ Form::checkbox('default', true, null, ['id' => 'default']) }}
+                                {{ Form::label('default', trans('shift::roles.form.default.label'), ['for' => 'default']) }}
                             </li>
                         </ul>
                     </div>
                 </div>
+            </div>
+
+            <div class="column-half roles-right-column">
+                {{ HTML::permissionsMatrix($role) }}
             </div>
         </div>
         <div class="form-actions">

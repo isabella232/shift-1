@@ -281,7 +281,9 @@ abstract class Repository implements RepositoryInterface
             return $resource->save();
         }
 
-        return $resource->touch();
+        if ($resource->timestamps === true) {
+            return $resource->touch();
+        }
     }
 
     /**

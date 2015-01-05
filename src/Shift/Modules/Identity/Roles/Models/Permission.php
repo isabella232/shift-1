@@ -23,7 +23,7 @@ class Permission extends Model
      *
      * @var array
      */
-    public $fillable = ['action', 'resource', 'allow'];
+    public $fillable = ['action', 'resource', 'mode'];
 
     /**
      * Each permission belongs to exactly one role.
@@ -74,7 +74,7 @@ class Permission extends Model
      */
     public function setModeAttribute(Mode $mode)
     {
-        $this->attributes['mode'] = $mode;
+        $this->attributes['mode'] = (string) $mode;
     }
 
     /**
