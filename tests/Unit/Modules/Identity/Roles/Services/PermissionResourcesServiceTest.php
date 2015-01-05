@@ -15,7 +15,7 @@ class PermissionResourcesServiceTest extends UnitTestCase
 
     public function testResourceRetrieval()
     {
-        $this->assertEquals(['FilesAll', 'FilesOwner', 'Fields', 'Roles', 'Users'], $this->service->get());
+        $this->assertEquals(['Account', 'FilesAll', 'FilesOwner', 'Fields', 'Roles', 'Users'], $this->service->get());
     }
 
     public function testResourceExistence()

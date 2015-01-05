@@ -11,6 +11,7 @@ class PermissionResourcesService
      * @var array
      */
     protected $resources = [
+        'Account',
         'FilesAll',
         'FilesOwner',
         'Fields',
