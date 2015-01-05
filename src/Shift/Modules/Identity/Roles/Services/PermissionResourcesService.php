@@ -1,6 +1,8 @@
 <?php
 namespace Tectonic\Shift\Modules\Identity\Roles\Services;
 
+use Event;
+
 class PermissionResourcesService
 {
     /**
@@ -9,10 +11,11 @@ class PermissionResourcesService
      * @var array
      */
     protected $resources = [
-        'Document',
-        'Field',
-        'Role',
-        'User',
+        'FilesAll',
+        'FilesOwner',
+        'Fields',
+        'Roles',
+        'Users',
     ];
 
     /**
@@ -42,10 +45,13 @@ class PermissionResourcesService
     /**
      * Return all registered resources.
      *
+     * @fires Tectonic.Shift.Permissions.Requested
      * @return array
      */
     public function get()
     {
+        Event::fire('Tectonic.Shift.Permissions.Requested', [$this]);
+
         return $this->resources;
     }
 }

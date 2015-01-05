@@ -29,7 +29,7 @@ class SetupDefaultRolesCommandHandler implements CommandHandlerInterface
     public function handle($command)
     {
         $this->setupAdmin($command->account);
-        $this->setupUser($command->account);
+        $this->setupGuest($command->account);
     }
 
     /**
@@ -46,11 +46,11 @@ class SetupDefaultRolesCommandHandler implements CommandHandlerInterface
     }
 
     /**
-     * Setup the user role for the account.
+     * Setup the guest role for the account.
      *
      * @param Account $account
      */
-    private function setupUser(Account $account)
+    private function setupGuest(Account $account)
     {
         $guest = Role::create([]);
         $guest->setAccount($account);

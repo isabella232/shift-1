@@ -38,6 +38,11 @@ table {
 			
 			&:first-child { border-radius: $default-radius 0 0 $default-radius; }
 			&:last-child  { border-radius: 0 $default-radius $default-radius 0; }
+
+			// Horizontal alignment
+			&.center {
+				text-align: center;
+			}
 		}
 		a {
 			color: white;

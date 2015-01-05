@@ -2,6 +2,7 @@
 namespace Tectonic\Shift\Modules\Identity\Roles\Repositories;
 
 use DB;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Tectonic\Shift\Library\Support\Database\Eloquent\Repository;
 use Tectonic\Shift\Modules\Identity\Roles\Models\Role;
 use Tectonic\Shift\Modules\Identity\Roles\Contracts\RoleRepositoryInterface;
@@ -29,6 +30,29 @@ class EloquentRoleRepository extends Repository implements RoleRepositoryInterfa
         }
 
         return null;
+    }
+
+    /**
+     * Roles have some special requirements when queried for by slugs.
+     *
+     * @param string $slug
+     * @return mixed
+     */
+    public function requireBySlug($slug)
+    {
+        $query = $this->getQuery();
+        $query = $query->with('permissions');
+        $query = $query->whereSlug($slug);
+
+        $role = $query->first();
+
+        if (!$role) {
+            $exception = with(new ModelNotFoundException)->setModel(get_class($this->model));
+
+            throw $exception;
+        }
+
+        return $role;
     }
 
     /**

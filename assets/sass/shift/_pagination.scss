@@ -3,13 +3,10 @@
 	text-align: right;
 }
 
-// The actual container of the pagination directive.
-div[pagination] {
+div.pagination {
 	overflow: hidden;
 	margin: 20px 0;
-}
 
-div.pagination {
 	select {
 		float: right;
 		font-size: 0.875em;

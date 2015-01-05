@@ -18,4 +18,12 @@ interface RoleRepositoryInterface extends RepositoryInterface
      * @param $role
      */
     public function setDefault($role);
+
+    /**
+     * Roles have some special requirements when queried for by slugs.
+     *
+     * @param string $slug
+     * @return mixed
+     */
+    public function requireBySlug($slug);
 }
