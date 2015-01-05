@@ -2,6 +2,8 @@
 namespace Tectonic\Shift;
 
 use App;
+use Curl\Curl;
+use Tectonic\Shift\Commands\CompileServicesCommand;
 use Tectonic\Shift\Commands\InstallCommand;
 use Tectonic\Shift\Commands\ResetCommand;
 use Tectonic\Shift\Library\Recaptcha;
@@ -31,7 +33,6 @@ class ShiftServiceProvider extends ServiceProvider
     protected $filesToBoot = [
         'errors',
         'macros',
-        'composers',
         'routes',
         'validators'
     ];
@@ -126,7 +127,7 @@ class ShiftServiceProvider extends ServiceProvider
     public function registerRecaptcha()
     {
         $this->app->singleton('recaptcha', function($app) {
-            return new Recaptcha($app['config']->get('shift::recaptcha.keys.private'));
+            return new Recaptcha(new Curl, $app['config']->get('shift::recaptcha.keys.private'));
         });
     }
 
@@ -139,7 +140,7 @@ class ShiftServiceProvider extends ServiceProvider
 	 */
 	public function requireFiles(array $files)
 	{
-        foreach($files as $file) {
+        foreach ($files as $file) {
             require __DIR__.'/../../boot/'.$file.'.php';
         }
 	}
@@ -151,18 +152,20 @@ class ShiftServiceProvider extends ServiceProvider
      */
     protected function registerRouter()
     {
-        $this->app['router'] = $this->app->share(function($app)
-        {
+        $this->app['router'] = $this->app->share(function($app) {
             return new Router($app['events'], $app);
         });
     }
 
     protected function bootCommands()
     {
-        $this->app->bind('command.install', InstallCommand::class);
-        $this->commands('command.install');
+        $this->app->bind('command.shift.install', InstallCommand::class);
+        $this->commands('command.shift.install');
 
-        $this->app->bind('command.reset', ResetCommand::class);
-        $this->commands('command.reset');
+        $this->app->bind('command.shift.reset', ResetCommand::class);
+        $this->commands('command.shift.reset');
+
+        $this->app->bind('command.shift.compile-services', CompileServicesCommand::class);
+        $this->commands('command.shift.compile-services');
     }
 }

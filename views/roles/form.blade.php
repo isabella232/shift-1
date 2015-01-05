@@ -1,5 +1,5 @@
 <div class="container">
-    {{ Form::model($role, ['action' => 'Tectonic\Shift\Controllers\RoleController@postStore', 'class' => 'vertical']) }}
+    {{ Form::model($role, ['route' => $role->id ? ['roles.update', $role->slug] : 'roles.create', 'method' => $role->id ? 'put' : 'post', 'class' => 'vertical']) }}
         <div class="row">
             <div class="column-half roles-left-column">
                 <div class="control">
@@ -7,7 +7,7 @@
                         {{ Form::label('name', trans('shift::roles.form.name.label')) }}
                     </div>
                     <div class="control-field">
-                        {{ Multilingual::text('name') }}
+                        {{ Multilingual::text('name', $role) }}
                         <div class="help-text">{{ trans('shift::roles.form.name.hint') }}</div>
                     </div>
                 </div>

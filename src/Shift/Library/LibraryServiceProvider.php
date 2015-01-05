@@ -11,7 +11,6 @@ use Tectonic\Shift\Modules\Localisation\Services\TranslationService;
 class LibraryServiceProvider extends ServiceProvider
 {
     protected $aliases = [
-        'ConsumerManager' => 'Tectonic\Shift\Library\Facades\Consumer',
         'CurrentLocale' => 'Tectonic\Shift\Library\Facades\CurrentLocale',
     ];
 

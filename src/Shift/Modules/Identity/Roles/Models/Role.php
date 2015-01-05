@@ -10,6 +10,7 @@ use Tectonic\Shift\Library\Support\Database\Eloquent\TranslatableModel;
 use Tectonic\Shift\Modules\Accounts\Facades\CurrentAccount;
 use Tectonic\Shift\Modules\Accounts\Models\Account;
 use Tectonic\Shift\Modules\Identity\Roles\Events\RoleWasCreated;
+use Tectonic\Shift\Modules\Identity\Roles\Events\RoleWasUpdated;
 use Tectonic\Shift\Modules\Identity\Users\Models\User;
 
 class Role extends Model implements TranslatableInterface
@@ -20,6 +21,13 @@ class Role extends Model implements TranslatableInterface
     use Sluggable;
 
     /**
+     * Roles only have one definable attribute that can be mass-assigned.
+     *
+     * @var array
+     */
+    public $fillable = ['default'];
+
+    /**
      * Each role belongs to exactly one account.
      *
      * @return Query
@@ -27,6 +35,16 @@ class Role extends Model implements TranslatableInterface
     public function account()
     {
         return $this->belongsTo(Account::class);
+    }
+
+    /**
+     * Sets the account id for the role.
+     *
+     * @param Account $account
+     */
+    public function setAccount(Account $account)
+    {
+        $this->accountId = $account->id;
     }
 
     /**
@@ -72,5 +90,18 @@ class Role extends Model implements TranslatableInterface
         $role->raise(new RoleWasCreated($role));
 
         return $role;
+    }
+
+    /**
+     * Flag the role as updated.
+     *
+     * @return $this
+     */
+    public function update(array $attributes = [])
+    {
+        $this->default = $attributes['default'];
+        $this->raise(new RoleWasUpdated($this));
+
+        return $this;
     }
 }

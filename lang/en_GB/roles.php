@@ -13,7 +13,6 @@ return [
 
     'titles' => [
         'main' => 'Roles',
-        'new' => 'New role',
-        'edit' => 'Edit role'
+        'new' => 'New role'
     ]
 ];

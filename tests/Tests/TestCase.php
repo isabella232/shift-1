@@ -1,8 +1,10 @@
 <?php
 namespace Tests;
 
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Config;
 use Mockery as m;
+use Monolog\Handler\NullHandler;
 
 class TestCase extends \Orchestra\Testbench\TestCase
 {
@@ -32,6 +34,11 @@ class TestCase extends \Orchestra\Testbench\TestCase
 		// reset base path to point to our package's src directory
 		$app['path.base'] = __DIR__ . '/../../';
         $app['config']->set('app.debug', false);
+
+        // Here we disable any log output to the console, which makes reading any test
+        // errors/information easier to read and understand during test runs.
+        $monolog = Log::getMonolog();
+        $monolog->pushHandler(new NullHandler);
 	}
 
     protected function getPackageAliases()

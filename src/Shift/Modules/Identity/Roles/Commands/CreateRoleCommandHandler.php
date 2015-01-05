@@ -1,9 +1,9 @@
 <?php
 namespace Tectonic\Shift\Modules\Identity\Roles\Commands;
 
-use Tectonic\LaravelLocalisation\Database\TranslationService;
 use Tectonic\Application\Commanding\CommandHandlerInterface;
 use Tectonic\Application\Eventing\EventDispatcher;
+use Tectonic\LaravelLocalisation\Database\TranslationService;
 use Tectonic\Shift\Modules\Identity\Roles\Contracts\RoleRepositoryInterface;
 use Tectonic\Shift\Modules\Identity\Roles\Models\Role;
 
@@ -44,7 +44,7 @@ class CreateRoleCommandHandler implements CommandHandlerInterface
      */
     public function handle($command)
     {
-        $role = Role::create($attributes = []);
+        $role = Role::create(['default' => $command->default]);
 
         $this->roleRepository->save($role);
         $this->translationService->sync($role, $command->translated);

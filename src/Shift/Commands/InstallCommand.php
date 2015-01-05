@@ -22,6 +22,7 @@ class InstallCommand extends Command
      *   2. Migrate the laravel-localisations package
      *   3. Migrate the shift package
      *   4. Publish any and all assets
+     *   5. Rebuild the services.json file
      */
     public function fire()
     {
@@ -29,6 +30,7 @@ class InstallCommand extends Command
 
         $this->call('migrate', array('--package' => 'tectonic/shift'));
         $this->call('asset:publish');
+        $this->call('shift:compile-services');
 
         $this->info('Shift installed.');
     }

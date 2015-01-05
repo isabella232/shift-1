@@ -8,6 +8,8 @@ use Tectonic\Shift\Modules\Identity\Users\Repositories\EloquentUserRepository;
 
 class UsersServiceProvider extends ServiceProvider
 {
+    public $defer = true;
+
     /**
      * Repositories defined by the users module.
      *
@@ -25,4 +27,23 @@ class UsersServiceProvider extends ServiceProvider
     protected $listeners = [
         'Tectonic.Shift.Modules.Identity.Users.Events.UserHasRegistered' => NotificationListener::class
     ];
+
+    public function provides()
+    {
+        return [
+            UserRepositoryInterface::class
+        ];
+    }
+
+    /**
+     * There are some events that require the service provider to be registered.
+     *
+     * @return array
+     */
+    public function when()
+    {
+        return [
+            'Tectonic.Shift.Modules.Identity.Users.Events.UserHasRegistered'
+        ];
+    }
 }

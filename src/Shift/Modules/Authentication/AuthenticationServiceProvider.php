@@ -24,4 +24,6 @@ class AuthenticationServiceProvider extends ServiceProvider
     {
         parent::register();
     }
+
+    public $defer = true;
 }

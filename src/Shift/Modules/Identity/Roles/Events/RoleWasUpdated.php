@@ -1,0 +1,21 @@
+<?php
+namespace Tectonic\Shift\Modules\Identity\Roles\Events;
+
+use Tectonic\Application\Eventing\Event;
+use Tectonic\Shift\Modules\Identity\Roles\Models\Role;
+
+class RoleWasUpdated extends Event
+{
+    /**
+     * @var Role
+     */
+    public $role;
+
+    /**
+     * @param Role $role
+     */
+    public function __construct(Role $role)
+    {
+        $this->role = $role;
+    }
+}

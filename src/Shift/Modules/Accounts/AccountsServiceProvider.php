@@ -14,6 +14,8 @@ use Tectonic\Shift\Modules\Accounts\Services\CurrentAccountService;
 
 class AccountsServiceProvider extends ServiceProvider
 {
+    public $defer = true;
+
     protected $aliases = [
         'CurrentAccount' => CurrentAccount::class
     ];
@@ -28,13 +30,6 @@ class AccountsServiceProvider extends ServiceProvider
         DomainRepositoryInterface::class => EloquentDomainRepository::class,
         SupportedLanguageRepositoryInterface::class => EloquentSupportedLanguagesRepository::class,
     ];
-
-    /**
-     * A list of listeners that are setup as subscribers within Laravel.
-     *
-     * @var array
-     */
-    protected $listeners = [];
 
     /**
      * Register any required bindings.
@@ -52,5 +47,17 @@ class AccountsServiceProvider extends ServiceProvider
     public function registerCurrentAccountService()
     {
         $this->app->singleton('current.account', CurrentAccountService::class);
+    }
+
+    /**
+     * Return all necessary classes/objects for when they're needed.
+     * @return array
+     */
+    public function provides()
+    {
+        return [
+            'current.account',
+            'CurrentAccount'
+        ];
     }
 }

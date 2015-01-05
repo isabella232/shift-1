@@ -1,6 +1,7 @@
 <?php
 namespace Tectonic\Shift\Library\Authorization;
 
+use Tectonic\Shift\Modules\Accounts\Facades\CurrentAccount;
 use Tectonic\Shift\Modules\Identity\Users\Models\User;
 
 /**

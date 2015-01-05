@@ -54,14 +54,6 @@ class OrderFilter implements SearchFilterInterface
 		return static::byFieldAndDirection($field, $direction);
 	}
 
-	/**
-	 * Add an order by clause to the search query.
-	 */
-	public function applyToDoctrine($queryBuilder)
-	{
-		$queryBuilder->orderBy($this->sortField($queryBuilder), $this->sortDirection());
-	}
-
     /**
      * Apply the given search filter to an Eloquent query.
      *
@@ -70,19 +62,8 @@ class OrderFilter implements SearchFilterInterface
      */
     public function applyToEloquent($query)
     {
-        $query->orderBy($this->field, $this->sortDirection());
+        return $query->orderBy($this->field, $this->sortDirection());
     }
-
-
-    /**
-	 * Provides a default sort field if the order key is not present in the search params.
-	 * 
-	 * @return string 
-	 */
-	protected function sortField($queryBuilder)
-	{
-		return $queryBuilder->getRootAliases()[0].'.'.$this->field;
-	}
 
 	/**
 	 * Returns the required sort direction.

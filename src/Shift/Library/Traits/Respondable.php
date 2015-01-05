@@ -13,7 +13,7 @@ trait Respondable
      * @param string $view
      * @param array $data
      */
-    protected function respond($view, array $data = [])
+    public function respond($view, array $data = [])
     {
         if (Request::wantsJson()) {
             return $data;
@@ -31,7 +31,7 @@ trait Respondable
      *
      * @return bool
      */
-    protected function isPjax()
+    public function isPjax()
     {
         return Request::header('X-PJAX') === 'true';
     }
@@ -41,7 +41,7 @@ trait Respondable
      *
      * @return bool
      */
-    protected function isFullPage()
+    public function isFullPage()
     {
         return !Request::wantsJson() && !$this->isPjax();
     }

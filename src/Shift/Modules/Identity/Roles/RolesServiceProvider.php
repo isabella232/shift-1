@@ -18,4 +18,12 @@ class RolesServiceProvider extends ServiceProvider
         RoleRepositoryInterface::class => EloquentRoleRepository::class,
         PermissionRepositoryInterface::class => EloquentPermissionRepository::class
     ];
+
+    public function provides()
+    {
+        return [
+            RoleRepositoryInterface::class,
+            PermissionRepositoryInterface::class
+        ];
+    }
 }

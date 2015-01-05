@@ -1,5 +1,4 @@
 <?php
-
 namespace Tectonic\Shift\Library\Search\Filters;
 
 class KeywordFilter implements SearchFilterInterface
@@ -23,39 +22,27 @@ class KeywordFilter implements SearchFilterInterface
     /**
      * @var
      */
-    private $field;
+    private $fields;
 
     /**
 	 * @param $keywords
 	 */
-	private function __construct($keywords, $field)
+	private function __construct($keywords, $fields)
 	{
 		$this->keywords = $keywords;
-        $this->field = is_null($field) ? $this->defaultField : $field;
+        $this->fields = is_null($fields) ? $this->defaultField : $fields;
     }
 
 	/**
 	 * Creates a new KeywordFilter from the keywords provided.
 	 *
-	 * @param $keywords
+	 * @param string $keywords
+     * @param string|array $fields
 	 * @return static
 	 */
-	public static function fromKeywords($keywords, $field = null)
+	public static function fromKeywords($keywords, $fields = null)
 	{
-		return new static($keywords, $field);
-	}
-
-	/**
-	 * Applies the filter to the doctrine query builder.
-	 *
-	 * @param QueryBuilder $queryBuilder
-	 */
-	public function applyToDoctrine($queryBuilder)
-	{
-		if ($this->keywords) {
-			$queryBuilder->andWhere($this->fieldName($queryBuilder).' LIKE :keywords');
-			$queryBuilder->setParameter('keywords', '%'.$this->keywords.'%');
-		}
+		return new static($keywords, $fields);
 	}
 
     /**
@@ -67,20 +54,16 @@ class KeywordFilter implements SearchFilterInterface
     public function applyToEloquent($query)
     {
         if ($this->keywords) {
-            $query->where($this->field, 'LIKE', '%'.$this->keywords.'%');
+            if (!is_array($this->fields)) {
+                $query = $query->where($this->fields, 'LIKE', '%' . $this->keywords . '%');
+            }
+            else {
+                foreach ($this->fields as $field) {
+                    $query = $query->where($field, 'LIKE', '%' . $this->keywords . '%');
+                }
+            }
         }
+
+        return $query;
     }
-
-    /**
-	 * Returns the field name to match against the keywords.
-	 *
-	 * @param $queryBuilder
-	 * @return string
-	 */
-	public function fieldName($queryBuilder)
-	{
-		$rootAliases = $queryBuilder->getRootAliases();
-
-		return $rootAliases[0].'.'.$this->field;
-	}
 }

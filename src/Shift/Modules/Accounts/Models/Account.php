@@ -3,29 +3,24 @@ namespace Tectonic\Shift\Modules\Accounts\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletingTrait;
 use Tectonic\Application\Eventing\EventGenerator;
+use Tectonic\Localisation\Contracts\TranslatableInterface;
 use Tectonic\Localisation\Translator\Translatable;
 use Tectonic\Shift\Library\Slugs\Sluggable;
 use Tectonic\Shift\Library\Support\Database\Eloquent\Model;
 use Tectonic\Shift\Library\Support\Database\Eloquent\TranslatableModel;
+use Tectonic\Shift\Modules\Accounts\Events\AccountWasCreated;
 use Tectonic\Shift\Modules\Accounts\Events\AccountWasInstalled;
 use Tectonic\Shift\Modules\Accounts\Events\OwnerWasChanged;
 use Tectonic\Shift\Modules\Localisation\Languages\Language;
 use Tectonic\Shift\Modules\Identity\Users\Models\User;
 
-class Account extends Model
+class Account extends Model implements TranslatableInterface
 {
     use EventGenerator;
     use SoftDeletingTrait;
     use Translatable;
     use TranslatableModel;
     use Sluggable;
-
-    /**
-     * Fillable fields via mass assignment.
-     *
-     * @var array
-     */
-    protected $fillable = ['name'];
 
     /**
      * An account can have one or more domains, and is often queried via this relationship.
@@ -98,6 +93,20 @@ class Account extends Model
     {
         $this->owner()->associate($user);
         $this->raise(new OwnerWasChanged($user));
+    }
+
+    /**
+     * Create a new account instance.
+     *
+     * @param array $attributes
+     * @return static
+     */
+    public static function create(array $attributes)
+    {
+        $account = new static($attributes);
+        $account->raise(new AccountWasCreated($account));
+
+        return $account;
     }
 
     /**

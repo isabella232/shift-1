@@ -40,6 +40,13 @@ final class Bouncer
 	private $authority;
 
 	/**
+	 * Used as a kind of pointer. If any authorise method passes, this should be set to true.
+	 *
+	 * @var bool
+	 */
+	private $permitted = false;
+
+	/**
 	 * The resource provided must be the resource that is matched throughout the system. Usually this in camelcase,
 	 * such as User or EntrySubmission.etc.
 	 *
@@ -100,7 +107,7 @@ final class Bouncer
 			$this->matrix[$method][$action] = $access_requirement;
 		}
 		else {
-			$this->matrix[$method][$action] = array_merge($this->matrix[$method][$action], $access_requirement);
+			$this->matrix[$method][$action] = array_merge_recursive($this->matrix[$method][$action], $access_requirement);
 		}
 	}
 
@@ -113,54 +120,77 @@ final class Bouncer
 	 */
 	public function allowed($method, $action)
 	{
+		$this->reset();
+
 		$method = $this->method($method);
 
-		// If the action is a #, then we follow RESTful conventions - the action should actually be the index action
-		if (is_numeric($action)) {
-			$action = $this->determineAction($method);
-		}
-
-		Log::debug('ACCESS REQUEST: FROM ' . $this->resource . ' WITH ' . $method .' TO ' . $action);
+		$this->debug("Access request from [{$this->resource}] with [$method] to [$action].");
 
 		// let's see if such an action and resource exists in the matrix
 		if (isset($this->matrix[$method][$action])) {
-			$auth_check = $this->matrix[$method][$action];
-
-			foreach ($auth_check as $check) {
-				// if the auth check value is a callable function, let that handle whether
-				// access is allowable or not for the user's request.
-				if (is_callable($check) && $this->authoriseByFunction($check)) {
-					return true;
-				}
-
-				//If auth check value is an array, check each member rule
-				if (is_array($check)) {
-					foreach ($check as $key => $rule) {
-						if (is_callable($rule) && $this->authoriseByFunction($rule)) return true;
-
-						$this_resource = is_numeric($key) ? $this->resource : $key;
-
-						if (is_array($rule)) {
-							// looks like we have a custom resource and an array of permissons allowed
-							foreach ($rule as $r) {
-								if ($this->authoriseByRule($r, $this_resource)) return true;
-							}
-						}
-						else {
-							// 'any' means anyone can do it
-							if ($this->authoriseByRule($rule, $this_resource)) return true;
-						}
-					}
-				}
-				else {
-					if ($this->authoriseByRule($check, $this->resource)) return true;
-				}
-			}
+			$this->authoriseMatrix($this->matrix[$method][$action], $this->resource);
 		}
 
-		Log::debug('ACCESS REQUEST: DENIED.');
+		$this->debug('Access request denied.');
 
-		return false;
+		return $this->permitted();
+	}
+
+	/**
+	 * Once a set of rules is found for a method and action, we can then parse the rules and determine
+	 * whether or not the user has access to the requested method and action.
+	 *
+	 * @param array $rules
+	 * @param string $resource
+	 * @return bool
+     */
+	protected function authoriseMatrix(array $rules, $resource)
+	{
+		foreach ($rules as $key => $check) {
+			$resource = is_numeric($key) ? $this->resource : $key;
+
+			if (is_callable($check)) {
+				$this->authoriseFunction($check);
+			}
+			else if (is_array($check)) {
+				$this->authoriseArray($check, $resource);
+			}
+			else {
+				$this->authoriseRule($check, $resource);
+			}
+		}
+	}
+
+	/**
+	 * Determines whether or not a user has access based on the array of required rules.
+	 *
+	 * @param array $rules
+	 * @param string $resource
+	 * @return bool
+     */
+	public function authoriseArray(array $rules, $resource)
+	{
+		foreach ($rules as $rule) {
+			if ($this->authoriseRule($rule, $resource)) {
+				$this->permit();
+			}
+		}
+	}
+
+	/**
+	 * The default authorization check. See if access is provided for a given permission rule and resource.
+	 *
+	 * @param string $rule
+	 * @param string $resource
+	 * @return bool
+	 */
+	public function authoriseRule($rule, $resource)
+	{
+		if ($this->can($rule, $resource)) {
+			$this->debug("Access request granted from [$resource] on rule $rule");
+
+			return $this->permit();
+		}
 	}
 
 	/**
@@ -170,37 +200,38 @@ final class Bouncer
 	 * @param \Closure $function
 	 * @return bool
 	 */
-	private function authoriseByFunction(\Closure $function)
+	public function authoriseFunction(\Closure $function)
 	{
-		$access = $function();
-
-		if ($access) {
-			Log::debug("ACCESS REQUEST: GRANTED for anonymous function.");
+		if ($function()) {
+			$this->debug("Access request granted for provided closure.");
+			$this->permit();
 		}
-
-		return $access;
 	}
 
 	/**
-	 * The default authorization check. See if access is provided for a given permission rule and resource.
+	 * Returns the permitted value.
 	 *
-	 * @param $rule
-	 * @param null $resource
 	 * @return bool
-	 */
-	private function authoriseByRule($rule, $resource = null)
+     */
+	public function permitted()
 	{
-		if (is_null($resource)) {
-			$resource = $this->resource;
-		}
+		return $this->permitted;
+	}
 
-		if ($this->can($rule, $resource)) {
-			Log::debug('ACCESS REQUEST: GRANTED FROM ' . $resource . ' ON RULE: ' . $rule);
+	/**
+	 * Permits access.
+	 */
+	public function permit()
+	{
+		return $this->permitted = true;
+	}
 
-			return true;
-		}
-
-		return false;
+	/**
+	 * Reset the permitted check. Necessary if doing numerous checks.
+	 */
+	public function reset()
+	{
+		$this->permitted = false;
 	}
 
     /**
@@ -213,9 +244,15 @@ final class Bouncer
     private function can($rule, $resource)
     {
         // Guest access allowed
-        if ('any' == $rule) return true;
+        if ('guest' == $rule) {
+	        return $this->permit();
+        }
 
-        return $this->authority->can($rule, $resource);
+        if ($this->authority->can($rule, $resource)) {
+	        return $this->permit();
+        }
+
+	    return false;
     }
 
 	/**
@@ -278,5 +315,15 @@ final class Bouncer
 	private function method($method)
 	{
 		return Str::lower($method);
+	}
+
+	/**
+	 * Simply a wrapper a method for the logger.
+	 *
+	 * @param string $message
+     */
+	private function debug($message)
+	{
+		Log::debug($message);
 	}
 }
