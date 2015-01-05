@@ -1,4 +1,4 @@
-<td class="permission-action">
+<td class="permission-action separator">
     {{ Form::radio("permission[$resource][$action]", "deny", $mode == 'deny') }}
 </td>
 

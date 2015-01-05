@@ -31,6 +31,13 @@ class CurrentAccountService
      */
     private $account;
 
+    /**
+     * The translated version of the account model.
+     *
+     * @var Entity
+     */
+    private $translatedAccount;
+
 	/**
 	 * @param \Tectonic\Shift\Modules\Accounts\Contracts\AccountRepositoryInterface $accountRepository
 	 */
@@ -77,5 +84,20 @@ class CurrentAccountService
     public function determine($domain)
     {
         return $this->accountRepository->requireByDomain($domain);
+    }
+
+    /**
+     * Returns the account entity, which has been translated from the original model - which can be used
+     * for dealing with the account name and any other fields that are translated to a user's locality.
+     *
+     * @return Entity
+     */
+    public function translated()
+    {
+        if (!$this->translatedAccount) {
+            $this->translatedAccount = \Translator::translate($this->account);
+        }
+
+        return $this->translatedAccount;
     }
 } 

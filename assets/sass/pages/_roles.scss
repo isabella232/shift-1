@@ -23,3 +23,11 @@ th.action {
 		border-bottom-top-radius: 0;
 	}
 }
+
+.matrix {
+	tr {
+		td.separator {
+			border-left: 1px solid #E8E8E8;
+		}
+	}
+}
