@@ -4,7 +4,7 @@
 <![endif]-->
 <!--[if lt IE 8]><script src="//cdnjs.cloudflare.com/ajax/libs/json3/3.2.4/json3.min.js"></script><![endif]-->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.2/select2.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.2/select2.min.css"/>
 
 {{-- Load Assets --}}
 @foreach(Asset::containers(['custom']) as $container)

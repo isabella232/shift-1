@@ -12,6 +12,9 @@
             <div id="control-panel">
                 <ul class="horizontal">
                     <li>Have an account? <a href="#">Log in</a></li>
+                    @if(Auth::check())
+                    <li><span><input type="hidden" id="accountSwitcher" style="width: 300px;" /></span></li>
+                    @endif
                 </ul>
             </div>
         </div>
@@ -19,11 +22,7 @@
 
     <nav id="navigation">
         <div class="container pad-on-handheld">
-            <ul class="horizontal menu">
-                <li>
-                    <div id="accountSwitcher" class="select2-container"></div>
-                </li>
-            </ul>
+            <ul class="horizontal menu"></ul>
         </div>
     </nav>
 
