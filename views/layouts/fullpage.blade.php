@@ -13,7 +13,10 @@
                 <ul class="horizontal">
                     <li>Have an account? <a href="#">Log in</a></li>
                     @if(Auth::check())
-                    <li><span><input type="hidden" id="accountSwitcher" style="width: 300px;" /></span></li>
+                    <li>
+                        <span id="accountName">Account</span>
+                        <input type="hidden" id="accountSwitcher" style="width: 300px;"/>
+                    </li>
                     @endif
                 </ul>
             </div>

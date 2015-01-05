@@ -115,3 +115,8 @@
 // Theme specific styling
 .theme-option-field { width: 80%; }
 .theme-hint-text { margin-bottom: 4px; }
+
+.select2-container .select2-choice {
+  	display: inline-block !important;
+	width: 100%;
+}

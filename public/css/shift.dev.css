@@ -2640,6 +2640,10 @@ div#recaptcha_area #recaptcha_response_field {
 .theme-hint-text {
   margin-bottom: 4px; }
 
+.select2-container .select2-choice {
+  display: inline-block !important;
+  width: 100%; }
+
 /*
 |--------------------------------------------------------------------------
 | Shame.css
@@ -2678,4 +2682,4 @@ div#recaptcha_area #recaptcha_response_field {
   .lt-ie8 body #unsupported-browser, .lt-ie8 body #no-javascript {
     display: block; }
 
-/*# sourceMappingURL=ca1ba4c2-e4d7-48dd-b6fc-f72c366dc717.scss.map */
+/*# sourceMappingURL=216eee30-d6c3-487c-a75a-7d25da74aee8.scss.map */
