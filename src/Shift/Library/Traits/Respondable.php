@@ -19,10 +19,6 @@ trait Respondable
             return $data;
         }
 
-        if ($this->isPjax()) {
-            return View::make($view, $data);
-        }
-
         $this->layout->main = View::make($view, $data);
     }
 

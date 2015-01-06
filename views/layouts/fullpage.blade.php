@@ -24,7 +24,7 @@
     </nav>
 
     <section id="content">
-        <div>@yield('main')</div>
+        @yield('main')
     </section>
 
     <div id="footer-links">
