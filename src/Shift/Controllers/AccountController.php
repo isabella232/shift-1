@@ -7,8 +7,16 @@ use Tectonic\Shift\Modules\Accounts\Services\AccountsService;
 
 class AccountController extends Controller
 {
-	public function __construct(AccountsService $service)
+	/**
+	 * Retrieve a list of roles based on the search conditions provided.
+	 *
+	 * @return mixed
+	 */
+	public function getIndex()
 	{
-		$this->crudService = $service;
+		$search = App::make(AccountSearch::class);
+		$roles = Translator::translate($search->fromInput(Input::get()));
+
+		return $this->respond('shift::accounts.index', compact('roles'));
 	}
 }

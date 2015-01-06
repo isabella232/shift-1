@@ -18,20 +18,23 @@ Route::group(['prefix' => Config::get('shift.url', ''), 'namespace' => 'Tectonic
     Route::get('logout', ['uses' => 'AuthenticationController@logout', 'before' => 'auth']);
 
     // User profile routes
-    Route::get('profile', 'UserController@profile');
-    Route::post('profile', 'UserController@updateProfile');
+    Route::group(['after' => 'shift.pjax'], function() {
+        Route::get('profile', 'UserController@profile');
+        Route::post('profile', 'UserController@updateProfile');
 
-    Route::collection('fields', 'FieldController');
-    Route::collection('roles', 'RoleController');
-    Route::collection('sessions', 'AuthenticationController');
-    Route::collection('users', 'UserController');
+        Route::collection('fields', 'FieldController');
+        Route::collection('roles', 'RoleController');
+        Route::collection('sessions', 'AuthenticationController');
+        Route::collection('users', 'UserController');
 
-    Route::get('settings', ['uses' => 'SettingController@index']);
-    Route::post('settings', ['uses' => 'SettingController@update']);
+        Route::get('settings', ['uses' => 'SettingController@index']);
+        Route::post('settings', ['uses' => 'SettingController@update']);
+    });
 });
 
 Route::filter('shift.auth', 'Tectonic\Shift\Library\Filters\AuthFilter');
 Route::filter('shift.account', 'Tectonic\Shift\Library\Filters\AccountFilter');
 Route::filter('shift.install', 'Tectonic\Shift\Library\Filters\InstallationFilter');
+Route::filter('shift.pjax', 'Tectonic\Shift\Library\Filters\PjaxFilter');
 
 Route::whenRegex('/^(?!install)/i', 'shift.account');

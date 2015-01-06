@@ -1,5 +1,5 @@
 <div class="container">
-    {{ Form::model($role, ['route' => $role->id ? ['roles.update', $role->slug] : 'roles.create', 'method' => $role->id ? 'put' : 'post', 'class' => 'vertical']) }}
+    {{ Form::model($role, ['route' => $role->id ? ['roles.update', $role->slug] : 'roles.create', 'method' => $role->id ? 'put' : 'post', 'class' => 'vertical', 'data-pjax' => '']) }}
         <div class="row">
             <div class="column-half roles-left-column">
                 <div class="control">

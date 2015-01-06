@@ -1,26 +1,20 @@
 <?php
 namespace Tectonic\Shift\Controllers;
 
-use Illuminate\Support\Facades\Redirect;
+use App;
 use Input;
+use Redirect;
 use Tectonic\Application\Validation\ValidationCommandBus;
 use Tectonic\LaravelLocalisation\Facades\Translator;
 use Tectonic\Shift\Library\Support\Controller;
-use Tectonic\Shift\Library\Support\DefaultResponder;
 use Tectonic\Shift\Modules\Identity\Roles\Commands\CreateRoleCommand;
 use Tectonic\Shift\Modules\Identity\Roles\Commands\UpdateRoleCommand;
 use Tectonic\Shift\Modules\Identity\Roles\Contracts\RoleRepositoryInterface;
-use Tectonic\Shift\Modules\Identity\Roles\Models\Role;
 use Tectonic\Shift\Modules\Identity\Roles\Search\RoleSearch;
 use Tectonic\Shift\Modules\Identity\Roles\Services\RoleService;
 
 class RoleController extends Controller
 {
-    /**
-     * @var RoleSearch
-     */
-    private $search;
-
     /**
      * @var RoleRepositoryInterface
      */
@@ -36,11 +30,9 @@ class RoleController extends Controller
      * @param RoleService $rolesService
      */
     public function __construct(
-        RoleSearch $search,
         ValidationCommandBus $commandBus,
         RoleRepositoryInterface $roleRepository
     ) {
-        $this->search = $search;
         $this->roleRepository = $roleRepository;
         $this->commandBus = $commandBus;
     }
@@ -52,7 +44,8 @@ class RoleController extends Controller
      */
     public function getIndex()
     {
-        $roles = Translator::translate($this->search->fromInput(Input::get()));
+        $search = App::make(RoleSearch::class);
+        $roles = Translator::translate($search->fromInput(Input::get()));
 
         return $this->respond('shift::roles.index', compact('roles'));
     }
@@ -62,7 +55,7 @@ class RoleController extends Controller
      */
     public function getNew()
     {
-        $role = new Role;
+        $role = $this->roleRepository->getNew();
 
         return $this->respond('shift::roles.new', compact('role'));
     }

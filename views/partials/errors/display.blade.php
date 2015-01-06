@@ -1,4 +1,4 @@
-@if ($errors->count())
+@if (isset($errors) && $errors->count())
     <div class="container">
         <div class="alert-error sticky island">
             <ul class="validation-errors">

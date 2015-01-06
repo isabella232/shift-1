@@ -26,4 +26,9 @@ abstract class Controller extends \Illuminate\Routing\Controller
             $this->layout = View::make('shift::layouts.pjax');
         }
     }
+
+    public function pjaxHeader($route, $request)
+    {
+
+    }
 }
