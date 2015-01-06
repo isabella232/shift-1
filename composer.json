@@ -23,7 +23,6 @@
 		"jasonlewis/basset": "dev-master",
 		"kirkbushell/eloquence": "dev-master",
 		"laravel/framework": "~5.0",
-		"machuga/authority-l4" : "dev-master",
 		"orchestra/asset": "2.2.*",
 		"tectonic/application-support": "dev-l5",
 		"tectonic/laravel-localisation": "dev-l5"
