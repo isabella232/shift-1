@@ -20,7 +20,7 @@ class ShiftServiceProvider extends ServiceProvider
      */
     protected $aliases = [
         'Asset'         => 'Orchestra\Support\Facades\Asset',
-        'Authority'     => 'Authority\AuthorityL4\Facades\Authority',
+        //'Authority'     => 'Authority\AuthorityL4\Facades\Authority',
         'Utility'       => 'Tectonic\Shift\Library\Facades\Utility',
         'Recaptcha'     => 'Tectonic\Shift\Library\Facades\Recaptcha',
     ];
@@ -43,7 +43,7 @@ class ShiftServiceProvider extends ServiceProvider
      * @var array
      */
     protected $serviceProviders = [
-        'Authority\AuthorityL4\AuthorityL4ServiceProvider',
+        //'Authority\AuthorityL4\AuthorityL4ServiceProvider',
         'Orchestra\Asset\AssetServiceProvider',
         'Eloquence\EloquenceServiceProvider',
         'Tectonic\LaravelLocalisation\ServiceProvider',
@@ -84,7 +84,7 @@ class ShiftServiceProvider extends ServiceProvider
 
         $this->registerRouter();
         $this->registerRecaptcha();
-        $this->registerAuthorityConfiguration();
+        //$this->registerAuthorityConfiguration();
         $this->registerHoneyPot();
 		$this->requireFiles($this->filesToRegister);
     }
@@ -109,9 +109,9 @@ class ShiftServiceProvider extends ServiceProvider
 	 */
 	public function registerAuthorityConfiguration()
 	{
-		$this->app['config']->set('authority-l4::initialize', function($authority) {
+		/*$this->app['config']->set('authority-l4::initialize', function($authority) {
 			$user = $authority->getCurrentUser();
-		});
+		});*/
 	}
 
     protected function registerHoneyPot()
