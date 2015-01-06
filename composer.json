@@ -26,7 +26,7 @@
 		"machuga/authority-l4" : "dev-master",
 		"orchestra/asset": "2.2.*",
 		"tectonic/application-support": "dev-l5",
-		"tectonic/laravel-localisation": "dev-master"
+		"tectonic/laravel-localisation": "dev-l5"
 	},
 	"require-dev": {
 		"mockery/mockery": "dev-master@dev",
