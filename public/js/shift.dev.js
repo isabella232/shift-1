@@ -562,7 +562,7 @@ var Pjax = Pjax || {};
                 }
             },
             formatResult: function(repo) {
-                return repo.text;
+                return '<span class="account-switcher-result">' + repo.text + '</span>';
             },
             formatSelection: function(repo) {
                 return repo.text;

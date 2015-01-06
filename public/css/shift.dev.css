@@ -2524,6 +2524,44 @@ div#recaptcha_area #recaptcha_response_field {
 
 /*
 |--------------------------------------------------------------------------
+| Components
+|--------------------------------------------------------------------------
+|
+| This file will do nothing other than load other stylesheets from
+| components used in the site.
+|
+*/
+.select2-container .select2-choice {
+  display: inline-block !important;
+  width: 100%; }
+
+.select2-results .select2-highlighted {
+  background: none;
+  color: #28ACB9; }
+
+.select2-drop {
+  margin-top: -6px; }
+
+#accountName {
+  color: #FFFFFF; }
+
+#accountName:hover {
+  cursor: pointer; }
+
+.account-switcher-result {
+  margin: 0;
+  padding: 6px 0;
+  color: #666666;
+  display: block; }
+
+.account-switcher-result:hover {
+  color: #28ACB9; }
+
+.account-switcher-result + .account-switcher-result {
+  border-top: 1px solid #DDDDDD; }
+
+/*
+|--------------------------------------------------------------------------
 | Pages - page-specific styles
 |--------------------------------------------------------------------------
 | 
@@ -2662,10 +2700,6 @@ th.action {
 .theme-hint-text {
   margin-bottom: 4px; }
 
-.select2-container .select2-choice {
-  display: inline-block !important;
-  width: 100%; }
-
 /*
 |--------------------------------------------------------------------------
 | Shame.css
@@ -2704,4 +2738,4 @@ th.action {
   .lt-ie8 body #unsupported-browser, .lt-ie8 body #no-javascript {
     display: block; }
 
-/*# sourceMappingURL=c310cd2f-2af3-48f1-b7f7-1815d623c454.scss.map */
+/*# sourceMappingURL=cd3e81fb-dc07-4b50-aa87-8a0e231954e9.scss.map */
