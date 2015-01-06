@@ -21,7 +21,7 @@
 	  	"curl/curl": "1.2.0",
 		"hashids/hashids": "1.0.*@dev",
 		"jasonlewis/basset": "dev-master",
-		"kirkbushell/eloquence": "dev-master",
+		"kirkbushell/eloquence": "dev-L5",
 		"laravel/framework": "~5.0",
 		"orchestra/asset": "2.2.*",
 		"tectonic/application-support": "dev-l5",
