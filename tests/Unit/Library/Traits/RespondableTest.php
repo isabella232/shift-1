@@ -13,6 +13,8 @@ class RespondableTest extends UnitTestCase
 	public function init()
     {
         $this->respondable = new RespondableStub;
+        $this->respondable->layout = new \stdClass;
+        $this->respondable->layout->main = 'whatever';
     }
 
     public function testPjaxCheck()
@@ -52,21 +54,9 @@ class RespondableTest extends UnitTestCase
         $this->assertEquals([], $this->respondable->respond('view'));
     }
 
-    public function testPjaxResponse()
+    public function testPjaxAndFullpageResponses()
     {
         Request::shouldReceive('wantsJson')->andReturn(false);
-        Request::shouldReceive('header')->with('X-PJAX')->once()->andReturn('true');
-        View::shouldReceive('make')->with('view', [])->once()->andReturn('view');
-
-        $this->assertEquals('view', $this->respondable->respond('view'));
-    }
-
-    public function testFullPageResponse()
-    {
-        $this->respondable->layout = new \stdClass;
-
-        Request::shouldReceive('wantsJson')->andReturn(false);
-        Request::shouldReceive('header')->with('X-PJAX')->once()->andReturn('false');
         View::shouldReceive('make')->with('view', [])->once()->andReturn('view');
 
         $this->respondable->respond('view');

@@ -59,7 +59,7 @@
 
 					<div class="row">
 						<div class="two-thirds">
-							@include('shift::partials.page.pagination')
+							{{ HTML::pagination($roles) }}
 						</div>
 					</div>
 				@else

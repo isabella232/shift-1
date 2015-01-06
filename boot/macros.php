@@ -47,3 +47,13 @@ HTML::macro('permission', function($role, $resource, $action) {
 
     return View::make('shift::roles.permission', compact('role', 'resource', 'action', 'mode'));
 });
+
+/**
+ * Returns a very customised view for pagination. Simply provide the paginator instance to the
+ * macro as the one and only parameter and the pagination view will handle the rest.
+ *
+ * @param Paginator $paginator
+ */
+HTML::macro('pagination', function($paginator) {
+    return View::make('shift::partials.page.pagination', compact('paginator'));
+});
