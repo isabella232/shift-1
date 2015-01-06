@@ -22,7 +22,7 @@
 		"hashids/hashids": "1.0.*@dev",
 		"jasonlewis/basset": "dev-master",
 		"kirkbushell/eloquence": "dev-master",
-		"laravel/framework": "~4.2",
+		"laravel/framework": "~5.0",
 		"machuga/authority-l4" : "dev-master",
 		"orchestra/asset": "2.2.*",
 		"tectonic/application-support": "dev-master",
