@@ -8,7 +8,7 @@ Route::group(['prefix' => Config::get('shift.url', ''), 'namespace' => 'Tectonic
         Route::post('install', 'InstallationController@postInstall');
     });
 
-    Route::get('/', 'HomeController@index');
+    Route::get('/', ['as' => 'home', 'uses' => 'HomeController@index']);
 
     Route::get('register', 'RegistrationController@form');
     Route::post('register', 'RegistrationController@register');
@@ -22,10 +22,9 @@ Route::group(['prefix' => Config::get('shift.url', ''), 'namespace' => 'Tectonic
         Route::get('profile', 'UserController@profile');
         Route::post('profile', 'UserController@updateProfile');
 
-        Route::collection('fields', 'FieldController');
+        Route::collection('accounts', 'AccountController');
         Route::collection('roles', 'RoleController');
         Route::collection('sessions', 'AuthenticationController');
-        Route::collection('users', 'UserController');
 
         Route::get('settings', ['uses' => 'SettingController@index']);
         Route::post('settings', ['uses' => 'SettingController@update']);

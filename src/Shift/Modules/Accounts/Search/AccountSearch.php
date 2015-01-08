@@ -1,6 +1,9 @@
 <?php
 namespace Tectonic\Shift\Modules\Accounts\Search;
 
+use Tectonic\Shift\Library\Search\Filters\KeywordFilter;
+use Tectonic\Shift\Library\Search\Filters\OrderFilter;
+use Tectonic\Shift\Library\Search\SearchFilterCollection;
 use Tectonic\Shift\Library\Search\SearchInterface;
 use Tectonic\Shift\Modules\Accounts\Contracts\AccountRepositoryInterface;
 

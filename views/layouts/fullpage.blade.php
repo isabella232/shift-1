@@ -19,7 +19,7 @@
 
     <nav id="navigation">
         <div class="container pad-on-handheld">
-            <ul class="horizontal menu"></ul>
+            {{ HTML::menu('main') }}
         </div>
     </nav>
 

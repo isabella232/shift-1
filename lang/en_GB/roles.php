@@ -11,6 +11,15 @@ return [
         ]
     ],
 
+    'table' => [
+        'columns' => [
+            'created' => 'Created',
+            'default' => 'Default',
+            'name' => 'Name',
+            'users' => 'Users',
+        ]
+    ],
+
     'titles' => [
         'main' => 'Roles',
         'new' => 'New role'

@@ -3,6 +3,7 @@ namespace Tectonic\Shift;
 
 use App;
 use Curl\Curl;
+use Illuminate\Support\Facades\Request;
 use Tectonic\Shift\Commands\CompileServicesCommand;
 use Tectonic\Shift\Commands\InstallCommand;
 use Tectonic\Shift\Commands\ResetCommand;
@@ -10,6 +11,7 @@ use Tectonic\Shift\Library\Recaptcha;
 use Tectonic\Shift\Library\Router;
 use Tectonic\Shift\Library\Security\HoneyPot;
 use Tectonic\Shift\Library\ServiceProvider;
+use Tectonic\Shift\Modules\Accounts\Facades\CurrentAccount;
 
 class ShiftServiceProvider extends ServiceProvider
 {

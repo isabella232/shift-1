@@ -1,9 +1,11 @@
 <?php
-
 namespace Tectonic\Shift\Controllers;
 
+use App;
+use Input;
+use Tectonic\LaravelLocalisation\Facades\Translator;
 use Tectonic\Shift\Library\Support\Controller;
-use Tectonic\Shift\Modules\Accounts\Services\AccountsService;
+use Tectonic\Shift\Modules\Accounts\Search\AccountSearch;
 
 class AccountController extends Controller
 {

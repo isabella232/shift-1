@@ -3,7 +3,7 @@ ul, ol {
 		> li + li { margin-top: 5px; }
 	}
 	// Vertical and horizontal lists.
-	&.vertical, &.horizontal {
+	&.vertical, &.horizontal, &.menu {
 		list-style: none;
 		padding: 0;
 		margin: 0;

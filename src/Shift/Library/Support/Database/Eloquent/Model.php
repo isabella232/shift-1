@@ -7,4 +7,19 @@ class Model extends \Eloquent
 {
     // Ensure that fields are always approached with camel-casing
     use CamelCaseModel;
+
+    /**
+     * Return the cache key for the model. Taken from basecamp/rails.
+     *
+     * @return string
+     */
+    public function cacheKey()
+    {
+        if ($this->exists) {
+            return class_basename($this).'-'.$this->id.'-'.$this->updatedAt;
+        }
+        else {
+            return class_basename($this).'-new';
+        }
+    }
 }

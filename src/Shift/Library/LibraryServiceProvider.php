@@ -16,6 +16,8 @@ class LibraryServiceProvider extends ServiceProvider
 
     protected $serviceProviders = [
         'Tectonic\Shift\Library\Html\HtmlServiceProvider',
+        'Tectonic\Shift\Library\Localisation\LocalisationServiceProvider',
+        'Tectonic\Shift\Library\Menu\MenuServiceProvider',
     ];
 
     /**
@@ -31,7 +33,6 @@ class LibraryServiceProvider extends ServiceProvider
         $this->registerAssetContainer();
         $this->registerConsumer();
         $this->registerCurrentLocale();
-        $this->registerDeferredProviders();
     }
 
     protected function registerConsumer()
@@ -42,11 +43,6 @@ class LibraryServiceProvider extends ServiceProvider
     protected function registerCurrentLocale()
     {
         $this->app->singleton('currentLocale', CurrentLocaleService::class);
-    }
-
-    protected function registerDeferredProviders()
-    {
-        $this->app->registerDeferredProvider('Tectonic\Shift\Library\Localisation\LocalisationServiceProvider');
     }
 
     /**

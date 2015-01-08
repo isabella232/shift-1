@@ -1,11 +1,15 @@
 @extends('shift::content.main')
 
 @section('breadcrumbs')
-    <h1>{{ trans('shift::roles.titles.main') }}</h1>
+    <h1>Accounts</h1>
 @stop
 
 @section('buttons')
-    {{ Button::link(route('roles.new'), trans('shift::roles.titles.new'), ['type' => 'primary', 'icon' => 'plus']) }}
+    {{ Button::link(route('accounts.new'), 'New account', ['type' => 'primary', 'icon' => 'plus']) }}
+@stop
+
+@section('filters')
+    @include('shift::partials.page.filters')
 @stop
 
 @section('content')
@@ -33,10 +37,10 @@
 							<thead>
 								<tr>
 									<th class="checkbox"><input type="checkbox"></th>
-									<th><a href="javascript:;" sort="roles.name" class="sortable">{{ trans('shift::roles.table.columns.name') }}</a></th>
-									<th># {{ trans('shift::roles.table.columns.users') }}</th>
-									<th>{{ trans('shift::roles.table.columns.default') }}</th>
-									<th><a href="javascript:;" sort="roles.created_at" class="sortable">{{ trans('shift::roles.table.columns.created') }}</a></th>
+									<th><a href="javascript:;" sort="roles.name" class="sortable">Name</a></th>
+									<th># Users</th>
+									<th>Default</th>
+									<th><a href="javascript:;" sort="roles.created_at" class="sortable">Created</a></th>
 								</tr>
 							</thead>
 							<tbody>

@@ -14,11 +14,9 @@ use Tectonic\Shift\Library\Traits\Respondable;
  */
 class PjaxFilter
 {
-    use Respondable;
-
-	public function filter($route, $request, $response)
+    public function filter($route, $request, $response)
     {
-        if ($this->isPjax()) {
+        if (Request::header('X-PJAX') === 'true') {
             $response->header('X-PJAX-URL', Request::url());
         }
     }

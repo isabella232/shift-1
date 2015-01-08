@@ -57,3 +57,19 @@ HTML::macro('permission', function($role, $resource, $action) {
 HTML::macro('pagination', function($paginator) {
     return View::make('shift::partials.page.pagination', compact('paginator'));
 });
+
+/**
+ * Renders a menu that has been registered by the provided menuName.
+ *
+ * @param string|Menu $menu
+ * @return View
+ */
+HTML::macro('menu', function($menu) {
+    // If a menu instance was not passed, let's instead try and fetch the menu by name
+    if (!($menu instanceof \Tectonic\Shift\Library\Menu\Menu)) {
+        $menu = Menufy::get($menu);
+    }
+
+    // Render the menu
+    return View::make('shift::partials.menu.menu', compact('menu'));
+});
