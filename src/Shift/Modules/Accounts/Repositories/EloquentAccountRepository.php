@@ -61,6 +61,20 @@ class EloquentAccountRepository extends Repository implements AccountRepositoryI
 	}
 
     /**
+     * Searches for an account by user.
+     *
+     * @param $user
+     *
+     * @return mixed
+     */
+    public function getByUser($user)
+    {
+        return $this->getQuery()->whereHas('users', function($query) use ($user) {
+            $query->whereUserId($user);
+        })->first();
+    }
+
+    /**
      * Retrieves the total count for the number of accounts added to the system (both deleted and not).
      *
      * @return integer

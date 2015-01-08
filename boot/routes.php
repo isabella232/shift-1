@@ -29,6 +29,11 @@ Route::group(['prefix' => Config::get('shift.url', ''), 'namespace' => 'Tectonic
         Route::get('settings', ['uses' => 'SettingController@index']);
         Route::post('settings', ['uses' => 'SettingController@update']);
     });
+
+    // Account switching routes
+    Route::get('auth/accounts', 'AuthenticationController@getAccounts');
+    Route::get('auth/account/{id}', 'AuthenticationController@switchToAccount');
+    Route::get('auth/switch', 'AuthenticationController@switchAccount');
 });
 
 Route::filter('shift.auth', 'Tectonic\Shift\Library\Filters\AuthFilter');

@@ -1,6 +1,7 @@
 <?php
 namespace Tectonic\Shift\Modules\Identity\Users\Repositories;
 
+use Tectonic\LaravelLocalisation\Facades\Translator;
 use Tectonic\Shift\Library\Support\Database\Eloquent\Repository;
 use Tectonic\Shift\Modules\Identity\Users\Contracts\UserRepositoryInterface;
 use Tectonic\Shift\Modules\Identity\Users\Models\User;
@@ -48,5 +49,34 @@ class EloquentUserRepository extends Repository implements UserRepositoryInterfa
         })->whereEmail($email)->first();
 
         return $user;
+    }
+
+    /**
+     * Get a list of account ids with account name a user belongs to.
+     *
+     * @param      $user
+     * @param null $queryString
+     *
+     * @return array
+     */
+    public function getAccounts($user, $queryString = null)
+    {
+        $queryResult = $this->getQuery()->where('id', '=', $user->id)->first();
+
+        $results = [];
+
+        foreach ($queryResult->accounts as $account)
+        {
+            $language = $account->language;
+
+            $nameTranslation = $account->translations()
+                ->where('field', '=', 'name')
+                ->where('value', 'LIKE', "%{$queryString}%")
+                ->first();
+
+            $results[] = ['id' => $account->id, 'text' => $nameTranslation['value']];
+        }
+
+        return $results;
     }
 }

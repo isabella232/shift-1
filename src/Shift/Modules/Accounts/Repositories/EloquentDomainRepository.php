@@ -10,7 +10,7 @@ class EloquentDomainRepository extends Repository implements DomainRepositoryInt
     /**
      * Make sure we assign the required model.
      *
-     * @param Account $model
+     * @param \Tectonic\Shift\Modules\Accounts\Models\Domain $model
      */
     public function __construct(Domain $model)
     {

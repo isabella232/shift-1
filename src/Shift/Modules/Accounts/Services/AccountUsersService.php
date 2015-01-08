@@ -20,7 +20,8 @@ class AccountUsersService
     private $dispatcher;
 
     /**
-     * @param AccountRepositoryInterface $repository
+     * @param \Tectonic\Application\Eventing\EventDispatcher $dispatcher
+     * @param AccountRepositoryInterface                     $repository
      */
     public function __construct(EventDispatcher $dispatcher, AccountRepositoryInterface $repository)
     {

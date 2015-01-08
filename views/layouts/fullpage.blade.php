@@ -11,7 +11,13 @@
             <a href="" class="logo"></a>
             <div id="control-panel">
                 <ul class="horizontal">
-                    Have an account? <a href="#">Log in</a>
+                    <li>Have an account? <a href="#">Log in</a></li>
+                    @if(Auth::check())
+                    <li>
+                        <span id="accountName">{{ $account->name[1] }}</span>
+                        <input type="hidden" id="accountSwitcher" style="width: 300px;"/>
+                    </li>
+                    @endif
                 </ul>
             </div>
         </div>

@@ -2502,6 +2502,44 @@ ul.menu {
 
 /*
 |--------------------------------------------------------------------------
+| Components
+|--------------------------------------------------------------------------
+|
+| This file will do nothing other than load other stylesheets from
+| components used in the site.
+|
+*/
+.select2-container .select2-choice {
+  display: inline-block !important;
+  width: 100%; }
+
+.select2-results .select2-highlighted {
+  background: none;
+  color: #28ACB9; }
+
+.select2-drop {
+  margin-top: -6px; }
+
+#accountName {
+  color: #FFFFFF; }
+
+#accountName:hover {
+  cursor: pointer; }
+
+.account-switcher-result {
+  margin: 0;
+  padding: 6px 0;
+  color: #666666;
+  display: block; }
+
+.account-switcher-result:hover {
+  color: #28ACB9; }
+
+.account-switcher-result + .account-switcher-result {
+  border-top: 1px solid #DDDDDD; }
+
+/*
+|--------------------------------------------------------------------------
 | Pages - page-specific styles
 |--------------------------------------------------------------------------
 | 

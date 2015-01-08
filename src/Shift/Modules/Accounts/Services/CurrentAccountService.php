@@ -5,6 +5,7 @@ use Request;
 use Tectonic\Shift\Modules\Accounts\Contracts\AccountInterface;
 use Tectonic\Shift\Modules\Accounts\Contracts\AccountRepositoryInterface;
 use Tectonic\Shift\Modules\Accounts\Models\Account;
+use Tectonic\LaravelLocalisation\Facades\Translator;
 
 /**
  * Class CurrentAccountService
@@ -95,7 +96,7 @@ class CurrentAccountService
     public function translated()
     {
         if (!$this->translatedAccount) {
-            $this->translatedAccount = \Translator::translate($this->account);
+            $this->translatedAccount = Translator::translate($this->account);
         }
 
         return $this->translatedAccount;

@@ -4,7 +4,10 @@ namespace Tectonic\Shift\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Tectonic\Shift\Library\Support\Controller;
+use Tectonic\Shift\Modules\Authentication\Observers\AccountSwitcherResponder;
 use Tectonic\Shift\Modules\Authentication\Observers\LogoutResponder;
+use Tectonic\Shift\Modules\Authentication\Observers\SwitchAccountResponder;
+use Tectonic\Shift\Modules\Authentication\Services\AccountSwitcherService;
 use Tectonic\Shift\Modules\Authentication\Services\AuthenticationService;
 use Tectonic\Shift\Modules\Authentication\Observers\AuthenticationResponder;
 
@@ -16,15 +19,24 @@ class AuthenticationController extends Controller
     protected $authenticationService;
 
     /**
-     * @param AuthenticationService $authenticationService
+     * @var \Tectonic\Shift\Modules\Authentication\Services\AccountSwitcherService
      */
-    public function __construct(AuthenticationService $authenticationService)
+    protected $accountSwitcherService;
+
+    /**
+     * @param AuthenticationService                                                  $authenticationService
+     * @param \Tectonic\Shift\Modules\Authentication\Services\AccountSwitcherService $accountSwitcherService
+     */
+    public function __construct(AuthenticationService $authenticationService, AccountSwitcherService $accountSwitcherService)
     {
         $this->authenticationService = $authenticationService;
+        $this->accountSwitcherService = $accountSwitcherService;
     }
 
     /**
      * Handle authentication
+     *
+     * @return mixed
      */
     public function login()
     {
@@ -33,10 +45,44 @@ class AuthenticationController extends Controller
 
     /**
      * Handle logging out of user.
+     *
+     * @return mixed
      */
     public function logout()
     {
         return $this->authenticationService->logout(Auth::user(), new LogoutResponder);
+    }
+
+    /**
+     * Handle collecting a list of accounts the current user belongs to.
+     *
+     * @return mixed
+     */
+    public function getAccounts()
+    {
+        return $this->accountSwitcherService->getUserAccounts(Input::get());
+    }
+
+    /**
+     * Handle switching to another account
+     *
+     * @param $id
+     *
+     * @return mixed
+     */
+    public function switchToAccount($id)
+    {
+        return $this->accountSwitcherService->switchToAccount($id, new AccountSwitcherResponder);
+    }
+
+    /**
+     * Handle switching to new account, logging in and redirecting to home page
+     *
+     * @return mixed
+     */
+    public function switchAccount()
+    {
+        return $this->accountSwitcherService->switchAccount(Input::get('token'), new SwitchAccountResponder);
     }
 
 }

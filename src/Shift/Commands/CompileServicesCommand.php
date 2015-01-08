@@ -49,7 +49,7 @@ class CompileServicesCommand extends Command
     {
         $providers = $this->getProviders();
 
-        $this->providerRepository->compile($this->app, $providers);
+        $this->providerRepository->load($this->app, $providers);
 
         $this->info('Shift service providers registered and compiled.');
     }

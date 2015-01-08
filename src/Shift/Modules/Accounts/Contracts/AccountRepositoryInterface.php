@@ -22,6 +22,14 @@ interface AccountRepositoryInterface extends RepositoryInterface
 	 */
 	public function getByDomain($domains);
 
+	/**
+	 * Searches for an account by user.
+	 *
+	 * @param $user
+	 * @return mixed
+	 */
+	public function getByUser($user);
+
     /**
      * Return the total number of accounts currently available on the system.
      *
