@@ -23,8 +23,6 @@ class Menu extends MenuItem
     {
         $this->text = $text;
         $this->name = $name;
-
-        Menufy::register($this);
     }
 
     /**
@@ -47,6 +45,8 @@ class Menu extends MenuItem
         $this->children[] = $item;
 
         $item->setParent($this);
+
+        Menufy::register($item);
     }
 
     /**

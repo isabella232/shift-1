@@ -10,43 +10,45 @@ class Manager
      *
      * @var array
      */
-    private $menus = [];
+    private $items = [];
 
     /**
      * Return a given menu, if it exists.
      *
-     * @param string $menuName
+     * @param string $menuItem
      * @return Menu
      */
-    public function get($menuName)
+    public function get($menuItem)
     {
-        if (!$this->has($menuName)) {
-            throw new \Exception("No menu named [$menuName] has been registered.");
+        if (!$this->has($menuItem)) {
+            throw new \Exception("No menu named [$menuItem] has been registered.");
         }
 
-        return $this->menus[$menuName];
+        return $this->items[$menuItem];
     }
 
     /**
      * Add a newly created menu to the manager.
      *
-     * @param Menu $menu
+     * @param MenuItem $menuItem
      */
-    public function register(Menu $menu)
+    public function register(MenuItem $menuItem)
     {
-        $this->menus[$menu->name()] = $menu;
+        $name = $menuItem instanceof Menu ? $menuItem->name() : $menuItem->text();
 
-        Event::fire('menu added: '.$menu->name(), [$menu]);
+        $this->items[$name] = $menuItem;
+
+        Event::fire('item registered: '.$name, [$menuItem]);
     }
 
     /**
      * Returns true if the requested menu exists within the registered menus.
      *
-     * @param string $menuName
+     * @param string $menuItem
      * @return bool
      */
-    public function has($menuName)
+    public function has($menuItem)
     {
-        return isset($this->menus[$menuName]);
+        return isset($this->items[$menuItem]);
     }
 }

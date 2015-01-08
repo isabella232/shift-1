@@ -9,4 +9,3 @@
     {{ $container->scripts() }}
 @endforeach
 {{ Asset::container('custom')->scripts() }}
-

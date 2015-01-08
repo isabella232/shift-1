@@ -1,7 +1,7 @@
 <!doctype html>
-<html lang="en" ng-app="application" id="application">
+<html lang="en">
 <head>
-    @include( 'shift::partials.header.head' )
+    @include('shift::partials.header.head')
 </head>
 <body>
     @include('shift::partials.misc.browser')
@@ -11,10 +11,10 @@
             <a href="" class="logo"></a>
             <div id="control-panel">
                 <ul class="horizontal">
-                    <li>Have an account? <a href="#">Log in</a></li>
+                    <li>{{ trans('shift::header.haveAccount') }} <a href="/">{{ trans('shift::header.login') }}</a></li>
                     @if(Auth::check())
                     <li>
-                        <span id="accountName">{{ $account->name[1] }}</span>
+                        <span id="accountName">{{ lang($account, 'name') }}</span>
                         <input type="hidden" id="accountSwitcher" style="width: 300px;"/>
                     </li>
                     @endif
