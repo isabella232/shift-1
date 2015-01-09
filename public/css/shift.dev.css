@@ -485,7 +485,7 @@ body {
 
 #unsupported-browser, #no-javascript {
   background: #e58e80;
-  border-radius: 3px;
+  border-radius: 2px;
   color: white;
   display: none;
   margin: 50px auto;
@@ -570,7 +570,7 @@ input[type=submit] {
   -webkit-transition: background 0.25s;
   -moz-transition: background 0.25s;
   transition: background 0.25s;
-  border-radius: 3px;
+  border-radius: 2px;
   background: #00a5b3;
   border: 0;
   color: white;
@@ -735,11 +735,24 @@ button, a.button, .button, input[type=submit] {
     width: 100%;
     text-indent: -10000em; }
 
+#head {
+  background: #1f2630;
+  overflow: hidden; }
+  #head .app-title {
+    color: #fff;
+    float: left;
+    font-size: 140%;
+    font-weight: bold;
+    padding: 15px 30px; }
+  #head .user-info {
+    color: #bdbec0;
+    float: right; }
+
 #control-panel {
   position: absolute;
   top: 36px;
   right: 20px;
-  border-radius: 3px;
+  border-radius: 2px;
   background: #2e3641;
   padding: 10px; }
   #control-panel li {
@@ -774,7 +787,7 @@ button, a.button, .button, input[type=submit] {
     position: absolute;
     right: 20px;
     bottom: -35px;
-    border-radius: 0 0 3px 3px;
+    border-radius: 0 0 2px 2px;
     margin-right: 0;
     padding: 8px 20px 8px; }
   .filters .close-button-column {
@@ -863,7 +876,7 @@ ul.tabs {
     -moz-transition: all 0.25s;
     transition: all 0.25s;
     background: #c4c5c9;
-    border-radius: 3px 3px 0 0;
+    border-radius: 2px 2px 0 0;
     color: white;
     display: block;
     height: 38px;
@@ -878,9 +891,9 @@ ul.tabs {
       ul.tabs li + li {
         margin-left: 0; }
       ul.tabs li:first-child a {
-        border-radius: 3px 3px 0 0; }
+        border-radius: 2px 2px 0 0; }
       ul.tabs li:last-child a {
-        border-radius: 0 0 3px 3px; }
+        border-radius: 0 0 2px 2px; }
     ul.tabs a {
       border-radius: 0; } }
 
@@ -893,7 +906,7 @@ ul.tabs {
 input,
 textarea,
 select {
-  border-radius: 3px;
+  border-radius: 2px;
   background: #fff;
   border: 1px solid #d5d5d5;
   padding: 8px;
@@ -1140,7 +1153,7 @@ label.disabled {
       position: relative;
       top: -3px;
       background: white;
-      border-radius: 3px;
+      border-radius: 2px;
       border: 1px solid #d5d5d5;
       color: #aaa;
       display: inline-block;
@@ -1260,9 +1273,9 @@ table {
     text-align: left;
     vertical-align: middle; }
     table thead th:first-child {
-      border-radius: 3px 0 0 3px; }
+      border-radius: 2px 0 0 2px; }
     table thead th:last-child {
-      border-radius: 0 3px 3px 0; }
+      border-radius: 0 2px 2px 0; }
     table thead th.center {
       text-align: center; }
   table thead a {
@@ -1445,12 +1458,12 @@ hr {
 
 .well {
   background-color: #edeff2;
-  border-radius: 3px;
+  border-radius: 2px;
   padding: 10px; }
 
 .info-box {
   background: #edeff2;
-  border-radius: 3px;
+  border-radius: 2px;
   position: relative; }
   .info-box .close-buttons, .info-box .heading {
     -webkit-user-select: none;
@@ -1561,6 +1574,13 @@ span.icon-file-link {
   position: relative;
   top: -6px; }
 
+#main {
+  overflow: hidden; }
+
+#content {
+  margin-left: 220px;
+  padding: 10px 30px; }
+
 #alert-container {
   width: 300px;
   z-index: 700; }
@@ -1584,7 +1604,7 @@ span.icon-file-link {
 div[class^="alert-"] {
   background-image: url("../img/sprite-alerts.png");
   background-repeat: no-repeat;
-  border-radius: 3px;
+  border-radius: 2px;
   color: white;
   cursor: pointer;
   padding: 20px 20px 20px 65px; }
@@ -1643,7 +1663,7 @@ div[class^="alert-"] {
 
 #modal-content {
   background: white;
-  border-radius: 3px;
+  border-radius: 2px;
   border: 8px solid #2e3641;
   height: 200px;
   margin: 100px auto;
@@ -1716,7 +1736,7 @@ div[class^="alert-"] {
       padding-top: 5px;
       text-align: right; }
   .selector .list {
-    border-radius: 3px;
+    border-radius: 2px;
     border: 1px solid #d5d5d5;
     height: 185px;
     width: 100%;
@@ -1743,7 +1763,7 @@ div[class^="alert-"] {
 
 .other-panels {
   background: #fff;
-  border-radius: 3px;
+  border-radius: 2px;
   border: 1px solid #d5d5d5;
   box-shadow: 4px 4px 0 0 rgba(0, 0, 0, 0.08);
   display: none;
@@ -1754,7 +1774,7 @@ div[class^="alert-"] {
   .other-panels.dark {
     border: 1px solid white;
     background: #2e3641;
-    border-radius: 3px;
+    border-radius: 2px;
     color: white; }
     .other-panels.dark a {
       -webkit-transition: all 0.25s;
@@ -2037,7 +2057,7 @@ div[class^="alert-"] {
 
 .tips {
   background: #5ec0c9;
-  border-radius: 3px;
+  border-radius: 2px;
   color: white;
   overflow: hidden;
   padding: 20px; }
@@ -2368,12 +2388,12 @@ div[class^="alert-"] {
   background: #404040; }
 
 .uploader {
-  border-radius: 3px;
+  border-radius: 2px;
   border: 1px solid #D5D5D5;
   margin: 10px 0;
   padding: 3px; }
   .uploader .progress {
-    border-radius: 3px;
+    border-radius: 2px;
     background: #666666;
     height: 25px;
     overflow: hidden; }
@@ -2392,7 +2412,7 @@ div[class^="alert-"] {
 
 .tt-dropdown-menu {
   background: #fff;
-  border-radius: 3px;
+  border-radius: 2px;
   border: 1px solid #999;
   box-shadow: 4px 4px 0 0 rgba(0, 0, 0, 0.08);
   min-width: 180px;
@@ -2432,74 +2452,6 @@ div#recaptcha_area #recaptcha_response_field {
   div#recaptcha_area #recaptcha_response_field:focus {
     border-color: #999 !important; }
 
-ul.menu {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  overflow: hidden; }
-  ul.menu li {
-    float: left; }
-  ul.menu .menu li {
-    float: none; }
-
-#navigation {
-  background: #2e3641;
-  border-top: 2px solid #526074;
-  height: 58px;
-  position: relative;
-  z-index: 2; }
-  #navigation .menu a, #navigation .menu span {
-    -webkit-transition: all 0.25s;
-    -moz-transition: all 0.25s;
-    transition: all 0.25s;
-    color: #edeff2;
-    display: block;
-    font: 600 1.125em "Open Sans";
-    text-decoration: none; }
-    #navigation .menu a:hover, #navigation .menu span:hover {
-      color: #00a5b3; }
-  #navigation .menu .parent:hover > .children {
-    display: block; }
-  #navigation .menu .parent.active > span {
-    color: #00a5b3; }
-  #navigation .menu .parent .children li a {
-    background: none;
-    font-weight: normal;
-    height: auto;
-    line-height: inherit;
-    padding: 5px 20px; }
-  #navigation .menu > li > a, #navigation .menu > li > span {
-    background: url("../img/menu-separator.png") 0 19px no-repeat;
-    height: 56px;
-    line-height: 32px;
-    padding: 12px 15px; }
-    #navigation .menu > li > a:before, #navigation .menu > li > a:after, #navigation .menu > li > span:before, #navigation .menu > li > span:after {
-      -webkit-transition: all 0.25s;
-      -moz-transition: all 0.25s;
-      transition: all 0.25s; }
-  #navigation .menu > li.active > a, #navigation .menu > li:hover > a {
-    color: #00a5b3; }
-    #navigation .menu > li.active > a:before, #navigation .menu > li:hover > a:before {
-      border-top-color: #00a5b3; }
-  #navigation .menu .children {
-    position: absolute;
-    top: 65px;
-    background: #2e3641;
-    border-radius: 3px;
-    display: none;
-    margin-left: 5px;
-    padding: 15px 0;
-    min-width: 120px;
-    z-index: 1; }
-    #navigation .menu .children li > a {
-      padding: 5px 20px; }
-    #navigation .menu .children li:first-child > a {
-      border-top: 0; }
-    #navigation .menu .children li:first-child:hover {
-      border-radius: 0 3px 0 0; }
-    #navigation .menu .children li:last-child {
-      border-radius: 0 0 3px 3px; }
-
 /*
 |--------------------------------------------------------------------------
 | Components
@@ -2537,6 +2489,34 @@ ul.menu {
 
 .account-switcher-result + .account-switcher-result {
   border-top: 1px solid #DDDDDD; }
+
+#navigation {
+  background: #2e3641;
+  float: left;
+  width: 220px;
+  z-index: 2; }
+  #navigation .menu a, #navigation .menu span {
+    -webkit-transition: all 0.25s;
+    -moz-transition: all 0.25s;
+    transition: all 0.25s;
+    color: #8e96a3;
+    display: block;
+    font-size: 100%;
+    padding: 25px 30px;
+    text-decoration: none; }
+    #navigation .menu a:hover, #navigation .menu span:hover {
+      color: #00a5b3; }
+  #navigation .menu .children {
+    display: none; }
+  #navigation .menu span {
+    cursor: default; }
+  #navigation .menu .parent.active > .children {
+    display: block; }
+  #navigation .menu .parent.active > span {
+    background: #0195a8;
+    color: #fff; }
+  #navigation .menu a.active {
+    color: #0195a8; }
 
 /*
 |--------------------------------------------------------------------------
@@ -2608,7 +2588,7 @@ th.action {
   height: 50px;
   border: 1px solid #333;
   background: rgba(0, 0, 0, 0.7);
-  border-radius: 3px;
+  border-radius: 2px;
   color: white;
   z-index: 200; }
   .lt-ie9 #loading-indicator {

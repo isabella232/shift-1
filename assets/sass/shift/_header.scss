@@ -15,7 +15,23 @@
 	}
 }
 
+#head {
+	background: #1f2630;
+	overflow: hidden;
 
+	.app-title {
+		color: #fff;
+		float: left;
+		font-size: 140%;
+		font-weight: bold;
+		padding: 15px 30px;
+	}
+
+	.user-info {
+		color: #bdbec0;
+		float: right;
+	}
+}
 
 #control-panel {
 	@include position( absolute , 36px 20px 0 0 );

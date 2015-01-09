@@ -1,14 +1,12 @@
 @extends('shift::content.main')
 
-@section('breadcrumbs')
-    <h1>{{ trans('shift::roles.titles.main') }}</h1>
-@stop
-
-@section('buttons')
-    {{ Button::link(route('roles.new'), trans('shift::roles.titles.new'), ['type' => 'primary', 'icon' => 'plus']) }}
-@stop
-
 @section('content')
+	<div class="title">
+		<h1>{{ trans('shift::roles.titles.main') }}</h1>
+	</div>
+
+	{{ Button::link(route('roles.new'), trans('shift::roles.titles.new'), ['type' => 'primary', 'icon' => 'plus']) }}
+
     <!-- Result set -->
     <div class="container">
     	<div class="row">

@@ -1,0 +1,47 @@
+#navigation {
+	background: $colour-primary;
+	float: left;
+	width: 220px;
+	z-index: 2;
+
+	.menu {
+		// Global link styles (for main menu and submenus).
+		a, span {
+			@include transition(all $transition-speed);
+			color: #8e96a3;
+			display: block;
+			font-size: 100%;
+			padding: 25px 30px;
+			text-decoration: none;
+
+			&:hover {
+				color: $colour-header-link-hover;
+			}
+		}
+
+		.children {
+			display: none;
+		}
+
+		span {
+			cursor: default;
+		}
+
+		.parent {
+			&.active {
+				& > .children {
+					display: block;
+				}
+
+				& > span {
+					background: #0195a8;
+					color: #fff;
+				}
+			}
+		}
+
+		a.active {
+			color: #0195a8;
+		}
+	}
+}

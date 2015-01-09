@@ -6,6 +6,27 @@
 <body>
     @include('shift::partials.misc.browser')
 
+    <header id="head">
+        <div class="app-title">{{ lang($account, 'name') }}</div>
+        <div class="user-info"></div>
+    </header>
+
+    <section id="main">
+        <nav id="navigation">
+            {{ HTML::menu('main') }}
+        </nav>
+
+        <section id="content">
+            @yield('main')
+
+            <div id="footer-links">
+                <div class="container">
+                    <footer-links input="footerLinks"></footer-links>
+                </div>
+            </div>
+        </section>
+    </section>
+
     <header id="header">
         <div class="container">
             <a href="" class="logo"></a>
@@ -22,22 +43,6 @@
             </div>
         </div>
     </header>
-
-    <nav id="navigation">
-        <div class="container pad-on-handheld">
-            {{ HTML::menu('main') }}
-        </div>
-    </nav>
-
-    <section id="content">
-        @yield('main')
-    </section>
-
-    <div id="footer-links">
-        <div class="container">
-            <footer-links input="footerLinks"></footer-links>
-        </div>
-    </div>
 
     @include('shift::partials.footer.foot')
 </body>
