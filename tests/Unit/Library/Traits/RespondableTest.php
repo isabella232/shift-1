@@ -61,6 +61,6 @@ class RespondableTest extends UnitTestCase
 
         $this->respondable->respond('view');
 
-        $this->assertEquals('view', $this->respondable->layout->main);
+        $this->assertEquals('whatever', $this->respondable->layout->main);
     }
 }
