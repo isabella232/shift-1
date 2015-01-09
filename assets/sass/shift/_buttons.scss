@@ -8,7 +8,7 @@ a.button,
 	border: 0;
 	color: white;
 	display: inline-block;
-	font: 700 1.285em/1.285em $font-primary;
+	font: 700 1.285em/1.2em $font-primary;
 	padding: 5px 20px;
 	width: auto;
 	text-decoration: none;
@@ -31,15 +31,32 @@ a.button,
 		&:hover,
 		&:active,
 		&:focus { background: lighten( $colour-quaternary , 6 ); }
+
+		&.ladda-button {
+			&:disabled,
+			&[disabled] {
+				background: $colour-quaternary;
+			}
+		}
 		
 		&.big {
 			box-shadow: 0 2px 0 #bf5b4b;
 			
-			&.disabled { box-shadow: 0 2px 0 #bbb; }
+			&:disabled,
+			&[disabled] {
+				box-shadow: 0 2px 0 #bbb;
+			}
 		}
 	}
 	&.secondary {
 		background: #c4c5c9;
+
+		&.ladda-button {
+			&:disabled,
+			&[disabled] {
+				background: #c4c5c9;
+			}
+		}
 		
 		&:hover,
 		&:active,
@@ -73,17 +90,6 @@ a.button,
 
 /* Buttons placed right next to each other need more spacing */
 button, a.button, .button { margin-right: 5px; }
-
-
-// Used when we group a few buttons together.
-.button-group {
-	.horizontal {
-		margin-bottom: 7px;
-		
-		li { margin-right: 13px; }
-	}
-}
-
 
 .button-pill {
 	background: #eee;

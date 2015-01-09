@@ -4,5 +4,16 @@
 
 #content {
 	margin-left: 220px;
-	padding: 10px 30px;
+
+	.content {
+		padding: 10px 30px;
+		position: relative;
+		z-index: 1;
+	}
+}
+
+.search-pagination {
+	bottom: 0;
+	position: absolute;
+	right: 0;
 }

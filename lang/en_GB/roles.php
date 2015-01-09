@@ -13,9 +13,9 @@ return [
 
     'table' => [
         'columns' => [
-            'created' => 'Created',
             'default' => 'Default',
             'name' => 'Name',
+            'updated' => 'Last updated',
             'users' => 'Users',
         ]
     ],

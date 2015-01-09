@@ -8,7 +8,18 @@
 
     <header id="head">
         <div class="app-title">{{ lang($account, 'name') }}</div>
-        <div class="user-info"></div>
+        <div class="user-info">
+            <div id="control-panel">
+                <ul class="horizontal">
+                    @if (Auth::check())
+                        <li>
+                            <span id="accountName">{{ lang($account, 'name') }}</span>
+                            <input type="hidden" id="accountSwitcher" style="width: 300px;"/>
+                        </li>
+                    @endif
+                </ul>
+            </div>
+        </div>
     </header>
 
     <section id="main">
@@ -17,7 +28,24 @@
         </nav>
 
         <section id="content">
-            @yield('main')
+            <header id="header">
+                <a href="" class="logo"></a>
+            </header>
+
+            <div class="content">
+                <div id="pjaxContainer">
+                    @yield('main')
+                </div>
+
+                <div id="loader">
+                    <div class="spinner">
+                        <div class="cube1"></div>
+                        <div class="cube2"></div>
+                    </div>
+                </div>
+            </div>
+
+
 
             <div id="footer-links">
                 <div class="container">
@@ -26,23 +54,6 @@
             </div>
         </section>
     </section>
-
-    <header id="header">
-        <div class="container">
-            <a href="" class="logo"></a>
-            <div id="control-panel">
-                <ul class="horizontal">
-                    <li>{{ trans('shift::header.haveAccount') }} <a href="/">{{ trans('shift::header.login') }}</a></li>
-                    @if(Auth::check())
-                    <li>
-                        <span id="accountName">{{ lang($account, 'name') }}</span>
-                        <input type="hidden" id="accountSwitcher" style="width: 300px;"/>
-                    </li>
-                    @endif
-                </ul>
-            </div>
-        </div>
-    </header>
 
     @include('shift::partials.footer.foot')
 </body>

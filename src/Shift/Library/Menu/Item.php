@@ -45,7 +45,7 @@ class Item extends MenuItem
     {
         parent::setParent($menu);
 
-        if (Request::url() == $this->link) {
+        if (strpos(Request::url(), $this->link) !== false) {
             $this->setActive();
         }
     }

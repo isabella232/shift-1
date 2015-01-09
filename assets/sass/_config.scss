@@ -31,12 +31,14 @@ $colour-tab-up: #c4c5c9;
 $colour-tab-over: $colour-tertiary;
 $colour-tab-active: $colour-primary;
 
+$colour-border: #ddd;
 
 // Fonts.
 @import url(//fonts.googleapis.com/css?family=Open+Sans:400,600,700);
 
 $font-primary: 'Open Sans';
-
+$font-primary-colour: #666;
+$font-secondary-colour: #989898;
 
 // Directories and sprites.
 $img: '../img/';

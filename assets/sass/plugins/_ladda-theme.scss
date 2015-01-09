@@ -1,0 +1,38 @@
+/** Contains the default Ladda button theme styles */
+
+
+/*************************************
+ * CONFIG
+ */
+
+$green: #2aca76;
+$blue: #53b5e6;
+$red: #ea8557;
+$purple: #9973C2;
+$mint: #16a085;
+
+
+/*************************************
+ * BUTTON THEME
+ */
+
+.ladda-button {
+	border: 0;
+	cursor: pointer;
+	width: 150px;
+
+	-webkit-appearance: none;
+	-webkit-font-smoothing: antialiased;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+	&[disabled],
+	&[data-loading] {
+		border-color: rgba( 0, 0, 0, 0.07 );
+		cursor: default;
+
+		&:hover {
+			cursor: default;
+			background-color: #999;
+		}
+	}
+}

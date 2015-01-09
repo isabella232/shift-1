@@ -19,7 +19,7 @@ trait Respondable
             return $data;
         }
 
-        $this->layout->main = View::make($view, $data);
+        $this->layout->content = View::make($view, $data);
     }
 
     /**

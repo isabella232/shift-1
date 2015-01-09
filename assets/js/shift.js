@@ -1,5 +1,5 @@
 // Required for underscore string module
-(function() {
+(function($) {
 	// When menu parents are clicked, simply toggle the active class
 	$('.menu .parent span').click(function() {
 		$(this).parent().toggleClass('active');
@@ -9,16 +9,31 @@
 	// The long timeout is to ensure that we don't get weird cancellation effects for
 	// semi-long requests (a few hundred ms). Also helps with slow connections.
 	var timeout = 4000;
+    var pjaxContainer = '#pjaxContainer';
+    var loader = $('#loader');
 
 	var submissionCallback = function(event) {
-		$.pjax.submit(event, '#content');
+        // Setup our ladda button animations for submission type events. For some reason PJAX
+        // doesn't play nicely with this if it's bound outside of this callback, so we set it up
+        // here and manually start the animation once the form has been submitted.
+        var button = $('.ladda-button').ladda();
+
+        button.ladda('start');
+
+		$.pjax.submit(event, pjaxContainer);
 	};
 
-	$(document).pjax('#content a', '#content', {"timeout": timeout});
-	$(document).on('submit', 'form[data-pjax]', submissionCallback, {"timeout": timeout});
+	$(document).pjax('#content a, #navigation a', pjaxContainer, {"timeout": timeout});
+	$(document).on('submit', 'form[data-pjax]', submissionCallback);
+
+    $(document).on('pjax:send', function() {
+        loader.show().fadeTo(250, 0.8);
+    });
+    $(document).on('pjax:complete', function() {
+        loader.fadeTo(250, 0, function() { $(this).hide(); });
+    });
 
     $('#accountName').click(function() {
-
         $('#accountName').hide();
 
         $("#accountSwitcher").select2({
@@ -57,6 +72,5 @@
             $('#accountName').show();
             $("#accountSwitcher").select2('destroy');
         });
-
     });
-})();
+})(this.jQuery);

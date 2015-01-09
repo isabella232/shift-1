@@ -2,14 +2,13 @@
 	position: relative;
 	background: url( $img + 'header-pattern.png' ) repeat;
 	overflow: hidden;
-	height:  110px;
 	z-index: 3;
 	
 	.logo {
 		background: url( $img + 'default-client-image.png' ) no-repeat;
 		display: block;
 		height: 120px;
-		margin: 0;
+		margin: 0 0 0 30px;
 		width: 100%;
 		text-indent: -10000em;
 	}

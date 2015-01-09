@@ -1,5 +1,9 @@
 table {
 	width: 100%;
+
+	tr {
+		border-bottom: 1px solid $colour-border;
+	}
 	
 	th, td {
 		// Specify font-size in pixels so retarded IE can render the font size correctly.
@@ -26,18 +30,16 @@ table {
 	}
 	
 	thead {
+		$header-colour: lighten($font-primary-colour, 6);
+
 		tr {
-			background: $colour-primary;
-			color: white;
+			color: $header-colour;
 			text-align: left;
 		}
 		th {
 			padding: 11px 7px;
 			text-align: left;
 			vertical-align: middle;
-			
-			&:first-child { border-radius: $default-radius 0 0 $default-radius; }
-			&:last-child  { border-radius: 0 $default-radius $default-radius 0; }
 
 			// Horizontal alignment
 			&.center {
@@ -45,10 +47,10 @@ table {
 			}
 		}
 		a {
-			color: white;
+			color: $header-colour;
 			text-decoration: none;
 			
-			&:hover { color: white; }
+			&:hover { color: #999; }
 			
 			// Sorting styles.
 			&.sortable,
@@ -61,8 +63,6 @@ table {
 			&.sort-asc  { background-position: left -47px; }
 		}
 	}
-	
-	.even { background: #f9f9f9; }
 	
 	.totals { font-weight: bold; }
 	

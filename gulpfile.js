@@ -21,7 +21,11 @@ var input  = 'assets/',
 
 var scripts = [
   input + 'js/_app.js',
-  input + 'js/vendor/**/*.js',
+  input + 'js/vendor/jquery.pjax.js',
+  input + 'js/vendor/pjax-router.js',
+  input + 'js/vendor/spin.js',
+  input + 'js/vendor/ladda.js',
+  input + 'js/vendor/ladda.jquery.js',
   input + 'js/src/**/*.js',
   input + 'js/shift.js'
 ];

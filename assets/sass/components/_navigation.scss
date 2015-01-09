@@ -19,8 +19,22 @@
 			}
 		}
 
+		/* submenus */
+		ul {
+			margin: 20px 10px;
+
+			li {
+				a {
+					padding: 5px 30px;
+				}
+			}
+		}
+
 		.children {
-			display: none;
+			max-height: 0;
+			overflow: hidden;
+
+			@include transition(all $transition-speed);
 		}
 
 		span {
@@ -30,7 +44,7 @@
 		.parent {
 			&.active {
 				& > .children {
-					display: block;
+					max-height: 600px;
 				}
 
 				& > span {
