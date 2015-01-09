@@ -2,6 +2,8 @@
 namespace Tectonic\Shift\Commands;
 
 use Illuminate\Console\Command;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Input\InputArgument;
 
 class InstallCommand extends Command
 {
@@ -24,21 +26,12 @@ class InstallCommand extends Command
      *   4. Publish any and all assets
      *   5. Rebuild the services.json file
      */
-    public function fire()
+    public function handle()
     {
-        $this->tryMigrateInstall();
-
-        $this->call('migrate', array('--package' => 'tectonic/shift'));
-        $this->call('asset:publish');
-        $this->call('shift:compile-services');
+        $this->call('shift:sync');
+        $this->call('shift:migrate');
+        //$this->call('asset:publish');
 
         $this->info('Shift installed.');
-    }
-
-    private function tryMigrateInstall()
-    {
-        try {
-            $this->call('migrate:install');
-        } catch (\Exception $e) {}
     }
 }

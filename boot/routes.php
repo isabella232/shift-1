@@ -3,6 +3,7 @@
  * Shift-specific routes and routing, rules and filter definitions.
  */
 Route::group(['prefix' => Config::get('shift.url', ''), 'namespace' => 'Tectonic\Shift\Controllers'], function() {
+
     Route::group(['before' => 'shift.install'], function() {
         Route::get('install', 'InstallationController@getInstall');
         Route::post('install', 'InstallationController@postInstall');

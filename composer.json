@@ -25,11 +25,12 @@
 		"laravel/framework": "~5.0",
 		"orchestra/asset": "2.2.*",
 		"tectonic/application-support": "dev-l5",
-		"tectonic/laravel-localisation": "dev-l5"
+		"tectonic/laravel-localisation": "dev-l5",
+	  	"illuminate/html": "~5.0"
 	},
 	"require-dev": {
 		"mockery/mockery": "dev-master@dev",
-		"orchestra/testbench": "2.2.*",
+		"orchestra/testbench": "3.0.*",
 		"phpunit/phpunit": "4.2.*"
 	},
 	"autoload": {
