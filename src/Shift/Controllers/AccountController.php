@@ -17,8 +17,8 @@ class AccountController extends Controller
 	public function getIndex()
 	{
 		$search = App::make(AccountSearch::class);
-		$roles = Translator::translate($search->fromInput(Input::get()));
+		$accounts = Translator::translate($search->fromInput(Input::get()));
 
-		return $this->respond('shift::accounts.index', compact('roles'));
+		return $this->respond('shift::accounts.index', compact('accounts'));
 	}
 }

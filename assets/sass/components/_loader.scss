@@ -35,13 +35,13 @@
 	top: 0;
 	left: 0;
 
-	-webkit-animation: cubemove 1.8s infinite ease-in-out;
-	animation: cubemove 1.8s infinite ease-in-out;
+	-webkit-animation: cubemove 1.5s infinite ease-in-out;
+	animation: cubemove 1.5s infinite ease-in-out;
 }
 
 .cube2 {
-	-webkit-animation-delay: -0.9s;
-	animation-delay: -0.9s;
+	-webkit-animation-delay: -0.75s;
+	animation-delay: -0.75s;
 }
 
 @-webkit-keyframes cubemove {

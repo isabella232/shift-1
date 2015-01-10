@@ -26,11 +26,22 @@
 	$(document).pjax('#content a, #navigation a', pjaxContainer, {"timeout": timeout});
 	$(document).on('submit', 'form[data-pjax]', submissionCallback);
 
+    // Just in case the load time is really fast, we don't bother showing the loader. Give
+    // it a slight delay in case of really fast load times. We don't want loaders flickering
+    // in and out of existence, do we? //- Kirk
     $(document).on('pjax:send', function() {
         loader.show().fadeTo(250, 0.8);
     });
-    $(document).on('pjax:complete', function() {
+
+    $(document).on('pjax:end', function() {
         loader.fadeTo(250, 0, function() { $(this).hide(); });
+    });
+
+    // Handles navigation clicks
+    $('#navigation a').click(function() {
+        $('#navigation a').removeClass('active');
+
+        $(this).addClass('active');
     });
 
     $('#accountName').click(function() {

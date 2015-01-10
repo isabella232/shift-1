@@ -10,7 +10,7 @@ return [
 
     'table' => [
         'columns' => [
-            'created' => 'Created',
+            'updated' => 'Updated',
             'domains' => 'Domains',
             'name' => 'Name',
         ]
