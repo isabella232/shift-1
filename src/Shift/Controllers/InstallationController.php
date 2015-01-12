@@ -49,7 +49,7 @@ class InstallationController extends Controller
     /**
      * Handles the data submitted from the form.
      *
-     * @Post("/install", middleware="shift.install", prefix="/")
+     * @Post("/install", as="install", prefix="/")
      *
      * @return Response
      */

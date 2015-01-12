@@ -5,7 +5,7 @@
 @stop
 
 @section('buttons')
-    {{ Button::link(action('Tectonic\Shift\Controllers\RoleController@getNew'), 'New role', ['type' => 'primary', 'icon' => 'plus']) }}
+    {!! Button::link(action('Tectonic\Shift\Controllers\RoleController@getNew'), 'New role', ['type' => 'primary', 'icon' => 'plus']) !!}
 @stop
 
 @section('filters')
@@ -22,7 +22,7 @@
     					<div class="button-group">
     						<ul class="horizontal">
     							<li><span class="icon-batch-action"></span></li>
-    							<li>{{ Button::link(route('roles.new'), 'Delete', ['size' => 'small', 'icon' => 'icon']) }}</li>
+    							<li>{!! Button::link(route('roles.new'), 'Delete', ['size' => 'small', 'icon' => 'icon']) !!}</li>
     						</ul>
     					</div>
     				</div>
@@ -47,10 +47,10 @@
 								@foreach ($roles->getItems() as $i => $role)
 									<tr @if ($i % 2 == 1) class="even"@endif>
 										<td class="checkbox"><input type="checkbox"></td>
-										<td><a href="{{ route('roles.show', $role->slug) }}">{{ lang($role, 'name') }}</a></td>
+										<td><a href="{!! route('roles.show', $role->slug) !!}">{!! lang($role, 'name') !!}</a></td>
 										<td>TBI</td>
-										<td>{{ $role->default ? 'Yes' : 'No' }}</td>
-										<td>{{ HTML::relativeTime($role->createdAt) }}</td>
+										<td>{!! $role->default ? 'Yes' : 'No' !!}</td>
+										<td>{!! HTML::relativeTime($role->createdAt) !!}</td>
 									</tr>
 								@endforeach
 							</tbody>
@@ -59,7 +59,7 @@
 
 					<div class="row">
 						<div class="two-thirds">
-							{{ HTML::pagination($roles) }}
+							{!! HTML::pagination($roles) !!}
 						</div>
 					</div>
 				@else

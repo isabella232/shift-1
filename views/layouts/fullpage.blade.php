@@ -14,7 +14,7 @@
                     <li>Have an account? <a href="#">Log in</a></li>
                     @if(Auth::check())
                     <li>
-                        <span id="accountName">{{ $account->name[1] }}</span>
+                        <span id="accountName">{!! $account->name[1] !!}</span>
                         <input type="hidden" id="accountSwitcher" style="width: 300px;"/>
                     </li>
                     @endif

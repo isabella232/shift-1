@@ -2,7 +2,7 @@
 <html lang="en" ng-app="application" id="application">
 <head>
     @foreach(Asset::containers() as $container)
-        {{ $container->styles() }}
+        {!! $container->styles() !!}
     @endforeach
 </head>
 <body>
