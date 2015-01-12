@@ -22,10 +22,26 @@ class SyncCommand extends Command
      */
     public function handle()
     {
-        $src  = realpath(__DIR__.'/../../migrations');
+        $this->syncMigrations();
+        $this->syncConfig();
+    }
+
+    protected function syncMigrations()
+    {
+        $src = realpath(__DIR__ . '/../../migrations');
         $dest = realpath(app_path() . '/../database');
 
-        $command = 'cp -a ' . $src . ' ' . $dest;
+        $command = 'cp -R ' . $src . ' ' . $dest;
+        shell_exec(escapeshellcmd($command));
+    }
+
+    protected function syncConfig()
+    {
+        // Explicitly mentioning the file name, as otherwise it copies the whole /config dir (not just the contents)
+        $src = realpath(__DIR__ . '/../../../config/shift.php');
+        $dest = realpath(app_path() . '/../config');
+
+        $command = 'cp ' . $src . ' ' . $dest;
         shell_exec(escapeshellcmd($command));
     }
 }

@@ -1,7 +1,7 @@
 <?php
 namespace Tectonic\Shift\Controllers;
 
-//use Tectonic\Shift\Library\Support\Controller;
+use Tectonic\Shift\Library\Support\Controller;
 
 /**
  * Class HomeController
@@ -12,16 +12,15 @@ namespace Tectonic\Shift\Controllers;
  *
  * @package Tectonic\Shift\Controllers
  */
-class HomeController extends \Illuminate\Routing\Controller
+class HomeController extends Controller
 {
     /**
-     * @Get("/", as="home")
+     * @Get("/", as="home", prefix="/")
      *
      * @return mixed
      */
 	public function index()
     {
-        return "HOME";
         return $this->respond('shift::home.index');
     }
 }

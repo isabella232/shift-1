@@ -36,6 +36,8 @@ class AuthenticationController extends Controller
     /**
      * Handle authentication
      *
+     * @Post("/login", middleware={"shift.account", "guest"}, prefix="/")
+     *
      * @return mixed
      */
     public function login()
@@ -45,6 +47,8 @@ class AuthenticationController extends Controller
 
     /**
      * Handle logging out of user.
+     *
+     * @Get("/logout", middleware={"shift.account", "auth"}, prefix="/")
      *
      * @return mixed
      */
@@ -56,6 +60,8 @@ class AuthenticationController extends Controller
     /**
      * Handle collecting a list of accounts the current user belongs to.
      *
+     * @Get("/auth/accounts", middleware={"shift.account", "auth"}, prefix="/")
+     *
      * @return mixed
      */
     public function getAccounts()
@@ -65,6 +71,8 @@ class AuthenticationController extends Controller
 
     /**
      * Handle switching to another account
+     *
+     * @Get("/auth/account/{id}", middleware={"shift.account", "auth"}, prefix="/")
      *
      * @param $id
      *
@@ -77,6 +85,8 @@ class AuthenticationController extends Controller
 
     /**
      * Handle switching to new account, logging in and redirecting to home page
+     *
+     * @Get("/auth/switch", middleware={"shift.account", "auth"}, prefix="/")
      *
      * @return mixed
      */

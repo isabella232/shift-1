@@ -3,9 +3,10 @@ namespace Tectonic\Shift;
 
 use App;
 use Curl\Curl;
-use Tectonic\Shift\Commands\CompileServicesCommand;
+use Illuminate\Support\Facades\View;
 use Tectonic\Shift\Commands\InstallCommand;
 use Tectonic\Shift\Commands\ResetCommand;
+use Tectonic\Shift\Commands\SyncCommand;
 use Tectonic\Shift\Library\Recaptcha;
 use Tectonic\Shift\Library\Router;
 use Tectonic\Shift\Library\Security\HoneyPot;
@@ -32,7 +33,7 @@ class ShiftServiceProvider extends ServiceProvider
      */
     protected $filesToBoot = [
         'errors',
-        'macros',
+        //'macros',
         'validators'
     ];
 
@@ -83,11 +84,13 @@ class ShiftServiceProvider extends ServiceProvider
 	{
         parent::register();
 
-        $this->registerRouter();
         $this->registerRecaptcha();
         //$this->registerAuthorityConfiguration();
         $this->registerHoneyPot();
 		$this->requireFiles($this->filesToRegister);
+
+        // Define view namespace, as $this->package() doesn't exist anymore in L5
+        View::addNamespace('shift', realpath(__DIR__.'/../../views'));
     }
 
 	/**
@@ -97,7 +100,7 @@ class ShiftServiceProvider extends ServiceProvider
 	 */
 	public function boot()
 	{
-		//$this->package('tectonic/shift', 'shift');
+		//$this->package('tectonic/shift');
 		$this->requireFiles($this->filesToBoot);
         $this->bootCommands();
 	}
@@ -147,18 +150,6 @@ class ShiftServiceProvider extends ServiceProvider
         }
     }
 
-    /**
-     * Register the router instance. This completely overwrites the one registered by Laravel.
-     *
-     * @return void
-     */
-    protected function registerRouter()
-    {
-        $this->app['router'] = $this->app->share(function($app) {
-            return new Router($app['events'], $app);
-        });
-    }
-
     protected function bootCommands()
     {
         $this->app->bind('command.shift.install', InstallCommand::class);
@@ -166,5 +157,8 @@ class ShiftServiceProvider extends ServiceProvider
 
         $this->app->bind('command.shift.reset', ResetCommand::class);
         $this->commands('command.shift.reset');
+
+        $this->app->bind('command.shift.sync', SyncCommand::class);
+        $this->commands('command.shift.sync');
     }
 }

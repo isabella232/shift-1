@@ -25,6 +25,12 @@ class AnnotationsServiceProvider extends ServiceProvider {
      */
     protected $scanRoutes = [
         'Tectonic\Shift\Controllers\HomeController',
+        'Tectonic\Shift\Controllers\InstallationController',
+        'Tectonic\Shift\Controllers\RegistrationController',
+        'Tectonic\Shift\Controllers\AuthenticationController',
+        'Tectonic\Shift\Controllers\UserController',
+        'Tectonic\Shift\Controllers\SettingController',
+        'Tectonic\Shift\Controllers\RoleController',
     ];
 
 

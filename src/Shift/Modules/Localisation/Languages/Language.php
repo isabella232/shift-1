@@ -35,7 +35,7 @@ class Language
     public function __construct($code)
     {
         if (!isset(static::$languages)) {
-            static::$languages = Config::get('shift::languages');
+            static::$languages = Config::get('shift.languages');
         }
 
         if (!array_key_exists($code, static::$languages)) {

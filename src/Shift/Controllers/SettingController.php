@@ -24,6 +24,8 @@ class SettingController extends Controller
     /**
      * Display editable settings.
      *
+     * @Get("/settings", middleware="shift.account", prefix="/")
+     *
      * @return array
      */
     public function index()
@@ -39,6 +41,8 @@ class SettingController extends Controller
 
     /**
      * Update modified settings.
+     *
+     * @Post("/settings", middleware="shift.account", prefix="/")
      */
     public function update()
     {
