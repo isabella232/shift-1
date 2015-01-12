@@ -9,7 +9,7 @@ Route::group(['prefix' => Config::get('shift.url', ''), 'namespace' => 'Tectonic
         Route::post('install', 'InstallationController@postInstall');
     });
 
-    Route::get('/', 'HomeController@index');
+    //Route::get('/', 'HomeController@index');
 
     Route::get('register', 'RegistrationController@form');
     Route::post('register', 'RegistrationController@register');
@@ -40,4 +40,4 @@ Route::filter('shift.auth', 'Tectonic\Shift\Library\Filters\AuthFilter');
 Route::filter('shift.account', 'Tectonic\Shift\Library\Filters\AccountFilter');
 Route::filter('shift.install', 'Tectonic\Shift\Library\Filters\InstallationFilter');
 
-Route::whenRegex('/^(?!install)/i', 'shift.account');
+//Route::whenRegex('/^(?!install)/i', 'shift.account');

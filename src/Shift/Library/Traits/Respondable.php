@@ -11,7 +11,9 @@ trait Respondable
      * or the full layout render if it's a full page request.
      *
      * @param string $view
-     * @param array $data
+     * @param array  $data
+     *
+     * @return mixed
      */
     public function respond($view, array $data = [])
     {

@@ -33,7 +33,6 @@ class ShiftServiceProvider extends ServiceProvider
     protected $filesToBoot = [
         'errors',
         'macros',
-        'routes',
         'validators'
     ];
 
@@ -55,6 +54,8 @@ class ShiftServiceProvider extends ServiceProvider
         'Tectonic\Shift\Modules\Identity\Roles\RolesServiceProvider',
         'Tectonic\Shift\Modules\Identity\Users\UsersServiceProvider',
         'Tectonic\Shift\Modules\Authentication\AuthenticationServiceProvider',
+        'Tectonic\Shift\Providers\RouteServiceProvider',
+        'Tectonic\Shift\Providers\AnnotationsServiceProvider',
     ];
 
     /**
