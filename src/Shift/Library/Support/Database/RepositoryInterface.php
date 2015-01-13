@@ -93,4 +93,13 @@ interface RepositoryInterface
      * @return mixed
      */
     public function saveAll();
+
+    /**
+     * This flips the behaviour for account restriction, removing the constraint for queries and
+     * record saving. This is particularly useful for user roles that have the permission to manage
+     * resources from multiple accounts.
+     *
+     * @return mixed
+     */
+    public function relax();
 }

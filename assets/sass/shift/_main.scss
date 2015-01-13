@@ -11,6 +11,11 @@
 		position: relative;
 		z-index: 1;
 	}
+
+	&.install {
+		margin: 100px auto;
+		width: 80%;
+	}
 }
 
 .search-pagination {

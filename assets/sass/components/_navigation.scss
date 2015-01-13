@@ -22,7 +22,11 @@
 
 		/* submenus */
 		ul {
-			margin: 20px 10px;
+			@include transition(all $transition-speed);
+
+			max-height: 0;
+			overflow: hidden;
+			padding: 0 10px;
 
 			li {
 				a {
@@ -31,21 +35,15 @@
 			}
 		}
 
-		.children {
-			max-height: 0;
-			overflow: hidden;
-
-			@include transition(all $transition-speed);
-		}
-
 		span {
 			cursor: default;
 		}
 
 		.parent {
 			&.active {
-				& > .children {
+				& > ul {
 					max-height: 600px;
+					padding: 20px 10px;
 				}
 
 				& > span {

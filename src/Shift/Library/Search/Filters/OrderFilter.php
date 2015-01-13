@@ -4,6 +4,12 @@ namespace Tectonic\Shift\Library\Search\Filters;
 
 class OrderFilter implements SearchFilterInterface
 {
+	/**
+	 * The default field to be used for sorting.
+	 *
+	 * @var string
+     */
+	protected $defaultField = 'id';
 
 	/**
 	 * The default field for the search query to order by.
@@ -48,7 +54,7 @@ class OrderFilter implements SearchFilterInterface
 	 */
 	public static function byInput(array $input = [])
 	{
-		$field = isset($input['order']) ? $input['order'] : 'id';
+		$field = array_get($input, 'order');
 		$direction = isset($input['direction']) ? $input['direction'] : 'desc';
 
 		return static::byFieldAndDirection($field, $direction);
@@ -62,7 +68,7 @@ class OrderFilter implements SearchFilterInterface
      */
     public function applyToEloquent($query)
     {
-        return $query->orderBy($this->field, $this->sortDirection());
+        return $query->orderBy($this->sortField(), $this->sortDirection());
     }
 
 	/**
@@ -82,4 +88,23 @@ class OrderFilter implements SearchFilterInterface
 		return $direction;
 	}
 
+	/**
+	 * Set the default field for ordering.
+	 *
+	 * @param $field
+     */
+	public function setDefaultField($field)
+	{
+		$this->defaultField = $field;
+	}
+
+	/**
+	 * If no cusotm field has been specified, use the default.
+	 *
+	 * @return string
+     */
+	protected function sortField()
+	{
+		return $this->field ?: $this->defaultField;
+	}
 }

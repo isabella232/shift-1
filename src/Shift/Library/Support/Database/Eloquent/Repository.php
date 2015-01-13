@@ -29,6 +29,18 @@ abstract class Repository implements RepositoryInterface
     protected $model;
 
     /**
+     * This flips the behaviour for account restriction, removing the constraint for queries and
+     * record saving. This is particularly useful for user roles that have the permission to manage
+     * resources from multiple accounts.
+     *
+     * @return mixed
+     */
+    public function relax()
+    {
+        $this->restrictByAccount = false;
+    }
+
+    /**
      * Returns a collection of all records for this repository and the models or entities it respresents.
      *
      * @return array

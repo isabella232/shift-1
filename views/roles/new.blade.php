@@ -10,6 +10,8 @@
         </div>
     </div>
 
+    @include('shift::partials.errors.display')
+
     <div class="row">
         @include('shift::roles.form')
     </div>

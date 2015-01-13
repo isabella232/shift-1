@@ -4,6 +4,7 @@ namespace Tectonic\Shift\Modules\Identity\Users\Models;
 use CurrentAccount;
 use Illuminate\Auth\UserInterface as AuthUserInterface;
 use Tectonic\Application\Eventing\EventGenerator;
+use Tectonic\Shift\Library\Slugs\Sluggable;
 use Tectonic\Shift\Modules\Accounts\Contracts\AccountInterface;
 use Tectonic\Shift\Modules\Accounts\Models\Account;
 use Tectonic\Shift\Modules\Identity\Roles\Models\Role;
@@ -13,10 +14,12 @@ use Tectonic\Shift\Library\Support\Database\Eloquent\Model;
 use Tectonic\Shift\Modules\Identity\Users\Events\AdminUserWasCreated;
 use Tectonic\Shift\Modules\Identity\Users\Events\UserHasRegistered;
 use Tectonic\Shift\Modules\Identity\Users\Events\UserWasAdded;
+use Tectonic\Shift\Modules\Identity\Users\Events\UserWasUpdated;
 
 class User extends Model implements AuthUserInterface, RemindableInterface
 {
     use EventGenerator;
+    use Sluggable;
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -103,6 +106,22 @@ class User extends Model implements AuthUserInterface, RemindableInterface
         $user->raise(new AdminUserWasCreated($user));
 
         return $user;
+    }
+
+    /**
+     * @param $firstName
+     * @param $lastName
+     * @param $email
+     * @param $password
+     */
+    public function edit($firstName, $lastName, $email, $password)
+    {
+        $this->firstName = $firstName;
+        $this->lastName = $lastName;
+        $this->email = $email;
+        $this->password = $password;
+
+        $this->raise(new UserWasUpdated($this));
     }
 
     /**
@@ -213,7 +232,9 @@ class User extends Model implements AuthUserInterface, RemindableInterface
      */
     public function setPasswordAttribute($value)
     {
-        $this->attributes["password"] = \Hash::make($value);
+        if (isset($this->getDirty()['password'])) {
+            $this->attributes["password"] = \Hash::make($value);
+        }
     }
 
     /**

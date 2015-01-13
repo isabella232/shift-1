@@ -17,6 +17,7 @@ class MainMenuComposer
         $configMenu->addChild(new Item(trans('shift::accounts.titles.main'), route('accounts.index')));
 
         $mainMenu->addChild($configMenu);
+        $mainMenu->addChild(new Item('Users', route('users.index')));
 
         Menufy::register($mainMenu);
     }

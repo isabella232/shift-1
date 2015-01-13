@@ -25,6 +25,7 @@ Route::group(['prefix' => Config::get('shift.url', ''), 'namespace' => 'Tectonic
         Route::collection('accounts', 'AccountController');
         Route::collection('roles', 'RoleController');
         Route::collection('sessions', 'AuthenticationController');
+        Route::collection('users', 'UserController');
 
         Route::get('settings', ['uses' => 'SettingController@index']);
         Route::post('settings', ['uses' => 'SettingController@update']);

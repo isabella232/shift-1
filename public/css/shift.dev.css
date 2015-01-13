@@ -1588,6 +1588,9 @@ span.icon-file-link {
     padding: 10px 30px;
     position: relative;
     z-index: 1; }
+  #content.install {
+    margin: 100px auto;
+    width: 80%; }
 
 .search-pagination {
   bottom: 0;
@@ -2950,21 +2953,21 @@ div#recaptcha_area #recaptcha_response_field {
       #navigation .menu a:hover, #navigation .menu span:hover {
         color: #00a5b3; }
     #navigation .menu ul {
-      margin: 20px 10px; }
-      #navigation .menu ul li a {
-        padding: 5px 30px; }
-    #navigation .menu .children {
-      max-height: 0;
-      overflow: hidden;
       -webkit-transition: all 0.25s !important;
       -moz-transition: all 0.25s !important;
       -ms-transition: all 0.25s !important;
       -o-transition: all 0.25s !important;
-      transition: all 0.25s !important; }
+      transition: all 0.25s !important;
+      max-height: 0;
+      overflow: hidden;
+      padding: 0 10px; }
+      #navigation .menu ul li a {
+        padding: 5px 30px; }
     #navigation .menu span {
       cursor: default; }
-    #navigation .menu .parent.active > .children {
-      max-height: 600px; }
+    #navigation .menu .parent.active > ul {
+      max-height: 600px;
+      padding: 20px 10px; }
     #navigation .menu .parent.active > span {
       background: #0195a8;
       color: #fff; }

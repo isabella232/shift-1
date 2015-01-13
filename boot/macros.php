@@ -73,3 +73,12 @@ HTML::macro('menu', function($menu) {
     // Render the menu
     return View::make('shift::partials.menu.menu', compact('menu'));
 });
+
+/**
+ * Displays the full name for a user.
+ *
+ * @param object $user
+ */
+HTML::macro('fullName', function($user) {
+    return $user->firstName.' '.$user->lastName;
+});
