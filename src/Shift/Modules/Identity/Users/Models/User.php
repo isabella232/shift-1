@@ -232,7 +232,7 @@ class User extends Model implements AuthUserInterface, RemindableInterface
      */
     public function setPasswordAttribute($value)
     {
-        if (isset($this->getDirty()['password'])) {
+        if (isset($this->getDirty()['password']) or !$this->exists) {
             $this->attributes["password"] = \Hash::make($value);
         }
     }
