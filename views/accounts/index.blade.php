@@ -28,7 +28,8 @@
 					<tr>
 						<th class="checkbox"><input type="checkbox"></th>
 						<th><a href="javascript:;" sort="accounts.name" class="sortable">{{ trans('shift::accounts.table.columns.name') }}</a></th>
-						<th># {{ trans('shift::accounts.table.columns.domains') }}</th>
+						<th>{{ trans('shift::accounts.table.columns.domain') }}</th>
+						<th>{{ trans('shift::accounts.table.columns.owner') }}</th>
 						<th><a href="javascript:;" sort="accounts.updatedAt" class="sortable">{{ trans('shift::accounts.table.columns.updated') }}</a></th>
 					</tr>
 				</thead>
@@ -37,7 +38,14 @@
 						<tr @if ($i % 2 == 1) class="even"@endif>
 							<td class="checkbox"><input type="checkbox"></td>
 							<td><a href="{{ route('accounts.show', $account->slug) }}">{{ lang($account, 'name') }}</a></td>
-							<td>TBI</td>
+							<td>{{ $account->domains->first()->domain }}</td>
+							<td>
+								@if ($account->owner)
+									{{ $account->owner->firstName.' '.$account->owner->lastName }}
+								@else
+									No owner assigned
+								@endif
+							</td>
 							<td>{{ HTML::relativeTime($account->updatedAt) }}</td>
 						</tr>
 					@endforeach

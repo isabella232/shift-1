@@ -1,6 +1,7 @@
 <?php
 namespace Tectonic\Shift\Modules\Accounts\Search;
 
+use Tectonic\Shift\Library\Search\Filters\IncludeFilter;
 use Tectonic\Shift\Library\Search\Filters\KeywordFilter;
 use Tectonic\Shift\Library\Search\Filters\OrderFilter;
 use Tectonic\Shift\Library\Search\SearchFilterCollection;
@@ -35,6 +36,7 @@ class AccountSearch implements SearchInterface
     public function fromInput(array $input = [])
     {
         $filterCollection = new SearchFilterCollection;
+        $filterCollection->add(new IncludeFilter('owner', 'domains'));
 
         if (isset($input['keywords'])) {
             $filterCollection->add(KeywordFilter::fromKeywords($input['keywords']));

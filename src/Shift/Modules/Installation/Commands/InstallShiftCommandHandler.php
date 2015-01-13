@@ -20,7 +20,7 @@ class InstallShiftCommandHandler implements CommandHandlerInterface
     /**
      * @var AccountRepositoryInterface
      */
-    private $accounts;
+    private $accountRepository;
 
     /**
      * @var UserRepositoryInterface
@@ -42,7 +42,7 @@ class InstallShiftCommandHandler implements CommandHandlerInterface
         LanguageRepositoryInterface $languageRepository
     ) {
         $this->dispatcher = $dispatcher;
-        $this->accounts = $accounts;
+        $this->accountRepository = $accounts;
         $this->users = $users;
         $this->languageRepository = $languageRepository;
     }
@@ -63,7 +63,7 @@ class InstallShiftCommandHandler implements CommandHandlerInterface
 
         $account->setOwner($user);
 
-        $this->accounts->save($account);
+        $this->accountRepository->save($account);
 
         // Set the current account for the request. This is necessary for some other tasks
         CurrentAccount::set($account);

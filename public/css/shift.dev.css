@@ -374,6 +374,7 @@ table {
 | 
 */
 html, body {
+  height: 100%;
   margin: 0;
   padding: 0; }
 
@@ -1578,6 +1579,7 @@ span.icon-file-link {
   top: -6px; }
 
 #main {
+  height: 100%;
   overflow: hidden; }
 
 #content {
@@ -2929,6 +2931,7 @@ div#recaptcha_area #recaptcha_response_field {
 #navigation {
   background: #2e3641;
   float: left;
+  height: 100%;
   width: 220px;
   z-index: 2; }
   #navigation .menu {
@@ -2977,6 +2980,15 @@ div#recaptcha_area #recaptcha_response_field {
 | with pages used in the site.
 | 
 */
+.domain {
+  float: left; }
+  .domain input {
+    width: 250px; }
+
+.http {
+  float: left;
+  padding: 10px 5px 0 0; }
+
 .entry-types .entry-types-heading {
   float: left;
   width: 130px; }

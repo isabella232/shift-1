@@ -2,17 +2,26 @@
 
 return [
     'form' => [
+        'default_language' => [
+            'label' => 'Default language',
+            'hint' => 'Select the default language that will used for text output for this account'
+        ],
+        'domain' => [
+            'label' => 'Account domain name',
+            'hint' => 'The default/primary domain for the account.'
+        ],
         'name' => [
             'label' => 'Name',
             'hint' => 'Enter the name of the account.'
-        ]
+        ],
     ],
 
     'table' => [
         'columns' => [
             'updated' => 'Updated',
-            'domains' => 'Domains',
+            'domain' => 'Domain',
             'name' => 'Name',
+            'owner' => 'Owner',
         ]
     ],
 
