@@ -2,28 +2,28 @@
 namespace Tectonic\Shift\Modules\Identity\Users\Models;
 
 use CurrentAccount;
-use Illuminate\Auth\UserInterface as AuthUserInterface;
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Auth\Passwords\CanResetPassword;
 use Tectonic\Application\Eventing\EventGenerator;
-use Tectonic\Shift\Modules\Accounts\Contracts\AccountInterface;
 use Tectonic\Shift\Modules\Accounts\Models\Account;
 use Tectonic\Shift\Modules\Identity\Roles\Models\Role;
-use Tectonic\Shift\Modules\Identity\Users\Contracts\UserInterface;
-use Illuminate\Auth\Reminders\RemindableInterface;
 use Tectonic\Shift\Library\Support\Database\Eloquent\Model;
-use Tectonic\Shift\Modules\Identity\Users\Events\AdminUserWasCreated;
-use Tectonic\Shift\Modules\Identity\Users\Events\UserHasRegistered;
 use Tectonic\Shift\Modules\Identity\Users\Events\UserWasAdded;
+use Tectonic\Shift\Modules\Identity\Users\Events\UserHasRegistered;
+use Tectonic\Shift\Modules\Identity\Users\Events\AdminUserWasCreated;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
-class User extends Model implements AuthUserInterface, RemindableInterface
+class User extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
-    use EventGenerator;
+    use EventGenerator, Authenticatable, CanResetPassword;
 
     /**
      * The attributes excluded from the model's JSON form.
      *
      * @var array
      */
-    protected $hidden = array('password');
+    protected $hidden = ['password'];
 
     /**
      * Fillable attributes for the user model.

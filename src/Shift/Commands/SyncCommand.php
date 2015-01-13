@@ -24,6 +24,7 @@ class SyncCommand extends Command
     {
         $this->syncMigrations();
         $this->syncConfig();
+        $this->syncAssets();
     }
 
     protected function syncMigrations()
@@ -42,6 +43,18 @@ class SyncCommand extends Command
         $dest = realpath(app_path() . '/../config');
 
         $command = 'cp ' . $src . ' ' . $dest;
+        shell_exec(escapeshellcmd($command));
+    }
+
+    protected function syncAssets()
+    {
+        $src  = realpath(__DIR__ . '/../../../public/css');
+        $src .= " " . realpath(__DIR__ . '/../../../public/js');
+        $src .= " " . realpath(__DIR__ . '/../../../public/img');
+
+        $dest = realpath(public_path() . '/packages/tectonic/shift');
+
+        $command = 'cp -R ' . $src . ' ' . $dest;
         shell_exec(escapeshellcmd($command));
     }
 }
