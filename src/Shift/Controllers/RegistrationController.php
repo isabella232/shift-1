@@ -31,7 +31,7 @@ class RegistrationController extends Controller
     /**
      * Main request that is made for the registration form.
      *
-     * @Get("/register", middleware="shift.account", prefix="/")
+     * @Get("/register", prefix="/")
      */
     public function form()
     {

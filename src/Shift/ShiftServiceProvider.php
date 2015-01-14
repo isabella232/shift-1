@@ -4,13 +4,12 @@ namespace Tectonic\Shift;
 use App;
 use Curl\Curl;
 use Illuminate\Support\Facades\View;
-use Tectonic\Shift\Commands\InstallCommand;
-use Tectonic\Shift\Commands\ResetCommand;
-use Tectonic\Shift\Commands\SyncCommand;
 use Tectonic\Shift\Library\Recaptcha;
-use Tectonic\Shift\Library\Router;
-use Tectonic\Shift\Library\Security\HoneyPot;
+use Tectonic\Shift\Commands\SyncCommand;
+use Tectonic\Shift\Commands\ResetCommand;
 use Tectonic\Shift\Library\ServiceProvider;
+use Tectonic\Shift\Commands\InstallCommand;
+use Tectonic\Shift\Library\Security\HoneyPot;
 
 class ShiftServiceProvider extends ServiceProvider
 {
@@ -24,6 +23,17 @@ class ShiftServiceProvider extends ServiceProvider
         //'Authority'     => 'Authority\AuthorityL4\Facades\Authority',
         'Utility'       => 'Tectonic\Shift\Library\Facades\Utility',
         'Recaptcha'     => 'Tectonic\Shift\Library\Facades\Recaptcha',
+    ];
+
+    /**
+     * A collection of the application's route middleware (previously known as Filters in L4)
+     *
+     * @var array
+     */
+    protected $routeMiddleware = [
+        'shift.auth'    => 'Tectonic\Shift\Library\Middleware\AuthFilter',
+        'shift.account' => 'Tectonic\Shift\Library\Middleware\AccountFilter',
+        'shift.install' => 'Tectonic\Shift\Library\Middleware\InstallationFilter'
     ];
 
     /**
@@ -88,6 +98,7 @@ class ShiftServiceProvider extends ServiceProvider
         //$this->registerAuthorityConfiguration();
         $this->registerHoneyPot();
 		$this->requireFiles($this->filesToRegister);
+        $this->registerRouteMiddleware($this->routeMiddleware);
 
         // Define view namespace, as $this->package() doesn't exist anymore in L5
         View::addNamespace('shift', realpath(__DIR__.'/../../views'));
@@ -160,5 +171,18 @@ class ShiftServiceProvider extends ServiceProvider
 
         $this->app->bind('command.shift.sync', SyncCommand::class);
         $this->commands('command.shift.sync');
+    }
+
+    /**
+     * Register route middleware
+     *
+     * @param array $routeMiddleware
+     */
+    protected function registerRouteMiddleware($routeMiddleware)
+    {
+        foreach($routeMiddleware as $key => $middleware)
+        {
+            $this->app['router']->middleware($key, $middleware);
+        }
     }
 }

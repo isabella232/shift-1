@@ -1,7 +1,7 @@
 <h1>Register</h1>
 
 <!-- Registration form -->
-{!! Form::open(['action' => 'Tectonic\Shift\Controllers\RegistrationController@register', 'novalidate' => 'novalidate', 'class' => 'vertical well']) !!}
+{!! Form::open(['action' => '\Tectonic\Shift\Controllers\RegistrationController@register', 'novalidate' => 'novalidate', 'class' => 'vertical well']) !!}
     <div class="control">
         <div class="control-label">
             {!! Form::label('firstName', 'First name') !!}

@@ -1,7 +1,7 @@
 <h1>Log in</h1>
 
 <!-- Login form -->
-{!! Form::open(['action' => 'Tectonic\Shift\Controllers\AuthenticationController@login', 'class' => 'vertical well']) !!}
+{!! Form::open(['action' => '\Tectonic\Shift\Controllers\AuthenticationController@login', 'class' => 'vertical well']) !!}
 
     <div class="control">
         <div class="control-label">

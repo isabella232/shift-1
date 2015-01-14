@@ -27,6 +27,7 @@
     		<div class="column-third">
                 @include('shift::authentication.login')
     		</div>
-    	</div>
+
+        </div>
     </div>
 @stop

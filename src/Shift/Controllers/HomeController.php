@@ -15,12 +15,12 @@ use Tectonic\Shift\Library\Support\Controller;
 class HomeController extends Controller
 {
     /**
-     * @Get("/", as="home", prefix="/")
+     * @Get("/", as="home", middleware={"shift.account"})
      *
      * @return mixed
      */
 	public function index()
     {
-        return $this->respond('shift::home.index');
+        return view('shift::home.index', []);
     }
 }
