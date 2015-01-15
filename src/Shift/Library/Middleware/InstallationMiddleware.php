@@ -3,10 +3,11 @@ namespace Tectonic\Shift\Library\Middleware;
 
 use Closure;
 use Illuminate\Auth\Guard;
+use Illuminate\Contracts\Routing\Middleware;
 use Illuminate\Support\Facades\App;
 use Tectonic\Shift\Modules\Accounts\Services\AccountsService;
 
-class InstallationFilter
+class InstallationMiddleware implements Middleware
 {
 
 	/**

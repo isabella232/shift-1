@@ -15,7 +15,7 @@ class SyncCommand extends Command
     /**
      * @var string
      */
-    protected $description = 'Sync the Shift 2 resources (migration, configuration and language files)';
+    protected $description = 'Sync the Shift 2 resources (migration, configuration and asset files)';
 
     /**
      * Handle running migrations
@@ -32,8 +32,11 @@ class SyncCommand extends Command
         $src = realpath(__DIR__ . '/../../migrations');
         $dest = realpath(app_path() . '/../database');
 
-        $command = 'cp -R ' . $src . ' ' . $dest;
+        $command = "cp -Rf $src $dest";
+
         shell_exec(escapeshellcmd($command));
+
+        $this->info('Synchronised migrations.');
     }
 
     protected function syncConfig()
@@ -42,19 +45,22 @@ class SyncCommand extends Command
         $src = realpath(__DIR__ . '/../../../config/shift.php');
         $dest = realpath(app_path() . '/../config');
 
-        $command = 'cp ' . $src . ' ' . $dest;
+        $command = "cp $src $dest";
+
         shell_exec(escapeshellcmd($command));
+
+        $this->info('Synchronised configuration.');
     }
 
     protected function syncAssets()
     {
-        $src  = realpath(__DIR__ . '/../../../public/css');
-        $src .= " " . realpath(__DIR__ . '/../../../public/js');
-        $src .= " " . realpath(__DIR__ . '/../../../public/img');
+        $src  = realpath(__DIR__ . '/../../../public');
+        $dest = realpath(public_path().'/../');
 
-        $dest = realpath(public_path() . '/packages/tectonic/shift');
+        $command = "cp -Rf $src $dest";
 
-        $command = 'cp -R ' . $src . ' ' . $dest;
         shell_exec(escapeshellcmd($command));
+
+        $this->info('Synchronised assets.');
     }
 }

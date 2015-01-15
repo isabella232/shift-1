@@ -4,9 +4,9 @@
  * The default behaviour is for the user to be redirected back to the page they were just one,
  * whereby the errors will be shown in the correct locations.
  */
-/*App::error(function(\Tectonic\Application\Validation\ValidationException $exception) {
+App::error(function(\Tectonic\Application\Validation\ValidationException $exception) {
     return Redirect::back()->withInput()->withErrors($exception->getValidationErrors());
-});*/
+});
 
 /**
  * This is possibly a very bad approach, but we need this here in order to catch exceptions for installation.

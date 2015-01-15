@@ -1432,8 +1432,6 @@ var Pjax = Pjax || {};
 
 // Required for underscore string module
 (function() {
-<<<<<<< HEAD
-
     $('#accountName').click(function() {
 
         $('#accountName').hide();
@@ -1477,8 +1475,7 @@ var Pjax = Pjax || {};
 
     });
 
-=======
+
 	// Setup jquery pjax
 	$(document).pjax('[data-pjax], #content a', '#content');
->>>>>>> master
 })();

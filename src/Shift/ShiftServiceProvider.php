@@ -4,6 +4,7 @@ namespace Tectonic\Shift;
 use App;
 use Curl\Curl;
 use Illuminate\Support\Facades\View;
+use Tectonic\Shift\Commands\MigrateCommand;
 use Tectonic\Shift\Library\Recaptcha;
 use Tectonic\Shift\Commands\SyncCommand;
 use Tectonic\Shift\Commands\ResetCommand;
@@ -20,7 +21,8 @@ class ShiftServiceProvider extends ServiceProvider
      */
     protected $aliases = [
         'Asset'         => 'Orchestra\Support\Facades\Asset',
-        //'Authority'     => 'Authority\AuthorityL4\Facades\Authority',
+        'Form'          => 'Illuminate\Html\FormFacade',
+        'Html'          => 'Illuminate\Html\HtmlFacade',
         'Utility'       => 'Tectonic\Shift\Library\Facades\Utility',
         'Recaptcha'     => 'Tectonic\Shift\Library\Facades\Recaptcha',
     ];
@@ -31,9 +33,10 @@ class ShiftServiceProvider extends ServiceProvider
      * @var array
      */
     protected $routeMiddleware = [
-        'shift.auth'    => 'Tectonic\Shift\Library\Middleware\AuthFilter',
-        'shift.account' => 'Tectonic\Shift\Library\Middleware\AccountFilter',
-        'shift.install' => 'Tectonic\Shift\Library\Middleware\InstallationFilter'
+        'shift.account.exception' => 'Tectonic\Shift\Library\Middleware\AccountExceptionMiddleware',
+        'shift.auth'              => 'Tectonic\Shift\Library\Middleware\AuthFilter',
+        'shift.account'           => 'Tectonic\Shift\Library\Middleware\AccountFilter',
+        'shift.install'           => 'Tectonic\Shift\Library\Middleware\InstallationFilter'
     ];
 
     /**
@@ -42,7 +45,6 @@ class ShiftServiceProvider extends ServiceProvider
      * @var array
      */
     protected $filesToBoot = [
-        'errors',
         //'macros',
         'validators'
     ];
@@ -53,9 +55,9 @@ class ShiftServiceProvider extends ServiceProvider
      * @var array
      */
     protected $serviceProviders = [
-        //'Authority\AuthorityL4\AuthorityL4ServiceProvider',
         'Orchestra\Asset\AssetServiceProvider',
         'Eloquence\EloquenceServiceProvider',
+        'Illuminate\Html\HtmlServiceProvider',
         'Tectonic\LaravelLocalisation\ServiceProvider',
         'Tectonic\Shift\Library\Authorization\AuthorizationServiceProvider',
         'Tectonic\Shift\Library\LibraryServiceProvider',
@@ -95,7 +97,6 @@ class ShiftServiceProvider extends ServiceProvider
         parent::register();
 
         $this->registerRecaptcha();
-        //$this->registerAuthorityConfiguration();
         $this->registerHoneyPot();
 		$this->requireFiles($this->filesToRegister);
         $this->registerRouteMiddleware($this->routeMiddleware);
@@ -114,18 +115,6 @@ class ShiftServiceProvider extends ServiceProvider
 		//$this->package('tectonic/shift');
 		$this->requireFiles($this->filesToBoot);
         $this->bootCommands();
-	}
-
-	/**
-	 * Sets up the configuration required by Authority when it gets loaded.
-     *
-     * @returns void
-	 */
-	public function registerAuthorityConfiguration()
-	{
-		/*$this->app['config']->set('authority-l4::initialize', function($authority) {
-			$user = $authority->getCurrentUser();
-		});*/
 	}
 
     protected function registerHoneyPot()
@@ -159,6 +148,9 @@ class ShiftServiceProvider extends ServiceProvider
         }
     }
 
+    /**
+     * Sets up the required commands that are necessary for Shift operations
+     */
     protected function bootCommands()
     {
         $this->app->bind('command.shift.install', InstallCommand::class);
@@ -166,6 +158,9 @@ class ShiftServiceProvider extends ServiceProvider
 
         $this->app->bind('command.shift.reset', ResetCommand::class);
         $this->commands('command.shift.reset');
+
+        $this->app->bind('command.shift.migrate', MigrateCommand::class);
+        $this->commands('command.shift.migrate');
 
         $this->app->bind('command.shift.sync', SyncCommand::class);
         $this->commands('command.shift.sync');

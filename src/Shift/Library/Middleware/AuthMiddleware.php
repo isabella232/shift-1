@@ -4,6 +4,7 @@ namespace Tectonic\Shift\Library\Middleware;
 use Auth;
 use Closure;
 use Consumer;
+use Illuminate\Contracts\Routing\Middleware;
 use Redirect;
 use Illuminate\Contracts\Auth\Guard;
 use Tectonic\Shift\Library\Authorization\UserConsumer;
@@ -16,7 +17,7 @@ use Tectonic\Shift\Library\Authorization\UserConsumer;
  *
  * @package Tectonic\Shift\Library\Filters
  */
-class AuthFilter
+class AuthMiddleware implements Middleware
 {
 
     /**
@@ -35,7 +36,7 @@ class AuthFilter
     /**
      * Handle an incoming request.
      *
-     * @param          $request
+     * @param $request
      * @param callable $next
      *
      * @return mixed

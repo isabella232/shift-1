@@ -1,7 +1,5 @@
 // Required for underscore string module
 (function() {
-<<<<<<< HEAD
-
     $('#accountName').click(function() {
 
         $('#accountName').hide();
@@ -45,8 +43,7 @@
 
     });
 
-=======
+
 	// Setup jquery pjax
 	$(document).pjax('[data-pjax], #content a', '#content');
->>>>>>> master
 })();

@@ -22,6 +22,5 @@ class HomeController extends Controller
 	public function index()
     {
         return view('shift::home.index');
-        //return view('shift::temp.temp.index', []);
     }
 }

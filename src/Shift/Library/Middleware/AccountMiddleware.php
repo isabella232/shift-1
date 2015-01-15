@@ -3,6 +3,7 @@ namespace Tectonic\Shift\Library\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Contracts\Routing\Middleware;
 use Tectonic\Shift\Controllers\InstallationController;
 use Tectonic\Shift\Modules\Accounts\AccountNotFoundException;
 use Tectonic\Shift\Modules\Accounts\Facades\CurrentAccount;
@@ -17,7 +18,7 @@ use Tectonic\Shift\Modules\Accounts\Services\AccountsService;
  *
  * @package Tectonic\Shift\Library\Filters
  */
-class AccountFilter
+class AccountMiddleware implements Middleware
 {
 
 	/**
