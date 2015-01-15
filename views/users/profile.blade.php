@@ -10,7 +10,7 @@
         @include('shift::partials.errors.display')
 
         <!-- User profile form -->
-        {!! Form::open(['action' => 'Tectonic\Shift\Controllers\UserController@updateProfile', 'novalidate' => 'novalidate', 'class' => 'vertical']) !!}
+        {!! Form::open(['action' => '\Tectonic\Shift\Controllers\UserController@updateProfile', 'novalidate' => 'novalidate', 'class' => 'vertical']) !!}
 
             <div class="control">
                 <div class="control-label">

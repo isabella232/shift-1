@@ -1,7 +1,6 @@
 <?php
 namespace Tectonic\Shift\Modules\Identity\Users\Repositories;
 
-use Tectonic\LaravelLocalisation\Facades\Translator;
 use Tectonic\Shift\Library\Support\Database\Eloquent\Repository;
 use Tectonic\Shift\Modules\Identity\Users\Contracts\UserRepositoryInterface;
 use Tectonic\Shift\Modules\Identity\Users\Models\User;

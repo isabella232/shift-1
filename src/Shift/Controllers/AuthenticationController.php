@@ -36,7 +36,7 @@ class AuthenticationController extends Controller
     /**
      * Handle authentication
      *
-     * @Post("/login", prefix="/")
+     * @Post("/login", middleware={"shift.account"}, prefix="/")
      *
      * @return mixed
      */

@@ -31,6 +31,8 @@ class UserController extends Controller
     {
         $profile = $this->userProfileService->getUserProfile(Auth::user()->id);
 
+        dd($profile);
+
         $this->respond('shift::users.profile', compact('profile'));
     }
 

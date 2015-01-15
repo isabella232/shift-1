@@ -156,4 +156,9 @@ class Account extends Model implements TranslatableInterface
     {
         return ['name'];
     }
+
+    public function getId()
+    {
+        return $this->id;
+    }
 }

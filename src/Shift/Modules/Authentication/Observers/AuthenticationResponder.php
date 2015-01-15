@@ -1,7 +1,6 @@
 <?php
 namespace Tectonic\Shift\Modules\Authentication\Observers;
 
-use Illuminate\Auth\UserInterface;
 use Illuminate\Support\MessageBag;
 use Illuminate\Support\Facades\Redirect;
 use Tectonic\Shift\Controllers\HomeController;
@@ -11,6 +10,7 @@ use Tectonic\Application\Validation\ValidationException;
 use Tectonic\Shift\Modules\Authentication\Contracts\AuthenticationResponderInterface;
 use Tectonic\Shift\Modules\Authentication\Exceptions\UserAccountAssociationException;
 use Tectonic\Shift\Modules\Authentication\Exceptions\InvalidAuthenticationCredentialsException;
+use Tectonic\Shift\Modules\Identity\Users\Models\User;
 
 /**
  * Class AuthenticationResponder
@@ -28,11 +28,11 @@ class AuthenticationResponder implements AuthenticationResponderInterface
      * When authentication has succeeded, then the $user object belonging to the newly
      * authenticated user, is passed back and can be handled by this observer method.
      *
-     * @param \Illuminate\Auth\UserInterface    $user
+     * @param \Tectonic\Shift\Modules\Identity\Users\Models\User $user
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function onSuccess(UserInterface $user)
+    public function onSuccess(User $user)
     {
         return Redirect::action(UserController::class.'@profile');
     }
