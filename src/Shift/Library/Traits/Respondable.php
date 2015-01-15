@@ -2,7 +2,6 @@
 namespace Tectonic\Shift\Library\Traits;
 
 use Request;
-use View;
 
 trait Respondable
 {
@@ -11,7 +10,9 @@ trait Respondable
      * or the full layout render if it's a full page request.
      *
      * @param string $view
-     * @param array $data
+     * @param array  $data
+     *
+     * @return mixed
      */
     public function respond($view, array $data = [])
     {
@@ -19,7 +20,7 @@ trait Respondable
             return $data;
         }
 
-        $this->layout->content = View::make($view, $data);
+        $this->layout->content = view($view, $data);
     }
 
     /**

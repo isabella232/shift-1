@@ -15,13 +15,10 @@ class ConfigLanguageRepository implements LanguageRepositoryInterface
      */
     private static $languages;
 
-    /**
-     * @param Locale $locale
-     */
     public function __construct()
     {
         if (!isset(static::$languages)) {
-            static::$languages = $this->hydrateCollection(Config::get('shift::languages'));
+            static::$languages = $this->hydrateCollection(Config::get('shift.languages'));
         }
     }
 

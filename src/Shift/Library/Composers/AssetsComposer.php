@@ -12,11 +12,11 @@ class AssetsComposer
 
         // Add required assets to the asset container
         $container = Asset::container('shift');
-        $container->add('shift.js' , "packages/tectonic/shift/js/shift{$assetSuffix}.js");
-        $container->add('shift.css' , "packages/tectonic/shift/css/shift{$assetSuffix}.css");
+        $container->add('shift.js' , "js/shift{$assetSuffix}.js");
+        $container->add('shift.css' , "css/shift{$assetSuffix}.css");
 
         // We can also have custom asset container that are bound to the view
         $customContainer = Asset::container('custom');
-        $customContainer->add('app', 'packages/tectonic/shift/js/app.js');
+        $customContainer->add('app', 'js/app.js');
     }
 }

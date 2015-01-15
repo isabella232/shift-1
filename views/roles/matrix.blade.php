@@ -27,11 +27,11 @@
             @foreach ($resources as $resource => $name)
                 <?php $i = isset($i) ? $i + 1 : 0; ?>
                 <tr @if ($i % 2 == 1) class="even"@endif>
-                    <td>{{ $name }}</td>
-                    {{ HTML::permission($role, $resource, 'create') }}
-                    {{ HTML::permission($role, $resource, 'view') }}
-                    {{ HTML::permission($role, $resource, 'update') }}
-                    {{ HTML::permission($role, $resource, 'delete') }}
+                    <td>{!! $name !!}</td>
+                    {!! HTML::permission($role, $resource, 'create') !!}
+                    {!! HTML::permission($role, $resource, 'view') !!}
+                    {!! HTML::permission($role, $resource, 'update') !!}
+                    {!! HTML::permission($role, $resource, 'delete') !!}
                 </tr>
             @endforeach
         </tbody>

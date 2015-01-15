@@ -7,13 +7,13 @@
     @include('shift::partials.misc.browser')
 
     <header id="head">
-        <div class="app-title">{{ lang($account, 'name') }}</div>
+        <div class="app-title">{!! lang($account, 'name') !!}</div>
         <div class="user-info">
             <div id="control-panel">
                 <ul class="horizontal">
                     @if (Auth::check())
                         <li>
-                            <span id="accountName">{{ lang($account, 'name') }}</span>
+                            <span id="accountName">{!! lang($account, 'name') !!}</span>
                             <input type="hidden" id="accountSwitcher" style="width: 300px;"/>
                         </li>
                     @endif
@@ -24,7 +24,7 @@
 
     <section id="main">
         <nav id="navigation">
-            {{ HTML::menu('main') }}
+            {!! HTML::menu('main') !!}
         </nav>
 
         <section id="content">
@@ -44,8 +44,6 @@
                     </div>
                 </div>
             </div>
-
-
 
             <div id="footer-links">
                 <div class="container">

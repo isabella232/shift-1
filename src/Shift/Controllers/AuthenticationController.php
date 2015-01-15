@@ -19,13 +19,13 @@ class AuthenticationController extends Controller
     protected $authenticationService;
 
     /**
-     * @var \Tectonic\Shift\Modules\Authentication\Services\AccountSwitcherService
+     * @var AccountSwitcherService
      */
     protected $accountSwitcherService;
 
     /**
-     * @param AuthenticationService                                                  $authenticationService
-     * @param \Tectonic\Shift\Modules\Authentication\Services\AccountSwitcherService $accountSwitcherService
+     * @param AuthenticationService $authenticationService
+     * @param AccountSwitcherService $accountSwitcherService
      */
     public function __construct(AuthenticationService $authenticationService, AccountSwitcherService $accountSwitcherService)
     {
@@ -35,6 +35,8 @@ class AuthenticationController extends Controller
 
     /**
      * Handle authentication
+     *
+     * @Post("/login", middleware={"shift.account"}, prefix="/")
      *
      * @return mixed
      */
@@ -46,6 +48,8 @@ class AuthenticationController extends Controller
     /**
      * Handle logging out of user.
      *
+     * @Get("/logout", middleware={"shift.account", "auth"}, prefix="/")
+     *
      * @return mixed
      */
     public function logout()
@@ -56,6 +60,8 @@ class AuthenticationController extends Controller
     /**
      * Handle collecting a list of accounts the current user belongs to.
      *
+     * @Get("/auth/accounts", middleware={"shift.account", "auth"}, prefix="/")
+     *
      * @return mixed
      */
     public function getAccounts()
@@ -65,6 +71,8 @@ class AuthenticationController extends Controller
 
     /**
      * Handle switching to another account
+     *
+     * @Get("/auth/account/{id}", middleware={"shift.account", "auth"}, prefix="/")
      *
      * @param $id
      *
@@ -77,6 +85,8 @@ class AuthenticationController extends Controller
 
     /**
      * Handle switching to new account, logging in and redirecting to home page
+     *
+     * @Get("/auth/switch", middleware={"shift.account", "auth"}, prefix="/")
      *
      * @return mixed
      */

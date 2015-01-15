@@ -1,3 +1,5 @@
+@extends('shift::layouts.fullpage')
+
 @section('main')
     <div class="container ng-scope">
     	<div class="island"></div>
@@ -27,6 +29,7 @@
     		<div class="column-third">
                 @include('shift::authentication.login')
     		</div>
-    	</div>
+
+        </div>
     </div>
 @stop

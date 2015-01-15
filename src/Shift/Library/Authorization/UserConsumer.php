@@ -29,9 +29,9 @@ final class UserConsumer implements ConsumerInterface
 	/**
 	 * Constructs the class and sets the $id property.
 	 *
-     * @param UserInterface $user
+     * @param $user
 	 */
-	public function __construct(User $user)
+	public function __construct($user)
 	{
         $this->user = $user;
 	}

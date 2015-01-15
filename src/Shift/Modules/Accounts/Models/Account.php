@@ -1,7 +1,7 @@
 <?php
 namespace Tectonic\Shift\Modules\Accounts\Models;
 
-use Illuminate\Database\Eloquent\SoftDeletingTrait;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Tectonic\Application\Eventing\EventGenerator;
 use Tectonic\Localisation\Contracts\TranslatableInterface;
 use Tectonic\Localisation\Translator\Translatable;
@@ -17,7 +17,7 @@ use Tectonic\Shift\Modules\Identity\Users\Models\User;
 class Account extends Model implements TranslatableInterface
 {
     use EventGenerator;
-    use SoftDeletingTrait;
+    use SoftDeletes;
     use Translatable;
     use TranslatableModel;
     use Sluggable;
@@ -155,5 +155,10 @@ class Account extends Model implements TranslatableInterface
     public function getTranslatableFields()
     {
         return ['name'];
+    }
+
+    public function getId()
+    {
+        return $this->id;
     }
 }

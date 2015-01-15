@@ -1,4 +1,5 @@
 // Required for underscore string module
+<<<<<<< HEAD
 (function($) {
 	// When menu parents are clicked, simply toggle the active class
 	$('.menu .parent span').click(function() {
@@ -22,6 +23,10 @@
 
 		$.pjax.submit(event, pjaxContainer);
 	};
+=======
+(function() {
+    $('#accountName').click(function() {
+>>>>>>> l5
 
 	$(document).pjax('#content a, #navigation a', pjaxContainer, {"timeout": timeout});
 	$(document).on('submit', 'form[data-pjax]', submissionCallback);
@@ -84,4 +89,12 @@
             $("#accountSwitcher").select2('destroy');
         });
     });
+<<<<<<< HEAD
 })(this.jQuery);
+=======
+
+
+	// Setup jquery pjax
+	$(document).pjax('[data-pjax], #content a', '#content');
+})();
+>>>>>>> l5

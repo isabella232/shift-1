@@ -3,15 +3,14 @@ namespace Tectonic\Shift;
 
 use App;
 use Curl\Curl;
-use Illuminate\Support\Facades\Request;
-use Tectonic\Shift\Commands\CompileServicesCommand;
-use Tectonic\Shift\Commands\InstallCommand;
-use Tectonic\Shift\Commands\ResetCommand;
+use Illuminate\Support\Facades\View;
+use Tectonic\Shift\Commands\MigrateCommand;
 use Tectonic\Shift\Library\Recaptcha;
-use Tectonic\Shift\Library\Router;
-use Tectonic\Shift\Library\Security\HoneyPot;
+use Tectonic\Shift\Commands\SyncCommand;
+use Tectonic\Shift\Commands\ResetCommand;
 use Tectonic\Shift\Library\ServiceProvider;
-use Tectonic\Shift\Modules\Accounts\Facades\CurrentAccount;
+use Tectonic\Shift\Commands\InstallCommand;
+use Tectonic\Shift\Library\Security\HoneyPot;
 
 class ShiftServiceProvider extends ServiceProvider
 {
@@ -22,9 +21,22 @@ class ShiftServiceProvider extends ServiceProvider
      */
     protected $aliases = [
         'Asset'         => 'Orchestra\Support\Facades\Asset',
-        'Authority'     => 'Authority\AuthorityL4\Facades\Authority',
+        'Form'          => 'Illuminate\Html\FormFacade',
+        'Html'          => 'Illuminate\Html\HtmlFacade',
         'Utility'       => 'Tectonic\Shift\Library\Facades\Utility',
         'Recaptcha'     => 'Tectonic\Shift\Library\Facades\Recaptcha',
+    ];
+
+    /**
+     * A collection of the application's route middleware (previously known as Filters in L4)
+     *
+     * @var array
+     */
+    protected $routeMiddleware = [
+        'shift.account.exception' => 'Tectonic\Shift\Library\Middleware\AccountExceptionMiddleware',
+        'shift.auth'              => 'Tectonic\Shift\Library\Middleware\AuthMiddleware',
+        'shift.account'           => 'Tectonic\Shift\Library\Middleware\AccountMiddleware',
+        'shift.install'           => 'Tectonic\Shift\Library\Middleware\InstallationMiddleware'
     ];
 
     /**
@@ -33,9 +45,7 @@ class ShiftServiceProvider extends ServiceProvider
      * @var array
      */
     protected $filesToBoot = [
-        'errors',
-        'macros',
-        'routes',
+        // 'macros',
         'validators'
     ];
 
@@ -45,9 +55,9 @@ class ShiftServiceProvider extends ServiceProvider
      * @var array
      */
     protected $serviceProviders = [
-        'Authority\AuthorityL4\AuthorityL4ServiceProvider',
         'Orchestra\Asset\AssetServiceProvider',
         'Eloquence\EloquenceServiceProvider',
+        'Illuminate\Html\HtmlServiceProvider',
         'Tectonic\LaravelLocalisation\ServiceProvider',
         'Tectonic\Shift\Library\Authorization\AuthorizationServiceProvider',
         'Tectonic\Shift\Library\LibraryServiceProvider',
@@ -57,6 +67,8 @@ class ShiftServiceProvider extends ServiceProvider
         'Tectonic\Shift\Modules\Identity\Roles\RolesServiceProvider',
         'Tectonic\Shift\Modules\Identity\Users\UsersServiceProvider',
         'Tectonic\Shift\Modules\Authentication\AuthenticationServiceProvider',
+        'Tectonic\Shift\Providers\RouteServiceProvider',
+        'Tectonic\Shift\Providers\AnnotationsServiceProvider',
     ];
 
     /**
@@ -84,11 +96,13 @@ class ShiftServiceProvider extends ServiceProvider
 	{
         parent::register();
 
-        $this->registerRouter();
         $this->registerRecaptcha();
-        $this->registerAuthorityConfiguration();
         $this->registerHoneyPot();
 		$this->requireFiles($this->filesToRegister);
+        $this->registerRouteMiddleware($this->routeMiddleware);
+
+        // Define view namespace, as $this->package() doesn't exist anymore in L5
+        View::addNamespace('shift', realpath(__DIR__.'/../../views'));
     }
 
 	/**
@@ -98,22 +112,9 @@ class ShiftServiceProvider extends ServiceProvider
 	 */
 	public function boot()
 	{
-		$this->package('tectonic/shift', 'shift');
-
+		//$this->package('tectonic/shift');
 		$this->requireFiles($this->filesToBoot);
         $this->bootCommands();
-	}
-
-	/**
-	 * Sets up the configuration required by Authority when it gets loaded.
-     *
-     * @returns void
-	 */
-	public function registerAuthorityConfiguration()
-	{
-		$this->app['config']->set('authority-l4::initialize', function($authority) {
-			$user = $authority->getCurrentUser();
-		});
 	}
 
     protected function registerHoneyPot()
@@ -145,20 +146,11 @@ class ShiftServiceProvider extends ServiceProvider
         foreach ($files as $file) {
             require __DIR__.'/../../boot/'.$file.'.php';
         }
-	}
-
-    /**
-     * Register the router instance. This completely overwrites the one registered by Laravel.
-     *
-     * @return void
-     */
-    protected function registerRouter()
-    {
-        $this->app['router'] = $this->app->share(function($app) {
-            return new Router($app['events'], $app);
-        });
     }
 
+    /**
+     * Sets up the required commands that are necessary for Shift operations
+     */
     protected function bootCommands()
     {
         $this->app->bind('command.shift.install', InstallCommand::class);
@@ -167,7 +159,23 @@ class ShiftServiceProvider extends ServiceProvider
         $this->app->bind('command.shift.reset', ResetCommand::class);
         $this->commands('command.shift.reset');
 
-        $this->app->bind('command.shift.compile-services', CompileServicesCommand::class);
-        $this->commands('command.shift.compile-services');
+        $this->app->bind('command.shift.migrate', MigrateCommand::class);
+        $this->commands('command.shift.migrate');
+
+        $this->app->bind('command.shift.sync', SyncCommand::class);
+        $this->commands('command.shift.sync');
+    }
+
+    /**
+     * Register route middleware
+     *
+     * @param array $routeMiddleware
+     */
+    protected function registerRouteMiddleware($routeMiddleware)
+    {
+        foreach($routeMiddleware as $key => $middleware)
+        {
+            $this->app['router']->middleware($key, $middleware);
+        }
     }
 }
