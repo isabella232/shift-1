@@ -116,8 +116,6 @@ class ShiftServiceProvider extends ServiceProvider
         $this->bootCommands();
 	}
 
-    //public function package(){}
-
 	/**
 	 * Sets up the configuration required by Authority when it gets loaded.
      *

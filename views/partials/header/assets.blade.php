@@ -6,7 +6,6 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.2/select2.min.css"/>
 
-{!!-- Load Assets --!!}
 @foreach(Asset::containers(['custom']) as $container)
     {!! $container->styles() !!}
 @endforeach

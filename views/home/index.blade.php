@@ -1,3 +1,5 @@
+@extends('shift::layouts.fullpage')
+
 @section('main')
     <div class="container ng-scope">
     	<div class="island"></div>
