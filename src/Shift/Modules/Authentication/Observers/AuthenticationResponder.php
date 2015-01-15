@@ -2,7 +2,6 @@
 namespace Tectonic\Shift\Modules\Authentication\Observers;
 
 use Illuminate\Support\MessageBag;
-use Illuminate\Support\Facades\Redirect;
 use Tectonic\Shift\Controllers\HomeController;
 use Tectonic\Shift\Controllers\UserController;
 use Tectonic\Shift\Library\Traits\Respondable;
@@ -34,7 +33,7 @@ class AuthenticationResponder implements AuthenticationResponderInterface
      */
     public function onSuccess(User $user)
     {
-        return Redirect::action(UserController::class.'@profile');
+        return redirect()->route('user.profile');
     }
 
     /**
@@ -46,7 +45,7 @@ class AuthenticationResponder implements AuthenticationResponderInterface
      */
     public function onValidationFailure(ValidationException $e)
     {
-        return Redirect::action(HomeController::class.'@index')
+        return redirect()->action('home')
             ->withInput()
             ->withErrors($e->getValidationErrors());
     }

@@ -1,4 +1,5 @@
-<?php namespace Tectonic\Shift\Providers; 
+<?php
+namespace Tectonic\Shift\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Routing\Router;

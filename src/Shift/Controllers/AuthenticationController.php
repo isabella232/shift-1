@@ -19,13 +19,13 @@ class AuthenticationController extends Controller
     protected $authenticationService;
 
     /**
-     * @var \Tectonic\Shift\Modules\Authentication\Services\AccountSwitcherService
+     * @var AccountSwitcherService
      */
     protected $accountSwitcherService;
 
     /**
-     * @param AuthenticationService                                                  $authenticationService
-     * @param \Tectonic\Shift\Modules\Authentication\Services\AccountSwitcherService $accountSwitcherService
+     * @param AuthenticationService $authenticationService
+     * @param AccountSwitcherService $accountSwitcherService
      */
     public function __construct(AuthenticationService $authenticationService, AccountSwitcherService $accountSwitcherService)
     {

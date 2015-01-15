@@ -34,9 +34,9 @@ class ShiftServiceProvider extends ServiceProvider
      */
     protected $routeMiddleware = [
         'shift.account.exception' => 'Tectonic\Shift\Library\Middleware\AccountExceptionMiddleware',
-        'shift.auth'              => 'Tectonic\Shift\Library\Middleware\AuthFilter',
-        'shift.account'           => 'Tectonic\Shift\Library\Middleware\AccountFilter',
-        'shift.install'           => 'Tectonic\Shift\Library\Middleware\InstallationFilter'
+        'shift.auth'              => 'Tectonic\Shift\Library\Middleware\AuthMiddleware',
+        'shift.account'           => 'Tectonic\Shift\Library\Middleware\AccountMiddleware',
+        'shift.install'           => 'Tectonic\Shift\Library\Middleware\InstallationMiddleware'
     ];
 
     /**
@@ -45,7 +45,7 @@ class ShiftServiceProvider extends ServiceProvider
      * @var array
      */
     protected $filesToBoot = [
-        //'macros',
+        // 'macros',
         'validators'
     ];
 

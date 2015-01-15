@@ -25,7 +25,7 @@ class UserController extends Controller
     /**
      * Display view for updating a user profile
      *
-     * @Get("profile", middleware={"shift.account", "auth"}, prefix="/")
+     * @Get("profile", middleware={"shift.account", "auth"}, prefix="/", as="user.profile")
      */
     public function profile()
     {

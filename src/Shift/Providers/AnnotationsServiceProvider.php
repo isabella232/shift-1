@@ -1,9 +1,10 @@
-<?php namespace Tectonic\Shift\Providers;
+<?php
+namespace Tectonic\Shift\Providers;
 
 use Adamgoose\AnnotationsServiceProvider as ServiceProvider;
 
-class AnnotationsServiceProvider extends ServiceProvider {
-
+class AnnotationsServiceProvider extends ServiceProvider
+{
     /**
      * Determines if we will auto-scan in the local environment.
      *
@@ -32,7 +33,4 @@ class AnnotationsServiceProvider extends ServiceProvider {
         'Tectonic\Shift\Controllers\SettingController',
         'Tectonic\Shift\Controllers\RoleController',
     ];
-
-
-
 }

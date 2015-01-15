@@ -43,9 +43,8 @@ class AuthMiddleware implements Middleware
      */
     public function handle($request, Closure $next)
     {
-        if($this->auth->guest())
-        {
-            return redirect()->to('/');
+        if ($this->auth->guest()) {
+            return redirect()->route('home');
         }
 
         Consumer::set(new UserConsumer($this->auth->user()));
