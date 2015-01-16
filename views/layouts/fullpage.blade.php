@@ -24,7 +24,7 @@
 
     <section id="main">
         <nav id="navigation">
-            {{ HTML::menu('main') }}
+            {!! HTML::menu('main') !!}
         </nav>
 
         <section id="content">

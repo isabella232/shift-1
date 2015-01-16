@@ -26,7 +26,7 @@
         "laravel/framework": "~5.0",
         "orchestra/asset": "2.2.*",
         "tectonic/application-support": "dev-l5",
-        "tectonic/laravel-localisation": "dev-l5",
+        "tectonic/laravel-localisation": "dev-master",
         "adamgoose/laravel-annotations": "~5.0"
     },
     "require-dev": {
