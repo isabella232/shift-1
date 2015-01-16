@@ -14,6 +14,10 @@ return [
             'label' => 'Name',
             'hint' => 'Enter the name of the account.'
         ],
+        'owner' => [
+            'label' => 'Owner',
+            'hint' => 'Select a user that will act as the owner of this account'
+        ]
     ],
 
     'table' => [

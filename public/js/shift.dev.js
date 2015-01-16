@@ -2263,7 +2263,25 @@ var Pjax = Pjax || {};
 	var router = Pjax.Router;
 
 	var accountForm = function() {
-		console.log('@TODO: Implement user autocomplete functionality using select2 for defining the user of an account.');
+		$('#owner').select2({
+			ajax: {
+				url: '/users/',
+				dataType: 'json',
+				delay: 250,
+				data: function(params) {
+					return {
+						name: params.term
+					}
+				},
+				processResults: function(data) {
+					return {
+						results: data.data
+					}
+				},
+				cache: true
+			},
+			minimumInputLength: 3
+		});
 	};
 
 	var editAccount = function() {

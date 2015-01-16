@@ -919,7 +919,8 @@ select {
   background: #fff;
   border: 1px solid #d5d5d5;
   padding: 8px;
-  width: 100%; }
+  width: 100%;
+  -webkit-appearance: none; }
   input.ng-invalid,
   textarea.ng-invalid,
   select.ng-invalid {
@@ -1258,6 +1259,17 @@ label.disabled {
     top: 10px;
     left: 10px;
     color: #999999; }
+
+.control-field .select2-container {
+  width: 200px; }
+
+.select2-drop-active {
+  border: 1px solid #999; }
+
+ul.select2-results li.select2-no-results {
+  background: none;
+  color: #666;
+  font-size: 10px; }
 
 table {
   width: 100%; }

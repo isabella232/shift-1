@@ -7,6 +7,7 @@ select {
 	border: 1px solid #d5d5d5;
 	padding: 8px;
 	width: 100%;
+	-webkit-appearance: none;
 	
 	&.ng-invalid {
 		border-color: $colour-error;
@@ -399,5 +400,24 @@ $colour-placeholder: #999;
 	.ie-placeholder {
 		@include position( absolute , 10px 0 0 10px );
 		color: $colour-placeholder;
+	}
+}
+
+// Select2 steezy
+.control-field {
+	.select2-container {
+		width: 200px;
+	}
+}
+
+.select2-drop-active {
+	border: 1px solid #999;
+}
+
+ul.select2-results {
+	li.select2-no-results {
+		background: none;
+		color: #666;
+		font-size: 10px;
 	}
 }

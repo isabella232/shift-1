@@ -49,12 +49,12 @@
                     <div class="help-text">{{ trans('shift::users.form.password_confirmation.hint') }}</div>
                 </div>
             </div>
-
-            <div class="control">
-                <div class="control-field">
-                    {{ Form::submit('Save') }}
-                </div>
-            </div>
         </div>
+    </div>
+
+    <div class="form-actions">
+        <button type="submit" class="button primary big ladda-button" data-style="contract" data-spinner-color="#333">
+            {{ trans('shift::buttons.saveNext') }}
+        </button>
     </div>
 {{ Form::close() }}

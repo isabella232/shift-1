@@ -44,6 +44,15 @@
                         <div class="domain">{{ Form::text('domain') }}</div>
                     </div>
                 </div>
+
+                <div class="control">
+                    <div class="control-label">
+                        {{ Form::label('owner', trans('shift::accounts.form.owner.label')) }}
+                    </div>
+                    <div class="control-field">
+                        {{ Form::hidden('owner') }}
+                    </div>
+                </div>
             </div>
         </div>
 
