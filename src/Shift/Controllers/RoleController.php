@@ -40,6 +40,8 @@ class RoleController extends Controller
     /**
      * Retrieve a list of roles based on the search conditions provided.
      *
+     * @Get("roles", middleware={"shift.account", "shift.auth"}, as="roles.index")
+     *
      * @return mixed
      */
     public function getIndex()
@@ -52,6 +54,8 @@ class RoleController extends Controller
 
     /**
      * Renders the form required for creating a new role.
+     *
+     * @Get("roles/new", middleware={"shift.account", "shift.auth"}, as="roles.new")
      */
     public function getNew()
     {
@@ -62,6 +66,8 @@ class RoleController extends Controller
 
     /**
      * Creates a new role based on the information provided by the user.
+     *
+     * @Post("roles", middleware={"shift.account", "shift.auth"}, as="roles.create")
      */
     public function postStore()
     {
@@ -74,6 +80,12 @@ class RoleController extends Controller
 
     /**
      * Retrieve a single role.
+     *
+     * @Get("roles/{slug}", middleware={"shift.account", "shift.auth"}, as="roles.show")
+     *
+     * @param $slug
+     *
+     * @return mixed
      */
     public function getShow($slug)
     {
@@ -84,6 +96,8 @@ class RoleController extends Controller
 
     /**
      * Manage the updating of a specific role, based on the slug provided.
+     *
+     * @Put("roles/{slug}", middleware={"shift.account", "shift.auth"}, as="roles.update")
      *
      * @param string $slug
      * @return mixed

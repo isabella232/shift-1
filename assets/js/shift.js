@@ -84,4 +84,7 @@
             $("#accountSwitcher").select2('destroy');
         });
     });
-})(this.jQuery);
+
+	// Setup jquery pjax
+	$(document).pjax('[data-pjax], #content a', '#content');
+})();

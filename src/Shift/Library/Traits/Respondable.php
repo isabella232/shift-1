@@ -2,7 +2,6 @@
 namespace Tectonic\Shift\Library\Traits;
 
 use Request;
-use View;
 
 trait Respondable
 {
@@ -11,7 +10,9 @@ trait Respondable
      * or the full layout render if it's a full page request.
      *
      * @param string $view
-     * @param array $data
+     * @param array  $data
+     *
+     * @return mixed
      */
     public function respond($view, array $data = [])
     {
@@ -19,7 +20,7 @@ trait Respondable
             return $data;
         }
 
-        $this->layout->content = View::make($view, $data);
+        $this->layout->content = view($view, $data);
     }
 
     /**
@@ -40,6 +41,27 @@ trait Respondable
     public function isFullPage()
     {
         return !Request::wantsJson() && !$this->isPjax();
+    }
+
+    /**
+     * Pulled from Laravel 4. Laravel 5 completely does away with any ability to support PJAX
+     * applications - we need this method as it was.
+     *
+     * @param string $method
+     * @param array $parameters
+     * @return mixed
+     */
+    public function callAction($method, $parameters)
+    {
+        $this->setupLayout();
+
+        $response = call_user_func_array(array($this, $method), $parameters);
+
+        if (is_null($response) && ! is_null($this->layout)) {
+            $response = $this->layout;
+        }
+
+        return $response;
     }
 }
  

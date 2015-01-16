@@ -1,28 +1,28 @@
 <?php
-namespace Tests\Unit\Library\Filters;
+namespace Tests\Unit\Library\Middleware;
 
 use CurrentAccount;
 use Mockery as m;
-use Tectonic\Shift\Library\Filters\AccountFilter;
+use Tectonic\Shift\Library\Middleware\AccountMiddleware;
 use Tectonic\Shift\Modules\Accounts\Models\Account;
 use Tectonic\Shift\Modules\Accounts\Services\AccountsService;
 use Tectonic\Shift\Modules\Accounts\Services\CurrentAccountService;
 use Tests\UnitTestCase;
 
-class AccountFilterTest extends UnitTestCase
+class AccountMiddlewareTest extends UnitTestCase
 {
     private $mockAccount;
 	private $mockAccountManagementService;
-	private $mockCurrentAccountService;
+	private $middleware;
 
-    public function setUp()
+	public function setUp()
 	{
 		parent::setUp();
 
         $this->mockAccount = m::mock(Account::class);
 		$this->mockAccountManagementService = m::mock(AccountsService::class)->makePartial();
 
-		$this->filter = new AccountFilter($this->mockAccountManagementService);
+		$this->middleware = new AccountMiddleware($this->mockAccountManagementService);
 	}
 
 	public function testFilterWithNoActiveAccount()
@@ -30,7 +30,7 @@ class AccountFilterTest extends UnitTestCase
 		CurrentAccount::shouldReceive('determine')->once()->andReturn(null);
 		$this->mockAccountManagementService->shouldReceive('totalNumberOfAccounts')->andReturn(0);
 
-        $this->filter->filter();
+        $this->middleware->filter();
 	}
 
     public function testFilterWithActiveValidAccount()
@@ -38,6 +38,6 @@ class AccountFilterTest extends UnitTestCase
         CurrentAccount::shouldReceive('determine')->once()->andReturn($this->mockAccount);
         CurrentAccount::shouldReceive('set')->once()->with($this->mockAccount);
 
-        $this->filter->filter();
+        $this->middleware->filter();
     }
 }

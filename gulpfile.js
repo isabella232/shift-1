@@ -17,7 +17,7 @@ if (fs.existsSync('./gulp.custom.js')) {
 }
 
 var input  = 'assets/',
-    output = 'public/';
+    output = 'resources/public/';
 
 var scripts = [
   input + 'js/_app.js',

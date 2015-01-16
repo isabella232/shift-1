@@ -34,6 +34,8 @@ class InstallationController extends Controller
     /**
      * Renders the installation/setup form.
      *
+     * @Get("/install", prefix="/")
+     *
      * @return Response
      */
     public function getInstall()
@@ -46,6 +48,8 @@ class InstallationController extends Controller
 
     /**
      * Handles the data submitted from the form.
+     *
+     * @Post("/install", as="install", prefix="/")
      *
      * @return Response
      */

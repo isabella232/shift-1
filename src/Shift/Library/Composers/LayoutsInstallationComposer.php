@@ -12,7 +12,7 @@ class LayoutsInstallationComposer
 
         // Add required assets to the asset container
         $container = Asset::container('shift');
-        $container->add('app.js.shift' , "packages/tectonic/shift/js/shift.{$assetSuffix}.js");
-        $container->add('app.css.shift' , "packages/tectonic/shift/css/shift.{$assetSuffix}.css");
+        $container->add('app.js.shift' , "js/shift.{$assetSuffix}.js");
+        $container->add('app.css.shift' , "css/shift.{$assetSuffix}.css");
     }
 }

@@ -20,5 +20,11 @@ return [
     ],
 
     // Url settings. If you want Shift located at something like /admin/, for example, put 'admin'
-    'url' => ''
+    'url' => '',
+
+    // Shift supported languages
+    'languages' => [
+        'en_GB' => 'English (Great Britain)'
+    ]
+
 ];

@@ -1,49 +1,49 @@
 <h1>Register</h1>
 
 <!-- Registration form -->
-{{ Form::open(['action' => 'Tectonic\Shift\Controllers\RegistrationController@register', 'novalidate' => 'novalidate', 'class' => 'vertical well']) }}
+{!! Form::open(['action' => '\Tectonic\Shift\Controllers\RegistrationController@register', 'novalidate' => 'novalidate', 'class' => 'vertical well']) !!}
     <div class="control">
         <div class="control-label">
-            {{ Form::label('firstName', 'First name') }}
+            {!! Form::label('firstName', 'First name') !!}
         </div>
         <div class="control-field">
-            {{ Form::text('firstName') }}
+            {!! Form::text('firstName') !!}
         </div>
     </div>
 
     <div class="control">
         <div class="control-label">
-            {{ Form::label('lastName', 'Last name') }}
+            {!! Form::label('lastName', 'Last name') !!}
         </div>
         <div class="control-field">
-            {{ Form::text('lastName') }}
+            {!! Form::text('lastName') !!}
         </div>
     </div>
 
     <div class="control">
         <div class="control-label">
-            {{ Form::label('email', 'Email') }}
+            {!! Form::label('email', 'Email') !!}
         </div>
         <div class="control-field">
-            {{ Form::email('email') }}
+            {!! Form::email('email') !!}
         </div>
     </div>
 
     <div class="control">
         <div class="control-label">
-            {{ Form::label('password', 'Password') }}
+            {!! Form::label('password', 'Password') !!}
         </div>
         <div class="control-field">
-            {{ Form::password('password') }}
+            {!! Form::password('password') !!}
         </div>
     </div>
 
     <div class="control">
         <div class="control-label">
-            {{ Form::label('password_confirmation', 'Password') }}
+            {!! Form::label('password_confirmation', 'Password') !!}
         </div>
         <div class="control-field">
-            {{ Form::password('password_confirmation') }}
+            {!! Form::password('password_confirmation') !!}
         </div>
     </div>
 
@@ -62,4 +62,4 @@
         </div>
     </div>
 
-{{ Form::close() }}
+{!! Form::close() !!}

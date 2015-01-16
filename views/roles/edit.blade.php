@@ -3,16 +3,25 @@
         <div class="column-half">
             <div class="title">
                 <h1>
-                    <a href="{{ route('roles.index') }}">{{ trans('shift::roles.titles.main')}}</a>
+                    <a href="{{ route('roles.index') }}">{{ trans('roles.titles.main')}}</a>
                     &gt; {{ lang($role, 'name') }}
                 </h1>
             </div>
         </div>
     </div>
 
-    @include('shift::partials.errors.display')
+<<<<<<< HEAD
+    @include('partials.errors.display')
+=======
+@section('breadcrumbs')
+    <h1>
+        <a href="{!! action('Tectonic\Shift\Controllers\RoleController@getIndex') !!}">{!! trans('roles.titles.main')!!}</a>
+        &gt; {!! lang($role, 'name') !!}
+    </h1>
+@stop
+>>>>>>> l5
 
     <div class="row">
-        @include('shift::roles.form')
+        @include('roles.form')
     </div>
 @stop

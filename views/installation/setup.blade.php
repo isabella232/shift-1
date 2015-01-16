@@ -1,4 +1,4 @@
-@extends('shift::layouts.installation')
+@extends('layouts.installation')
 
 @section('content')
     <div class="row island">
@@ -9,39 +9,39 @@
         </div>
     </div>
 
-    @include('shift::partials.errors.display')
+    @include('partials.errors.display')
 
     <div class="row">
-        {{ Form::open(['action' => 'Tectonic\Shift\Controllers\InstallationController@postInstall', 'autocomplete' => 'off']) }}
+        {!! Form::open(['action' => 'Tectonic\Shift\Controllers\InstallationController@postInstall', 'autocomplete' => 'off']) !!}
             <div class="column-half vertical">
                 <h3 class="first">Application details</h3>
 
                 <div class="control">
                     <div class="control-label forty">
-                        {{ Form::label('name', 'Account name') }}
+                        {!! Form::label('name', 'Account name') !!}
                     </div>
                     <div class="control-field sixty">
-                        {{ Form::text('name', 'Shift 2.0', ['autofocus', 'required']) }}
+                        {!! Form::text('name', 'Shift 2.0', ['autofocus', 'required']) !!}
                         <div class="help-text">Enter the name of the first account for this installation.</div>
                     </div>
                 </div>
 
                 <div class="control">
                     <div class="control-label forty">
-                        {{ Form::label('language', 'Default language') }}
+                        {!! Form::label('language', 'Default language') !!}
                     </div>
                     <div class="control-field sixty">
-                        {{ Form::select('language', $languages->lists('language', 'code'), ['required']) }}
+                        {!! Form::select('language', $languages->lists('language', 'code'), ['required']) !!}
                         <div class="help-text">Select the default language for this installation.</div>
                     </div>
                 </div>
 
                 <div class="control">
                     <div class="control-label forty">
-                        {{ Form::label('host', 'Host \ Domain') }}
+                        {!! Form::label('host', 'Host \ Domain') !!}
                     </div>
                     <div class="control-field sixty">
-                        {{ Form::text('host', $host) }}
+                        {!! Form::text('host', $host) !!}
                         <div class="help-text">Enter the domain or host information for this account (eg. somedomain.com or 192.168.1.1:8000.</div>
                     </div>
                 </div>
@@ -50,20 +50,20 @@
 
                 <div class="control">
                     <div class="control-label forty">
-                        {{ Form::label('email', 'Email address') }}
+                        {!! Form::label('email', 'Email address') !!}
                     </div>
                     <div class="control-field sixty">
-                        {{ Form::text('email') }}
+                        {!! Form::text('email') !!}
                         <div class="help-text">Enter the email address of the administrator's account.</div>
                     </div>
                 </div>
 
                 <div class="control">
                     <div class="control-label forty">
-                        {{ Form::label('password', 'Password') }}
+                        {!! Form::label('password', 'Password') !!}
                     </div>
                     <div class="control-field sixty">
-                        {{ Form::password('password') }}
+                        {!! Form::password('password') !!}
                         <div class="help-text">Every administrator needs a good a password.</div>
                     </div>
                 </div>
@@ -88,6 +88,6 @@
         <div class="form-actions">
             <input type="submit" class="button primary" value="Install">
         </div>
-        {{ Form::close() }}
+        {!! Form::close() !!}
     </div>
 @endsection

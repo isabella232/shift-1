@@ -6,11 +6,10 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.2/select2.min.css"/>
 
-{{-- Load Assets --}}
 @foreach(Asset::containers(['custom']) as $container)
-    {{ $container->styles() }}
+    {!! $container->styles() !!}
 @endforeach
-{{ Asset::container('custom')->styles() }}
+{!! Asset::container('custom')->styles() !!}
 
 <script type="text/javascript">
     var _gaq = _gaq || [];

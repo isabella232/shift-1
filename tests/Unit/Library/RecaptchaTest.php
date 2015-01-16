@@ -3,7 +3,7 @@ namespace Tests\Unit\Library;
 
 use Curl\Curl;
 use Mockery as m;
-use Tectonic\Shift\Library\Recaptcha;
+use Tectonic\Shift\Library\Recaptcha\Recaptcha;
 use Tests\UnitTestCase;
 
 class RecaptchaTest extends UnitTestCase

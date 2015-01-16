@@ -30,6 +30,8 @@ class RegistrationController extends Controller
 
     /**
      * Main request that is made for the registration form.
+     *
+     * @Get("/register", prefix="/")
      */
     public function form()
     {
@@ -38,6 +40,8 @@ class RegistrationController extends Controller
 
     /**
      * Handles the submission of user registrations.
+     *
+     * @Post("/register", middleware="shift.account", prefix="/")
      */
     public function register()
     {

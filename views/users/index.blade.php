@@ -2,11 +2,11 @@
 	<div class="row island">
 		<div class="column-half">
 			<div class="title">
-				<h1>{{ trans('shift::users.titles.main') }}</h1>
+				<h1>{{ trans('users.titles.main') }}</h1>
 			</div>
 
 			<div class="buttons">
-				{{ Button::link(route('users.new'), trans('shift::users.titles.new'), ['type' => 'primary', 'icon' => 'plus']) }}
+				{{ Button::link(route('users.new'), trans('users.titles.new'), ['type' => 'primary', 'icon' => 'plus']) }}
 			</div>
 		</div>
 		<div class="search-pagination">
@@ -15,7 +15,7 @@
 			</div>
 
 			@if ($users->count())
-				@include('shift::partials.page.pagination-info', ['paginator' => $users])
+				@include('partials.page.pagination-info', ['paginator' => $users])
 			@endif
 		</div>
 	</div>
@@ -27,9 +27,9 @@
 				<thead>
 					<tr>
 						<th class="checkbox"><input type="checkbox"></th>
-						<th><a href="javascript:;" sort="users.name" class="sortable">{{ trans('shift::users.table.columns.name') }}</a></th>
-						<th># {{ trans('shift::users.table.columns.email') }}</th>
-						<th><a href="javascript:;" sort="users.updatedAt" class="sortable">{{ trans('shift::users.table.columns.updated') }}</a></th>
+						<th><a href="javascript:;" sort="users.name" class="sortable">{{ trans('users.table.columns.name') }}</a></th>
+						<th># {{ trans('users.table.columns.email') }}</th>
+						<th><a href="javascript:;" sort="users.updatedAt" class="sortable">{{ trans('users.table.columns.updated') }}</a></th>
 					</tr>
 				</thead>
 				<tbody>

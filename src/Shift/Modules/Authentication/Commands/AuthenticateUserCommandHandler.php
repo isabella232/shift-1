@@ -14,10 +14,11 @@ use Tectonic\Shift\Modules\Authentication\Exceptions\InvalidAuthenticationCreden
 class AuthenticateUserCommandHandler implements CommandHandlerInterface
 {
     use EventGenerator;
+
     /**
      * @var \Tectonic\Shift\Modules\Identity\Users\Contracts\UserRepositoryInterface
      */
-    protected $userRepo;
+    protected $userRepository;
 
     /**
      * @var \Illuminate\Auth\AuthManager
@@ -36,7 +37,7 @@ class AuthenticateUserCommandHandler implements CommandHandlerInterface
      */
     public function __construct(UserRepositoryInterface $userRepo, AuthManager $authenticate, EventDispatcher $eventDispatcher)
     {
-        $this->userRepo = $userRepo;
+        $this->userRepository = $userRepo;
         $this->authenticate = $authenticate;
         $this->eventDispatcher = $eventDispatcher;
     }
@@ -56,14 +57,15 @@ class AuthenticateUserCommandHandler implements CommandHandlerInterface
         $userCredentialsAreValid = $this->authenticate->validate(['email' => $command->email, 'password' => $command->password]);
 
         // If user credential are invalid, throw exception.
-        if(!$userCredentialsAreValid) throw new InvalidAuthenticationCredentialsException();
+        if (!$userCredentialsAreValid) {
+            throw new InvalidAuthenticationCredentialsException();
+        }
 
         // Find out if user has an account id with the current account
-        $accountUser = $this->userRepo->getByEmailAndAccount($command->email, CurrentAccount::get());
+        $accountUser = $this->userRepository->getByEmailAndAccount($command->email, CurrentAccount::get());
 
         // If an account user is found, login and return user
-        if ($accountUser)
-        {
+        if ($accountUser) {
             $this->authenticate->login($accountUser, $command->remember);
 
             $user = $this->authenticate->getUser();
