@@ -32,4 +32,21 @@ class AnnotationsServiceProvider extends \Adamgoose\AnnotationsServiceProvider
         'Tectonic\Shift\Controllers\SettingController',
         'Tectonic\Shift\Controllers\UserController',
     ];
+
+    /**
+     * Load the scanned application routes.
+     *
+     * @return void
+     */
+    protected function loadScannedRoutes()
+    {
+        $this->app->booted(function () {
+            $router = $this->app['Illuminate\Contracts\Routing\Registrar'];
+
+            // Will configure this later.
+            $router->group(['prefix' => ''], function () {
+                require $this->finder->getScannedRoutesPath();
+            });
+        }
+    }
 }

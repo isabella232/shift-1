@@ -1,4 +1,4 @@
-@extends('layouts.fullpage')
+@extends('shift::layouts.fullpage')
 
 @section('main')
 
@@ -7,7 +7,7 @@
 
         <h1>Edit profile</h1>
 
-        @include('partials.errors.display')
+        @include('shift::partials.errors.display')
 
         <!-- User profile form -->
         {!! Form::open(['action' => '\Tectonic\Shift\Controllers\UserController@updateProfile', 'novalidate' => 'novalidate', 'class' => 'vertical']) !!}

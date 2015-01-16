@@ -84,7 +84,6 @@ class RoleController extends Controller
      * @Get("roles/{slug}", middleware={"shift.account", "shift.auth"}, as="roles.show")
      *
      * @param $slug
-     *
      * @return mixed
      */
     public function getShow($slug)

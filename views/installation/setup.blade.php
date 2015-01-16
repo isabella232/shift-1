@@ -9,7 +9,7 @@
         </div>
     </div>
 
-    @include('partials.errors.display')
+    @include('shift::partials.errors.display')
 
     <div class="row">
         {!! Form::open(['action' => 'Tectonic\Shift\Controllers\InstallationController@postInstall', 'autocomplete' => 'off']) !!}

@@ -29,7 +29,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					@foreach ($roles->getItems() as $i => $role)
+					@foreach ($roles->items() as $i => $role)
 						<tr @if ($i % 2 == 1) class="even"@endif>
 							<td class="checkbox"><input type="checkbox"></td>
 							<td><a href="{!! route('roles.show', $role->slug) !!}">{!! lang($role, 'name') !!}</a></td>

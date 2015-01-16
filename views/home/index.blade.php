@@ -1,10 +1,10 @@
-@extends('layouts.fullpage')
+@extends('shift::layouts.fullpage')
 
 @section('main')
     <div class="container ng-scope">
     	<div class="island"></div>
 
-        @include('partials.errors.display')
+        @include('shift::partials.errors.display')
 
     	<div class="row">
     		<div class="column-third">
@@ -23,11 +23,11 @@
     		</div>
 
     		<div class="column-third">
-                @include('users.register')
+                @include('shift::users.register')
     		</div>
 
     		<div class="column-third">
-                @include('authentication.login')
+                @include('shift::authentication.login')
     		</div>
 
         </div>
