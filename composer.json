@@ -41,7 +41,7 @@
             "Tests\\": "tests/Tests"
         },
         "classmap": [
-            "src/migrations"
+            "resources/migrations"
         ],
         "files": [
             "src/Shift/Library/helpers.php"

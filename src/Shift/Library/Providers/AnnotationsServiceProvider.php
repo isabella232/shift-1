@@ -47,6 +47,6 @@ class AnnotationsServiceProvider extends \Adamgoose\AnnotationsServiceProvider
             $router->group(['prefix' => ''], function () {
                 require $this->finder->getScannedRoutesPath();
             });
-        }
+        });
     }
 }
