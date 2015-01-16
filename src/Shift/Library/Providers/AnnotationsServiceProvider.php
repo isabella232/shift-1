@@ -1,9 +1,7 @@
 <?php
-namespace Tectonic\Shift\Providers;
+namespace Tectonic\Shift\Library\Providers;
 
-use Adamgoose\AnnotationsServiceProvider as ServiceProvider;
-
-class AnnotationsServiceProvider extends ServiceProvider
+class AnnotationsServiceProvider extends \Adamgoose\AnnotationsServiceProvider
 {
     /**
      * Determines if we will auto-scan in the local environment.
@@ -25,12 +23,13 @@ class AnnotationsServiceProvider extends ServiceProvider
      * @var array
      */
     protected $scanRoutes = [
+        'Tectonic\Shift\Controllers\AccountController',
+        'Tectonic\Shift\Controllers\AuthenticationController',
         'Tectonic\Shift\Controllers\HomeController',
         'Tectonic\Shift\Controllers\InstallationController',
         'Tectonic\Shift\Controllers\RegistrationController',
-        'Tectonic\Shift\Controllers\AuthenticationController',
-        'Tectonic\Shift\Controllers\UserController',
-        'Tectonic\Shift\Controllers\SettingController',
         'Tectonic\Shift\Controllers\RoleController',
+        'Tectonic\Shift\Controllers\SettingController',
+        'Tectonic\Shift\Controllers\UserController',
     ];
 }

@@ -16,13 +16,6 @@ abstract class ServiceProvider extends Provider
 	 */
 	protected $aliases = [];
 
-	/**
-	 * Service providers that this provider also manages.
-	 *
-	 * @var array
-	 */
-	protected $serviceProviders = [];
-
     /**
      * An array of the listeners that need to be registered with the system. The key should
      * refer to the event that is fired, and the value should be the class name and method
@@ -48,7 +41,6 @@ abstract class ServiceProvider extends Provider
 		$this->registerRepositories();
 		$this->registerAliases();
 		$this->registerListeners();
-		$this->registerServiceProviders();
 	}
 
     /**
@@ -74,28 +66,6 @@ abstract class ServiceProvider extends Provider
 		}
 	}
 
-	/**
-	 * Register service providers defined by the class.
-	 *
-	 * @return void
-	 */
-	protected function registerServiceProviders()
-	{
-		foreach ($this->serviceProviders as $provider) {
-			$this->app->register($provider);
-		}
-	}
-
-	/**
-	 * Returns the array of service providers that are registered by this service provider.
-	 *
-	 * @return array
-     */
-	public function serviceProviders()
-	{
-		return $this->serviceProviders;
-	}
-
     /**
      * Registers the defined repository interfaces and binds them to an implementation.
      *
@@ -107,43 +77,4 @@ abstract class ServiceProvider extends Provider
             $this->app->singleton($interface, $repository);
         }
     }
-
-	/**
-	 * Due to the way in which the configuration array is initially configured, it can mean that the first
-	 * path doesn't actually exist. As a result, we want to loop through the configuration on each use case
-	 * and remove any paths that don't actually exist.
-	 */
-	private function cleanupConfiguration(array $configuration = [])
-	{
-		$keysToRemove = [];
-
-		foreach ($configuration as $key => $path) {
-			if (!File::isDirectory($path)) {
-				$keysToRemove[$key] = null;
-			}
-		}
-
-		$diff = array_diff_key($configuration, $keysToRemove);
-
-		return $diff;
-	}
-
-	/**
-	 * Gets the service provider's directory location.
-	 *
-	 * @param null $path
-	 * @return string
-	 */
-	private function getServiceProviderDirectory($path = null)
-	{
-		$reflector = new \ReflectionClass(get_class($this));
-		$directory = [dirname($reflector->getFileName())];
-
-		if (!is_null($path)) {
-			$directory[] = $path;
-		}
-
-		return implode('/', $directory);
-	}
-
 }

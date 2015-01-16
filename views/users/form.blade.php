@@ -5,7 +5,7 @@
 
             <div class="control">
                 <div class="control-label">
-                    {{ Form::label('firstName', trans('shift::users.form.first_name.label')) }}
+                    {{ Form::label('firstName', trans('users.form.first_name.label')) }}
                 </div>
                 <div class="control-field">
                     {{ Form::text('firstName') }}
@@ -14,7 +14,7 @@
 
             <div class="control">
                 <div class="control-label">
-                    {{ Form::label('lastName', trans('shift::users.form.last_name.label')) }}
+                    {{ Form::label('lastName', trans('users.form.last_name.label')) }}
                 </div>
                 <div class="control-field">
                     {{ Form::text('lastName') }}
@@ -23,7 +23,7 @@
 
             <div class="control">
                 <div class="control-label">
-                    {{ Form::label('email', trans('shift::users.form.email.label')) }}
+                    {{ Form::label('email', trans('users.form.email.label')) }}
                 </div>
                 <div class="control-field">
                     {{ Form::email('email') }}
@@ -32,21 +32,21 @@
 
             <div class="control">
                 <div class="control-label">
-                    {{ Form::label('password', trans('shift::users.form.password.label')) }}
+                    {{ Form::label('password', trans('users.form.password.label')) }}
                 </div>
                 <div class="control-field">
                     {{ Form::password('password') }}
-                    <div class="help-text">{{ trans('shift::users.form.password.hint') }}</div>
+                    <div class="help-text">{{ trans('users.form.password.hint') }}</div>
                 </div>
             </div>
 
             <div class="control">
                 <div class="control-label">
-                    {{ Form::label('passwordConfirmation', trans('shift::users.form.password_confirmation.label')) }}
+                    {{ Form::label('passwordConfirmation', trans('users.form.password_confirmation.label')) }}
                 </div>
                 <div class="control-field">
                     {{ Form::password('passwordConfirmation') }}
-                    <div class="help-text">{{ trans('shift::users.form.password_confirmation.hint') }}</div>
+                    <div class="help-text">{{ trans('users.form.password_confirmation.hint') }}</div>
                 </div>
             </div>
 

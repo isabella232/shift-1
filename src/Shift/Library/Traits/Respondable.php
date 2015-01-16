@@ -42,5 +42,26 @@ trait Respondable
     {
         return !Request::wantsJson() && !$this->isPjax();
     }
+
+    /**
+     * Pulled from Laravel 4. Laravel 5 completely does away with any ability to support PJAX
+     * applications - we need this method as it was.
+     *
+     * @param string $method
+     * @param array $parameters
+     * @return mixed
+     */
+    public function callAction($method, $parameters)
+    {
+        $this->setupLayout();
+
+        $response = call_user_func_array(array($this, $method), $parameters);
+
+        if (is_null($response) && ! is_null($this->layout)) {
+            $response = $this->layout;
+        }
+
+        return $response;
+    }
 }
  

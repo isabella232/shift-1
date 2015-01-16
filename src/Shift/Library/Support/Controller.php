@@ -20,10 +20,10 @@ abstract class Controller extends \Illuminate\Routing\Controller
     protected function setupLayout()
     {
         if ($this->isFullPage()) {
-            $this->layout = View::make('shift::layouts.fullpage');
+            $this->layout = view('shift::layouts.fullpage');
         }
         else if ($this->isPjax()) {
-            $this->layout = View::make('shift::layouts.pjax');
+            $this->layout = view('shift::layouts.pjax');
         }
     }
 }

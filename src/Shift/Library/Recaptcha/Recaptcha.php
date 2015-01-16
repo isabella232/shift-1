@@ -1,5 +1,5 @@
 <?php
-namespace Tectonic\Shift\Library;
+namespace Tectonic\Shift\Library\Recaptcha;
 use Curl\Curl;
 
 /**

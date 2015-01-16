@@ -1,28 +1,26 @@
 <?php
-namespace Tests\Unit\Library\Filters;
+namespace Tests\Unit\Library\Middleware;
 
 use Illuminate\Http\Request;
-use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Mockery as m;
 use Tectonic\Shift\Library\Facades\Consumer;
-use Tectonic\Shift\Library\Filters\AuthFilter;
+use Tectonic\Shift\Library\Middleware\AuthMiddleware;
 use Tectonic\Shift\Modules\Identity\Users\Models\User;
 use Tests\UnitTestCase;
 
-class AuthFilterTest extends UnitTestCase
+class AuthMiddlewareTest extends UnitTestCase
 {
-    private $filter;
-    private $mockRoute;
+    private $middleware;
     private $mockRequest;
 
     public function init()
     {
-        $this->mockRoute = m::mock(Route::class);
         $this->mockRequest = m::mock(Request::class);
+        $this->mockGuard = m::mock(\Illuminate\Contracts\Auth\Guard::class);
 
-        $this->filter = new AuthFilter;
+        $this->middleware = new AuthMiddleware($this->mockGuard);
     }
 
 	public function testGuestResponse()
@@ -30,7 +28,7 @@ class AuthFilterTest extends UnitTestCase
         Auth::shouldReceive('guest')->once()->andReturn(true);
         Redirect::shouldReceive('to')->with('/')->once()->andReturn('response');
 
-        $this->assertEquals('response', $this->filter->filter($this->mockRoute, $this->mockRequest));
+        $this->assertEquals('response', $this->middleware->handle($this->mockRequest, function() {}));
     }
 
     public function testAuthorisedUser()
@@ -42,6 +40,6 @@ class AuthFilterTest extends UnitTestCase
 
         Consumer::shouldReceive('set')->once();
 
-        $this->filter->filter($this->mockRoute, $this->mockRequest);
+        $this->middleware->handle($this->mockRequest, function() {});
     }
 }

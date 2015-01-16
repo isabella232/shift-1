@@ -2,11 +2,11 @@
 	<div class="row island">
 		<div class="column-half">
 			<div class="title">
-				<h1>{!! trans('shift::roles.titles.main') !!}</h1>
+				<h1>{!! trans('roles.titles.main') !!}</h1>
 			</div>
 
 			<div class="buttons">
-				{!! Button::link(route('roles.new'), trans('shift::roles.titles.new'), ['type' => 'primary', 'icon' => 'plus']) !!}
+				{!! Button::link(route('roles.new'), trans('roles.titles.new'), ['type' => 'primary', 'icon' => 'plus']) !!}
 			</div>
 		</div>
 		<div class="search-pagination">
@@ -14,16 +14,18 @@
 		</div>
 	</div>
 
+	@include('shift::partials.errors.display')
+
 	<div class="row">
 		@if ($roles->count())
 			<table>
 				<thead>
 					<tr>
 						<th class="checkbox"><input type="checkbox"></th>
-						<th><a href="javascript:;" sort="roles.name" class="sortable">{!! trans('shift::roles.table.columns.name') !!}</a></th>
-						<th># {!! trans('shift::roles.table.columns.users') !!}</th>
-						<th>{!! trans('shift::roles.table.columns.default') !!}</th>
-						<th><a href="javascript:;" sort="roles.updatedAt" class="sortable">{!! trans('shift::roles.table.columns.updated') !!}</a></th>
+						<th><a href="javascript:;" sort="roles.name" class="sortable">{!! trans('roles.table.columns.name') !!}</a></th>
+						<th># {!! trans('roles.table.columns.users') !!}</th>
+						<th>{!! trans('roles.table.columns.default') !!}</th>
+						<th><a href="javascript:;" sort="roles.updatedAt" class="sortable">{!! trans('roles.table.columns.updated') !!}</a></th>
 					</tr>
 				</thead>
 				<tbody>

@@ -1,4 +1,4 @@
-@extends('shift::layouts.installation')
+@extends('layouts.installation')
 
 @section('content')
     <div class="row island">
@@ -9,7 +9,7 @@
         </div>
     </div>
 
-    @include('shift::partials.errors.display')
+    @include('partials.errors.display')
 
     <div class="row">
         {!! Form::open(['action' => 'Tectonic\Shift\Controllers\InstallationController@postInstall', 'autocomplete' => 'off']) !!}

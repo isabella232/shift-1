@@ -1,4 +1,4 @@
-@extends('shift::layouts.application')
+@extends('layouts.application')
 
 @section('main')
 

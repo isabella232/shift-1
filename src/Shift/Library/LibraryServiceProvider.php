@@ -2,22 +2,27 @@
 namespace Tectonic\Shift\Library;
 
 use App;
+use Illuminate\Support\AggregateServiceProvider;
 use Tectonic\Shift\Library\Authorization\ConsumerManager;
 use Tectonic\Shift\Library\Localisation\CurrentLocaleService;
 use Tectonic\Shift\Library\Localisation\Translator;
+use Tectonic\Shift\Library\Providers\Providable;
 use Tectonic\Shift\Library\Support\AssetFactory;
 use Tectonic\Shift\Modules\Localisation\Services\TranslationService;
 
-class LibraryServiceProvider extends ServiceProvider
+class LibraryServiceProvider extends AggregateServiceProvider
 {
+    use Providable;
+
     protected $aliases = [
         'CurrentLocale' => 'Tectonic\Shift\Library\Facades\CurrentLocale',
     ];
 
-    protected $serviceProviders = [
+    protected $providers = [
         'Tectonic\Shift\Library\Html\HtmlServiceProvider',
         'Tectonic\Shift\Library\Localisation\LocalisationServiceProvider',
         'Tectonic\Shift\Library\Menu\MenuServiceProvider',
+        'Tectonic\Shift\Library\Recaptcha\RecaptchaServiceProvider',
     ];
 
     /**

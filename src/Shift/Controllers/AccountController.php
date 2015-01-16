@@ -35,6 +35,8 @@ class AccountController extends Controller
 	/**
 	 * Retrieve a list of roles based on the search conditions provided.
 	 *
+	 * @Get("accounts", middleware={"shift.account", "shift.auth"}, as="accounts.index")
+	 *
 	 * @return mixed
 	 */
 	public function getIndex()
@@ -48,6 +50,8 @@ class AccountController extends Controller
 	/**
 	 * Render the form for a new account.
 	 *
+	 * @Get("accounts/new", middleware={"shift.account", "shift.auth"}, as="accounts.new")
+	 *
 	 * @return mixed
      */
 	public function getNew()
@@ -59,6 +63,8 @@ class AccountController extends Controller
 
 	/**
 	 * Create a new account based on the input provided.
+	 *
+	 * @Post("accounts", middleware={"shift.account", "shift.auth"}, as="accounts.create")
 	 *
 	 * @return mixed
      */
@@ -73,6 +79,8 @@ class AccountController extends Controller
 
 	/**
 	 * Retrieve a single account based on the slug provided.
+	 *
+	 * @Get("accounts/{slug}", middleware={"shift.account", "shift.auth"}, as="accounts.show")
 	 *
 	 * @param $slug
 	 */

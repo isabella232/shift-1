@@ -9,24 +9,16 @@ use Tectonic\Shift\Modules\Accounts\Services\AccountsService;
 
 class InstallationMiddleware implements Middleware
 {
-
-	/**
-	 * @var \Illuminate\Auth\Guard
-	 */
-	protected $auth;
-
 	/**
 	 * @var \Tectonic\Shift\Modules\Accounts\Services\AccountsService
 	 */
 	protected $accountService;
 
 	/**
-	 * @param \Illuminate\Auth\Guard $auth
 	 * @param AccountsService        $accountService
 	 */
-	public function __construct(Guard $auth, AccountsService $accountService)
+	public function __construct(AccountsService $accountService)
 	{
-		$this->auth = $auth;
 		$this->accountService = $accountService;
 	}
 

@@ -48,6 +48,8 @@ class UserController extends Controller
     /**
      * Search for the required users and return the result.
      *
+     * @Get("users", middleware={"shift.account", "shift.auth"}, as="users.index")
+     *
      * @return response|json
      */
     public function getIndex()
@@ -61,6 +63,8 @@ class UserController extends Controller
     /**
      * Create a new user form.
      *
+     * @Get("users/new", middleware={"shift.account", "shift.auth"}, as="users.new")
+     *
      * @return response|json
      */
     public function getNew()
@@ -72,6 +76,8 @@ class UserController extends Controller
 
     /**
      * Create new user account.
+     *
+     * @Post("users", middleware={"shift.account", "shift.auth"}, as="users.create")
      *
      * @return response
      */
@@ -87,6 +93,8 @@ class UserController extends Controller
     /**
      * Retrieve a single user based on their slug.
      *
+     * @Get("users/{slug}", middleware={"shift.account", "shift.auth"}, as="users.show")
+     *
      * @param $slug
      * @return array
      */
@@ -98,7 +106,9 @@ class UserController extends Controller
     }
 
     /**
-     * Update a specific user record based on the
+     * Update a specific user record based on the.
+     *
+     * @Put("users", middleware={"shift.account", "shift.auth"}, as="users.update")
      *
      * @param string $slug
      * @return mixed
