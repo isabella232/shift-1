@@ -44,7 +44,7 @@ class AnnotationsServiceProvider extends \Adamgoose\AnnotationsServiceProvider
             $router = $this->app['Illuminate\Contracts\Routing\Registrar'];
 
             // Will configure this later.
-            $router->group(['prefix' => ''], function () {
+            $router->group(['prefix' => $this->app['config']->get('shift.url', '')], function () use ($router) {
                 require $this->finder->getScannedRoutesPath();
             });
         });
