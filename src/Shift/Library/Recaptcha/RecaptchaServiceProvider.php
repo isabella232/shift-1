@@ -1,6 +1,7 @@
 <?php
 namespace Tectonic\Shift\Library\Recaptcha;
 
+use Curl\Curl;
 use Illuminate\Support\ServiceProvider;
 
 class RecaptchaServiceProvider extends ServiceProvider

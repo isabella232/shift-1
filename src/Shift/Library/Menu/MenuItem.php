@@ -8,7 +8,7 @@ abstract class MenuItem
      *
      * @var string|null It is possible for top-level menus to not need any text.
      */
-    protected $text;
+    public $text;
 
     /**
      * Stores the parent Menu.
@@ -76,46 +76,6 @@ abstract class MenuItem
     public function setParent(Menu $parent)
     {
         $this->parent = $parent;
-    }
-
-    /**
-     * Returns the current parent for the menu item.
-     *
-     * @return null|Menu
-     */
-    public function parent()
-    {
-        return $this->parent;
-    }
-
-    /**
-     * Return the text for the menu item.
-     *
-     * @return mixed
-     */
-    public function text()
-    {
-        return $this->text;
-    }
-
-    /**
-     * Set the renderable property for the menu item.
-     *
-     * @param $renderable
-     */
-    public function setRenderable($renderable)
-    {
-        $this->renderable = $renderable;
-    }
-
-    /**
-     * Return the renderable value.
-     *
-     * @return bool
-     */
-    public function renderable()
-    {
-        return $this->renderable;
     }
 
     /**

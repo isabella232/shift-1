@@ -10,7 +10,7 @@ class Item extends MenuItem
      *
      * @var string
      */
-    private $link;
+    public $link;
 
     /**
      * Construct a new item to be appended to a menu.
@@ -22,31 +22,7 @@ class Item extends MenuItem
     public function __construct($text, $link)
     {
         $this->text = $text;
+        $this->name = $text;
         $this->link = $link;
-    }
-
-    /**
-     * Returns the link that is used for the click event.
-     *
-     * @return string
-     */
-    public function link()
-    {
-        return $this->link;
-    }
-
-    /**
-     * When the parent is set for a menu item, we want to check to see if this particular
-     * item is currently active. If it is, we need to set the parent menu as active as well.
-     *
-     * @param Menu $menu
-     */
-    public function setParent(Menu $menu)
-    {
-        parent::setParent($menu);
-
-        if (strpos(Request::url(), $this->link) !== false) {
-            $this->setActive();
-        }
     }
 }

@@ -16,7 +16,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
 		m::close();
 	}
 
-	protected function getPackageProviders()
+	protected function getPackageProviders($app)
 	{
 		return [
             'Tectonic\Shift\ShiftServiceProvider'
@@ -39,9 +39,14 @@ class TestCase extends \Orchestra\Testbench\TestCase
         // errors/information easier to read and understand during test runs.
         $monolog = Log::getMonolog();
         $monolog->pushHandler(new NullHandler);
+
+        // Necessary for future checks
+        Config::set('shift.languages', [
+            'en_GB' => 'English (Great Britain)'
+        ]);
 	}
 
-    protected function getPackageAliases()
+    protected function getPackageAliases($app)
     {
         return [
             'Validator' => 'Illuminate\Support\Facades\Validator'

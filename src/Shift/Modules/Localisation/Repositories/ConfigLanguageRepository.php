@@ -18,7 +18,7 @@ class ConfigLanguageRepository implements LanguageRepositoryInterface
     public function __construct()
     {
         if (!isset(static::$languages)) {
-            static::$languages = $this->hydrateCollection(Config::get('shift.languages'));
+            static::$languages = $this->hydrateCollection(Config::get('shift.languages', []));
         }
     }
 
@@ -49,7 +49,7 @@ class ConfigLanguageRepository implements LanguageRepositoryInterface
      * @param array $languages key-value pair array of language codes to language names.
      * @return Collection
      */
-    private function hydrateCollection($languages)
+    private function hydrateCollection(array $languages)
     {
         $items = [];
 

@@ -34,7 +34,7 @@ class InstallationController extends Controller
     /**
      * Renders the installation/setup form.
      *
-     * @Get("install", middleware={"shift.install"})
+     * @Get("install", middleware={"shift.install"}, as="install")
      *
      * @return Response
      */

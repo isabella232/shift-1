@@ -919,8 +919,7 @@ select {
   background: #fff;
   border: 1px solid #d5d5d5;
   padding: 8px;
-  width: 100%;
-  -webkit-appearance: none; }
+  width: 100%; }
   input.ng-invalid,
   textarea.ng-invalid,
   select.ng-invalid {

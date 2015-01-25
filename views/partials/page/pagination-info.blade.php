@@ -1,8 +1,8 @@
-@if ($paginator->getTotal() > 0)
+@if ($paginator->total() > 0)
     <div class="pagination-info">
         <div class="summary">
             Displaying
-            <b>{!! $roles->getFrom() !!} - {!! $roles->getTo() !!}</b> of <b>{!! $roles->getTotal() !!}</b>
+            <b>{!! $paginator->firstItem() !!} - {!! $paginator->lastItem() !!}</b> of <b>{!! $paginator->total() !!}</b>
         </div>
     </div>
 @endif

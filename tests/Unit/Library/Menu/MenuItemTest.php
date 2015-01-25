@@ -17,19 +17,6 @@ class MenuItemTest extends UnitTestCase
     {
         $this->menuItem = new MenuItemStub('text');
 
-        $this->assertEquals('text', $this->menuItem->text());
-    }
-
-    public function testParentCheck()
-    {
-        $this->assertFalse($this->menuItem->hasParent());
-        $this->assertNull($this->menuItem->parent());
-    }
-
-    public function testRenderableSetting()
-    {
-        $this->menuItem->setRenderable(true);
-
-        $this->assertTrue($this->menuItem->renderable());
+        $this->assertEquals('text', $this->menuItem->text);
     }
 }

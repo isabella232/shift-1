@@ -151,6 +151,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function ownerOf(Account $account)
     {
+        if (is_null($this->ownedAccounts)) {
+            return false;
+        }
+
         $ownedAccountIds = $this->ownedAccounts->lists('id');
 
         return in_array($account->getId(), $ownedAccountIds);

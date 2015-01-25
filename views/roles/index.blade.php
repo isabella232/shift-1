@@ -10,7 +10,13 @@
 			</div>
 		</div>
 		<div class="search-pagination">
-			<div class="filter-details"></div>
+			<div class="filter-details">
+
+			</div>
+
+			@if ($roles->count())
+				@include('shift::partials.page.pagination-info', ['paginator' => $roles])
+			@endif
 		</div>
 	</div>
 

@@ -1,10 +1,5 @@
 // Required for underscore string module
 (function($) {
-	// When menu parents are clicked, simply toggle the active class
-	$('.menu .parent span').click(function() {
-		$(this).parent().toggleClass('active');
-	});
-
 	// PJAX configuration and setup - links, and forms.
 	// The long timeout is to ensure that we don't get weird cancellation effects for
 	// semi-long requests (a few hundred ms). Also helps with slow connections.
@@ -35,6 +30,11 @@
 
     $(document).on('pjax:end', function() {
         loader.fadeTo(250, 0, function() { $(this).hide(); });
+    });
+
+    // When menu parents are clicked, simply toggle the active class
+    $('.menu .parent span').click(function() {
+        $(this).parent().toggleClass('active');
     });
 
     // Handles navigation clicks
@@ -87,4 +87,4 @@
 
 	// Setup jquery pjax
 	$(document).pjax('[data-pjax], #content a', '#content');
-})();
+})(jQuery);

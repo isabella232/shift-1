@@ -15,7 +15,7 @@ class LocalisationServiceProvider extends TranslationServiceProvider
     protected function registerLoader()
     {
         $this->app->bindShared('translation.loader', function($app) {
-            $fileLoader = new FileLoader($app['files'], $app['path'].'/lang');
+            $fileLoader = new FileLoader($app['files'], base_path().'/resources/lang');
 
             return new TranslationLoader($fileLoader, $app->make(TranslationRepositoryInterface::class));
         });

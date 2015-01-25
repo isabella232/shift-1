@@ -11,7 +11,7 @@ class Menu extends MenuItem
      *
      * @var string
      */
-    private $name;
+    public $name;
 
     /**
      * Construct a new menu with the following text.
@@ -23,16 +23,6 @@ class Menu extends MenuItem
     {
         $this->text = $text;
         $this->name = $name;
-    }
-
-    /**
-     * Returns the name of the menu.
-     *
-     * @return string
-     */
-    public function name()
-    {
-        return $this->name;
     }
 
     /**

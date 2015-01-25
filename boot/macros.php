@@ -67,7 +67,7 @@ HTML::macro('pagination', function($paginator) {
 HTML::macro('menu', function($menu) {
     // If a menu instance was not passed, let's instead try and fetch the menu by name
     if (!($menu instanceof \Tectonic\Shift\Library\Menu\Menu)) {
-        $menu = Menufy::get($menu);
+        $menu = Menufy::menu($menu)->first();
     }
 
     // Render the menu

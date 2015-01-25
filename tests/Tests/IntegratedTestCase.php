@@ -63,17 +63,11 @@ class IntegratedTestCase extends TestCase
     {
         parent::setUp();
 
-        Route::disableFilters();
+        $migrations = $this->app->make('migration.repository');
+        $migrations->createRepository();
 
-        // reset base path to point to our package's src directory
-        $app['path.base'] = __DIR__ . '/../../';
-
-        $artisan = $this->app->make('artisan');
-
-        $artisan->call('migrate', [
-            '--database' => $this->database,
-            '--path'     => 'src/migrations'
-        ]);
+        $migrator = $this->app->make('migrator');
+        $migrator->run(__DIR__.'/../../resources/migrations');
 
         $this->setupAccount();
         $this->init();

@@ -72,8 +72,7 @@ class AccountMiddleware implements Middleware
 			$count = $this->accountService->totalNumberOfAccounts();
 
 			if ($count === 0) {
-
-				return redirect()->action(InstallationController::class.'@getInstall');
+				return redirect()->route('install');
 			}
 
 			throw new AccountNotFoundException;

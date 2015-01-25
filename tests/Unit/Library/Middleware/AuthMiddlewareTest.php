@@ -25,8 +25,9 @@ class AuthMiddlewareTest extends UnitTestCase
 
 	public function testGuestResponse()
     {
-        Auth::shouldReceive('guest')->once()->andReturn(true);
-        Redirect::shouldReceive('to')->with('/')->once()->andReturn('response');
+        $this->mockGuard->shouldReceive('guest')->once()->andReturn(true);
+
+        Redirect::shouldReceive('route')->with('home')->once()->andReturn('response');
 
         $this->assertEquals('response', $this->middleware->handle($this->mockRequest, function() {}));
     }
@@ -35,8 +36,8 @@ class AuthMiddlewareTest extends UnitTestCase
     {
         $mockUser = m::mock(User::class);
 
-        Auth::shouldReceive('guest')->once()->andReturn(false);
-        Auth::shouldReceive('user')->once()->andReturn($mockUser);
+        $this->mockGuard->shouldReceive('guest')->once()->andReturn(false);
+        $this->mockGuard->shouldReceive('user')->once()->andReturn($mockUser);
 
         Consumer::shouldReceive('set')->once();
 

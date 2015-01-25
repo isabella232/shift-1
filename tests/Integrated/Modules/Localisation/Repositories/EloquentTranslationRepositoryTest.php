@@ -2,6 +2,7 @@
 namespace Tests\Integrated\Modules\Localisation\Repositories;
 
 use App;
+use Illuminate\Support\Facades\Config;
 use Mockery;
 use Tests\IntegratedTestCase;
 use Tectonic\Shift\Modules\Localisation\Repositories\ConfigLanguageRepository;

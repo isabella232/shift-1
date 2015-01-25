@@ -24,13 +24,13 @@ class InstallationMiddlewareTest extends UnitTestCase
         $this->mockAccountManagementService->shouldReceive('totalNumberOfAccounts')->andReturn(1);
         App::shouldReceive('abort')->with(404)->once();
 
-        $this->middleware->filter();
+        $this->middleware->handle('request', function() {});
     }
 
     public function testInstallationNeedsToBeCompleted()
     {
         $this->mockAccountManagementService->shouldReceive('totalNumberOfAccounts')->andReturn(0);
 
-        $this->middleware->filter();
+        $this->middleware->handle('request', function() {});
     }
 }

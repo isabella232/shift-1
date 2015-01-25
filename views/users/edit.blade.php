@@ -10,9 +10,9 @@
         </div>
     </div>
 
-    @include('partials.errors.display')
+    @include('shift::partials.errors.display')
 
     <div class="row">
-        @include('users.form')
+        @include('shift::users.form')
     </div>
 @stop

@@ -15,7 +15,7 @@
 			</div>
 
 			@if ($accounts->count())
-				@include('partials.page.pagination-info', ['paginator' => $accounts])
+				@include('shift::partials.page.pagination-info', ['paginator' => $accounts])
 			@endif
 		</div>
 	</div>
@@ -34,7 +34,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					@foreach ($accounts->getItems() as $i => $account)
+					@foreach ($accounts->items() as $i => $account)
 						<tr @if ($i % 2 == 1) class="even"@endif>
 							<td class="checkbox"><input type="checkbox"></td>
 							<td><a href="{!! route('accounts.show', $account->slug) !!}">{!! lang($account, 'name') !!}</a></td>

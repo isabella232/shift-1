@@ -2,31 +2,10 @@
 namespace Tectonic\Shift\Library\Menu;
 
 use Event;
+use Illuminate\Support\Collection;
 
-class Manager
+class Manager extends Collection
 {
-    /**
-     * Stores an array of the menus registered with the system.
-     *
-     * @var array
-     */
-    private $items = [];
-
-    /**
-     * Return a given menu, if it exists.
-     *
-     * @param string $menuItem
-     * @return Menu
-     */
-    public function get($menuItem)
-    {
-        if (!$this->has($menuItem)) {
-            throw new \Exception("No menu named [$menuItem] has been registered.");
-        }
-
-        return $this->items[$menuItem];
-    }
-
     /**
      * Add a newly created menu to the manager.
      *
@@ -34,11 +13,22 @@ class Manager
      */
     public function register(MenuItem $menuItem)
     {
-        $name = $menuItem instanceof Menu ? $menuItem->name() : $menuItem->text();
+        $this->items[] = $menuItem;
 
-        $this->items[$name] = $menuItem;
+        Event::fire('Menu item registered', [$menuItem]);
+    }
 
-        Event::fire('item registered: '.$name, [$menuItem]);
+    /**
+     * Return a specific menu.
+     *
+     * @param string $menuName
+     * @return static
+     */
+    public function menu($menuName)
+    {
+        return $this->filter(function($menuItem) use ($menuName) {
+            return $menuItem instanceof Menu && $menuItem->name == $menuName;
+        });
     }
 
     /**
@@ -49,6 +39,64 @@ class Manager
      */
     public function has($menuItem)
     {
-        return isset($this->items[$menuItem]);
+        return $this->where('name', $menuItem);
+    }
+
+    /**
+     * @param $url
+     */
+    public function activateByUrl($url)
+    {
+        $activated = $this->activateByFullMatch($url);
+
+        if (!$activated) {
+            // When no active item is found, we'll try and make a partial match
+            $this->activateByPartialMatch($url);
+        }
+    }
+
+    /**
+     * Set the current range of items to an active state based on the full url.
+     *
+     * @param string $url
+     * @return boolean
+     */
+    public function activateByFullMatch($url)
+    {
+        foreach ($this->itemsOnly() as $item) {
+            if ($item->link == $url) {
+                $item->setActive();
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Activate a menu based on a partial match.
+     *
+     * @param string $url
+     */
+    public function activateByPartialMatch($url)
+    {
+        $this->itemsOnly()->each(function($menuItem) use ($url) {
+            if (strpos($url, $menuItem->link) === 0) {
+                $menuItem->setActive();
+            }
+        });
+    }
+
+    /**
+     * Return only the items of the menu items, not the menus.
+     *
+     * @return Collection
+     */
+    protected function itemsOnly()
+    {
+        return $this->filter(function($menuItem) {
+            return $menuItem instanceof Item;
+        });
     }
 }
