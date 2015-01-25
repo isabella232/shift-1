@@ -6,20 +6,26 @@
 	var accountForm = function() {
 		$('#owner').select2({
 			ajax: {
-				url: '/users/',
+				url: '/users/autocomplete',
 				dataType: 'json',
 				delay: 250,
-				data: function(params) {
+				data: function(searchTerm) {
 					return {
-						name: params.term
+						name: searchTerm
 					}
 				},
-				processResults: function(data) {
+				results: function(data) {
 					return {
-						results: data.data
+						results: data
 					}
 				},
 				cache: true
+			},
+			formatResult: function(object) {
+				return object.firstName + ' ' + object.lastName
+			},
+			formatSelection: function(object) {
+				return object.firstName + ' ' + object.lastName
 			},
 			minimumInputLength: 3
 		});

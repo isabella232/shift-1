@@ -4,6 +4,7 @@ namespace Tectonic\Shift\Controllers;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use Tectonic\Application\Validation\ValidationCommandBus;
 use Tectonic\LaravelLocalisation\Facades\Translator;
@@ -55,9 +56,21 @@ class UserController extends Controller
     public function getIndex()
     {
         $search = App::make(UserSearch::class);
-        $users = Translator::translate($search->fromInput(Input::get()));
+        $users = $search->fromInput(Input::get());
 
         return $this->respond('shift::users.index', compact('users'));
+    }
+
+    /**
+     * Return a list of user records that match a given name.
+     *
+     * @Get("users/autocomplete", middleware={"shift.account", "shift.auth"}, as="users.autocomplete")
+     *
+     * @return mixed
+     */
+    public function getAutocomplete()
+    {
+        return $this->userRepository->getAllByName(Input::get('name'));
     }
 
     /**

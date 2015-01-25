@@ -78,4 +78,22 @@ class EloquentUserRepository extends Repository implements UserRepositoryInterfa
 
         return $results;
     }
+
+    /**
+     * Search for a list of users based on name.
+     *
+     * @param string $name
+     * @param integer $limit
+     * @return mixed
+     */
+    public function getAllByName($name, $limit = 8)
+    {
+        $query = $this->getQuery();
+        $query = $query->where(function($query) use ($name) {
+            $query->orWhere('first_name', 'LIKE', '%'.$name.'%');
+            $query->orWhere('last_name', 'LIKE', '%'.$name.'%');
+        });
+
+        return $query->take($limit)->get();
+    }
 }

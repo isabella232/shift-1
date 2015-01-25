@@ -1,6 +1,7 @@
 <?php
 namespace Tectonic\Shift\Library\Traits;
 
+use Illuminate\Contracts\Support\Arrayable;
 use Request;
 
 trait Respondable
@@ -17,7 +18,7 @@ trait Respondable
     public function respond($view, array $data = [])
     {
         if (Request::wantsJson()) {
-            return $data;
+            return $this->formatJson($data);
         }
 
         $this->layout->content = view($view, $data);
@@ -41,6 +42,26 @@ trait Respondable
     public function isFullPage()
     {
         return !Request::wantsJson() && !$this->isPjax();
+    }
+
+    /**
+     * Format an array or collection of variables. Basically, we want to ensure
+     * an array response for the controller action for json requests.
+     *
+     * @param mixed $var
+     * @return array
+     */
+    public function formatJson($var)
+    {
+        if (is_array($var)) {
+            foreach ($var as $key => &$value) {
+                if ($value instanceof Arrayable) {
+                    $value = $value->toArray();
+                }
+            }
+        }
+
+        return $var;
     }
 
     /**

@@ -23,4 +23,13 @@ interface UserRepositoryInterface extends RepositoryInterface
      * @return object|null
      */
     public function getByEmailAndAccount($email, $accountId);
+
+    /**
+     * Search for a list of users based on name.
+     *
+     * @param string $name
+     * @param integer $limit
+     * @return mixed
+     */
+    public function getAllByName($name, $limit = 8);
 }

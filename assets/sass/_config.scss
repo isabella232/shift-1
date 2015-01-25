@@ -32,6 +32,8 @@ $colour-tab-over: $colour-tertiary;
 $colour-tab-active: $colour-primary;
 
 $colour-border: #ddd;
+$colour-input-border: #d5d5d5;
+$colour-input-border-focus: darken(#d5d5d5, 15%);
 
 // Fonts.
 @import url(//fonts.googleapis.com/css?family=Open+Sans:400,600,700);

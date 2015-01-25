@@ -4,17 +4,9 @@ textarea,
 select {
 	border-radius: $default-radius;
 	background: #fff;
-	border: 1px solid #d5d5d5;
+	border: 1px solid $colour-input-border;
 	padding: 8px;
 	width: 100%;
-	
-	&.ng-invalid {
-		border-color: $colour-error;
-		
-		&:focus {
-			border-color: darken( $colour-error , 15 );
-		}
-	}
 }
 
 // Minor adjustment on the padding on dropdown menus.
@@ -402,21 +394,3 @@ $colour-placeholder: #999;
 	}
 }
 
-// Select2 steezy
-.control-field {
-	.select2-container {
-		width: 200px;
-	}
-}
-
-.select2-drop-active {
-	border: 1px solid #999;
-}
-
-ul.select2-results {
-	li.select2-no-results {
-		background: none;
-		color: #666;
-		font-size: 10px;
-	}
-}

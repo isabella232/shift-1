@@ -7,6 +7,19 @@ use Tectonic\Shift\Modules\Accounts\Facades\CurrentAccount;
 class UserAccountFilter implements SearchFilterInterface
 {
     /**
+     * @var array
+     */
+    private $input;
+
+    /**
+     * @param array $input
+     */
+    function __construct(array $input)
+    {
+        $this->input = $input;
+    }
+
+    /**
      * Apply the given search filter to an Eloquent query.
      *
      * @param $query
@@ -14,10 +27,12 @@ class UserAccountFilter implements SearchFilterInterface
      */
     public function applyToEloquent($query)
     {
-        $accountId = CurrentAccount::get()->id;
+        if (!array_get($this->input, 'relax')) {
+            $accountId = CurrentAccount::get()->id;
 
-        $query->join('account_user', 'account_user.user_id', '=', 'users.id');
-        $query->where('account_user.account_id', '=', $accountId);
+            $query->join('account_user', 'account_user.user_id', '=', 'users.id');
+            $query->where('account_user.account_id', '=', $accountId);
+        }
 
         return $query;
     }
